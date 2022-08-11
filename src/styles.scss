@@ -1,0 +1,821 @@
+
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@use '@angular/material' as mat;
+// Plus imports for other components in your app.
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat.core();
+
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
+$fyle-qbo-app-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
+
+// The warn palette is optional (defaults to red).
+$fyle-qbo-app-warn: mat.define-palette(mat.$red-palette);
+
+// Create the theme object. A theme consists of configurations for individual
+// theming systems such as "color" or "typography".
+$fyle-qbo-app-theme: mat.define-light-theme((
+  color: (
+    primary: $fyle-qbo-app-accent,
+    accent: $fyle-qbo-app-accent,
+    warn: $fyle-qbo-app-warn,
+  )
+));
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include mat.all-component-themes($fyle-qbo-app-theme);
+
+/* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body {
+  margin: 0;
+  font: 16px aktiv-grotesk,sans-serif;
+  color: #161528;
+}
+
+h3, h4, h5, h6 {
+  font-weight: normal;
+  margin: 0;
+}
+
+h1, h2 {
+  margin: 0;
+}
+
+table {
+  width: 100%;
+}
+
+tr {
+  border-radius: 4px !important;
+}
+
+tr.mat-header-row {
+  border-radius: 4px !important;
+}
+
+th {
+  color: #161528 !important;
+  font-weight: 500 !important;
+  white-space: nowrap !important;
+  border-right: 1px solid #DFDFE2 !important;
+  height: 100%;
+}
+
+th.mat-header-cell {
+  color: #161528 !important;
+  font-weight: 500 !important;
+  white-space: nowrap !important;
+  border-left: none !important;
+  border-top: 1px solid #DFDFE2 !important;
+  border-right: 1px solid #DFDFE2 !important;
+  border-bottom: 1px solid #DFDFE2 !important;
+}
+
+th.mat-header-cell:first-of-type {
+  border-left: 1px solid #DFDFE2 !important;
+  border-top-left-radius: 4px !important;
+  border-bottom-left-radius: 4px !important;
+  padding-left: 44px !important;
+}
+
+td.mat-cell:first-of-type, td.mat-footer-cell:first-of-type {
+  padding-left: 44px !important;
+}
+
+th.mat-header-cell {
+  padding-left: 22px !important;
+}
+
+td.mat-cell, td.mat-footer-cell {
+  padding-left: 22px !important;
+}
+
+th.mat-header-cell:last-of-type {
+  border-top-right-radius: 4px !important;
+  border-bottom-right-radius: 4px !important;
+}
+
+.bold { font-weight: bold; }
+
+.paragraph {
+  line-height: 1.5;
+}
+
+.align-center {
+  text-align: center;
+}
+
+.sub-text-color {
+  color: #5A5D72;
+}
+
+.default-cursor {
+  cursor: default;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.single-line-text {
+  white-space: nowrap;
+}
+
+.btn-enabled {
+  background: linear-gradient(162.38deg, #FF3366 3.01%, #FE5196 111.5%);
+  @extend .pointer;
+
+  &:hover {
+    @extend .btn-shadow;
+  }
+}
+
+.btn-disabled {
+  background: #FFC2D6;
+  @extend .cursor-disabled;
+}
+
+.btn-cta-text-with-icon {
+  padding-left: 24px;
+}
+
+.btn-cta-text-without-icon {
+  @extend .btn-cta-text-with-icon;
+  padding-right: 24px;
+}
+
+.btn-icon {
+  padding-left: 10px;
+  padding-right: 26px;
+}
+
+.btn-loader {
+  padding-left: 10px;
+  padding-right: 20px;
+}
+
+.cursor-disabled {
+  cursor: no-drop;
+}
+
+.italic {
+  font-style: italic;
+}
+
+.capitalize {
+  text-transform: capitalize;
+}
+
+.search-zero-state {
+  height: 100px !important;
+  &:hover {
+    cursor: default;
+  }
+}
+
+.actionable-text {
+  color: #FF3366;
+  cursor: pointer;
+}
+
+.mapping-snackbar {
+  @extend .single-line-text;
+  background: #24A148;
+  min-width: 122px !important;
+  font-size: 12px;
+  color: #FFFFFF;
+}
+
+.dashboard-snackbar {
+  @extend .mapping-snackbar;
+  margin-right: 300px !important;
+}
+
+.profile-tooltip {
+  margin-top: 30px !important;
+}
+
+.export-log-tooltip {
+  margin-top: -10px !important;
+}
+
+.export-log-child-tooltip {
+  @extend .export-log-tooltip;
+  margin-right: 100px !important;
+}
+
+.mat-select-arrow-closed {
+  position: absolute;
+  right: 16px;
+  top: 3px;
+  width: 16px;
+  height: 10px;
+  background-image: url("assets/images/svgs/actions/arrow-mark-down.svg");
+}
+
+.mat-spinner circle {
+  stroke: white;
+}
+
+.mat-form-field-outline-start {
+  border-width: 1px !important;
+}
+
+.mat-form-field-outline-end {
+  border-width: 1px !important;
+}
+
+.mat-form-field-outline-thick {
+  border-width: 1px !important;
+}
+
+.mat-form-field-type-mat-select .mat-form-field-flex {
+  height: 40px;
+  font-size: 14px !important;
+  padding: 4px 0px 0px 14px !important;
+}
+
+.mat-option.mat-selected:not(.mat-option-multiple):not(.mat-option-disabled), .mat-option:focus:not(.mat-selected), .mat-option:hover:not(.mat-selected) {
+  background: #0000000a !important;
+}
+
+.mat-option.mat-active {
+  background: none !important;
+}
+
+.mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-thick {
+  color: #5a5d72 !important;
+}
+
+.mat-form-field-wrapper {
+  padding-bottom: 0.5em;
+}
+
+.mat-accent .mat-option.mat-selected:not(.mat-option-disabled), .mat-primary .mat-option.mat-selected:not(.mat-option-disabled) {
+  background: #F5F5F5;
+  border-radius: 4px;
+  color: #2C304E;
+}
+
+.mat-form-field-appearance-outline .mat-form-field-infix {
+  padding-top: 0px;
+}
+
+.mat-form-field-appearance-outline .mat-select-arrow-wrapper {
+  transform: none !important;
+}
+
+.mat-dialog-container {
+  padding: 0 !important;
+}
+
+.mat-tooltip {
+  background: #2C304E;
+  border-radius: 2px;
+  color: #FFFFFF;
+  min-width: fit-content;
+  font-size: 12px;
+  position: relative;
+  @extend .single-line-text;
+
+  &::after {
+    width: 0;
+    height: 0;
+    content: '';
+    position: absolute;
+    border-left: 0.5rem solid transparent;
+    border-right: 0.5rem solid transparent;
+    border-bottom: 0.5rem solid #2C304E;
+  }
+
+  &.below {
+    overflow: initial;
+    margin-top: 1rem;
+    &:after {
+      top: -0.5rem;
+      right: calc(50% - 0.5rem);
+      transform: rotate(0);
+    }
+  }
+
+  &.above {
+    overflow: initial;
+    margin-bottom: 1rem;
+    &:after {
+      bottom: -0.5rem;
+      right: calc(50% - 0.5rem);
+      transform: rotate(180deg);
+    }
+  }
+
+  &.right {
+    overflow: initial;
+    margin-left: 1rem;
+    &:after {
+      left: -0.75rem;
+      top: calc(50% - 0.25rem);
+      transform: rotate(270deg);
+    }
+  }
+
+  &.left {
+    overflow: initial;
+    margin-right: 1rem;
+    &:after {
+      right: -0.75rem;
+      top: calc(50% - 0.25rem);
+      transform: rotate(90deg);
+    }
+  }
+}
+
+.mat-select-panel {
+  margin-top: 50px;
+}
+
+.mat-select-panel .mat-optgroup-label, .mat-select-panel .mat-option {
+  // TODO: scroll is going down when the option is selected
+  height: 32px !important;
+  font-size: 14px !important;
+  color: #414562;
+}
+
+.mat-select-panel-wrap {
+  flex-basis: 96% !important;
+}
+
+.mat-form-field-appearance-outline .mat-select-arrow-wrapper {
+  padding-right: 12px;
+}
+
+.mat-select-arrow {
+  display: none !important;
+}
+
+.mat-slide-toggle-bar {
+  width: 51px !important;
+  height: 21px !important;
+  background-color: #A9ACBC;
+  border-radius: 11px !important;
+}
+
+.mat-slide-toggle.mat-checked .mat-slide-toggle-thumb {
+  background-color: #FFFFFF;
+  position: absolute;
+  left: 18px !important;
+  top: 6px !important;
+}
+
+.mat-slide-toggle-thumb {
+  height: 14px !important;
+  width: 14px !important;
+  position: absolute;
+  right: 3px !important;
+  top: 6px;
+}
+
+.mat-slide-toggle-ripple {
+  display: none;
+}
+
+.mat-slide-toggle.mat-checked .mat-slide-toggle-bar {
+  background-color: #FF3366;
+  border-radius: 11px !important;
+}
+
+.mat-checkbox-frame {
+  border-radius: 3px !important;
+  border-width: 1.5px !important;
+  border-color: #000000 !important;
+}
+
+.mat-pseudo-checkbox {
+  border: 1px solid !important;
+  border-color: #000000 !important;
+  border-radius: 3px !important;
+}
+
+.mat-checkbox-checked.mat-accent .mat-checkbox-background {
+  background: #2C304E;
+}
+
+.mat-pseudo-checkbox-checked {
+  background: #2C304E;
+}
+
+.mat-pseudo-checkbox-checked::after {
+  width: 7px !important;
+  left: 2px !important;
+}
+
+.mat-checkbox-checkmark {
+  height: 12px;
+  top: 2px !important;
+}
+
+.mat-checkbox-checked.mat-accent.mat-checkbox-disabled .mat-checkbox-background, .mat-checkbox-indeterminate.mat-accent .mat-checkbox-background {
+  background-color: #A9ACBC;
+}
+
+.mat-primary .mat-pseudo-checkbox-checked {
+  background: #2C304E;
+}
+
+.selected-value-check-mark {
+  width: 15px;
+  height: 15px;
+  position: absolute;
+  right: 17.5px;
+  top: 8px;
+}
+
+.btn-shadow {
+  box-shadow: 0px 4px 4px rgba(44, 48, 78, 0.1);
+}
+
+.configuration {
+  &--section {
+    padding-bottom: 100px;
+  }
+
+  &--onboarding-section {
+    margin-top: -75px;
+  }
+
+  &--post-onboarding-section {
+    margin-top: -140px;
+  }
+
+  &--contents {
+    background: #FFFFFF;
+    border: 1px solid #F5F5F5;
+    box-sizing: border-box;
+    box-shadow: 0px 4px 8px -2px rgba(16, 24, 40, 0.1), 0px 2px 4px -2px rgba(16, 24, 40, 0.06);
+    border-radius: 8px;
+    margin: -60px 0px;
+    width: 1098px;
+  }
+
+  &--field-section {
+    padding: 24px 32px;
+    min-height: 83px;
+  }
+
+  &--field-label {
+    padding-top: 8px;
+  }
+
+  &--input-section {
+    width: 433px;
+  }
+
+  &--footer-contents {
+    padding: 20px 20px;
+  }
+
+  &--back-btn {
+    border: 1px solid #DFDFE2;
+    box-sizing: border-box;
+    border-radius: 4px;
+    height: 42px;
+
+    &:hover {
+      @extend .btn-shadow;
+    }
+  }
+
+  &--back-btn-text {
+    padding: 12px 24px 12px 0px;
+    color: #2C304E;
+  }
+
+  &--submit-btn {
+    border: none;
+    border-radius: 4px;
+    height: 42px;
+    color: #FFFFFF;
+  }
+
+  &--back-btn-arrow {
+    padding-left: 26px;
+  }
+
+  &--img-arrow-left {
+    padding: 12px 8px 12px 24px;
+  }
+
+  &--toggle-form-field {
+    padding: 22.5px 0px 0px 0px;
+  }
+
+  &--input-toggle-section {
+    padding-right: 365px;
+  }
+
+  &--icon {
+    padding-right: 16px;
+  }
+
+  &--field-label-text-section {
+    width: 552px;
+  }
+
+  &--field-toggle-section {
+    padding: 24px 8px 24px 32px;
+    min-height: 114px;
+    background: #FAFCFF;
+    border: 1px solid #F5F5F5;
+    box-sizing: border-box;
+  }
+
+  &--field-label-section {
+    max-width: 650px;
+    padding-right: 46px;
+  }
+
+  &--form-field {
+    width: 401px;
+    padding: 2px 0px 0px 0px;
+    @media only screen and (max-width: 1440px) {
+      padding: 2px 8px 0px 10px;
+    }
+  }
+
+  &--field-header {
+    padding-top: 3px;
+    width: 592px;
+  }
+}
+
+.loader-main {
+  margin-top: 4%;
+}
+
+.configuration-main {
+  &--main {
+    position: absolute;
+    width: 1658px;
+    z-index: -1;
+    @media only screen and (max-width: 1440px) {
+      width: 1178px;
+    }
+  }
+
+  &--configuration {
+    width: 1658px;
+    @media only screen and (max-width: 1440px) {
+      width: 1178px;
+    }
+  }
+
+  &--bg-top {
+    @extend .configuration-main--main;
+    background: linear-gradient(97.33deg, #E1EEFF 26.8%, #FFE4FB 97.18%);
+    height: 282px;
+  }
+
+  &--bg-bottom {
+    @extend .configuration-main--main;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, #FFFFFF 100%);
+    top: 162px;
+    height: 192px;
+  }
+}
+
+.navbar {
+  height: 72px;
+  padding: 6px 16px;
+
+  &--fyle-logo {
+    padding-top: 15.5px;
+    padding-bottom: 18.54px;
+  }
+
+  &--plus {
+    padding: 0px 16px;
+    margin-bottom: 8px;
+  }
+
+  &--small-text {
+    font-size: 14px;
+  }
+
+  &--profile-help {
+    padding: 14px 16px 14px 0px;
+  }
+
+  &--help-section {
+    padding-right: 32px
+  }
+
+  &--help-icon {
+    padding: 12px 7px 12px 12px;
+  }
+
+  &--help-text {
+    padding: 12px 0px 12px 0px;
+    margin-top: 2px;
+    color: #2C304E;
+  }
+
+  &--avatar-section {
+    background: #2C304E;
+    border-radius: 48px;
+    width: 37px;
+    height: 37px;
+  }
+
+  &--avatar-text {
+    color: #FFFFFF;
+    margin: 0;
+    padding: 9px 13px;
+  }
+
+  &--profile-section {
+    padding: 1.5px 0px 1.5px 10px;
+  }
+
+  &--user-org {
+    padding-top: 1px;
+  }
+
+  &--page-name-with-back-btn {
+    padding-left: 14px;
+    padding-right: 20px;
+  }
+
+  &--page-name {
+    padding-left: 24px;
+    padding-right: 20px;
+  }
+
+  &--switcher-divider {
+    border-right: 1px solid #DFDFE2;
+    height: 28px;
+    margin-right: 20px;
+  }
+
+  &--back-btn {
+    padding-left: 20px;
+  }
+
+  &--logo-section {
+    padding: 10px 5px 2px 6px;
+    height: 72px;
+    width: 244px;
+  }
+
+  &--qbo-logo {
+    margin-right: 21px;
+  }
+}
+
+.mapping {
+  td.mat-cell:first-of-type, td.mat-footer-cell:first-of-type {
+    padding-left: 19px !important;
+  }
+
+  width: 1658px;
+  @media only screen and (max-width: 1440px) {
+    width: 1178px;
+  }
+
+  &--main {
+    z-index: -1;
+    width: 1658px;
+    @media only screen and (max-width: 1440px) {
+      width: 1178px;
+    }
+  }
+
+  &--bg-top {
+    @extend .mapping--main;
+    position: absolute;
+    background: linear-gradient(97.33deg, #E1EEFF 26.8%, #FFE4FB 97.18%);
+    height: 282px;
+  }
+
+  &--bg-bottom {
+    @extend .mapping--main;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, #FFFFFF 100%);
+    position: absolute;
+    top: 162px;
+    height: 192px;
+  }
+
+  &--core-section {
+    margin-top: 24px;
+    padding-left: 32px;
+    padding-right: 32px;
+  }
+
+  &--core-section-content {
+    background: #FFFFFF;
+    border-radius: 8px;
+
+    width: 1598px;
+    @media only screen and (max-width: 1440px) {
+      width: 1098px;
+    }
+  }
+
+  &--stats-section {
+    margin-top: -216px;
+    padding-left: 10px;
+  }
+
+  &--table {
+    overflow: scroll;
+    height: 580px;
+    @media only screen and (max-width: 1440px) {
+      height: 400px;
+    }
+  }
+}
+
+.shimmers {
+  background: #efefef;
+  background-image: linear-gradient(to right, #efefef 0%, #e8e8e8 20%, #efefef 40%, #efefef 100%);
+  background-size: 800px 104px;
+  display: inline-block;
+  position: relative;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+  animation-iteration-count: infinite;
+  animation-name: shimmer;
+  animation-timing-function: linear;
+  border-radius: 4px;
+
+  @keyframes shimmer {
+    0% {
+      background-position: -468px 0;
+    }
+    100% {
+      background-position: 468px 0;
+    }
+  }
+}
+
+.skeleton-loader-list-view {
+  &--row-box {
+    background: #FFFFFF;
+    border-radius: 4px;
+    height: 70px;
+  }
+
+  &--init-box-section {
+    padding: 24px 19px 24px 15px;
+  }
+
+  &--init-box {
+    height: 22px;
+    width: 29px;
+  }
+
+  &--init-box-export-log {
+    height: 18px;
+    width: 162px;
+  }
+
+  &--init-box-custom-mapping {
+    @extend .skeleton-loader-list-view--init-box-export-log;
+    margin-right: 48px;
+  }
+
+  &--end-box-section {
+    padding: 26px 32px 26px 0px;
+  }
+
+  &--end-box {
+    height: 18px;
+    width: 1498px;
+    @media only screen and (max-width: 1440px) {
+      width: 1021px;
+    }
+  }
+
+  &--end-box-export-log {
+    height: 18px;
+    width: 1372px;
+    @media only screen and (max-width: 1440px) {
+      width: 900px;
+    }
+  }
+
+  &--end-box-export-log-dashboard {
+    height: 18px;
+    width: 1072px;
+    @media only screen and (max-width: 1440px) {
+      width: 550px;
+    }
+  }
+}
