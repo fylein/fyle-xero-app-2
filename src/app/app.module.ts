@@ -8,9 +8,9 @@ import { MatSnackBarModule, MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/mater
 
 import * as Sentry from '@sentry/angular';
 
-import { AppRoutingModule } from './app-routing.module';
+// Import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { JwtInterceptor } from './core/interceptors/jwt.interceptor';
+// Import { JwtInterceptor } from './core/interceptors/jwt.interceptor';
 import { GlobalErrorHandler } from './app.errorhandling';
 
 @NgModule({
@@ -19,7 +19,7 @@ import { GlobalErrorHandler } from './app.errorhandling';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
+    // AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
     FormsModule,
@@ -32,11 +32,11 @@ import { GlobalErrorHandler } from './app.errorhandling';
       useValue: JWT_OPTIONS
     },
     JwtHelperService,
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: JwtInterceptor,
-      multi: true
-    },
+    // {
+    //   Provide: HTTP_INTERCEPTORS,
+    //   UseClass: JwtInterceptor,
+    //   Multi: true
+    // },
     {
       provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {
         duration: 2500,
