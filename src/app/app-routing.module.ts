@@ -1,35 +1,35 @@
-// import { NgModule } from '@angular/core';
-// import { RouterModule, Routes } from '@angular/router';
-// import { AuthGuard } from './core/guard/auth.guard';
+// Import { NgModule } from '@angular/core';
+// Import { RouterModule, Routes } from '@angular/router';
+// Import { AuthGuard } from './core/guard/auth.guard';
 
-// const routes: Routes = [
+// Const routes: Routes = [
 //   {
-//     path: '',
-//     redirectTo: '/workspaces',
-//     pathMatch: 'full'
+//     Path: '',
+//     RedirectTo: '/workspaces',
+//     PathMatch: 'full'
 //   },
 //   {
-//     path: 'workspaces',
-//     loadChildren: () => import('./integration/integration.module').then(m => m.IntegrationModule),
-//     canActivate: [AuthGuard]
+//     Path: 'workspaces',
+//     LoadChildren: () => import('./integration/integration.module').then(m => m.IntegrationModule),
+//     CanActivate: [AuthGuard]
 //   },
 //   {
-//     path: 'auth',
-//     loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule)
+//     Path: 'auth',
+//     LoadChildren: () => import('./auth/auth.module').then(m => m.AuthModule)
 //   },
 //   {
-//     path: 'xero_callback',
-//     loadChildren: () => import('./xero-callback/xero-callback.module').then(m => m.XeroCallbackModule)
+//     Path: 'xero_callback',
+//     LoadChildren: () => import('./xero-callback/xero-callback.module').then(m => m.XeroCallbackModule)
 //   },
 //   {
-//     path: '**',
-//     redirectTo: 'workspaces',
-//     pathMatch: 'full'
+//     Path: '**',
+//     RedirectTo: 'workspaces',
+//     PathMatch: 'full'
 //   }
 // ];
 
 // @NgModule({
-//   imports: [RouterModule.forRoot(routes)],
-//   exports: [RouterModule]
+//   Imports: [RouterModule.forRoot(routes)],
+//   Exports: [RouterModule]
 // })
-// export class AppRoutingModule { }
+// Export class AppRoutingModule { }
