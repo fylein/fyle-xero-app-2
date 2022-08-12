@@ -18,8 +18,8 @@ const routes: Routes = [
     loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule)
   },
   {
-    path: 'qbo_callback',
-    loadChildren: () => import('./qbo-callback/qbo-callback.module').then(m => m.QboCallbackModule)
+    path: 'xero_callback',
+    loadChildren: () => import('./xero-callback/xero-callback.module').then(m => m.XeroCallbackModule)
   },
   {
     path: '**',
