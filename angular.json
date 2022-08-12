@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "fyle-qbo-app": {
+    "fyle-xero-app": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -20,7 +20,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/fyle-qbo-app",
+            "outputPath": "dist/fyle-xero-app",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -66,13 +66,13 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "fyle-qbo-app:build:production"
+              "browserTarget": "fyle-xero-app:build:production"
             },
             "development": {
-              "browserTarget": "fyle-qbo-app:build:development"
+              "browserTarget": "fyle-xero-app:build:development"
             },
             "docker": {
-              "browserTarget": "fyle-qbo-app:build:docker"
+              "browserTarget": "fyle-xero-app:build:docker"
             }
           },
           "defaultConfiguration": "development"
@@ -80,7 +80,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "fyle-qbo-app:build"
+            "browserTarget": "fyle-xero-app:build"
           }
         },
         "test": {
@@ -114,7 +114,7 @@
       }
     }
   },
-  "defaultProject": "fyle-qbo-app",
+  "defaultProject": "fyle-xero-app",
   "cli": {
     "defaultCollection": "@angular-eslint/schematics"
   }

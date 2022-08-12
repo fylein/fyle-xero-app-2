@@ -22,10 +22,9 @@ jobs:
         CALLBACK_URL: ${{secrets.CALLBACK_URL}} 
         API_URL: ${{secrets.API_URL}} 
         APP_URL: ${{secrets.APP_URL}} 
-        QBO_CLIENT_ID: ${{secrets.QBO_CLIENT_ID}} 
-        QBO_SCOPE: ${{secrets.QBO_SCOPE}} 
-        QBO_AUTHORIZE_URI: ${{secrets.QBO_AUTHORIZE_URI}} 
-        QBO_APP_URL: ${{secrets.QBO_APP_URL}} 
+        XERO_CLIENT_ID: ${{secrets.XERO_CLIENT_ID}} 
+        XERO_SCOPE: ${{secrets.XERO_SCOPE}} 
+        XERO_AUTHORIZE_URI: ${{secrets.XERO_AUTHORIZE_URI}} 
         SENTRY_DSN: ${{secrets.SENTRY_DSN}} 
         RELEASE: ${{secrets.RELEASE}} 
         FYLE_APP_URL: ${{secrets.FYLE_APP_URL}} 
