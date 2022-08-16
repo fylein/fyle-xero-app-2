@@ -102,46 +102,46 @@ describe('ApiService', () => {
     req.flush('', responseKeys);
   });
 
-  // it('Put service check', () => {
-  //   const employeeSettingPayload: EmployeeSettingPost = {
-  //     workspace_general_settings: {
-  //       employee_field_mapping: EmployeeFieldMapping.EMPLOYEE,
-  //       auto_map_employees: AutoMapEmployee.EMPLOYEE_CODE
+  // It('Put service check', () => {
+  //   Const employeeSettingPayload: EmployeeSettingPost = {
+  //     Workspace_general_settings: {
+  //       Employee_field_mapping: EmployeeFieldMapping.EMPLOYEE,
+  //       Auto_map_employees: AutoMapEmployee.EMPLOYEE_CODE
   //     }
   //   };
-  //   const response: EmployeeSettingGet = {
-  //     workspace_general_settings: { employee_field_mapping: EmployeeFieldMapping.EMPLOYEE, auto_map_employees: AutoMapEmployee.EMPLOYEE_CODE },
-  //     workspace_id: 1
+  //   Const response: EmployeeSettingGet = {
+  //     Workspace_general_settings: { employee_field_mapping: EmployeeFieldMapping.EMPLOYEE, auto_map_employees: AutoMapEmployee.EMPLOYEE_CODE },
+  //     Workspace_id: 1
   //   };
-  //   service.put('/v2/workspaces/'+workspace_id+'/map_employees/', employeeSettingPayload).subscribe(value => {
-  //     expect(value).toEqual(response);
+  //   Service.put('/v2/workspaces/'+workspace_id+'/map_employees/', employeeSettingPayload).subscribe(value => {
+  //     Expect(value).toEqual(response);
   //   });
-  //   const req = httpMock.expectOne({
-  //     method: 'PUT',
-  //     url: `${API_BASE_URL}/v2/workspaces/${workspace_id}/map_employees/`
+  //   Const req = httpMock.expectOne({
+  //     Method: 'PUT',
+  //     Url: `${API_BASE_URL}/v2/workspaces/${workspace_id}/map_employees/`
   //   });
-  //   req.flush(response);
+  //   Req.flush(response);
   // });
 
-  // it('Put service error', () => {
-  //   const employeeSettingPayload: EmployeeSettingPost = {
-  //     workspace_general_settings: {
-  //       employee_field_mapping: EmployeeFieldMapping.EMPLOYEE,
-  //       auto_map_employees: AutoMapEmployee.EMPLOYEE_CODE
+  // It('Put service error', () => {
+  //   Const employeeSettingPayload: EmployeeSettingPost = {
+  //     Workspace_general_settings: {
+  //       Employee_field_mapping: EmployeeFieldMapping.EMPLOYEE,
+  //       Auto_map_employees: AutoMapEmployee.EMPLOYEE_CODE
   //     }
   //   };
-  //   const responseKeys = { status: 404, statusText: "Not Found" };
-  //   service.put('/v2/workspaces/'+workspace_id+'/map_employees/', employeeSettingPayload).subscribe(value => {
-  //     expect(value).toEqual(responseKeys);
+  //   Const responseKeys = { status: 404, statusText: "Not Found" };
+  //   Service.put('/v2/workspaces/'+workspace_id+'/map_employees/', employeeSettingPayload).subscribe(value => {
+  //     Expect(value).toEqual(responseKeys);
   //   },
-  //   error => {
-  //     expect(error.status).toBe(404);
+  //   Error => {
+  //     Expect(error.status).toBe(404);
   //   });
-  //   const req = httpMock.expectOne({
-  //     method: 'PUT',
-  //     url: `${API_BASE_URL}/v2/workspaces/${workspace_id}/map_employees/`
+  //   Const req = httpMock.expectOne({
+  //     Method: 'PUT',
+  //     Url: `${API_BASE_URL}/v2/workspaces/${workspace_id}/map_employees/`
   //   });
-  // req.flush('', responseKeys);
+  // Req.flush('', responseKeys);
   // });
 
   it('patch service check', () => {

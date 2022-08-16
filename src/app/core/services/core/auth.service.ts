@@ -1,6 +1,6 @@
 import {
   HttpClient,
-  HttpHeaders,
+  HttpHeaders
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
@@ -15,8 +15,8 @@ import { MinimalUser } from '../../models/db/user.model';
 
 const httpOptions = {
   headers: new HttpHeaders({
-    'Content-Type': 'application/json',
-  }),
+    'Content-Type': 'application/json'
+  })
 };
 
 const API_BASE_URL = environment.api_url;
@@ -25,7 +25,7 @@ const FYLE_CLIENT_ID = environment.fyle_client_id;
 const CALLBACK_URI = environment.callback_uri;
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class AuthService {
   windowReference: Window;
