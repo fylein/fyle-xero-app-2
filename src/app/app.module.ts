@@ -8,7 +8,7 @@ import { MatSnackBarModule, MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/mater
 
 import * as Sentry from '@sentry/angular';
 
-// Import { AppRoutingModule } from './app-routing.module';
+import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 // Import { JwtInterceptor } from './core/interceptors/jwt.interceptor';
 import { GlobalErrorHandler } from './app.errorhandling';
@@ -19,7 +19,7 @@ import { GlobalErrorHandler } from './app.errorhandling';
   ],
   imports: [
     BrowserModule,
-    // AppRoutingModule,
+    AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
     FormsModule,
