@@ -58,13 +58,7 @@ export class AuthService {
   }
 
   redirectToLogin() {
-    this.windowReference.location.href = FYLE_URL +
-      '/app/developers/#/oauth/authorize?' +
-      'client_id=' +
-      FYLE_CLIENT_ID +
-      '&redirect_uri=' +
-      CALLBACK_URI +
-      '&response_type=code';
+    this.windowReference.location.href = `${environment.fyle_app_url}/app/developers/#/oauth/authorize?client_id=${environment.fyle_client_id}&redirect_uri=${environment.callback_uri}&response_type=code`;
   }
 
   switchWorkspace() {
