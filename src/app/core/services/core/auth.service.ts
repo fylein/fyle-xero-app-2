@@ -19,11 +19,6 @@ const httpOptions = {
   })
 };
 
-const API_BASE_URL = environment.api_url;
-const FYLE_URL = environment.fyle_url;
-const FYLE_CLIENT_ID = environment.fyle_client_id;
-const CALLBACK_URI = environment.callback_uri;
-
 @Injectable({
   providedIn: 'root'
 })
