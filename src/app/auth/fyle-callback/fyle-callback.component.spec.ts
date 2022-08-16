@@ -3,11 +3,12 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientModule } from '@angular/common/http';
 import { FyleCallbackComponent } from './fyle-callback.component';
 import { MatSnackBar, MatSnackBarModule} from '@angular/material/snack-bar';
-import { AuthService } from 'src/app/core/services/core/auth.service';
-import { UserService } from 'src/app/core/services/misc/user.service';
+import { AuthService } from '../../core/services/core/auth.service';
+import { UserService } from '../../core/services/misc/user.service';
 import { of, throwError } from 'rxjs';
 import { errorResponse, response } from './fyle-callback.fixture';
 import { ActivatedRoute, Router } from '@angular/router';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 describe('FyleCallbackComponent', () => {
   let component: FyleCallbackComponent;
@@ -32,6 +33,7 @@ describe('FyleCallbackComponent', () => {
     await TestBed.configureTestingModule({
       imports: [RouterTestingModule, HttpClientModule, MatSnackBarModule],
       declarations: [ FyleCallbackComponent ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
       providers: [
         { provide: Router, useValue: routerSpy },
         {

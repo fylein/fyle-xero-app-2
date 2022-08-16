@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MinimalUser } from 'src/app/core/models/db/user.model';
-import { AuthService } from 'src/app/core/services/core/auth.service';
-import { UserService } from 'src/app/core/services/misc/user.service';
+import { MinimalUser } from '../../core/models/db/user.model';
+import { AuthService } from '../../core/services/core/auth.service';
+import { UserService } from '../../core/services/misc/user.service';
 
 @Component({
   selector: 'app-fyle-callback',

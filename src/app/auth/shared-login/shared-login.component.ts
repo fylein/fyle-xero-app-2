@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AuthService } from 'src/app/core/services/core/auth.service';
-import { StorageService } from 'src/app/core/services/core/storage.service';
+import { AuthService } from '../../core/services/core/auth.service';
+import { StorageService } from '../../core/services/core/storage.service';
 
 @Component({
   selector: 'app-shared-login',

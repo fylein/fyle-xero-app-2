@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from 'src/app/core/services/core/auth.service';
+import { AuthService } from '../../core/services/core/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -15,7 +15,7 @@ export class LoginComponent implements OnInit {
   ) { }
 
   login(): void {
-    this.authService.redirectToFyleOAuth();
+    this.authService.redirectToLogin();
   }
 
   private redirectLoggedInUser(): void {
