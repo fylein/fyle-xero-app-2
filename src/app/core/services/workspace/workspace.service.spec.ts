@@ -23,10 +23,11 @@ describe('WorkspaceService', () => {
   });
 
   it('getWorkspaceid service', () => {
-    const id:any = service.getWorkspaceId();
+    const id = JSON.stringify(service.getWorkspaceId());
+    console.log(id);
     const org = +workspace_id;
     if (id){
-      expect(id).toEqual(org);
+      expect(+id).toEqual(org);
     } else {
       expect(id).toBeNull();
     }
