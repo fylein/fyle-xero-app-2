@@ -36,7 +36,7 @@ describe('XeroConnectorService', () => {
     const response: XeroCredentials = {
       country: "GB",
       created_at: new Date("2021-10-05T11:56:13.883015Z"),
-      id: 219,
+      id: +workspace_id,
       refresh_token: "AB",
       updated_at: new Date("2022-05-06T13:13:25.893837Z"),
       workspace: 1
@@ -68,10 +68,9 @@ describe('XeroConnectorService', () => {
       service.connectXero(workspace_id, 'yyyyy').subscribe(value => {
         expect(value).toEqual(response);
       });
-      const req = httpMock.expectOne({
-        method: 'POST',
-        url: `${API_BASE_URL}/workspaces/${workspace_id}/connect_xero/authorization_code/`
-      });
+      const req = httpMock.expectOne(
+        req => req.method === 'POST' && req.url.includes(`${API_BASE_URL}/workspaces`)
+      );
       req.flush(response);
     });
 

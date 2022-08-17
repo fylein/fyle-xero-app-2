@@ -11,6 +11,7 @@ import { of, throwError } from 'rxjs';
 import { errorResponse, errorResponse1, response } from './xero-callback-routing.fixture';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 describe('XeroCallbackComponent', () => {
   let component: XeroCallbackComponent;
@@ -37,6 +38,7 @@ describe('XeroCallbackComponent', () => {
     await TestBed.configureTestingModule({
       imports: [ NoopAnimationsModule, RouterTestingModule.withRoutes([{path: 'xero_callback', component: XeroCallbackComponent}]), HttpClientModule, MatDialogModule, MatSnackBarModule],
       declarations: [ XeroCallbackComponent ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
       providers: [
         { provide: XeroConnectorService, useValue: service1 },
         { provide: WorkspaceService, useValue: service2 },

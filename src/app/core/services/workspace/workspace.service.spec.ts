@@ -25,7 +25,10 @@ describe('WorkspaceService', () => {
   it('getWorkspaceid service', () => {
     const id:any = service.getWorkspaceId();
     const org = +workspace_id;
-    expect(id).toEqual(org);
+    if(id)
+      expect(id).toEqual(org);
+    else
+      expect(id).toBeNull
   });
 
   it('setOnboardingState and getOnboardingState service', () => {
