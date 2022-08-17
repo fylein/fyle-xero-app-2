@@ -24,9 +24,8 @@ export class WorkspaceService {
     });
   }
 
-  getWorkspaceById(): Observable<Workspace> {
-    const workspaceId = this.getWorkspaceId();
-    return this.apiService.get(`/workspaces/${workspaceId}/`, {});
+  getWorkspaceById(id:number): Observable<Workspace> {
+    return this.apiService.get(`/workspaces/${id}/`, {});
   }
 
   getWorkspaceId(): number|null {

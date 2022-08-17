@@ -94,7 +94,7 @@ describe('WorkspaceService', () => {
       created_at: new Date("2022-04-13T10:29:18.796760Z"),
       updated_at: new Date("2022-04-13T10:29:18.796760Z")
     };
-    service.getWorkspaceById().subscribe(value => {
+    service.getWorkspaceById(+workspace_id).subscribe(value => {
       expect(value).toEqual(responseKeys);
     });
     const req = httpMock.expectOne(
