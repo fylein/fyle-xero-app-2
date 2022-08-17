@@ -1,6 +1,3 @@
-/* Tslint:disable */
-import { User } from "./user.model";
-
 export type Workspace = {
   id?: number;
   name: string;
