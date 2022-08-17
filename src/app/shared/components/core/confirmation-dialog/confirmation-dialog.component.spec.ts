@@ -4,7 +4,7 @@ import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/materia
 import { ConfirmationDialog } from 'src/app/core/models/misc/confirmation-dialog.model';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ConfirmationDialogComponent } from './confirmation-dialog.component';
-// import { SharedModule } from 'src/app/shared/shared.module';
+// Import { SharedModule } from 'src/app/shared/shared.module';
 
 describe('ConfirmationDialogComponent', () => {
   const model: ConfirmationDialog = {
@@ -27,7 +27,7 @@ describe('ConfirmationDialogComponent', () => {
       imports: [
         MatButtonModule,
         MatDialogModule,
-        RouterTestingModule,
+        RouterTestingModule
         // SharedModule
       ],
       providers: [
