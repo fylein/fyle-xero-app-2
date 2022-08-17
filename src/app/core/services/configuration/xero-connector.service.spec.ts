@@ -45,10 +45,9 @@ describe('XeroConnectorService', () => {
       value.refresh_token="AB";
       expect(value).toEqual(response);
     });
-    const req = httpMock.expectOne({
-      method: 'GET',
-      url: `${API_BASE_URL}/workspaces/${workspace_id}/credentials/xero/`
-    });
+    const req = httpMock.expectOne(
+      req => req.method === 'GET' && req.url.includes(`${API_BASE_URL}/workspaces`)
+    );
     req.flush(response);
   });
 
