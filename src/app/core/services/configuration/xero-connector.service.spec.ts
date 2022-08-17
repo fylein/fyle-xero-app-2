@@ -52,7 +52,7 @@ describe('XeroConnectorService', () => {
     req.flush(response);
   });
 
-  
+
     it('connectXero service check', () => {
       const response={
         id: 1,
@@ -65,7 +65,7 @@ describe('XeroConnectorService', () => {
         updated_at: new Date(),
         workspace: +workspace_id
       };
-      service.connectXero(workspace_id,'yyyyy').subscribe(value => {
+      service.connectXero(workspace_id, 'yyyyy').subscribe(value => {
         expect(value).toEqual(response);
       });
       const req = httpMock.expectOne({
