@@ -24,8 +24,8 @@ describe('WorkspaceService', () => {
 
   it('getWorkspaceid service', () => {
     const id:any = service.getWorkspaceId();
-    const org = workspace_id;
-    expect(id.toString()).toEqual(org);
+    const org = +workspace_id;
+    expect(id).toEqual(org);
   });
 
   it('setOnboardingState and getOnboardingState service', () => {
@@ -97,10 +97,9 @@ describe('WorkspaceService', () => {
     service.getWorkspaceById().subscribe(value => {
       expect(value).toEqual(responseKeys);
     });
-    const req = httpMock.expectOne({
-      method: 'GET',
-      url: `${API_BASE_URL}/workspaces/${workspace_id}/`
-    });
+    const req = httpMock.expectOne(
+      req => req.method === 'GET' && req.url.includes(`${API_BASE_URL}/workspaces`)
+    );
   req.flush(responseKeys);
   });
 

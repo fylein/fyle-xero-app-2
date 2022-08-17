@@ -39,6 +39,7 @@ describe('AuthService', () => {
   it('logout() service check', () => {
     const result = service.logout();
     expect(result).toBeUndefined();
+    localStorage.setItem('workspaceId', environment.tests.workspaceId);
   });
 
   it('login() service check', () => {
