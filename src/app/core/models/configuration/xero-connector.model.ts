@@ -6,11 +6,3 @@ export type XeroCredentials = {
     updated_at: Date;
     workspace: number;
   };
-  export type XeroConnector = {
-    code: string;
-    realm_id: string;
-  }
-
-  export interface XeroConnectorPost extends XeroConnector {
-    redirect_uri: string;
-  }

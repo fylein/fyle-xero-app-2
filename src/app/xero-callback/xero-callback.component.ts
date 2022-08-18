@@ -45,7 +45,6 @@ export class XeroCallbackComponent implements OnInit {
   }
 
   private postXeroCredentials(code: string, realmId: string): void {
-
     this.xeroConnectorService.connectXero(this.workspaceService.getWorkspaceId(), code).subscribe(() => {
       this.router.navigate([`/workspaces/main/dashboard`]);
     }, (error: { error: { message: any; }; }) => {

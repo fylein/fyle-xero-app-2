@@ -1,7 +1,7 @@
 import { getTestBed, TestBed } from '@angular/core/testing';
 import { WorkspaceService } from './workspace.service';
 import { Workspace } from '../../models/db/workspace.model';
-import { EmployeeFieldMapping, OnboardingState } from '../../models/enum/enum.model';
+import { OnboardingState } from '../../models/enum/enum.model';
 import { HttpTestingController, HttpClientTestingModule } from '@angular/common/http/testing';
 import { environment } from 'src/environments/environment';
 

@@ -28,7 +28,7 @@ export class WorkspaceService {
     return this.apiService.get(`/workspaces/${id}/`, {});
   }
 
-  getWorkspaceId(): number|null {
+  getWorkspaceId(): number | null {
     const id = this.storageService.get('workspaceId');
     return id ? +id : null;
   }
@@ -40,5 +40,4 @@ export class WorkspaceService {
   setOnboardingState(onboardingState: OnboardingState): void {
     return this.storageService.set('onboardingState', onboardingState);
   }
-  // TODO: Add a method with implicit workspace id and replace calls everwhere
 }

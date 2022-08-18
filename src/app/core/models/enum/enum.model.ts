@@ -1,14 +1,3 @@
-export enum EmployeeFieldMapping {
-  EMPLOYEE = 'EMPLOYEE',
-  VENDOR = 'VENDOR'
-}
-
-export enum AutoMapEmployee {
-  EMAIL = 'EMAIL',
-  NAME = 'NAME',
-  EMPLOYEE_CODE = 'EMPLOYEE_CODE'
-}
-
 export enum ExpenseState {
   PAYMENT_PROCESSING = 'PAYMENT_PROCESSING',
   PAID = 'PAID'
@@ -22,38 +11,10 @@ export enum ExportDateType {
   VERIFIED_AT = 'verified_at'
 }
 
-export enum ReimbursableExpensesObject {
-  BILL = 'BILL',
-  CHECK = 'CHECK',
-  JOURNAL_ENTRY = 'JOURNAL ENTRY',
-  EXPENSE = 'EXPENSE'
-}
-
-export enum CorporateCreditCardExpensesObject {
-  CREDIT_CARD_PURCHASE = 'CREDIT CARD PURCHASE',
-  BILL = 'BILL',
-  JOURNAL_ENTRY = 'JOURNAL ENTRY',
-  EXPENSE = 'EXPENSE',
-  DEBIT_CARD_EXPENSE = 'DEBIT CARD EXPENSE'
-}
-
 export enum MappingSourceField {
   PROJECT = 'PROJECT',
   COST_CENTER = 'COST_CENTER',
   TAX_GROUP = 'TAX_GROUP'
-}
-
-export enum MappingDestinationField {
-  CUSTOMER = 'CUSTOMER',
-  CLASS = 'CLASS',
-  DEPARTMENT = 'DEPARTMENT',
-  TAX_CODE = 'TAX_CODE'
-}
-
-export enum ExpenseGroupingFieldOption {
-  CLAIM_NUMBER = 'claim_number',
-  SETTLEMENT_ID = 'settlement_id',
-  EXPENSE_ID = 'expense_id'
 }
 
 export enum PaymentSyncDirection {
@@ -63,7 +24,6 @@ export enum PaymentSyncDirection {
 
 export enum OnboardingState {
   CONNECTION = 'CONNECTION',
-  MAP_EMPLOYEES = 'MAP_EMPLOYEES',
   EXPORT_SETTINGS = 'EXPORT_SETTINGS',
   IMPORT_SETTINGS = 'IMPORT_SETTINGS',
   ADVANCED_CONFIGURATION = 'ADVANCED_CONFIGURATION',
@@ -104,29 +64,9 @@ export enum FyleField {
   CORPORATE_CARD = 'CORPORATE_CARD'
 }
 
-export enum XEROField {
-  ACCOUNT = 'ACCOUNT',
-  CUSTOMER = 'CUSTOMER',
-  DEPARTMENT = 'DEPARTMENT',
-  CLASS = 'CLASS',
-  TAX_CODE = 'TAX_CODE'
-}
-
 export enum ExportState {
   SUCCESS = 'SUCCESS',
   FAILED = 'FAILED'
-}
-
-export enum TaskLogType {
-  CREATING_BILL = 'CREATING_BILL',
-  CREATING_EXPENSE = 'CREATING_EXPENSE',
-  CREATING_CHECK = 'CREATING_CHECK',
-  CREATING_JOURNAL_ENTRY = 'CREATING_JOURNAL_ENTRY',
-  CREATING_CREDIT_CARD_PURCHASE = 'CREATING_CREDIT_CARD_PURCHASE',
-  CREATING_CREDIT_CARD_CREDIT = 'CREATING_CREDIT_CARD_CREDIT',
-  CREATING_DEBIT_CARD_EXPENSE = 'CREATING_DEBIT_CARD_EXPENSE',
-  CREATING_BILL_PAYMENT = 'CREATING_BILL_PAYMENT',
-  FETCHING_EXPENSE = 'FETCHING_EXPENSE'
 }
 
 export enum TaskLogState {
@@ -163,8 +103,8 @@ export enum RedirectLink {
 export enum ClickEvent {
   CONNECT_XERO = 'Connect XERO',
   ONBOARDING_DONE = 'Onboarding Done',
-  RECONNECT_XERO = 'Reconnect XERO with different company',
-  PREVIEW_XERO_EXPORT = 'Preview XERO Export',
+  RECONNECT_XERO = 'Reconnect Xero with different company',
+  PREVIEW_XERO_EXPORT = 'Preview Xero Export',
   PREVIEW_FYLE_EXPENSE_FORM = 'Preview Fyle Expense Form',
   HELP_SECTION = 'Help Section',
   EXPORT = 'Export',
@@ -174,7 +114,7 @@ export enum ClickEvent {
   MAPPING_PAGE_NAVIGATION = 'Mapping Page Navigation',
   UNMAPPED_MAPPINGS_FILTER = 'Unmapped Mappings Filter',
   MAPPED_MAPPINGS_FILTER = 'Mapped Mappings Filter',
-  DISCONNECT_XERO = 'Disconnect XERO',
+  DISCONNECT_XERO = 'Disconnect Xero',
   SYNC_DIMENSION = 'Sync Dimension'
 }
 
@@ -186,7 +126,6 @@ export enum ProgressPhase {
 export enum OnboardingStep {
   LANDING = 'Landing',
   CONNECT_XERO = 'Connect XERO',
-  MAP_EMPLOYEES = 'Map Employees',
   EXPORT_SETTINGS = 'Export Settings',
   IMPORT_SETTINGS = 'Import Settings',
   ADVANCED_SETTINGS = 'Advanced Settings',
@@ -195,7 +134,6 @@ export enum OnboardingStep {
 
 export enum UpdateEvent {
   CONNECT_XERO = 'Connect XERO',
-  MAP_EMPLOYEES = 'Map Employees',
   EXPORT_SETTINGS = 'Export Settings',
   IMPORT_SETTINGS = 'Import Settings',
   ADVANCED_SETTINGS = 'Advanced Settings',
