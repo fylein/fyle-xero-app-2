@@ -1,3 +1,7 @@
+export enum TenantFieldMapping {
+  TENANT = 'TENANT'
+}
+
 export enum ExpenseState {
   PAYMENT_PROCESSING = 'PAYMENT_PROCESSING',
   PAID = 'PAID'
@@ -11,10 +15,31 @@ export enum ExportDateType {
   VERIFIED_AT = 'verified_at'
 }
 
+export enum ReimbursableExpensesObject {
+  PURCHASE_BILL = 'PURCHASE BILL'
+}
+
+export enum CorporateCreditCardExpensesObject {
+  BANK_TRANSACTION = 'BANK TRANSACTION'
+}
+
 export enum MappingSourceField {
   PROJECT = 'PROJECT',
   COST_CENTER = 'COST_CENTER',
   TAX_GROUP = 'TAX_GROUP'
+}
+
+export enum MappingDestinationField {
+  ACCOUNT = 'ACCOUNT',
+  CONTACT = 'CONTACT',
+  DBANK_ACCOUNT = 'BANK_ACCOUNT',
+  TAX_CODE = 'TAX_CODE'
+}
+
+export enum ExpenseGroupingFieldOption {
+  CLAIM_NUMBER = 'claim_number',
+  SETTLEMENT_ID = 'settlement_id',
+  EXPENSE_ID = 'expense_id'
 }
 
 export enum PaymentSyncDirection {
@@ -67,6 +92,13 @@ export enum FyleField {
 export enum ExportState {
   SUCCESS = 'SUCCESS',
   FAILED = 'FAILED'
+}
+
+export enum TaskLogType {
+  CREATING_BILL = 'CREATING_BILL',
+  CREATING_BANK_TRANSACTION = 'CREATING_BANK_TRANSACTION',
+  CREATING_PAYMENT = 'CREATING_PAYMENT',
+  FETCHING_EXPENSE = 'FETCHING_EXPENSE'
 }
 
 export enum TaskLogState {
