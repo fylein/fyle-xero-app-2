@@ -32,7 +32,7 @@ export enum MappingSourceField {
 export enum MappingDestinationField {
   ACCOUNT = 'ACCOUNT',
   CONTACT = 'CONTACT',
-  DBANK_ACCOUNT = 'BANK_ACCOUNT',
+  BANK_ACCOUNT = 'BANK_ACCOUNT',
   TAX_CODE = 'TAX_CODE'
 }
 
