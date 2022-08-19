@@ -24,7 +24,7 @@ describe('WorkspaceService', () => {
   });
 
   it('getWorkspaceid service', () => {
-    const id = JSON.stringify(service.getWorkspaceId());
+    const id = service.getWorkspaceId();
     const org = +workspace_id;
     if (id){
       expect(+id).toEqual(org);
