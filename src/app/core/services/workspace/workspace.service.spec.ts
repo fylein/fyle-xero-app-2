@@ -13,6 +13,7 @@ describe('WorkspaceService', () => {
   const workspace_id = environment.tests.workspaceId;
 
   beforeEach(() => {
+    localStorage.setItem('workspaceId', environment.tests.workspaceId);
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
       providers: [WorkspaceService]
@@ -22,7 +23,7 @@ describe('WorkspaceService', () => {
     httpMock = injector.inject(HttpTestingController);
   });
 
-  xit('getWorkspaceid service', () => {
+  it('getWorkspaceid service', () => {
     const id = JSON.stringify(service.getWorkspaceId());
     const org = +workspace_id;
     if (id){
