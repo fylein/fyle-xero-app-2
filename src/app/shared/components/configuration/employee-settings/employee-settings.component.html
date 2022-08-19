@@ -1,0 +1,35 @@
+<div fxLayout="row" fxLayoutAlign="center center" class="configuration--section" [ngClass]="[isOnboarding ? 'configuration--onboarding-section' : '', !isOnboarding ? 'configuration--post-onboarding-section': '']">
+  <app-loader [ngClass]="{'loader-main': !isOnboarding}" [phase]="'pre_onboarding'" *ngIf="isLoading"></app-loader>
+  <div *ngIf="!isLoading" class="configuration--contents">
+    <app-configuration-step-header-section></app-configuration-step-header-section>
+    <form [formGroup]="employeeSettingsForm">
+      <app-configuration-select-field 
+        [form]="employeeSettingsForm"
+        [options]="employeeMappingOptions"
+        [isFieldMandatory]="true"
+        [mandatoryErrorListName]="'option'"
+        [liveEntityExample]="liveEntityExample"
+        [iconPath]="'assets/images/svgs/general/employee.svg'"
+        [label]="'How are your Employees represented in Quickbooks Online?'"
+        [subLabel]="'Select how you represent your employees in xero. This would help to export the expenses from Fyle to the correct employee/vendor record in xero.'"
+        [placeholder]="'Select representation'"
+        [formControllerName]="'employeeMapping'"
+        >
+      </app-configuration-select-field>
+
+      <app-configuration-select-field 
+        [form]="employeeSettingsForm"
+        [options]="autoMapEmployeeOptions"
+        [iconPath]="'assets/images/svgs/general/employee.svg'"
+        [label]="'How should Employees in Fyle be matched to Employees/Vendors in Quickbooks Online?'"
+        [subLabel]="'Automatically map the employees in Fyle to their corresponding records in xero based on a unique parameter.'"
+        [placeholder]="'Select representation'"
+        [formControllerName]="'autoMapEmployee'"
+        >
+      </app-configuration-select-field>
+
+      <app-configuration-step-footer-section [ctaText]="!saveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING" [showBackButton]="isOnboarding" [isButtonDisabled]="!employeeSettingsForm.valid || saveInProgress" (navigateToPreviousStep)="navigateToPreviousStep()" (save)="save()"></app-configuration-step-footer-section>
+    </form>
+  </div>
+</div>
+<app-onboarding-footer *ngIf="isOnboarding && !isLoading"></app-onboarding-footer>

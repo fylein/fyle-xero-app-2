@@ -1,0 +1,19 @@
+.export-log-child-table {
+  &--reference-id {
+    text-decoration-line: underline;
+  }
+
+  &--heading {
+    background: #F5F5F5;
+    border: 1px solid #F5F5F5;
+    border-radius: 4px;
+    height: 40px;
+  }
+
+  &--row {
+    height: 70px;
+      &:hover {
+        background: #FAFCFF;
+      }
+  }
+}
