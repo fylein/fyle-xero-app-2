@@ -31,8 +31,7 @@ export class WorkspaceService {
   }
 
   getWorkspaceId(): string {
-    const id = this.storageService.get('workspaceId');
-    return id ? id : null;
+    return this.storageService.get('workspaceId');
   }
 
   getWorkspaceGeneralSettings(): Observable<WorkspaceGeneralSetting> {
