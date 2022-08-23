@@ -1,9 +1,7 @@
 import { DestinationAttribute } from "src/app/core/models/db/destination-attribute.model";
-import { EmployeeMapping } from "src/app/core/models/db/employee-mapping.model";
-import { ExpenseAttribute } from "src/app/core/models/db/expense-attribute.model";
+import { ExpenseAttribute } from "../../../../core/models/db/expense-attribute-detail.model";
 import { ExpenseGroup } from "src/app/core/models/db/expense-group.model";
-import { MappingList, ResolveMappingError } from "src/app/core/models/db/mapping.model";
-import { FyleReferenceType, EmployeeFieldMapping, ErrorType, MappingState, XeroField } from "src/app/core/models/enum/enum.model";
+import { FyleReferenceType, ErrorType, MappingState, TenantFieldMapping } from "src/app/core/models/enum/enum.model";
 
 export   const expenseAttribute: ExpenseAttribute = {
   id: 1,
@@ -44,9 +42,9 @@ export const expencegroup:ExpenseGroup = {
   workspace: 2,
   expenses: []
 };
-export const model: ResolveMappingError = {
-  sourceType: EmployeeFieldMapping.EMPLOYEE,
-  destinationType: EmployeeFieldMapping.VENDOR,
+export const model: any = {
+  sourceType: TenantFieldMapping.TENANT,
+  destinationType: TenantFieldMapping.TENANT,
   fyleAttributes: [{
     id: 1,
     type: ErrorType.CATEGORY_MAPPING,
@@ -62,9 +60,9 @@ export const model: ResolveMappingError = {
   workspaceId: "string"
 };
 
-export const model2: ResolveMappingError = {
-  sourceType: EmployeeFieldMapping.VENDOR,
-  destinationType: XeroField.ACCOUNT,
+export const model2 = {
+  sourceType: TenantFieldMapping.TENANT,
+  destinationType: TenantFieldMapping.TENANT,
   fyleAttributes: [{
     id: 1,
     type: ErrorType.CATEGORY_MAPPING,
@@ -79,12 +77,12 @@ export const model2: ResolveMappingError = {
   }],
   workspaceId: "string"
 };
-export const mappinglist: MappingList[] = [{
+export const mappinglist: any[] = [{
   fyle: {
       id: 1,
       value: 'string'
   },
-  Xero: {
+  xero: {
       id: 'string',
       value: 'string'
   },
@@ -110,7 +108,7 @@ export const destinationAttributes: DestinationAttribute = {
     fully_qualified_name: 'Fyle'
   }
 };
-export const response: EmployeeMapping = {
+export const response = {
   id: 1,
   source_employee: {
     id: 1,

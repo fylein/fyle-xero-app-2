@@ -2,7 +2,6 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { AdvancedSettingAddEmailModel, AdvancedSettingWorkspaceSchedulePost } from 'src/app/core/models/configuration/advanced-setting.model';
-import { AdvancedSettingService } from 'src/app/core/services/configuration/advanced-setting.service';
 
 @Component({
   selector: 'app-add-email-dialog',
@@ -16,8 +15,7 @@ export class AddEmailDialogComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     public dialogRef: MatDialogRef<AddEmailDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: AdvancedSettingAddEmailModel,
-    private settingsService: AdvancedSettingService
+    @Inject(MAT_DIALOG_DATA) public data: AdvancedSettingAddEmailModel
   ) { }
 
   submit() {

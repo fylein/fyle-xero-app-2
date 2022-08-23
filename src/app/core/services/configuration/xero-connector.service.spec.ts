@@ -3,7 +3,6 @@ import { XeroConnectorService } from './xero-connector.service';
 import { XeroCredentials } from '../../models/configuration/xero-connector.model';
 import { HttpTestingController, HttpClientTestingModule } from '@angular/common/http/testing';
 import { environment } from 'src/environments/environment';
-import { of } from 'rxjs';
 import { WorkspaceService } from '../workspace/workspace.service';
 
 describe('XeroConnectorService', () => {
@@ -64,7 +63,7 @@ describe('XeroConnectorService', () => {
         updated_at: new Date(),
         workspace: +workspace_id
       };
-      service.connectXero(workspace_id, 'yyyyy').subscribe(value => {
+      service.connectXero(+workspace_id, 'yyyyy').subscribe(value => {
         expect(value).toEqual(response);
       });
       const req = httpMock.expectOne(

@@ -3,14 +3,11 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormBuilder } from '@angular/forms';
 import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { of } from 'rxjs';
-import { AdvancedSettingService } from 'src/app/core/services/configuration/advanced-setting.service';
-import { emailResponse } from '../advanced-settings.fixture';
 import { AddEmailDialogComponent } from './add-email-dialog.component';
 
 describe('AddEmailDialogComponent', () => {
   let component: AddEmailDialogComponent;
   let fixture: ComponentFixture<AddEmailDialogComponent>;
-  let advancedSettingService: AdvancedSettingService;
   let formBuilder: FormBuilder;
   const dialogMock = {
     close: () => of({ workspaceId: 1,
@@ -51,7 +48,6 @@ describe('AddEmailDialogComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(AddEmailDialogComponent);
     component = fixture.componentInstance;
-    advancedSettingService = TestBed.inject(AdvancedSettingService);
     formBuilder = TestBed.inject(FormBuilder);
     component.form = formBuilder.group({
       name: 'Fyle',

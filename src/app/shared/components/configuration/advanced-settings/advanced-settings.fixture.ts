@@ -2,32 +2,26 @@ import { AdvancedSettingGet, AdvancedSettingPost } from "src/app/core/models/con
 import { DestinationAttribute } from "src/app/core/models/db/destination-attribute.model";
 import { WorkspaceSchedule, WorkspaceScheduleEmailOptions } from "src/app/core/models/db/workspace-schedule.model";
 import { WorkspaceGeneralSetting } from "src/app/core/models/db/workspace-general-setting.model";
-import { AutoMapEmployee, CorporateCreditCardExpensesObject, EmployeeFieldMapping, ReimbursableExpensesObject } from "src/app/core/models/enum/enum.model";
+import { CorporateCreditCardExpensesObject, ReimbursableExpensesObject } from "src/app/core/models/enum/enum.model";
 
 export const response:WorkspaceGeneralSetting = {
   auto_create_destination_entity: true,
-  auto_map_employees: AutoMapEmployee.EMAIL,
-  category_sync_version: "v1",
+  auto_map_employees: 'Email',
   change_accounting_period: true,
   charts_of_accounts: ['Expense'],
-  corporate_credit_card_expenses_object: CorporateCreditCardExpensesObject.JOURNAL_ENTRY,
+  corporate_credit_card_expenses_object: CorporateCreditCardExpensesObject.BANK_TRANSACTION,
   created_at: new Date("2022-04-27T11:07:17.694377Z"),
-  employee_field_mapping: EmployeeFieldMapping.VENDOR,
   id: 1,
   import_categories: false,
   import_projects: false,
   import_tax_codes: false,
-  import_vendors_as_merchants: false,
-  je_single_credit_line: true,
-  map_fyle_cards_xero_account: true,
-  map_merchant_to_vendor: false,
-  memo_structure: ['Fyle'],
-  reimbursable_expenses_object: ReimbursableExpensesObject.BILL,
+  reimbursable_expenses_object: ReimbursableExpensesObject.PURCHASE_BILL,
   skip_cards_mapping: false,
   sync_fyle_to_xero_payments: false,
   sync_xero_to_fyle_payments: false,
   updated_at: new Date("2022-04-28T12:48:39.150177Z"),
-  workspace: 1
+  workspace: 1,
+  import_customers: false
 };
 
 export const advancedSettingResponse:AdvancedSettingGet = {

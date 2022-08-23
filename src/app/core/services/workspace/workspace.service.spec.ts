@@ -23,11 +23,11 @@ describe('WorkspaceService', () => {
     httpMock = injector.inject(HttpTestingController);
   });
 
-  xit('getWorkspaceid service', () => {
-    const id = JSON.stringify(service.getWorkspaceId());
-    const org = +workspace_id;
+  it('getWorkspaceid service', () => {
+    const id = service.getWorkspaceId();
+    const org = workspace_id;
     if (id){
-      expect(+id).toEqual(org);
+      expect(+id).toEqual(+org);
     } else {
       expect(id).toBeNull();
     }

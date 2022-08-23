@@ -56,7 +56,7 @@ export class DashboardExportLogDialogComponent implements OnInit {
         if (referenceType === FyleReferenceType.EXPENSE) {
           referenceNumber = expenseGroup.expenses[0].expense_number;
         } else if (referenceType === FyleReferenceType.PAYMENT) {
-          referenceNumber = expenseGroup.expenses[0].payment_number;
+          referenceNumber = expenseGroup.expenses[0].settlement_id;
         }
 
         const fyleUrl = this.exportLogService.generateFyleUrl(expenseGroup, referenceType);
@@ -69,7 +69,7 @@ export class DashboardExportLogDialogComponent implements OnInit {
           referenceNumber: referenceNumber,
           exportedAs: exportType,
           fyleUrl: fyleUrl,
-          xeroUrl: this.data.exportState === ExportState.SUCCESS ? `${environment.xero_app_url}/app/${type}?txnId=${id}` : fyleUrl,
+          xeroUrl: this.data.exportState === ExportState.SUCCESS ? `${environment.app_url}/app/${type}?txnId=${id}` : fyleUrl,
           expenses: expenseGroup.expenses
         });
       });

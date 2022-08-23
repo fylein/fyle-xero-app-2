@@ -1,7 +1,7 @@
 import { ExpenseFieldsFormOption, ImportSettingGet } from "src/app/core/models/configuration/import-setting.model";
 import { GeneralMapping } from "src/app/core/models/db/general-mapping.model";
 import { WorkspaceGeneralSetting } from "src/app/core/models/db/workspace-general-setting.model";
-import { EmployeeFieldMapping, MappingDestinationField, MappingSourceField, XeroField } from "src/app/core/models/enum/enum.model";
+import { MappingDestinationField, MappingSourceField } from "src/app/core/models/enum/enum.model";
 import { ExpenseField } from "src/app/core/models/misc/expense-field.model";
 import { MappingSetting } from "src/app/core/models/db/mapping-setting.model";
 import { DestinationAttribute } from "src/app/core/models/db/destination-attribute.model";
@@ -9,28 +9,22 @@ import { XeroCredentials } from "src/app/core/models/configuration/xero-connecto
 
 const workspaceresponse:WorkspaceGeneralSetting = {
   auto_create_destination_entity: true,
-  auto_map_employees: null,
-  category_sync_version: "v1",
   change_accounting_period: true,
   charts_of_accounts: ['Expense'],
-  corporate_credit_card_expenses_object: null,
   created_at: new Date("2022-04-27T11:07:17.694377Z"),
-  employee_field_mapping: EmployeeFieldMapping.EMPLOYEE,
   id: 1,
   import_categories: false,
   import_projects: false,
   import_tax_codes: false,
-  import_vendors_as_merchants: false,
-  je_single_credit_line: true,
-  map_fyle_cards_xero_account: true,
-  map_merchant_to_vendor: false,
-  memo_structure: ['Fyle'],
-  reimbursable_expenses_object: null,
   skip_cards_mapping: false,
   sync_fyle_to_xero_payments: false,
   sync_xero_to_fyle_payments: false,
   updated_at: new Date("2022-04-28T12:48:39.150177Z"),
-  workspace: 1
+  workspace: 1,
+  reimbursable_expenses_object: "",
+  corporate_credit_card_expenses_object: "",
+  auto_map_employees: "",
+  import_customers: false
 };
 
 const general_mappings:GeneralMapping = {
@@ -38,14 +32,9 @@ const general_mappings:GeneralMapping = {
   created_at: new Date(),
   updated_at: new Date(),
   workspace: 1,
-  bill_payment_account: {name: 'fyle', id: "1"},
-  bank_account: {name: 'fyle', id: "1"},
-  default_ccc_account: {name: 'fyle', id: "1"},
-  accounts_payable: {name: 'fyle', id: "1"},
-  default_ccc_vendor: {name: 'fyle', id: "1"},
-  xero_expense_account: {name: 'fyle', id: "1"},
-  default_debit_card_account: {name: 'fyle', id: "1"},
-  default_tax_code: {name: 'fyle', id: '1'}
+  bank_account: { name: 'fyle', id: "1" },
+  default_tax_code: { name: 'fyle', id: '1' },
+  payment_account: { name: 'fyle', id: '1' }
 };
 
 const mapping_settings: MappingSetting[] = [{
@@ -54,7 +43,7 @@ const mapping_settings: MappingSetting[] = [{
   updated_at: new Date(),
   workspace: 1,
   source_field: MappingSourceField.TAX_GROUP,
-  destination_field: MappingDestinationField.CUSTOMER,
+  destination_field: MappingDestinationField.ACCOUNT,
   import_to_fyle: true,
   is_custom: true,
   source_placeholder: null
@@ -65,7 +54,7 @@ const mapping_settings: MappingSetting[] = [{
   updated_at: new Date(),
   workspace: 1,
   source_field: 'CUSTOM_FIELD',
-  destination_field: MappingDestinationField.DEPARTMENT,
+  destination_field: MappingDestinationField.BANK_ACCOUNT,
   import_to_fyle: false,
   is_custom: true,
   source_placeholder: null
@@ -119,7 +108,7 @@ export const postImportsettingresponse={
   general_mappings: {default_tax_code: {name: 'fyle', id: '1'}},
   mapping_settings: [{
     source_field: MappingSourceField.PROJECT,
-    destination_field: MappingDestinationField.CLASS,
+    destination_field: MappingDestinationField.CONTACT,
     import_to_fyle: true,
     is_custom: false,
     source_placeholder: 'Fyle'
@@ -161,12 +150,9 @@ export const destinationAttribute: DestinationAttribute[] = [{
   }
 }];
 export const XeroCredentialsResponse: XeroCredentials = {
-  company_name: "Sandbox Company_FAE",
   country: "GB",
   created_at: new Date("2021-10-05T11:56:13.883015Z"),
   id: 219,
-  is_expired: false,
-  realm_id: "123146326950399",
   refresh_token: "AB",
   updated_at: new Date("2022-05-06T13:13:25.893837Z"),
   workspace: 1

@@ -47,12 +47,14 @@ export enum PaymentSyncDirection {
   XERO_TO_FYLE = 'xero_to_fyle'
 }
 
+
 export enum OnboardingState {
   CONNECTION = 'CONNECTION',
   EXPORT_SETTINGS = 'EXPORT_SETTINGS',
   IMPORT_SETTINGS = 'IMPORT_SETTINGS',
   ADVANCED_CONFIGURATION = 'ADVANCED_CONFIGURATION',
-  COMPLETE = 'COMPLETE'
+  COMPLETE = 'COMPLETE',
+  MAP_EMPLOYEES = "MAP_EMPLOYEES"
 }
 
 export enum PaginatorPage {

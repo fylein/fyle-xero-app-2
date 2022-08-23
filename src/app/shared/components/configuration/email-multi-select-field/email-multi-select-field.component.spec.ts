@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
 import { MatDialogModule } from '@angular/material/dialog';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { SharedModule } from 'src/app/shared/shared.module';
@@ -35,7 +35,7 @@ describe('EmailMultiSelectFieldComponent', () => {
     component.formControllerName = 'employeeMapping';
     component.isFieldMandatory = true;
     component.iconPath = 'assets/images/svgs/general/employee.svg';
-    component.label = 'How are your Employees represented in Quickbooks Online?';
+    component.label = 'How are your Employees represented in Xero?';
     component.subLabel = 'Select how you represent your employees in Xero. This would help to export the expenses from Fyle to the correct employee/vendor record in Xero.';
     component.placeholder = 'Select representation';
     fixture.detectChanges();

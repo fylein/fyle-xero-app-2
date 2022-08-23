@@ -103,8 +103,8 @@ export class HeaderComponent implements OnInit {
     this.phase = this.windowReference.location.pathname.includes('onboarding') ? ProgressPhase.ONBOARDING : ProgressPhase.POST_ONBOARDING;
     this.user = this.userService.getUserProfile();
 
-    this.xeroConnectorService.getXeroCredentials().subscribe((credentials: XeroCredentials) => {
-      this.xeroCompanyName = credentials.company_name;
+    this.xeroConnectorService.getXeroCredentials(+this.workspaceService.getWorkspaceId).subscribe((credentials: XeroCredentials) => {
+      this.xeroCompanyName = 'credentials.company_name';
     }, (error) => {
       this.isXeroConnected = false;
       if ('id' in error.error) {
@@ -131,17 +131,17 @@ export class HeaderComponent implements OnInit {
   }
 
   switchFyleOrg(): void {
-    this.authService.logout(true);
+    this.authService.logout();
     this.authService.redirectToFyleOAuth();
   }
 
   disconnectXero(): void {
     const data: ConfirmationDialog = {
-      title: 'Disconnect Quickbooks Online',
+      title: 'Disconnect Xero',
       contents: `Exporting expenses from Fyle will no longer work if you disconnect your 
-        Quickbooks Online Company.
+        Xero Company.
         <br>
-        Are you sure you want to disconnect <b>${this.xeroCompanyName}</b> Quickbooks Online
+        Are you sure you want to disconnect <b>${this.xeroCompanyName}</b> Xero
         company?`,
       primaryCtaText: 'Disconnect'
     };
@@ -153,8 +153,8 @@ export class HeaderComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((disconnect) => {
       if (disconnect) {
-        this.trackingService.onClickEvent(ClickEvent.DISCONNECT_Xero, {phase: this.phase});
-        this.xeroConnectorService.disconnectXeroConnection().subscribe(() => {
+        this.trackingService.onClickEvent(ClickEvent.DISCONNECT_XERO, {phase: this.phase});
+        this.xeroConnectorService.revokeXeroConnection(+this.workspaceService.getWorkspaceId).subscribe(() => {
           this.authService.redirectToOnboardingLanding();
         });
       }

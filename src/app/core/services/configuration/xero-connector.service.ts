@@ -22,7 +22,7 @@ export class XeroConnectorService {
   @CacheBuster({
     cacheBusterNotifier: xeroCredentialsCache
   })
-  connectXero(workspaceId: any, code:string): Observable<XeroCredentials> {
+  connectXero(workspaceId: number, code:string): Observable<XeroCredentials> {
     globalCacheBusterNotifier.next();
     return this.apiService.post('/workspaces/' + workspaceId + '/connect_xero/authorization_code/', code
     );
@@ -33,6 +33,13 @@ export class XeroConnectorService {
   })
   getXeroCredentials(workspaceId: number): Observable<XeroCredentials> {
     return this.apiService.get('/workspaces/' + workspaceId + '/credentials/xero/', {});
+  }
+
+  @CacheBuster({
+    cacheBusterNotifier: xeroCredentialsCache
+  })
+  revokeXeroConnection(workspaceId: number) {
+    return this.apiService.post('/workspaces/' + workspaceId + '/connection/xero/revoke/', {});
   }
 
 }

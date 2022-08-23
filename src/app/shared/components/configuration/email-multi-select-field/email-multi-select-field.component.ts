@@ -1,9 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { AdvancedSettingFormOption } from 'src/app/core/models/configuration/advanced-setting.model';
-import { EmployeeSettingFormOption } from 'src/app/core/models/configuration/employee-setting.model';
 import { ExportSettingFormOption } from 'src/app/core/models/configuration/export-setting.model';
-import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { ProgressPhase, SimpleSearchPage, SimpleSearchType } from 'src/app/core/models/enum/enum.model';
 import { HelperService } from 'src/app/core/services/core/helper.service';
 
@@ -16,9 +14,9 @@ export class EmailMultiSelectFieldComponent implements OnInit {
 
   @Input() form: FormGroup;
 
-  @Input() options: EmployeeSettingFormOption[] | ExportSettingFormOption[] | AdvancedSettingFormOption[] | any[];
+  @Input() options: ExportSettingFormOption[] | AdvancedSettingFormOption[] | any[];
 
-  @Input() xeroAttributes: DestinationAttribute[];
+  @Input() xeroAttributes: any[];
 
   @Input() iconPath: string;
 

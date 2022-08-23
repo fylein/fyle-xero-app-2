@@ -7,13 +7,11 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { XeroConnectorService } from 'src/app/core/services/configuration/xero-connector.service';
 import { AuthService } from 'src/app/core/services/core/auth.service';
 import { WorkspaceService } from 'src/app/core/services/workspace/workspace.service';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { environment } from 'src/environments/environment';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { of, ReplaySubject, throwError } from 'rxjs';
 import { response } from '../../configuration/xero-connector/xero-connector.fixture';
 import { NavigationStart, Router, RouterEvent } from '@angular/router';
 import { Renderer2, Type } from '@angular/core';
-import { WindowService } from 'src/app/core/services/core/window.service';
 
 describe('HeaderComponent', () => {
   let component: HeaderComponent;
@@ -47,7 +45,7 @@ describe('HeaderComponent', () => {
     };
 
     service2 = {
-      disconnectXeroConnection: () => of(response),
+      revokeXeroConnection: () => of(response),
       getXeroCredentials: () => of(response)
     };
     const eve = new Event('click', {});
@@ -184,11 +182,11 @@ describe('HeaderComponent', () => {
   });
 
   it('DisconnectXero function check', () => {
-    spyOn(xeroConnectorService, 'disconnectXeroConnection').and.callThrough();
+    spyOn(xeroConnectorService, 'revokeXeroConnection').and.callThrough();
     spyOn(authService, 'redirectToOnboardingLanding').and.callThrough();
     component.disconnectXero();
     fixture.detectChanges();
-    expect(xeroConnectorService.disconnectXeroConnection).toHaveBeenCalled();
+    expect(xeroConnectorService.revokeXeroConnection).toHaveBeenCalled();
     expect(authService.redirectToOnboardingLanding).toHaveBeenCalled();
     expect(dialogSpy).toHaveBeenCalled();
   });

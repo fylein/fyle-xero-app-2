@@ -5,18 +5,18 @@ import { Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
 import { AdvancedSettingFormOption, AdvancedSettingGet, AdvancedSettingModel } from 'src/app/core/models/configuration/advanced-setting.model';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
-import { AutoMapEmployee, ConfigurationCtaText, CorporateCreditCardExpensesObject, EmployeeFieldMapping, OnboardingState, OnboardingStep, PaymentSyncDirection, ProgressPhase, ReimbursableExpensesObject, UpdateEvent } from 'src/app/core/models/enum/enum.model';
+import { ConfigurationCtaText, CorporateCreditCardExpensesObject, OnboardingState, OnboardingStep, PaymentSyncDirection, ProgressPhase, ReimbursableExpensesObject, UpdateEvent } from 'src/app/core/models/enum/enum.model';
 import { WorkspaceService } from 'src/app/core/services/workspace/workspace.service';
 import { AdvancedSettingService } from 'src/app/core/services/configuration/advanced-setting.service';
-import { MappingService } from 'src/app/core/services/misc/mapping.service';
 import { HelperService } from 'src/app/core/services/core/helper.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { WorkspaceGeneralSetting } from 'src/app/core/models/db/workspace-general-setting.model';
 import { WindowService } from 'src/app/core/services/core/window.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { AddEmailDialogComponent } from './add-email-dialog/add-email-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { WorkspaceSchedule, WorkspaceScheduleEmailOptions } from 'src/app/core/models/db/workspace-schedule.model';
+import { MappingService } from 'src/app/core/services/misc/mapping.service';
+import { WorkspaceGeneralSetting } from 'src/app/core/models/db/workspace-general-setting.model';
 
 @Component({
   selector: 'app-advanced-settings',
@@ -47,12 +47,12 @@ export class AdvancedSettingsComponent implements OnInit, OnDestroy {
 
   paymentSyncOptions: AdvancedSettingFormOption[] = [
     {
-      label: 'Export Fyle ACH Payments to Quickbooks Online',
-      value: PaymentSyncDirection.FYLE_TO_Xero
+      label: 'Export Fyle ACH Payments to Xero',
+      value: PaymentSyncDirection.FYLE_TO_XERO
     },
     {
-      label: 'Import Quickbooks Payments into Fyle',
-      value: PaymentSyncDirection.Xero_TO_FYLE
+      label: 'Import Xero Payments into Fyle',
+      value: PaymentSyncDirection.XERO_TO_FYLE
     }
   ];
 
@@ -94,7 +94,7 @@ export class AdvancedSettingsComponent implements OnInit, OnDestroy {
 
   private createPaymentSyncWatcher(): void {
     this.advancedSettingsForm.controls.paymentSync.valueChanges.subscribe((ispaymentSyncSelected) => {
-      if (ispaymentSyncSelected && ispaymentSyncSelected === PaymentSyncDirection.FYLE_TO_Xero) {
+      if (ispaymentSyncSelected && ispaymentSyncSelected === PaymentSyncDirection.FYLE_TO_XERO) {
         this.advancedSettingsForm.controls.billPaymentAccount.setValidators(Validators.required);
       } else {
         this.advancedSettingsForm.controls.billPaymentAccount.clearValidators();
@@ -154,23 +154,19 @@ export class AdvancedSettingsComponent implements OnInit, OnDestroy {
   }
 
   showPaymentSyncField(): boolean {
-    return this.workspaceGeneralSettings.reimbursable_expenses_object === ReimbursableExpensesObject.BILL;
+    return this.workspaceGeneralSettings.reimbursable_expenses_object === ReimbursableExpensesObject.PURCHASE_BILL;
   }
 
   showSingleCreditLineJEField(): boolean {
-    return this.workspaceGeneralSettings.reimbursable_expenses_object === ReimbursableExpensesObject.JOURNAL_ENTRY || this.workspaceGeneralSettings.corporate_credit_card_expenses_object === CorporateCreditCardExpensesObject.JOURNAL_ENTRY;
-  }
-
-  showAutoCreateVendorsField(): boolean {
-    return this.workspaceGeneralSettings.employee_field_mapping === EmployeeFieldMapping.VENDOR && this.workspaceGeneralSettings.auto_map_employees !== null && this.workspaceGeneralSettings.auto_map_employees !== AutoMapEmployee.EMPLOYEE_CODE;
+    return this.workspaceGeneralSettings.reimbursable_expenses_object === ReimbursableExpensesObject.PURCHASE_BILL;
   }
 
   private setupForm(): void {
     let paymentSync = '';
     if (this.advancedSettings.workspace_general_settings.sync_fyle_to_xero_payments) {
-      paymentSync = PaymentSyncDirection.FYLE_TO_Xero;
+      paymentSync = PaymentSyncDirection.FYLE_TO_XERO;
     } else if (this.advancedSettings.workspace_general_settings.sync_xero_to_fyle_payments) {
-      paymentSync = PaymentSyncDirection.Xero_TO_FYLE;
+      paymentSync = PaymentSyncDirection.XERO_TO_FYLE;
     }
 
     this.memoStructure = this.advancedSettings.workspace_general_settings.memo_structure;
@@ -198,7 +194,7 @@ export class AdvancedSettingsComponent implements OnInit, OnDestroy {
     forkJoin([
       this.advancedSettingService.getAdvancedSettings(),
       this.mappingService.getXeroDestinationAttributes('BANK_ACCOUNT'),
-      this.workspaceService.getWorkspaceGeneralSettings(),
+      this.workspaceService.getWorkspaceGeneralSettings,
       this.advancedSettingService.getWorkspaceAdmins()
     ]).subscribe(response => {
       this.advancedSettings = response[0];

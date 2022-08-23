@@ -8,7 +8,7 @@
     <form [formGroup]="advancedSettingsForm">
       <app-configuration-toggle-field [form]="advancedSettingsForm"
         [iconPath]="'assets/images/svgs/general/calendar.svg'" [label]="'Schedule automatic export'"
-        [subLabel]="'Set up a schedule to frequently automate the export of expenses from Fyle to Quickbooks Online'"
+        [subLabel]="'Set up a schedule to frequently automate the export of expenses from Fyle to Xero'"
         [formControllerName]="'exportSchedule'">
       </app-configuration-toggle-field>
       <div *ngIf="advancedSettingsForm.value.exportSchedule">
@@ -45,7 +45,7 @@
             <img src="assets/images/svgs/general/list.svg" class="configuration--icon">
             <div class="configuration--field-label-text-section">
               <div class="configuration--field-header">
-                Set description field in QuickBooks Online
+                Set description field in Xero
               </div>
               <h5 class="configuration--field-label sub-text-color paragraph">
                 Customize the data set you would like to pass to the description field of Xero while exporting expenses
@@ -86,11 +86,11 @@
         [formControllerName]="'changeAccountingPeriod'">
       </app-configuration-toggle-field>
 
-      <app-configuration-toggle-field *ngIf="showAutoCreateVendorsField()" [form]="advancedSettingsForm"
+      <!-- <app-configuration-toggle-field *ngIf="showAutoCreateVendorsField()" [form]="advancedSettingsForm"
         [iconPath]="'assets/images/svgs/general/building.svg'" [label]="'Auto-Create Vendors'"
         [subLabel]="'While exporting reimbursable expenses from Fyle, the integration will automatically create a vendor if a match does not exist in Xero already.'"
         [formControllerName]="'autoCreateVendors'">
-      </app-configuration-toggle-field>
+      </app-configuration-toggle-field> -->
 
       <app-configuration-select-field *ngIf="showPaymentSyncField()" [form]="advancedSettingsForm"
         [options]="paymentSyncOptions" [iconPath]="'assets/images/svgs/actions/sync.svg'"
