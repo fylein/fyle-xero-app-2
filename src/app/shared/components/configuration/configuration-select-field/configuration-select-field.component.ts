@@ -20,7 +20,7 @@ export class ConfigurationSelectFieldComponent implements OnInit {
 
   @Input() options: ExportSettingFormOption[] | AdvancedSettingFormOption[] | any[];
 
-  @Input() XeroAttributes: DestinationAttribute[];
+  @Input() xeroAttributes: DestinationAttribute[];
 
   @Input() iconPath: string;
 
