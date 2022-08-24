@@ -9,9 +9,9 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   // {
-  //   path: 'workspaces',
-  //   loadChildren: () => import('./integration/integration.module').then(m => m.IntegrationModule),
-  //   canActivate: [AuthGuard]
+  //   Path: 'workspaces',
+  //   LoadChildren: () => import('./integration/integration.module').then(m => m.IntegrationModule),
+  //   CanActivate: [AuthGuard]
   // },
   {
     path: 'auth',
