@@ -1,0 +1,157 @@
+.side-nav-bar {
+  background: #161528;
+  height: 100%;
+  padding-top: 17px;
+  top: 72px;
+  position: fixed;
+  z-index: 101;
+
+  &--logo-header-section {
+    background-color: #FFFFFF;
+    position: absolute;
+    top: -72px;
+    border-right: 1px solid #DFDFE2;
+    right: 0px;
+  }
+
+  &--active-module-block {
+    @extend .side-nav-bar--module-block-content;
+    padding-left: 21px !important;
+  }
+
+  &--active-module-block-expandable {
+    @extend .side-nav-bar--module-block-content-expandable;
+    padding-left: 21px !important;
+  }
+
+  &--module-block-content {
+    padding: 13px 0px 13px 24px;
+    height: 48px;
+    width: 260px;
+
+    &:hover {
+      background: #252841;
+      width: 260px;
+    }
+  }
+
+  &--module-block-content-expandable {
+    padding: 13px 0px 13px 24px;
+    height: 48px;
+    width: 257px;
+
+    &:hover {
+      background: #252841;
+      width: 257px;
+    }
+  }
+
+  &--active-module {
+    background: #252841;
+    width: 260px;
+  }
+
+  &--active-child {
+    background: #252841;
+    width: 257px;
+    &:hover {
+      background: #252841;
+      width: 257px;
+    }
+  }
+
+  &--active-module-text {
+    color: #FFFFFF;
+  }
+
+  &--default-text-color {
+    color: #A9ACBC;
+  }
+
+  &--active-tag-module {
+    width: 3px;
+    height: 48px;
+    background: #FF3366;
+    border-radius: 1px;
+  }
+
+  &--module-block-text {
+    padding-left: 14px;
+    padding-top: 5px;
+    width: 146px;
+  }
+
+  &--text-properties {
+    font-weight: 500;
+    line-height: 18px;
+    font-size: 15.2px;
+  }
+
+  &--module-block-text-inner {
+    padding-left: 30px;
+    padding-top: 5px;
+    width: 202px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+
+  &--child-contents {
+    margin-left: 260px;
+  }
+
+  &--separator {
+    border-top: 1px solid #DFDFE2;
+    width: 212px;
+    margin-left: 24px;
+    opacity: 0.1;
+  }
+}
+
+.walk-through-tooltip {
+  position: absolute;
+  left: 100%;
+  margin-top: -58%;
+  color: #FFFFFF;
+  background: #2C304E;
+  border-radius: 8px;
+  height: 118px;
+  z-index: 101;
+
+  &--header-section {
+    padding: 16px 22px 24px 20px;
+  }
+
+  &--arrow-left {
+    position: absolute;
+    bottom: 20px;
+    left: -6px;
+  }
+
+  &--header-text {
+    font-size: 12px;
+    padding-right: 22px;
+    width: 212px;
+  }
+
+  &--close-icon {
+    padding-top: 4px;
+  }
+
+  &--cta-section {
+    padding-right: 20px;
+  }
+
+  &--cta {
+    width: 63px;
+    height: 32px;
+    background: #FFFFFF;
+    border: 1px solid #DFDFE2;
+    border-radius: 4px;
+    color: #2C304E;
+    font-size: 14px;
+  }
+}
+
+p {
+  margin: 0;
+}
