@@ -53,9 +53,9 @@ describe('OnboardingLandingComponent', () => {
     expect(workspace.getOnboardingState).toHaveBeenCalled();
   });
 
-  it('connectQbo function check', () => {
+  it('connectXero function check', () => {
     spyOn(authService, 'redirectToXeroOAuth').and.callThrough();
-    expect(component.connectQbo()).toBeUndefined();
+    expect(component.connectXero()).toBeUndefined();
     fixture.detectChanges();
     expect(authService.redirectToXeroOAuth).toHaveBeenCalled();
   });

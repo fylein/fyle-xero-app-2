@@ -3,7 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { OnboardingXeroConnectorComponent } from './onboarding-xero-connector.component';
 
-describe('OnboardingQboConnectorComponent', () => {
+describe('OnboardingXeroConnectorComponent', () => {
   let component: OnboardingXeroConnectorComponent;
   let fixture: ComponentFixture<OnboardingXeroConnectorComponent>;
 

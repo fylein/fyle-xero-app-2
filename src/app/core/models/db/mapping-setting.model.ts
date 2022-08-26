@@ -34,7 +34,7 @@ export type MappingSettingResponse = {
 
 export type MappingSettingList = {
   id?: number;
-  qboField: MappingDestinationField | string,
+  xeroField: MappingDestinationField | string,
   fyleField: MappingSourceField | string,
   index: number,
   existingMapping: boolean,

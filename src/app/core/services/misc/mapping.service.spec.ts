@@ -16,6 +16,7 @@ describe('MappingService', () => {
   const workspace_id = environment.tests.workspaceId;
 
   beforeEach(() => {
+    localStorage.setItem('workspaceId', environment.tests.workspaceId);
     TestBed.configureTestingModule({
       imports: [HttpClientModule, HttpClientTestingModule],
       providers: [MappingService]
@@ -99,11 +100,7 @@ describe('MappingService', () => {
     const destinationAttributes = ['BANK_ACCOUNT', 'CONTACT', 'ACCOUNT', 'TENANT'];
     const response = {
       BANK_ACCOUNT: [],
-        CONTACT: [],
-        TENANT: [],
-        ACCOUNT: [],
-        TAX_CODE: [],
-        REGION: []
+        TAX_CODE: []
     };
     let responseKeys;
     let actualResponseKeys;
@@ -119,14 +116,10 @@ describe('MappingService', () => {
       req.flush([{"id": 45531, "attribute_type": "CONTACT", "display_name": "Contact", "value": "2285 Fyle Credit Card", "destination_id": "106", "auto_created": false, "active": null, "detail": {"account_type": "Credit Card", "fully_qualified_name": "2285 Fyle Credit Card"}, "created_at": "2022-04-14T06:09:07.537182Z", "updated_at": "2022-04-14T06:09:07.537205Z", "workspace": 216}]);
   });
 
-  it('getGroupedQBODestinationAttributes() without data service check', () => {
+  it('getGroupedXeroDestinationAttributes() without data service check', () => {
     const destinationAttributes = ['BANK_ACCOUNT', 'CONTACT', 'ACCOUNT', 'TENTANT'];
     const response = {
       BANK_ACCOUNT: [],
-      CREDIT_CARD_ACCOUNT: [],
-      ACCOUNTS_PAYABLE: [],
-      VENDOR: [],
-      ACCOUNT: [],
       TAX_CODE: []
     };
     let responseKeys;
