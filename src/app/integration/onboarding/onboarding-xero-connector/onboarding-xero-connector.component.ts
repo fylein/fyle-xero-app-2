@@ -5,7 +5,7 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './onboarding-qbo-connector.component.html',
   styleUrls: ['./onboarding-qbo-connector.component.scss']
 })
-export class OnboardingQboConnectorComponent implements OnInit {
+export class OnboardingXeroConnectorComponent implements OnInit {
 
   constructor() { }
 

@@ -1,5 +1,5 @@
 import { QBOCredentials } from "../models/configuration/qbo-connector.model";
-import { QBOPreference } from "../models/misc/qbo-preference.model";
+import { QBOPreference } from "../models/misc/xero-preference.model";
 
 export const QBOresponse: QBOCredentials = {
   company_name: "Sandbox Company_FAE",

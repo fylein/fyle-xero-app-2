@@ -1,7 +1,7 @@
 import { Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { NavigationStart, Router } from '@angular/router';
 import { MappingSetting, MappingSettingResponse } from 'src/app/core/models/db/mapping-setting.model';
-import { EmployeeFieldMapping, FyleField } from 'src/app/core/models/enum/enum.model';
+import { FyleField, TenantFieldMapping } from 'src/app/core/models/enum/enum.model';
 import { DashboardModule, DashboardModuleChild } from 'src/app/core/models/misc/dashboard-module.model';
 import { MappingService } from 'src/app/core/services/misc/mapping.service';
 
@@ -50,11 +50,6 @@ export class MainComponent implements OnInit {
       isExpanded: false,
       isActive: false,
       childPages: [
-        {
-          name: 'Map Employees',
-          route: 'configuration/employee_settings',
-          isActive: false
-        },
         {
           name: 'Export Settings',
           route: 'configuration/export_settings',
@@ -106,7 +101,7 @@ export class MainComponent implements OnInit {
       if (m.name !== module.name) {
         m.isActive = false;
         if (m.childPages) {
-          m.childPages.forEach(c => {
+          m.childPages.forEach((c: { name: any; isActive: boolean; }) => {
             if (c.name !== module.name) {
               c.isActive = false;
             }
@@ -116,7 +111,7 @@ export class MainComponent implements OnInit {
     });
 
     // Set parent module as active if child module is clicked
-    const parentModule = this.modules.find(m => m.childPages.find(c => c.name === module.name));
+    const parentModule = this.modules.find(m => m.childPages.find((c: { name: any; }) => c.name === module.name));
     if (parentModule) {
       parentModule.isActive = true;
     }
@@ -136,7 +131,7 @@ export class MainComponent implements OnInit {
       // Filter module list to find the module that matches the route and mark it as active
       this.modules = this.modules.map(m => {
         if (m.childPages) {
-          m.childPages.forEach(c => {
+          m.childPages.forEach((c: { route: string; isActive: boolean; }) => {
             if (c.route === route) {
               c.isActive = true;
               m.isActive = true;
@@ -172,7 +167,7 @@ export class MainComponent implements OnInit {
     const sourceFieldRoutes: string[] = [`mapping/${FyleField.EMPLOYEE.toLowerCase()}`, `mapping/${FyleField.CATEGORY.toLowerCase()}`];
     const importedFieldsFromQBO = [];
     mappingSettingResponse.results.forEach((mappingSetting: MappingSetting) => {
-      if (mappingSetting.source_field !== EmployeeFieldMapping.EMPLOYEE && mappingSetting.source_field !== FyleField.CATEGORY) {
+      if (mappingSetting.source_field !== TenantFieldMapping.TENANT && mappingSetting.source_field !== FyleField.CATEGORY) {
         if (mappingSetting.import_to_fyle) {
           importedFieldsFromQBO.push(mappingSetting.destination_field);
         }

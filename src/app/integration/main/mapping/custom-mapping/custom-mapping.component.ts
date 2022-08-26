@@ -100,7 +100,7 @@ export class CustomMappingComponent implements OnInit {
           newState: {source_field: mappingSettingPayload[0].source_field, destination_field: mappingSettingPayload[0].destination_field}
         }
       );
-      this.mappingService.emitWalkThroughTooltip();
+      //this.mappingService.emitWalkThroughTooltip();
       this.mappingService.refreshMappingPages();
       this.snackBar.open('Custom Mapping Created Successfully');
       this.mappingSettings.push(response[0]);
@@ -108,52 +108,52 @@ export class CustomMappingComponent implements OnInit {
     });
   }
 
-  deleteMappingSetting(index: number): void {
-    const mappingRow: MappingSettingList = this.mappingSettingForm.value.mappingSetting[index];
-    const qboField: string = this.helperService.getSpaceCasedTitleCase(mappingRow.qboField);
-    const fyleField: string = this.helperService.getSpaceCasedTitleCase(mappingRow.fyleField);
+  // deleteMappingSetting(index: number): void {
+  //   const mappingRow: MappingSettingList = this.mappingSettingForm.value.mappingSetting[index];
+  //   const qboField: string = this.helperService.getSpaceCasedTitleCase(mappingRow.qboField);
+  //   const fyleField: string = this.helperService.getSpaceCasedTitleCase(mappingRow.fyleField);
 
-    const data: ConfirmationDialog = {
-      title: 'Delete Custom Mapping',
-      contents: `<li>You are deleting the custom mapping of <b>${qboField}</b> in QBO to ${fyleField} in Fyle.</li>
-        <li>This will delete all the mappings setup in the <b>${fyleField}</b> Mapping section.</li>
-        <br>Do you wish to continue?`,
-      primaryCtaText: 'Save and Continue'
-    };
+  //   const data: ConfirmationDialog = {
+  //     title: 'Delete Custom Mapping',
+  //     contents: `<li>You are deleting the custom mapping of <b>${qboField}</b> in QBO to ${fyleField} in Fyle.</li>
+  //       <li>This will delete all the mappings setup in the <b>${fyleField}</b> Mapping section.</li>
+  //       <br>Do you wish to continue?`,
+  //     primaryCtaText: 'Save and Continue'
+  //   };
 
-    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      width: '551px',
-      data: data
-    });
+  //   const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+  //     width: '551px',
+  //     data: data
+  //   });
 
-    dialogRef.afterClosed().subscribe((ctaClicked) => {
-      if (ctaClicked && mappingRow.id) {
-        this.isLoading = true;
-        this.mappingService.deleteMappingSetting(mappingRow.id).subscribe(() => {
-          // Hide mapping table if there are no more mappings
-          if (this.mappingSettingForm.value.mappingSetting.length === 1) {
-            this.showMappingList = false;
-          }
+  //   dialogRef.afterClosed().subscribe((ctaClicked) => {
+  //     if (ctaClicked && mappingRow.id) {
+  //       this.isLoading = true;
+  //       this.mappingService.deleteMappingSetting(mappingRow.id).subscribe(() => {
+  //         // Hide mapping table if there are no more mappings
+  //         if (this.mappingSettingForm.value.mappingSetting.length === 1) {
+  //           this.showMappingList = false;
+  //         }
 
-          this.trackingService.onDeleteEvent(
-            DeleteEvent.CUSTOM_MAPPING, {
-              source_field: mappingRow.fyleField,
-              destination_field: mappingRow.qboField
-            }
-          );
+  //         this.trackingService.onDeleteEvent(
+  //           DeleteEvent.CUSTOM_MAPPING, {
+  //             source_field: mappingRow.fyleField,
+  //             destination_field: mappingRow.qboField
+  //           }
+  //         );
 
-          this.mappingService.refreshMappingPages();
-          this.snackBar.open('Custom Mapping Deleted Successfully');
-          this.mappingSettings = this.mappingSettings.filter((mapping) => mapping.id !== mappingRow.id);
-          this.fyleFields.push({
-            attribute_type: mappingRow.fyleField,
-            display_name: this.helperService.getSpaceCasedTitleCase(mappingRow.fyleField)
-          });
-          this.setupPage();
-        });
-      }
-    });
-  }
+  //         this.mappingService.refreshMappingPages();
+  //         this.snackBar.open('Custom Mapping Deleted Successfully');
+  //         this.mappingSettings = this.mappingSettings.filter((mapping) => mapping.id !== mappingRow.id);
+  //         this.fyleFields.push({
+  //           attribute_type: mappingRow.fyleField,
+  //           display_name: this.helperService.getSpaceCasedTitleCase(mappingRow.fyleField)
+  //         });
+  //         this.setupPage();
+  //       });
+  //     }
+  //   });
+  // }
 
   saveMappingSetting(index: number): void {
     if (this.mappingSettingForm.valid) {
@@ -201,16 +201,16 @@ export class CustomMappingComponent implements OnInit {
     this.fyleFields = this.fyleFields.filter(field => {
       return !this.mappingSettings.some(mapping => mapping.source_field === field.attribute_type);
     });
-    this.qboFields = [MappingDestinationField.CLASS, MappingDestinationField.DEPARTMENT, MappingDestinationField.CUSTOMER];
+    this.qboFields = [MappingDestinationField.ACCOUNT, MappingDestinationField.BANK_ACCOUNT, MappingDestinationField.CONTACT, MappingDestinationField.TAX_CODE];
 
     const existingQBOFields = this.mappingSettings.filter((mappingSetting: MappingSetting) => {
-      return (mappingSetting.destination_field === MappingDestinationField.CLASS || mappingSetting.destination_field === MappingDestinationField.DEPARTMENT || mappingSetting.destination_field === MappingDestinationField.CUSTOMER);
+      return (mappingSetting.destination_field === MappingDestinationField.ACCOUNT || mappingSetting.destination_field === MappingDestinationField.BANK_ACCOUNT || mappingSetting.destination_field === MappingDestinationField.CONTACT || mappingSetting.destination_field === MappingDestinationField.TAX_CODE);
     }).map((mappingSetting: MappingSetting) => mappingSetting.destination_field);
 
     this.qboFields = this.qboFields.filter((qboField: MappingDestinationField) => !existingQBOFields.includes(qboField));
 
     const mappedRows = this.mappingSettings.filter((mappingSetting: MappingSetting) => {
-      return (mappingSetting.destination_field === MappingDestinationField.CLASS || mappingSetting.destination_field === MappingDestinationField.DEPARTMENT || mappingSetting.destination_field === MappingDestinationField.CUSTOMER) && !mappingSetting.import_to_fyle;
+      return (mappingSetting.destination_field === MappingDestinationField.ACCOUNT || mappingSetting.destination_field === MappingDestinationField.BANK_ACCOUNT || mappingSetting.destination_field === MappingDestinationField.CONTACT || mappingSetting.destination_field === MappingDestinationField.TAX_CODE) && !mappingSetting.import_to_fyle;
     }).map((mappingSetting, index) => {
       const mappedRow: MappingSettingList = {
         id: mappingSetting.id,

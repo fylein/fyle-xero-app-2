@@ -31,9 +31,9 @@ export class OnboardingLandingComponent implements OnInit, OnDestroy {
   }
 
   connectQbo(): void {
-    this.trackingService.onClickEvent(ClickEvent.CONNECT_QBO, {phase: this.phase});
+    this.trackingService.onClickEvent(ClickEvent.CONNECT_XERO, {phase: this.phase});
     this.trackSessionTime('success');
-    this.authService.redirectToQboOAuth();
+    this.authService.redirectToXeroOAuth();
   }
 
   ngOnDestroy(): void {
@@ -44,7 +44,7 @@ export class OnboardingLandingComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.phase = this.workspaceService.getOnboardingState() === OnboardingState.COMPLETE ? ProgressPhase.POST_ONBOARDING : ProgressPhase.ONBOARDING;
-    this.trackingService.onQBOLanding(this.phase);
+    this.trackingService.onXeroLanding(this.phase);
   }
 
 }

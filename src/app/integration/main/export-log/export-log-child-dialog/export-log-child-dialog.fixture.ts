@@ -34,7 +34,7 @@ export const expense: Expense[] = [
     vendor: 'string',
     billable: true,
     verified_at: new Date(),
-    paid_on_qbo: true,
+    paid_on_xero: true,
     custom_properties: []
   }
 ];

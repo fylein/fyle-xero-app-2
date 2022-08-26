@@ -20,8 +20,7 @@ import { OnboardingAdvancedSettingsComponent } from './onboarding-advanced-setti
 import { OnboardingDoneComponent } from './onboarding-done/onboarding-done.component';
 import { OnboardingComponent } from './onboarding.component';
 import { OnboardingLandingComponent } from './onboarding-landing/onboarding-landing.component';
-import { OnboardingQboConnectorComponent } from './onboarding-qbo-connector/onboarding-qbo-connector.component';
-import { OnboardingEmployeeSettingsComponent } from './onboarding-employee-settings/onboarding-employee-settings.component';
+import { OnboardingXeroConnectorComponent } from './onboarding-xero-connector/onboarding-xero-connector.component';
 import { OnboardingRoutingModule } from './onboarding-routing.module';
 
 @NgModule({
@@ -32,8 +31,7 @@ import { OnboardingRoutingModule } from './onboarding-routing.module';
     OnboardingDoneComponent,
     OnboardingComponent,
     OnboardingLandingComponent,
-    OnboardingQboConnectorComponent,
-    OnboardingEmployeeSettingsComponent
+    OnboardingXeroConnectorComponent,
   ],
   imports: [
     CommonModule,

@@ -52,9 +52,9 @@ describe('OnboardingLandingComponent', () => {
   });
 
   it('connectQbo function check', () => {
-    spyOn(authService, 'redirectToQboOAuth').and.callThrough();
+    spyOn(authService, 'redirectToXeroOAuth').and.callThrough();
     expect(component.connectQbo()).toBeUndefined();
     fixture.detectChanges();
-    expect(authService.redirectToQboOAuth).toHaveBeenCalled();
+    expect(authService.redirectToXeroOAuth).toHaveBeenCalled();
   });
 });

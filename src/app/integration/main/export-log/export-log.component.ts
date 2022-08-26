@@ -172,7 +172,7 @@ export class ExportLogComponent implements OnInit {
           referenceNumber: referenceNumber,
           exportedAs: exportType,
           fyleUrl: fyleUrl,
-          qboUrl: `${environment.qbo_app_url}/app/${type}?txnId=${id}`,
+          xeroUrl: `${environment.app_url}/app/${type}?txnId=${id}`,
           expenses: expenseGroup.expenses
         });
       });

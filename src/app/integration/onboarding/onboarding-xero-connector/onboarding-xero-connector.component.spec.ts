@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { OnboardingQboConnectorComponent } from './onboarding-qbo-connector.component';
+import { OnboardingXeroConnectorComponent } from './onboarding-xero-connector.component';
 
 describe('OnboardingQboConnectorComponent', () => {
-  let component: OnboardingQboConnectorComponent;
-  let fixture: ComponentFixture<OnboardingQboConnectorComponent>;
+  let component: OnboardingXeroConnectorComponent;
+  let fixture: ComponentFixture<OnboardingXeroConnectorComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ OnboardingQboConnectorComponent ]
+      declarations: [ OnboardingXeroConnectorComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(OnboardingQboConnectorComponent);
+    fixture = TestBed.createComponent(OnboardingXeroConnectorComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

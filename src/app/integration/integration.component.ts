@@ -41,7 +41,6 @@ export class IntegrationComponent implements OnInit {
     if (pathName === '/workspaces') {
       const onboardingStateComponentMap = {
         [OnboardingState.CONNECTION]: '/workspaces/onboarding/landing',
-        [OnboardingState.MAP_EMPLOYEES]: '/workspaces/onboarding/employee_settings',
         [OnboardingState.EXPORT_SETTINGS]: '/workspaces/onboarding/export_settings',
         [OnboardingState.IMPORT_SETTINGS]: '/workspaces/onboarding/import_settings',
         [OnboardingState.ADVANCED_CONFIGURATION]: '/workspaces/onboarding/advanced_settings',
@@ -75,11 +74,10 @@ export class IntegrationComponent implements OnInit {
         workspaceId: workspace.id
       });
       this.storageService.set('workspaceId', this.workspace.id);
-      this.storageService.set('currency', workspace.fyle_currency);
       this.storageService.set('onboardingState', workspace.onboarding_state);
       this.storageService.set('workspaceCreatedAt', workspace.created_at);
       this.workspaceService.syncFyleDimensions().subscribe();
-      this.workspaceService.syncQBODimensions().subscribe();
+      this.workspaceService.syncXeroDimensions().subscribe();
       this.isLoading = false;
       this.navigate();
     });

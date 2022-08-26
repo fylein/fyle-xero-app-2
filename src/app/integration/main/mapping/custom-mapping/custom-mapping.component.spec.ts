@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
 import { of } from 'rxjs';
 import { postMappingSettingResponse } from 'src/app/core/services/misc/mapping.service.fixture';
 import { fyleExpenseFields, mappedRowsFormArray, mappingRow, mappingSettingResponse } from './custom-mapping.fixture';
-import { FyleField, MappingDestinationField, MappingSourceField, QBOField } from 'src/app/core/models/enum/enum.model';
+import { FyleField, MappingDestinationField } from 'src/app/core/models/enum/enum.model';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('CustomMappingComponent', () => {
@@ -80,13 +80,13 @@ describe('CustomMappingComponent', () => {
     expect(mappingRow.isDeleteButtonAllowed).toBeTrue();
   });
 
-  it('should delete mapping setting', () => {
-    component.mappingSettingForm.patchValue({
-      mappingSetting: mappedRowsFormArray
-    });
-    fixture.detectChanges();
-    expect(component.deleteMappingSetting(0)).toBeUndefined();
-  });
+  // it('should delete mapping setting', () => {
+  //   component.mappingSettingForm.patchValue({
+  //     mappingSetting: mappedRowsFormArray
+  //   });
+  //   fixture.detectChanges();
+  //   expect(component.deleteMappingSetting(0)).toBeUndefined();
+  // });
 
   it('should clear mapping row', () => {
     component.mappingSettingForm.patchValue({
@@ -111,8 +111,8 @@ describe('CustomMappingComponent', () => {
     });
     fixture.detectChanges();
 
-    expect(component.updateMappingRow(0, MappingDestinationField.DEPARTMENT)).toBeUndefined();
-    expect(component.mappingRows[0].qboField).toBe(MappingDestinationField.DEPARTMENT);
+    expect(component.updateMappingRow(0, MappingDestinationField.ACCOUNT)).toBeUndefined();
+    expect(component.mappingRows[0].qboField).toBe(MappingDestinationField.ACCOUNT);
 
     expect(component.updateMappingRow(0, '', FyleField.COST_CENTER)).toBeUndefined();
     expect(component.mappingRows[0].fyleField).toBe(FyleField.COST_CENTER);
