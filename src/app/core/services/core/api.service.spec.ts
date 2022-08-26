@@ -112,7 +112,7 @@ describe('ApiService', () => {
         sync_fyle_to_xero_payments: false,
         sync_xero_to_fyle_payments: false,
         auto_create_destination_entity: true,
-        change_accounting_period: true,
+        change_accounting_period: true
       },
       general_mappings: {
         bill_payment_account: { id: '1', name: 'Fyle' }
@@ -129,7 +129,7 @@ describe('ApiService', () => {
         sync_fyle_to_xero_payments: false,
         sync_xero_to_fyle_payments: false,
         auto_create_destination_entity: true,
-        change_accounting_period: true,
+        change_accounting_period: true
       },
       general_mappings: {
         bill_payment_account: { id: '1', name: 'Fyle' }
@@ -141,7 +141,7 @@ describe('ApiService', () => {
       },
       workspace_id: 1
     };
-    service.put(`/v2/workspaces/${workspace_id}/advanced_configurations/`,advancedSettingPayload).subscribe(value => {
+    service.put(`/v2/workspaces/${workspace_id}/advanced_configurations/`, advancedSettingPayload).subscribe(value => {
       expect(value).toEqual(advancedSettingResponse);
     });
     const req = httpMock.expectOne({
@@ -157,7 +157,7 @@ describe('ApiService', () => {
         sync_fyle_to_xero_payments: false,
         sync_xero_to_fyle_payments: false,
         auto_create_destination_entity: true,
-        change_accounting_period: true,
+        change_accounting_period: true
       },
       general_mappings: {
         bill_payment_account: { id: '1', name: 'Fyle' }
@@ -174,7 +174,7 @@ describe('ApiService', () => {
         sync_fyle_to_xero_payments: false,
         sync_xero_to_fyle_payments: false,
         auto_create_destination_entity: true,
-        change_accounting_period: true,
+        change_accounting_period: true
       },
       general_mappings: {
         bill_payment_account: { id: '1', name: 'Fyle' }
@@ -187,7 +187,7 @@ describe('ApiService', () => {
       workspace_id: 1
     };
     const response = { status: 404, statusText: "Not Found" };
-    service.put(`/v2/workspaces/${workspace_id}/advanced_configurations/`,advancedSettingPayload).subscribe(value => {
+    service.put(`/v2/workspaces/${workspace_id}/advanced_configurations/`, advancedSettingPayload).subscribe(value => {
       expect(value).toEqual(advancedSettingResponse);
     },
     error => {

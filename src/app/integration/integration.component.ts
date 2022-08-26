@@ -46,9 +46,9 @@ export class IntegrationComponent implements OnInit {
         [OnboardingState.ADVANCED_CONFIGURATION]: '/workspaces/onboarding/advanced_settings',
         [OnboardingState.COMPLETE]: '/workspaces/main'
       };
-      //TODO 
-      //this.router.navigateByUrl(onboardingStateComponentMap[this.workspace.onboarding_state]);
-      this.router.navigateByUrl(onboardingStateComponentMap['COMPLETE']);
+      // TODO
+      // This.router.navigateByUrl(onboardingStateComponentMap[this.workspace.onboarding_state]);
+      this.router.navigateByUrl(onboardingStateComponentMap.COMPLETE);
     }
   }
 
@@ -76,7 +76,7 @@ export class IntegrationComponent implements OnInit {
       });
       this.storageService.set('workspaceId', this.workspace.id);
       // TODO after api
-      //this.storageService.set('onboardingState', workspace.onboarding_state);
+      // This.storageService.set('onboardingState', workspace.onboarding_state);
       this.storageService.set('onboardingState', 'COMPLETE');
       this.storageService.set('workspaceCreatedAt', workspace.created_at);
       this.workspaceService.syncFyleDimensions().subscribe();

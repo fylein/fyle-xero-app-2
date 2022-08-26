@@ -26,7 +26,7 @@ describe('OnboardingLandingComponent', () => {
         { provide: AuthService, useValue: service1},
         { provide: WorkspaceService, useValue: service2}
       ],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
     })
     .compileComponents();
   });

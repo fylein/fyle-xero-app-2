@@ -30,8 +30,8 @@ export const advancedSettingResponse:AdvancedSettingGet = {
         sync_fyle_to_xero_payments: false,
         sync_xero_to_fyle_payments: false,
         auto_create_destination_entity: true,
-        change_accounting_period: true,
-        
+        change_accounting_period: true
+
       },
       general_mappings: {
         bill_payment_account: {id: '1', name: 'Fyle'}
@@ -78,8 +78,8 @@ export const getadvancedSettingResponse:AdvancedSettingGet = {
     sync_fyle_to_xero_payments: false,
     sync_xero_to_fyle_payments: false,
     auto_create_destination_entity: true,
-    change_accounting_period: true,
-    
+    change_accounting_period: true
+
   },
   general_mappings: {
     bill_payment_account: {id: '1', name: 'Fyle'}
@@ -97,8 +97,8 @@ export const getadvancedSettingResponse2:AdvancedSettingGet = {
     sync_fyle_to_xero_payments: false,
     sync_xero_to_fyle_payments: false,
     auto_create_destination_entity: true,
-    change_accounting_period: true,
-    
+    change_accounting_period: true
+
   },
   general_mappings: {
     bill_payment_account: {id: '1', name: 'Fyle'}

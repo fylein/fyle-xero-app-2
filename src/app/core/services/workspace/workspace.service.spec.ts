@@ -138,7 +138,7 @@ describe('WorkspaceService', () => {
     });
   req.flush(response);
   });
-  
+
   it('syncFyleDimensions service', () => {
     expect(service.syncFyleDimensions()).toBeTruthy();
   });

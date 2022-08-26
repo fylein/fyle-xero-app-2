@@ -82,8 +82,8 @@ describe('AdvancedSettingsComponent', () => {
       autoCreateVendors: [component.advancedSettings.workspace_general_settings.auto_create_destination_entity],
       exportSchedule: [component.advancedSettings.workspace_schedules?.enabled ? component.advancedSettings.workspace_schedules.interval_hours : false],
       exportScheduleFrequency: [component.advancedSettings.workspace_schedules?.enabled ? component.advancedSettings.workspace_schedules.interval_hours : null],
-      searchOption: [],
-      
+      searchOption: []
+
     });
     component.advancedSettingsForm = form;
     router = TestBed.inject(Router);
@@ -127,8 +127,8 @@ describe('AdvancedSettingsComponent', () => {
       autoCreateVendors: [component.advancedSettings.workspace_general_settings.auto_create_destination_entity],
       exportSchedule: [component.advancedSettings.workspace_schedules?.enabled ? component.advancedSettings.workspace_schedules.interval_hours : false],
       exportScheduleFrequency: [component.advancedSettings.workspace_schedules?.enabled ? component.advancedSettings.workspace_schedules.interval_hours : null],
-      searchOption: [],
-      
+      searchOption: []
+
     });
     component.saveInProgress = false;
     component.advancedSettingsForm = form;
@@ -152,8 +152,8 @@ describe('AdvancedSettingsComponent', () => {
       autoCreateVendors: [component.advancedSettings.workspace_general_settings.auto_create_destination_entity],
       exportSchedule: [component.advancedSettings.workspace_schedules?.enabled ? component.advancedSettings.workspace_schedules.interval_hours : false],
       exportScheduleFrequency: [component.advancedSettings.workspace_schedules?.enabled ? component.advancedSettings.workspace_schedules.interval_hours : null],
-      searchOption: [],
-      
+      searchOption: []
+
     });
     component.saveInProgress = false;
     component.advancedSettingsForm = form;
@@ -175,8 +175,8 @@ describe('AdvancedSettingsComponent', () => {
       autoCreateVendors: [component.advancedSettings.workspace_general_settings.auto_create_destination_entity],
       exportSchedule: [component.advancedSettings.workspace_schedules?.enabled ? component.advancedSettings.workspace_schedules.interval_hours : false],
       exportScheduleFrequency: [component.advancedSettings.workspace_schedules?.enabled ? component.advancedSettings.workspace_schedules.interval_hours : null],
-      searchOption: [],
-      
+      searchOption: []
+
     });
     component.saveInProgress = false;
     component.advancedSettingsForm = form;
