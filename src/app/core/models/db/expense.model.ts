@@ -15,12 +15,14 @@ export type Expense = {
   foreign_amount: number;
   foreign_currency: string;
   fund_source: string;
+  org_id: string;
   id: number;
   project: string;
   purpose: string;
   reimbursable: boolean;
   report_id: string;
   settlement_id: string;
+  payment_number: string;
   spent_at: Date;
   state: string;
   sub_category: string;
@@ -29,7 +31,6 @@ export type Expense = {
   billable: boolean;
   verified_at: Date;
   paid_on_xero: boolean;
-  // Having any here is ok, since different expense have different properties
   custom_properties: any[];
 };
 

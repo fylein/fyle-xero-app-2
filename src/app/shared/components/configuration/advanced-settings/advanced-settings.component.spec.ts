@@ -5,7 +5,7 @@ import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { HttpClientModule } from '@angular/common/http';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { adminEmails, advancedSettingResponse, destinationAttribute, emailResponse, errorResponse, getadvancedSettingResponse, getadvancedSettingResponse2, memo, previewResponse, response } from './advanced-settings.fixture';
+import { adminEmails, advancedSettingResponse, destinationAttribute, errorResponse, getadvancedSettingResponse, getadvancedSettingResponse2, response } from './advanced-settings.fixture';
 import { Router } from '@angular/router';
 import { AdvancedSettingService } from 'src/app/core/services/configuration/advanced-setting.service';
 import { MappingService } from 'src/app/core/services/misc/mapping.service';
@@ -13,7 +13,6 @@ import { WorkspaceService } from 'src/app/core/services/workspace/workspace.serv
 import { of, throwError } from 'rxjs';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { OnboardingState, PaymentSyncDirection } from '../../../../core/models/enum/enum.model';
-import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { By } from '@angular/platform-browser';
 import { environment } from 'src/environments/environment';
 import { MatDialog } from '@angular/material/dialog';
@@ -78,14 +77,11 @@ describe('AdvancedSettingsComponent', () => {
       paymentSync: [PaymentSyncDirection.FYLE_TO_XERO],
       billPaymentAccount: [component.advancedSettings.general_mappings.bill_payment_account?.id],
       changeAccountingPeriod: [component.advancedSettings.workspace_general_settings.change_accounting_period],
-      singleCreditLineJE: [component.advancedSettings.workspace_general_settings.je_single_credit_line],
       autoCreateVendors: [component.advancedSettings.workspace_general_settings.auto_create_destination_entity],
       exportSchedule: [component.advancedSettings.workspace_schedules?.enabled ? component.advancedSettings.workspace_schedules.interval_hours : false],
       exportScheduleFrequency: [component.advancedSettings.workspace_schedules?.enabled ? component.advancedSettings.workspace_schedules.interval_hours : null],
-      memoStructure: [component.advancedSettings.workspace_general_settings.memo_structure],
       searchOption: [],
-      emails: [emailResponse.emails_selected],
-      addedEmail: [emailResponse.additional_email_options]
+      importCustomers: [component.advancedSettings.workspace_general_settings.import_customers]
     });
     component.advancedSettingsForm = form;
     router = TestBed.inject(Router);
@@ -109,10 +105,6 @@ describe('AdvancedSettingsComponent', () => {
     expect(component.showSingleCreditLineJEField()).toBeTrue();
   });
 
-  // It('showAutoCreateVendorsField function check', () => {
-  //   Expect(component.showAutoCreateVendorsField()).toBeTrue();
-  // });
-
   it('navigateToPreviousStep function check', () => {
     component.navigateToPreviousStep();
     expect(routerSpy.navigate).toHaveBeenCalledWith(['/workspaces/onboarding/import_settings']);
@@ -125,25 +117,16 @@ describe('AdvancedSettingsComponent', () => {
     expect(component.isLoading).toBeFalse();
   });
 
-  it('formatememopreview function check', () => {
-    component.memoStructure = memo;
-    fixture.detectChanges();
-    (component as any).formatMemoPreview();
-    expect(component.memoPreviewText.length).toEqual(previewResponse.length);
-  });
-
   it('Save Function check', () => {
     const form = formbuilder.group({
       paymentSync: [PaymentSyncDirection.FYLE_TO_XERO],
       billPaymentAccount: [component.advancedSettings.general_mappings.bill_payment_account?.id],
       changeAccountingPeriod: [component.advancedSettings.workspace_general_settings.change_accounting_period],
-      singleCreditLineJE: [component.advancedSettings.workspace_general_settings.je_single_credit_line],
       autoCreateVendors: [component.advancedSettings.workspace_general_settings.auto_create_destination_entity],
       exportSchedule: [component.advancedSettings.workspace_schedules?.enabled ? component.advancedSettings.workspace_schedules.interval_hours : false],
       exportScheduleFrequency: [component.advancedSettings.workspace_schedules?.enabled ? component.advancedSettings.workspace_schedules.interval_hours : null],
-      memoStructure: [component.advancedSettings.workspace_general_settings.memo_structure],
       searchOption: [],
-      emails: [emailResponse.emails_selected]
+      importCustomers: [component.advancedSettings.workspace_general_settings.import_customers]
     });
     component.saveInProgress = false;
     component.advancedSettingsForm = form;
@@ -164,13 +147,11 @@ describe('AdvancedSettingsComponent', () => {
       paymentSync: [PaymentSyncDirection.FYLE_TO_XERO],
       billPaymentAccount: [component.advancedSettings.general_mappings.bill_payment_account?.id],
       changeAccountingPeriod: [component.advancedSettings.workspace_general_settings.change_accounting_period],
-      singleCreditLineJE: [component.advancedSettings.workspace_general_settings.je_single_credit_line],
       autoCreateVendors: [component.advancedSettings.workspace_general_settings.auto_create_destination_entity],
       exportSchedule: [component.advancedSettings.workspace_schedules?.enabled ? component.advancedSettings.workspace_schedules.interval_hours : false],
       exportScheduleFrequency: [component.advancedSettings.workspace_schedules?.enabled ? component.advancedSettings.workspace_schedules.interval_hours : null],
-      memoStructure: [component.advancedSettings.workspace_general_settings.memo_structure],
       searchOption: [],
-      emails: [emailResponse.emails_selected]
+      importCustomers: [component.advancedSettings.workspace_general_settings.import_customers]
     });
     component.saveInProgress = false;
     component.advancedSettingsForm = form;
@@ -189,13 +170,11 @@ describe('AdvancedSettingsComponent', () => {
       paymentSync: [PaymentSyncDirection.FYLE_TO_XERO],
       billPaymentAccount: [component.advancedSettings.general_mappings.bill_payment_account?.id],
       changeAccountingPeriod: [component.advancedSettings.workspace_general_settings.change_accounting_period],
-      singleCreditLineJE: [component.advancedSettings.workspace_general_settings.je_single_credit_line],
       autoCreateVendors: [component.advancedSettings.workspace_general_settings.auto_create_destination_entity],
       exportSchedule: [component.advancedSettings.workspace_schedules?.enabled ? component.advancedSettings.workspace_schedules.interval_hours : false],
       exportScheduleFrequency: [component.advancedSettings.workspace_schedules?.enabled ? component.advancedSettings.workspace_schedules.interval_hours : null],
-      memoStructure: [component.advancedSettings.workspace_general_settings.memo_structure],
       searchOption: [],
-      emails: [emailResponse.emails_selected]
+      importCustomers: [component.advancedSettings.workspace_general_settings.import_customers]
     });
     component.saveInProgress = false;
     component.advancedSettingsForm = form;
@@ -223,27 +202,4 @@ describe('AdvancedSettingsComponent', () => {
     expect((component as any).createScheduledWatcher()).toBeUndefined();
   });
 
-  it('createMemoStructureWatcher function check', () => {
-    component.advancedSettingsForm.controls.memoStructure.patchValue(['Integration']);
-    expect((component as any).createMemoStructureWatcher()).toBeUndefined();
-  });
-
-  xit('drop function chek', () => {
-    component.defaultMemoFields = memo;
-    const button = fixture.debugElement.query(By.css('.advanced-settings--memo-preview-select'));
-    const final = button.children[0].children[0].children[0].nativeElement;
-    let event = final.click();
-    event = {
-      previousIndex: 0,
-      currentIndex: 1
-    };
-    fixture.detectChanges();
-    expect(component.drop(event)).toBeUndefined();
-  });
-
-  xit('openAddemailDialog function check', () => {
-    expect(component.openAddemailDialog()).toBeUndefined();
-    fixture.detectChanges();
-    expect(dialogSpy1).toHaveBeenCalled();
-  });
 });

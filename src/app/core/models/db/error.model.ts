@@ -1,5 +1,5 @@
 import { ErrorType } from "../enum/enum.model";
-import { ExpenseAttribute } from "./expense-attribute-detail.model";
+import { ExpenseAttribute } from "./expense-attribute.model";
 import { ExpenseGroup } from "./expense-group.model";
 
 export type Error = {

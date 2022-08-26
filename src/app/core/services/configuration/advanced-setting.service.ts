@@ -31,7 +31,4 @@ export class AdvancedSettingService {
     return this.apiService.put(`/v2/workspaces/${this.workspaceService.getWorkspaceId()}/advanced_configurations/`, exportSettingsPayload);
   }
 
-  getWorkspaceAdmins(): Observable<[WorkspaceScheduleEmailOptions]> {
-    return this.apiService.get(`/workspaces/${this.workspaceService.getWorkspaceId()}/admins/`, {});
-  }
 }

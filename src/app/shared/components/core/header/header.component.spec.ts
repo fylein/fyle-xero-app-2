@@ -12,6 +12,7 @@ import { of, ReplaySubject, throwError } from 'rxjs';
 import { response } from '../../configuration/xero-connector/xero-connector.fixture';
 import { NavigationStart, Router, RouterEvent } from '@angular/router';
 import { Renderer2, Type } from '@angular/core';
+import { environment } from 'src/environments/environment';
 
 describe('HeaderComponent', () => {
   let component: HeaderComponent;
@@ -56,8 +57,8 @@ describe('HeaderComponent', () => {
     service4 = {
       getFyleCurrency: () => 'USD',
       patchWorkspace: () => of({ app: 'done' }),
-      getWorkspaceCreatedAt: () => new Date('2022-06-05T09:30:00.000Z')
-
+      getWorkspaceCreatedAt: () => new Date('2022-06-05T09:30:00.000Z'),
+      getWorkspaceId: () => environment.tests.workspaceId
     };
     const localStorageDump = {
       email: 'fyle@fyle.in',

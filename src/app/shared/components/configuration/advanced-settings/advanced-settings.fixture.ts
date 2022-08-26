@@ -21,27 +21,26 @@ export const response:WorkspaceGeneralSetting = {
   sync_xero_to_fyle_payments: false,
   updated_at: new Date("2022-04-28T12:48:39.150177Z"),
   workspace: 1,
-  import_customers: false
+  import_customers: false,
+  map_merchant_to_contact: false
 };
 
 export const advancedSettingResponse:AdvancedSettingGet = {
   workspace_general_settings: {
-    sync_fyle_to_xero_payments: false,
-    sync_xero_to_fyle_payments: false,
-    auto_create_destination_entity: true,
-    je_single_credit_line: true,
-    change_accounting_period: true,
-    memo_structure: ['Fyle']
-  },
-  general_mappings: {
-    bill_payment_account: { id: '1', name: 'Fyle' }
-  },
-  workspace_schedules: {
-    enabled: true,
-    interval_hours: 10,
-    emails_selected: [],
-    additional_email_options: []
-  },
+        sync_fyle_to_xero_payments: false,
+        sync_xero_to_fyle_payments: false,
+        auto_create_destination_entity: true,
+        change_accounting_period: true,
+        import_customers: true
+      },
+      general_mappings: {
+        bill_payment_account: {id: '1', name: 'Fyle'}
+      },
+      workspace_schedules: {
+        enabled: true,
+        interval_hours: 10,
+        start_datetime: new Date()
+      },
   workspace_id: 1
 };
 export const destinationAttribute: DestinationAttribute[] = [{
@@ -77,41 +76,37 @@ export const destinationAttribute: DestinationAttribute[] = [{
 export const getadvancedSettingResponse:AdvancedSettingGet = {
   workspace_general_settings: {
     sync_fyle_to_xero_payments: false,
-    sync_xero_to_fyle_payments: true,
+    sync_xero_to_fyle_payments: false,
     auto_create_destination_entity: true,
-    je_single_credit_line: true,
     change_accounting_period: true,
-    memo_structure: ['Fyle']
+    import_customers: true
   },
   general_mappings: {
-    bill_payment_account: { id: '1', name: 'Fyle' }
+    bill_payment_account: {id: '1', name: 'Fyle'}
   },
   workspace_schedules: {
     enabled: true,
     interval_hours: 10,
-    emails_selected: [],
-    additional_email_options: []
+    start_datetime: new Date()
   },
   workspace_id: 1
 };
 
 export const getadvancedSettingResponse2:AdvancedSettingGet = {
   workspace_general_settings: {
-    sync_fyle_to_xero_payments: true,
-    sync_xero_to_fyle_payments: true,
+    sync_fyle_to_xero_payments: false,
+    sync_xero_to_fyle_payments: false,
     auto_create_destination_entity: true,
-    je_single_credit_line: true,
     change_accounting_period: true,
-    memo_structure: ['Fyle']
+    import_customers: true
   },
   general_mappings: {
-    bill_payment_account: { id: '1', name: 'Fyle' }
+    bill_payment_account: {id: '1', name: 'Fyle'}
   },
   workspace_schedules: {
     enabled: true,
     interval_hours: 10,
-    emails_selected: [],
-    additional_email_options: []
+    start_datetime: new Date()
   },
   workspace_id: 1
 };
@@ -131,9 +126,7 @@ export const emailResponse: WorkspaceSchedule = {
   enabled: false,
   start_datetime: new Date(),
   interval_hours: 1,
-  schedule: 1,
-  emails_selected: ['fyle@fyle.in', 'integrations@fyle.in' ],
-  additional_email_options: [{name: 'fyle3', email: 'fyle3@fyle.in'}]
+  schedule: 1
 };
 export const adminEmails: WorkspaceScheduleEmailOptions[] = [ {name: 'fyle', email: 'fyle@fyle.in'}, {name: 'fyle2', email: 'fyle2@fyle.in'}];
 export const memo = ['employee_email', 'merchant', 'purpose', 'category', 'report_number', 'expense_link'];

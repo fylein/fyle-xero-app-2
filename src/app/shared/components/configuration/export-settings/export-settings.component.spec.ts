@@ -71,18 +71,12 @@ describe('ExportSettingsComponent', () => {
       expenseState: [component.exportSettings.expense_group_settings?.expense_state, Validators.required],
       reimbursableExpense: [component.exportSettings.workspace_general_settings?.reimbursable_expenses_object ? true : false, (component as any).exportSelectionValidator()],
       reimbursableExportType: [component.exportSettings.workspace_general_settings?.reimbursable_expenses_object],
-      reimbursableExportGroup: [(component as any).getExportGroup(component.exportSettings.expense_group_settings?.reimbursable_expense_group_fields)],
       reimbursableExportDate: [component.exportSettings.expense_group_settings?.reimbursable_export_date_type],
       creditCardExpense: [component.exportSettings.workspace_general_settings?.corporate_credit_card_expenses_object ? true : false, (component as any).exportSelectionValidator()],
       creditCardExportType: [component.exportSettings.workspace_general_settings?.corporate_credit_card_expenses_object],
-      creditCardExportGroup: [(component as any).getExportGroup(component.exportSettings.expense_group_settings?.corporate_credit_card_expense_group_fields)],
       creditCardExportDate: [component.exportSettings.expense_group_settings?.ccc_export_date_type],
-      bankAccount: [component.exportSettings.general_mappings?.bank_account?.id ? component.exportSettings.general_mappings.bank_account : null],
-      defaultCCCAccount: [component.exportSettings.general_mappings?.default_ccc_account?.id ? component.exportSettings.general_mappings.default_ccc_account : null],
-      accountsPayable: [component.exportSettings.general_mappings?.accounts_payable?.id ? component.exportSettings.general_mappings.accounts_payable : null],
-      defaultCreditCardVendor: [component.exportSettings.general_mappings?.default_ccc_vendor?.id ? component.exportSettings.general_mappings.default_ccc_vendor : null],
-      xeroExpenseAccount: [component.exportSettings.general_mappings?.xero_expense_account?.id ? component.exportSettings.general_mappings.xero_expense_account : null],
-      defaultDebitCardAccount: [component.exportSettings.general_mappings?.default_debit_card_account?.id ? component.exportSettings.general_mappings.default_debit_card_account : null],
+      bankAccount: [component.exportSettings.general_mappings?.bank_account?.id ? component.exportSettings.general_mappings.bank_account : 'dtd'],
+      autoMapEmployees: [component.exportSettings.workspace_general_settings?.auto_map_employees],
       searchOption: []
     });
     fixture.detectChanges();
@@ -136,10 +130,6 @@ describe('ExportSettingsComponent', () => {
     expect((component as any).createCreditCardExpenseWatcher()).toBeUndefined();
   });
 
-  it('restrictExpenseGroupSetting function check', () => {
-    expect((component as any).restrictExpenseGroupSetting('CREDIT CARD PURCHASE')).toBeUndefined();
-  });
-
   it('getAccountsPayableLabel function check', () => {
     component.exportSettingsForm.controls.reimbursableExportType.patchValue(null);
     component.exportSettingsForm.controls.creditCardExportType.patchValue(CorporateCreditCardExpensesObject.BANK_TRANSACTION);
@@ -175,24 +165,6 @@ describe('ExportSettingsComponent', () => {
     component.exportSettingsForm.controls.creditCardExportType.patchValue(CorporateCreditCardExpensesObject.BANK_TRANSACTION);
     fixture.detectChanges();
     expect((component as any).setGeneralMappingsValidator()).toBeUndefined();
-  });
-
-  it('createReimbursableExportGroupWatcher function check', () => {
-    const reimbursable = component.exportSettingsForm.controls.reimbursableExportGroup.value;
-    component.exportSettingsForm.controls.reimbursableExportGroup.patchValue('expense_id');
-    expect((component as any).createReimbursableExportGroupWatcher()).toBeUndefined();
-    fixture.detectChanges();
-    component.exportSettingsForm.controls.reimbursableExportGroup.patchValue(reimbursable);
-    expect((component as any).createReimbursableExportGroupWatcher()).toBeUndefined();
-  });
-
-  it('createCreditCardExportGroupWatcher function check', () => {
-    const reimbursable = component.exportSettingsForm.controls.creditCardExportGroup.value;
-    component.exportSettingsForm.controls.creditCardExportGroup.patchValue('expense_id');
-    expect((component as any).createCreditCardExportGroupWatcher()).toBeUndefined();
-    fixture.detectChanges();
-    component.exportSettingsForm.controls.creditCardExportGroup.patchValue(reimbursable);
-    expect((component as any).createCreditCardExportGroupWatcher()).toBeUndefined();
   });
 
   it('function check', () => {

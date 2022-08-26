@@ -8,6 +8,7 @@ export type WorkspaceGeneralSetting = {
   change_accounting_period: boolean;
   sync_fyle_to_xero_payments: boolean;
   sync_xero_to_fyle_payments: boolean;
+  map_merchant_to_contact: boolean;
   auto_map_employees: string;
   auto_create_destination_entity: boolean;
   skip_cards_mapping?: boolean;

@@ -93,11 +93,10 @@ export class OnboardingStepperComponent implements OnInit {
 
     const onboardingStateStepMap = {
       [OnboardingState.CONNECTION]: 1,
-      [OnboardingState.MAP_EMPLOYEES]: 2,
       [OnboardingState.EXPORT_SETTINGS]: 3,
-      [OnboardingState.IMPORT_SETTINGS]: 4,
-      [OnboardingState.ADVANCED_CONFIGURATION]: 5,
-      [OnboardingState.COMPLETE]: 6
+      [OnboardingState.IMPORT_SETTINGS]: 2,
+      [OnboardingState.ADVANCED_CONFIGURATION]: 4,
+      [OnboardingState.COMPLETE]: 5
     };
 
     for (let index = onboardingStateStepMap[onboardingState] - 1; index > 0; index--) {

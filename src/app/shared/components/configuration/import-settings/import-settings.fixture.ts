@@ -24,7 +24,8 @@ const workspaceresponse:WorkspaceGeneralSetting = {
   reimbursable_expenses_object: "",
   corporate_credit_card_expenses_object: "",
   auto_map_employees: "",
-  import_customers: false
+  import_customers: false,
+  map_merchant_to_contact: false
 };
 
 const general_mappings:GeneralMapping = {

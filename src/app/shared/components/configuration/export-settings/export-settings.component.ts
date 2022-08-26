@@ -166,14 +166,11 @@ export class ExportSettingsComponent implements OnInit, OnDestroy {
     this.exportSettingsForm.controls.reimbursableExpense.valueChanges.subscribe((isReimbursableExpenseSelected) => {
       if (isReimbursableExpenseSelected) {
         this.exportSettingsForm.controls.reimbursableExportType.setValidators(Validators.required);
-        this.exportSettingsForm.controls.reimbursableExportGroup.setValidators(Validators.required);
         this.exportSettingsForm.controls.reimbursableExportDate.setValidators(Validators.required);
       } else {
         this.exportSettingsForm.controls.reimbursableExportType.clearValidators();
-        this.exportSettingsForm.controls.reimbursableExportGroup.clearValidators();
         this.exportSettingsForm.controls.reimbursableExportDate.clearValidators();
         this.exportSettingsForm.controls.reimbursableExportType.setValue(null);
-        this.exportSettingsForm.controls.reimbursableExportGroup.setValue(null);
         this.exportSettingsForm.controls.reimbursableExportDate.setValue(null);
       }
 
@@ -185,14 +182,11 @@ export class ExportSettingsComponent implements OnInit, OnDestroy {
     this.exportSettingsForm.controls.creditCardExpense.valueChanges.subscribe((isCreditCardExpenseSelected) => {
       if (isCreditCardExpenseSelected) {
         this.exportSettingsForm.controls.creditCardExportType.setValidators(Validators.required);
-        this.exportSettingsForm.controls.creditCardExportGroup.setValidators(Validators.required);
         this.exportSettingsForm.controls.creditCardExportDate.setValidators(Validators.required);
       } else {
         this.exportSettingsForm.controls.creditCardExportType.clearValidators();
-        this.exportSettingsForm.controls.creditCardExportGroup.clearValidators();
         this.exportSettingsForm.controls.creditCardExportDate.clearValidators();
         this.exportSettingsForm.controls.creditCardExportType.setValue(null);
-        this.exportSettingsForm.controls.creditCardExportGroup.setValue(null);
         this.exportSettingsForm.controls.creditCardExportDate.setValue(null);
       }
 
@@ -200,12 +194,6 @@ export class ExportSettingsComponent implements OnInit, OnDestroy {
     });
   }
 
-  private restrictExpenseGroupSetting(creditCardExportType: string | null) : void {
-    if (creditCardExportType === CorporateCreditCardExpensesObject.BANK_TRANSACTION) {
-      this.exportSettingsForm.controls.creditCardExportGroup.setValue(ExpenseGroupingFieldOption.EXPENSE_ID);
-      this.exportSettingsForm.controls.creditCardExportGroup.disable();
-  }
-}
 
   private createReimbursableExportTypeWatcher(): void {
     this.exportSettingsForm.controls.reimbursableExportType.valueChanges.subscribe(() => {
@@ -214,10 +202,10 @@ export class ExportSettingsComponent implements OnInit, OnDestroy {
   }
 
   private createCreditCardExportTypeWatcher(): void {
-    this.restrictExpenseGroupSetting(this.exportSettings.workspace_general_settings.corporate_credit_card_expenses_object);
+    // This.restrictExpenseGroupSetting(this.exportSettings.workspace_general_settings.corporate_credit_card_expenses_object);
     this.exportSettingsForm.controls.creditCardExportType.valueChanges.subscribe((creditCardExportType: string) => {
       this.setGeneralMappingsValidator();
-      this.restrictExpenseGroupSetting(creditCardExportType);
+      // This.restrictExpenseGroupSetting(creditCardExportType);
     });
   }
 
@@ -293,75 +281,40 @@ export class ExportSettingsComponent implements OnInit, OnDestroy {
       this.exportSettingsForm.controls.bankAccount.updateValueAndValidity();
     }
 
-    if (this.showCreditCardAccountField()) {
-      this.exportSettingsForm.controls.defaultCCCAccount.setValidators(Validators.required);
-    } else {
-      this.exportSettingsForm.controls.defaultCCCAccount.clearValidators();
-      this.exportSettingsForm.controls.defaultCCCAccount.updateValueAndValidity();
-    }
+    // If (this.showCreditCardAccountField()) {
+    //   This.exportSettingsForm.controls.defaultCCCAccount.setValidators(Validators.required);
+    // } else {
+    //   This.exportSettingsForm.controls.defaultCCCAccount.clearValidators();
+    //   This.exportSettingsForm.controls.defaultCCCAccount.updateValueAndValidity();
+    // }
 
-    if (this.showDebitCardAccountField()) {
-      this.exportSettingsForm.controls.defaultDebitCardAccount.setValidators(Validators.required);
-    } else {
-      this.exportSettingsForm.controls.defaultDebitCardAccount.clearValidators();
-      this.exportSettingsForm.controls.defaultDebitCardAccount.updateValueAndValidity();
-    }
+    // If (this.showDebitCardAccountField()) {
+    //   This.exportSettingsForm.controls.defaultDebitCardAccount.setValidators(Validators.required);
+    // } else {
+    //   This.exportSettingsForm.controls.defaultDebitCardAccount.clearValidators();
+    //   This.exportSettingsForm.controls.defaultDebitCardAccount.updateValueAndValidity();
+    // }
 
-    if (this.showReimbursableAccountsPayableField() || this.showCCCAccountsPayableField()) {
-      this.exportSettingsForm.controls.accountsPayable.setValidators(Validators.required);
-    } else {
-      this.exportSettingsForm.controls.accountsPayable.clearValidators();
-      this.exportSettingsForm.controls.accountsPayable.updateValueAndValidity();
-    }
+    // If (this.showReimbursableAccountsPayableField() || this.showCCCAccountsPayableField()) {
+    //   This.exportSettingsForm.controls.accountsPayable.setValidators(Validators.required);
+    // } else {
+    //   This.exportSettingsForm.controls.accountsPayable.clearValidators();
+    //   This.exportSettingsForm.controls.accountsPayable.updateValueAndValidity();
+    // }
 
-    if (this.showDefaultCreditCardVendorField()) {
-      this.exportSettingsForm.controls.defaultCreditCardVendor.setValidators(Validators.required);
-    } else {
-      this.exportSettingsForm.controls.defaultCreditCardVendor.clearValidators();
-      this.exportSettingsForm.controls.defaultCreditCardVendor.updateValueAndValidity();
-    }
+    // If (this.showDefaultCreditCardVendorField()) {
+    //   This.exportSettingsForm.controls.defaultCreditCardVendor.setValidators(Validators.required);
+    // } else {
+    //   This.exportSettingsForm.controls.defaultCreditCardVendor.clearValidators();
+    //   This.exportSettingsForm.controls.defaultCreditCardVendor.updateValueAndValidity();
+    // }
 
-    if (this.showExpenseAccountField()) {
-      this.exportSettingsForm.controls.xeroExpenseAccount.setValidators(Validators.required);
-    } else {
-      this.exportSettingsForm.controls.xeroExpenseAccount.clearValidators();
-      this.exportSettingsForm.controls.xeroExpenseAccount.updateValueAndValidity();
-    }
-  }
-
-  private createReimbursableExportGroupWatcher(): void {
-    this.exportSettingsForm.controls.reimbursableExportGroup.valueChanges.subscribe((reimbursableExportGroup: ExpenseGroupingFieldOption) => {
-      if (reimbursableExportGroup === ExpenseGroupingFieldOption.EXPENSE_ID) {
-        this.reimbursableExpenseGroupingDateOptions.pop();
-      } else {
-        if (this.reimbursableExpenseGroupingDateOptions.length !== 5) {
-          this.reimbursableExpenseGroupingDateOptions.push({
-            label: 'Last Spend Date',
-            value: ExportDateType.LAST_SPENT_AT
-          });
-        }
-      }
-    });
-  }
-
-  private createCreditCardExportGroupWatcher(): void {
-    this.exportSettingsForm.controls.creditCardExportGroup.valueChanges.subscribe((creditCardExportGroup: ExpenseGroupingFieldOption) => {
-      if (creditCardExportGroup && creditCardExportGroup === ExpenseGroupingFieldOption.EXPENSE_ID) {
-        this.cccExpenseGroupingDateOptions = this.cccExpenseGroupingDateOptions.filter((option) => {
-          return option.value !== ExportDateType.LAST_SPENT_AT;
-        });
-      } else {
-        const lastSpentAt = this.cccExpenseGroupingDateOptions.filter((option) => {
-          return option.value === ExportDateType.LAST_SPENT_AT;
-        });
-        if (!lastSpentAt.length) {
-          this.cccExpenseGroupingDateOptions.push({
-            label: 'Last Spend Date',
-            value: ExportDateType.LAST_SPENT_AT
-          });
-        }
-      }
-    });
+    // If (this.showExpenseAccountField()) {
+    //   This.exportSettingsForm.controls.xeroExpenseAccount.setValidators(Validators.required);
+    // } else {
+    //   This.exportSettingsForm.controls.xeroExpenseAccount.clearValidators();
+    //   This.exportSettingsForm.controls.xeroExpenseAccount.updateValueAndValidity();
+    // }
   }
 
   private setCustomValidatorsAndWatchers(): void {
@@ -372,10 +325,6 @@ export class ExportSettingsComponent implements OnInit, OnDestroy {
     // Export select fields
     this.createReimbursableExportTypeWatcher();
     this.createCreditCardExportTypeWatcher();
-
-    // Goruping fields
-    this.createReimbursableExportGroupWatcher();
-    this.createCreditCardExportGroupWatcher();
 
     this.setGeneralMappingsValidator();
   }
@@ -418,18 +367,12 @@ export class ExportSettingsComponent implements OnInit, OnDestroy {
       expenseState: [this.exportSettings.expense_group_settings?.expense_state, Validators.required],
       reimbursableExpense: [this.exportSettings.workspace_general_settings?.reimbursable_expenses_object ? true : false, this.exportSelectionValidator()],
       reimbursableExportType: [this.exportSettings.workspace_general_settings?.reimbursable_expenses_object],
-      reimbursableExportGroup: [this.getExportGroup(this.exportSettings.expense_group_settings?.reimbursable_expense_group_fields)],
       reimbursableExportDate: [this.exportSettings.expense_group_settings?.reimbursable_export_date_type],
       creditCardExpense: [this.exportSettings.workspace_general_settings?.corporate_credit_card_expenses_object ? true : false, this.exportSelectionValidator()],
       creditCardExportType: [this.exportSettings.workspace_general_settings?.corporate_credit_card_expenses_object],
-      creditCardExportGroup: [this.getExportGroup(this.exportSettings.expense_group_settings?.corporate_credit_card_expense_group_fields)],
       creditCardExportDate: [this.exportSettings.expense_group_settings?.ccc_export_date_type],
       bankAccount: [this.exportSettings.general_mappings?.bank_account?.id ? this.exportSettings.general_mappings.bank_account : null],
-      defaultCCCAccount: [this.exportSettings.general_mappings?.default_ccc_account?.id ? this.exportSettings.general_mappings.default_ccc_account : null],
-      accountsPayable: [this.exportSettings.general_mappings?.accounts_payable?.id ? this.exportSettings.general_mappings.accounts_payable : null],
-      defaultCreditCardVendor: [this.exportSettings.general_mappings?.default_ccc_vendor?.id ? this.exportSettings.general_mappings.default_ccc_vendor : null],
-      xeroExpenseAccount: [this.exportSettings.general_mappings?.xero_expense_account?.id ? this.exportSettings.general_mappings.xero_expense_account : null],
-      defaultDebitCardAccount: [this.exportSettings.general_mappings?.default_debit_card_account?.id ? this.exportSettings.general_mappings.default_debit_card_account : null],
+      autoMapEmployees: [this.exportSettings.workspace_general_settings?.auto_map_employees],
       searchOption: []
     });
 

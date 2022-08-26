@@ -110,12 +110,12 @@ describe('JwtInterceptor', () => {
     expect(interceptor.isTokenMandatory(`${API_BASE_URL}/workspaces/${workspace_id}/xero/employees/`)).toBeTrue();
   });
 
-  // It('getAccessToken() function check', () => {
-  //   SpyOn(authService, 'getRefreshToken').and.returnValue(null);
-  //   // @ts-ignore
-  //   Expect(interceptor.getAccessToken()).toBeDefined();
-  //   Expect(authService.getRefreshToken).toHaveBeenCalled();
-  // });
+  it('getAccessToken() function check', () => {
+    spyOn(authService, 'getRefreshToken').and.returnValue(null);
+    // @ts-ignore
+    expect(interceptor.getAccessToken()).toBeDefined();
+    expect(authService.getRefreshToken).toHaveBeenCalled();
+  });
 
   it('isTokenExpiring function check', () => {
     // @ts-ignore

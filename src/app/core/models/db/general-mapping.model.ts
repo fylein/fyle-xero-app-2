@@ -4,11 +4,11 @@ export type DefaultDestinationAttribute = {
 };
 
 export type GeneralMapping = {
-  id?: number;
+  id: number;
   bank_account: DefaultDestinationAttribute;
   payment_account: DefaultDestinationAttribute;
   default_tax_code: DefaultDestinationAttribute;
-  created_at?: Date;
-  updated_at?: Date;
-  workspace?: number;
+  created_at: Date;
+  updated_at: Date;
+  workspace: number;
 };

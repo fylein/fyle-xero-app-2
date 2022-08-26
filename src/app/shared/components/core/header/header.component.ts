@@ -103,7 +103,7 @@ export class HeaderComponent implements OnInit {
     this.phase = this.windowReference.location.pathname.includes('onboarding') ? ProgressPhase.ONBOARDING : ProgressPhase.POST_ONBOARDING;
     this.user = this.userService.getUserProfile();
 
-    this.xeroConnectorService.getXeroCredentials(+this.workspaceService.getWorkspaceId).subscribe((credentials: XeroCredentials) => {
+    this.xeroConnectorService.getXeroCredentials(this.workspaceService.getWorkspaceId()).subscribe((credentials: XeroCredentials) => {
       this.xeroCompanyName = 'credentials.company_name';
     }, (error) => {
       this.isXeroConnected = false;
@@ -154,7 +154,7 @@ export class HeaderComponent implements OnInit {
     dialogRef.afterClosed().subscribe((disconnect) => {
       if (disconnect) {
         this.trackingService.onClickEvent(ClickEvent.DISCONNECT_XERO, {phase: this.phase});
-        this.xeroConnectorService.revokeXeroConnection(+this.workspaceService.getWorkspaceId).subscribe(() => {
+        this.xeroConnectorService.revokeXeroConnection(this.workspaceService.getWorkspaceId()).subscribe(() => {
           this.authService.redirectToOnboardingLanding();
         });
       }

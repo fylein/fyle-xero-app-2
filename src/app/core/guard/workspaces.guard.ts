@@ -34,7 +34,8 @@ export class WorkspacesGuard implements CanActivate {
 
       return forkJoin(
         [
-          this.xeroConnectorService.getXeroCredentials(+workspaceId)
+          this.xeroConnectorService.getXeroCredentials(workspaceId),
+          this.xeroConnectorService.getXeroTokenHealth(workspaceId)
         ]
       ).pipe(
         map(response => !!response),

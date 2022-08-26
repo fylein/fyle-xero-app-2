@@ -53,38 +53,38 @@ export class ExportLogService {
   }
 
   generateExportTypeAndId(expenseGroup: ExpenseGroup) {
-    let exportRedirection = null;
-    let exportType = null;
-    let exportId = null;
+    const exportRedirection = "null";
+    const exportType = "null";
+    const exportId = "null";
 
-    if ('Bill' in expenseGroup.response_logs && expenseGroup.response_logs.Bill) {
-      exportRedirection = 'bill';
-      exportType = exportRedirection;
-      exportId = expenseGroup.response_logs.Bill.Id;
-    } else if ('JournalEntry' in expenseGroup.response_logs && expenseGroup.response_logs.JournalEntry) {
-      exportRedirection = 'journal';
-      exportType = 'Journal Entry';
-      exportId = expenseGroup.response_logs.JournalEntry.Id;
-    } else if ('Purchase' in expenseGroup.response_logs && expenseGroup.response_logs.Purchase) {
-      exportId = expenseGroup.response_logs.Purchase.Id;
-      if (expenseGroup.response_logs.Purchase.PaymentType === 'Check') {
-        exportRedirection = 'check';
-        exportType = exportRedirection;
-      } else {
-        exportRedirection = 'expense';
-        if (expenseGroup.fund_source === 'CCC' && expenseGroup.response_logs.Purchase.PaymentType === 'CreditCard' && !expenseGroup.response_logs.Purchase.Credit) {
-          exportType = 'Credit Card Purchase';
-        } else if (expenseGroup.fund_source === 'CCC' && expenseGroup.response_logs.Purchase.PaymentType === 'CreditCard' && expenseGroup.response_logs.Purchase.Credit) {
-          exportType = 'Credit Card Credit';
-          exportRedirection = 'creditcardcredit';
-        } else if (expenseGroup.fund_source === 'CCC' && expenseGroup.response_logs.Purchase.PaymentType === 'Cash') {
-          exportType = 'Debit Card Expense';
-          exportRedirection = 'expense';
-        } else {
-          exportType = 'expense';
-        }
-      }
-    }
+    // If ('Bill' in expenseGroup.response_logs && expenseGroup.response_logs.Bill) {
+    //   ExportRedirection = 'bill';
+    //   ExportType = exportRedirection;
+    //   ExportId = expenseGroup.response_logs.Bill.Id;
+    // } else if ('JournalEntry' in expenseGroup.response_logs && expenseGroup.response_logs.JournalEntry) {
+    //   ExportRedirection = 'journal';
+    //   ExportType = 'Journal Entry';
+    //   ExportId = expenseGroup.response_logs.JournalEntry.Id;
+    // } else if ('Purchase' in expenseGroup.response_logs && expenseGroup.response_logs.Purchase) {
+    //   ExportId = expenseGroup.response_logs.Purchase.Id;
+    //   If (expenseGroup.response_logs.Purchase.PaymentType === 'Check') {
+    //     ExportRedirection = 'check';
+    //     ExportType = exportRedirection;
+    //   } else {
+    //     ExportRedirection = 'expense';
+    //     If (expenseGroup.fund_source === 'CCC' && expenseGroup.response_logs.Purchase.PaymentType === 'CreditCard' && !expenseGroup.response_logs.Purchase.Credit) {
+    //       ExportType = 'Credit Card Purchase';
+    //     } else if (expenseGroup.fund_source === 'CCC' && expenseGroup.response_logs.Purchase.PaymentType === 'CreditCard' && expenseGroup.response_logs.Purchase.Credit) {
+    //       ExportType = 'Credit Card Credit';
+    //       ExportRedirection = 'creditcardcredit';
+    //     } else if (expenseGroup.fund_source === 'CCC' && expenseGroup.response_logs.Purchase.PaymentType === 'Cash') {
+    //       ExportType = 'Debit Card Expense';
+    //       ExportRedirection = 'expense';
+    //     } else {
+    //       ExportType = 'expense';
+    //     }
+    //   }
+    // }
 
     return [exportRedirection, exportId, exportType];
   }

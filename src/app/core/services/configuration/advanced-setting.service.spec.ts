@@ -33,9 +33,8 @@ describe('AdvancedSettingService', () => {
         sync_fyle_to_xero_payments: false,
         sync_xero_to_fyle_payments: false,
         auto_create_destination_entity: true,
-        je_single_credit_line: true,
         change_accounting_period: true,
-        memo_structure: ['Fyle']
+        import_customers: true
       },
       general_mappings: {
         bill_payment_account: { id: '1', name: 'Fyle' }
@@ -43,8 +42,7 @@ describe('AdvancedSettingService', () => {
       workspace_schedules: {
         enabled: true,
         interval_hours: 10,
-        emails_selected: [],
-        additional_email_options: []
+        start_datetime: new Date()
       },
       workspace_id: 1
     };
@@ -64,9 +62,8 @@ describe('AdvancedSettingService', () => {
         sync_fyle_to_xero_payments: false,
         sync_xero_to_fyle_payments: false,
         auto_create_destination_entity: true,
-        je_single_credit_line: true,
         change_accounting_period: true,
-        memo_structure: ['Fyle']
+        import_customers: true
       },
       general_mappings: {
         bill_payment_account: { id: '1', name: 'Fyle' }
@@ -74,8 +71,7 @@ describe('AdvancedSettingService', () => {
       workspace_schedules: {
         enabled: true,
         interval_hours: 10,
-        emails_selected: [],
-        additional_email_options: []
+        start_datetime: new Date()
       }
     };
 
@@ -84,9 +80,8 @@ describe('AdvancedSettingService', () => {
         sync_fyle_to_xero_payments: false,
         sync_xero_to_fyle_payments: false,
         auto_create_destination_entity: true,
-        je_single_credit_line: true,
         change_accounting_period: true,
-        memo_structure: ['Fyle']
+        import_customers: true
       },
       general_mappings: {
         bill_payment_account: { id: '1', name: 'Fyle' }
@@ -94,8 +89,7 @@ describe('AdvancedSettingService', () => {
       workspace_schedules: {
         enabled: true,
         interval_hours: 10,
-        emails_selected: [],
-        additional_email_options: []
+        start_datetime: new Date()
       },
       workspace_id: 1
     };
@@ -109,16 +103,4 @@ describe('AdvancedSettingService', () => {
   req.flush(advancedSettingResponse);
   });
 
-  it('getWorkspaceAdmins function check', () => {
-    const response: WorkspaceScheduleEmailOptions[] = [{name: 'fyle', email: 'fyle@fyle.in'}, {name: 'dhaara', email: 'fyle1@fyle.in'}];
-    service.getWorkspaceAdmins().subscribe((value) => {
-      expect(value).toEqual(response);
-    });
-    const req = httpMock.expectOne({
-      method: 'GET',
-      url: `${API_BASE_URL}/workspaces/${workspace_id}/admins/`
-    });
-  req.flush(response);
-
-  });
 });

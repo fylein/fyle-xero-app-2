@@ -1,6 +1,4 @@
-import { MappingSourceField, MappingDestinationField } from "../enum/enum.model";
-import { ExpenseAttributeDetail } from "./expense-attribute-detail.model";
-import { Mapping } from "./mapping.model";
+import { MappingDestinationField, MappingSourceField, XeroField } from "../enum/enum.model";
 
 export type MappingSetting = {
   id: number;
@@ -14,20 +12,6 @@ export type MappingSetting = {
   source_placeholder: string | null
 }
 
-export type MappingSource = {
-  id: number;
-  attribute_type: string;
-  display_name: string;
-  value: string;
-  source_id: number;
-  auto_mapped: boolean;
-  active: boolean;
-  created_at: Date;
-  updated_at: Date;
-  workspace: number;
-  detail: ExpenseAttributeDetail;
-};
-
 export type MappingSettingPost = {
   source_field: MappingSourceField | string;
   destination_field: MappingDestinationField | string;
@@ -36,9 +20,23 @@ export type MappingSettingPost = {
   source_placeholder: string | null
 }
 
+export type MinimalMappingSetting = {
+  source_field: MappingSourceField | string;
+  destination_field: MappingDestinationField | XeroField | string;
+};
+
 export type MappingSettingResponse = {
   count: number;
   next: string;
   previous: string;
-  results: Mapping[];
+  results: MappingSetting[];
+};
+
+export type MappingSettingList = {
+  id?: number;
+  qboField: MappingDestinationField | string,
+  fyleField: MappingSourceField | string,
+  index: number,
+  existingMapping: boolean,
+  isDeleteButtonAllowed: boolean
 };

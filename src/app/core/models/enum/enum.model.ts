@@ -1,3 +1,8 @@
+export enum AutoMapEmployee {
+  EMAIL = 'EMAIL',
+  NAME = 'NAME',
+  EMPLOYEE_CODE = 'EMPLOYEE_CODE'
+}
 export enum TenantFieldMapping {
   TENANT = 'TENANT'
 }
@@ -54,7 +59,6 @@ export enum OnboardingState {
   IMPORT_SETTINGS = 'IMPORT_SETTINGS',
   ADVANCED_CONFIGURATION = 'ADVANCED_CONFIGURATION',
   COMPLETE = 'COMPLETE',
-  MAP_EMPLOYEES = "MAP_EMPLOYEES"
 }
 
 export enum PaginatorPage {
@@ -89,6 +93,13 @@ export enum FyleField {
   COST_CENTER = 'COST_CENTER',
   TAX_GROUP = 'TAX_GROUP',
   CORPORATE_CARD = 'CORPORATE_CARD'
+}
+
+export enum XeroField {
+  ACCOUNT = 'ACCOUNT',
+  CUSTOMER = 'CUSTOMER',
+  DEPARTMENT = 'DEPARTMENT',
+  TAX_CODE = 'TAX_CODE',
 }
 
 export enum ExportState {

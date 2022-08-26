@@ -17,17 +17,6 @@
           [subLabel]="'Select the frequency at which you want your Automated import-export to happen'"
           [placeholder]="'Select Frequency'" [formControllerName]="'exportScheduleFrequency'">
         </app-configuration-select-field>
-        <app-email-multi-select-field [form]="advancedSettingsForm" [options]="adminEmails" [isFieldMandatory]="false"
-          [label]="'Select an email address to notify upon export failure'"
-          [subLabel]="'You can select one or more email address from the given list, or add new one to get email notifications on.'"
-          [placeholder]="'Select Email Address'" [formControllerName]="'emails'">
-        </app-email-multi-select-field>
-        <div fxLayout="row" class="advanced-settings--add-email-text pointer" fxLayoutAlign="end center"
-          (click)="openAddemailDialog()">
-          <span class="advanced-settings--span-or">or</span>
-          <img class="advanced-settings--add-btn" src="assets/images/svgs/actions/add.svg">
-          <span class="advanced-settings--span-or">Add new email address</span>
-        </div>
       </div>
 
       <div fxLayout="row" fxLayoutAlign="space-between start">
@@ -53,7 +42,7 @@
               </h5>
             </div>
           </div>
-          <div class="configuration--input-section advanced-settings--memo-preview-select">
+          <!-- <div class="configuration--input-section advanced-settings--memo-preview-select">
             <mat-form-field floatLabel="always" appearance="outline" class="configuration--form-field">
               <mat-select placeholder="Select and reorder the memo fields" formControlName="memoStructure" multiple>
                 <div cdkDropList (cdkDropListDropped)="drop($event)">
@@ -64,7 +53,7 @@
               </mat-select>
               <div class="mat-select-arrow-closed"></div>
             </mat-form-field>
-          </div>
+          </div> -->
         </div>
 
         <div class="advanced-settings--memo-preview-section">
@@ -108,13 +97,6 @@
           [placeholder]="'Select a Payment Account'" [formControllerName]="'billPaymentAccount'">
         </app-configuration-select-field>
       </div>
-
-      <app-configuration-toggle-field *ngIf="showSingleCreditLineJEField()" [form]="advancedSettingsForm"
-        [iconPath]="'assets/images/svgs/general/expense.svg'"
-        [label]="'Create a single itemized offset credit entry for Journal'"
-        [subLabel]="'Merge all Credits in a Journal to create a single entry.'"
-        [formControllerName]="'singleCreditLineJE'">
-      </app-configuration-toggle-field>
 
       <app-configuration-step-footer-section
         [ctaText]="!saveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING"

@@ -45,7 +45,7 @@ export class XeroCallbackComponent implements OnInit {
   }
 
   private postXeroCredentials(code: string, realmId: string): void {
-    this.xeroConnectorService.connectXero(+this.workspaceService.getWorkspaceId(), code).subscribe(() => {
+    this.xeroConnectorService.connectXero(this.workspaceService.getWorkspaceId(), code).subscribe(() => {
       this.router.navigate([`/workspaces/main/dashboard`]);
     }, (error: { error: { message: any; }; }) => {
       const errorMessage = 'message' in error.error ? error.error.message : 'Failed to connect to Xero. Please try again';

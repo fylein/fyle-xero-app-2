@@ -51,34 +51,46 @@ describe('ImportSettingService', () => {
     const employeeSettingPayload: ImportSettingPost = {
       workspace_general_settings: {
         import_categories: true,
-        charts_of_accounts: ImportSettingModel.formatChartOfAccounts([{ enabled: true, name: 'expense' }]),
-        import_tax_codes: true,
-        import_vendors_as_merchants: true
+        charts_of_accounts: ImportSettingModel.formatChartOfAccounts([{enabled: true, name: 'expence'}]),
+        import_tax_codes: true
       },
       general_mappings: {
-        default_tax_code: { id: '1', name: 'Fyle' }
+        default_tax_code: {id: '1', name: 'Fyle'}
       },
       mapping_settings: [{
         source_field: MappingSourceField.PROJECT,
         destination_field: MappingDestinationField.ACCOUNT,
         import_to_fyle: true,
-        is_custom: false,
-        source_placeholder: 'Fyle'
+        is_custom: false
+      },
+      {
+        source_field: MappingSourceField.COST_CENTER,
+        destination_field: MappingDestinationField.BANK_ACCOUNT,
+        import_to_fyle: false,
+        is_custom: false
       }]
     };
     const response={
-      general_mappings: {default_tax_code: {name: 'fyle', id: '1'}},
+      workspace_general_settings: {
+        import_categories: true,
+        charts_of_accounts: ImportSettingModel.formatChartOfAccounts([{enabled: true, name: 'expence'}]),
+        import_tax_codes: true
+      },
+      general_mappings: {
+        default_tax_code: {id: '1', name: 'Fyle'}
+      },
       mapping_settings: [{
         source_field: MappingSourceField.PROJECT,
-        destination_field: MappingDestinationField.BANK_ACCOUNT,
+        destination_field: MappingDestinationField.ACCOUNT,
         import_to_fyle: true,
-        is_custom: false,
-        source_placeholder: 'Fyle'
+        is_custom: false
+      },
+      {
+        source_field: MappingSourceField.COST_CENTER,
+        destination_field: MappingDestinationField.BANK_ACCOUNT,
+        import_to_fyle: false,
+        is_custom: false
       }],
-      workspace_general_settings: {charts_of_accounts: ["Expense"],
-      import_categories: true,
-      import_tax_codes: true,
-      import_vendors_as_merchants: true},
       workspace_id: 1
     };
     service.postImportSettings(employeeSettingPayload).subscribe(value => {

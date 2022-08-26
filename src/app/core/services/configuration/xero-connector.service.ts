@@ -22,24 +22,29 @@ export class XeroConnectorService {
   @CacheBuster({
     cacheBusterNotifier: xeroCredentialsCache
   })
-  connectXero(workspaceId: number, code:string): Observable<XeroCredentials> {
+  connectXero(workspaceId: string, code:string): Observable<XeroCredentials> {
     globalCacheBusterNotifier.next();
-    return this.apiService.post('/workspaces/' + workspaceId + '/connect_xero/authorization_code/', code
+    return this.apiService.post(`/workspaces/${workspaceId}/connect_xero/authorization_code/`, code
     );
   }
 
   @Cacheable({
     cacheBusterObserver: xeroCredentialsCache
   })
-  getXeroCredentials(workspaceId: number): Observable<XeroCredentials> {
-    return this.apiService.get('/workspaces/' + workspaceId + '/credentials/xero/', {});
+  getXeroCredentials(workspaceId: string): Observable<XeroCredentials> {
+    return this.apiService.get(`/workspaces/${workspaceId}/credentials/xero/`, {});
   }
 
   @CacheBuster({
     cacheBusterNotifier: xeroCredentialsCache
   })
-  revokeXeroConnection(workspaceId: number) {
-    return this.apiService.post('/workspaces/' + workspaceId + '/connection/xero/revoke/', {});
+  revokeXeroConnection(workspaceId: string) {
+    return this.apiService.post(`/workspaces/${workspaceId}/connection/xero/revoke/`, {});
+  }
+
+  @Cacheable()
+  getXeroTokenHealth(workspaceId: string): Observable<{}> {
+    return this.apiService.get(`/workspaces/${workspaceId}/xero/token_health/`, {});
   }
 
 }

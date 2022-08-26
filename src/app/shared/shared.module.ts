@@ -52,7 +52,6 @@ import { DashboardXeroErrorDialogComponent } from './components/dashboard/dashbo
 import { PreviewDialogComponent } from './components/configuration/preview-dialog/preview-dialog.component';
 import { ConfirmationDialogComponent } from './components/core/confirmation-dialog/confirmation-dialog.component';
 import { MandatoryErrorMessageComponent } from './components/helpers/mandatory-error-message/mandatory-error-message.component';
-import { AddEmailDialogComponent } from './components/configuration/advanced-settings/add-email-dialog/add-email-dialog.component';
 import { EmailMultiSelectFieldComponent } from './components/configuration/email-multi-select-field/email-multi-select-field.component';
 
 @NgModule({
@@ -91,7 +90,6 @@ import { EmailMultiSelectFieldComponent } from './components/configuration/email
     ConfirmationDialogComponent,
     ConfirmationDialogComponent,
     MandatoryErrorMessageComponent,
-    AddEmailDialogComponent,
     EmailMultiSelectFieldComponent
   ],
   imports: [

@@ -40,7 +40,7 @@ describe('XeroConnectorService', () => {
       updated_at: new Date("2022-05-06T13:13:25.893837Z"),
       workspace: 1
     };
-    service.getXeroCredentials(+workspace_id).subscribe((value) => {
+    service.getXeroCredentials(workspace_id).subscribe((value) => {
       value.refresh_token="AB";
       expect(value).toEqual(response);
     });
@@ -63,12 +63,35 @@ describe('XeroConnectorService', () => {
         updated_at: new Date(),
         workspace: +workspace_id
       };
-      service.connectXero(+workspace_id, 'yyyyy').subscribe(value => {
+      service.connectXero(workspace_id, 'yyyyy').subscribe(value => {
         expect(value).toEqual(response);
       });
       const req = httpMock.expectOne(
         req => req.method === 'POST' && req.url.includes(`${API_BASE_URL}/workspaces`)
       );
+      req.flush(response);
+    });
+
+    it('revokeXeroConnection service check', () => {
+      const response = {};
+      service.revokeXeroConnection(workspace_id).subscribe(value => {
+        expect(value).toEqual(response);
+      });
+      const req = httpMock.expectOne(
+        req => req.method === 'POST' && req.url.includes(`${API_BASE_URL}/workspaces/${workspace_id}/connection/xero/revoke/`)
+      );
+      req.flush(response);
+    });
+
+    it('getXeroTokenHealth service check', () => {
+      const response = {};
+      service.getXeroTokenHealth(workspace_id).subscribe(value => {
+        expect(value).toEqual(response);
+      });
+      const req = httpMock.expectOne({
+        method: 'GET',
+        url: `${API_BASE_URL}/workspaces/${workspace_id}/xero/token_health/`
+      });
       req.flush(response);
     });
 

@@ -1,5 +1,5 @@
 import { DestinationAttribute } from "src/app/core/models/db/destination-attribute.model";
-import { ExpenseAttribute } from "../../../../core/models/db/expense-attribute-detail.model";
+import { ExpenseAttribute } from "../../../../core/models/db/expense-attribute.model";
 import { ExpenseGroup } from "src/app/core/models/db/expense-group.model";
 import { FyleReferenceType, ErrorType, MappingState, TenantFieldMapping } from "src/app/core/models/enum/enum.model";
 
@@ -33,7 +33,6 @@ export const expencegroup:ExpenseGroup = {
     expense_id: FyleReferenceType.EXPENSE,
     settlement_id: FyleReferenceType.PAYMENT
   },
-  response_logs: [],
   export_type: 'Expence',
   employee_name: 'Fyle',
   exported_at: new Date(),

@@ -53,7 +53,7 @@
           </app-configuration-select-field>
         </div>
 
-        <div *ngIf="showExpenseAccountField()">
+        <!-- <div *ngIf="showExpenseAccountField()">
           <app-configuration-select-field
             [form]="exportSettingsForm"
             [xeroAttributes]="expenseAccounts"
@@ -65,9 +65,9 @@
             [formControllerName]="'xeroExpenseAccount'"
             >
           </app-configuration-select-field>
-        </div>
+        </div> -->
 
-        <div *ngIf="showReimbursableAccountsPayableField()">
+        <!-- <div *ngIf="showReimbursableAccountsPayableField()">
           <app-configuration-select-field
             [form]="exportSettingsForm"
             [xeroAttributes]="accountsPayables"
@@ -79,9 +79,9 @@
             [formControllerName]="'accountsPayable'"
             >
           </app-configuration-select-field>
-        </div>
+        </div> -->
 
-        <div *ngIf="exportSettingsForm.value.reimbursableExportType">
+        <!-- <div *ngIf="exportSettingsForm.value.reimbursableExportType">
           <app-configuration-select-field
             [form]="exportSettingsForm"
             [options]="expenseGroupingFieldOptions"
@@ -94,7 +94,7 @@
             [formControllerName]="'reimbursableExportGroup'"
             >
           </app-configuration-select-field>
-        </div>
+        </div> -->
 
         <div *ngIf="exportSettingsForm.value.reimbursableExportType">
           <app-configuration-select-field
@@ -135,7 +135,7 @@
           >
         </app-configuration-select-field>
 
-        <div *ngIf="showCreditCardAccountField()">
+        <!-- <div *ngIf="showCreditCardAccountField()">
           <app-configuration-select-field
             [form]="exportSettingsForm"
             [xeroAttributes]="cccAccounts"
@@ -148,9 +148,9 @@
             >
           </app-configuration-select-field>
 
-        </div>
+        </div> -->
 
-        <div *ngIf="showDebitCardAccountField()">
+        <!-- <div *ngIf="showDebitCardAccountField()">
           <app-configuration-select-field
             [form]="exportSettingsForm"
             [xeroAttributes]="bankAccounts"
@@ -163,9 +163,9 @@
             >
           </app-configuration-select-field>
 
-        </div>
+        </div> -->
 
-        <div *ngIf="showDefaultCreditCardVendorField()">
+        <!-- <div *ngIf="showDefaultCreditCardVendorField()">
           <app-configuration-select-field
             [form]="exportSettingsForm"
             [xeroAttributes]="vendors"
@@ -178,9 +178,9 @@
             >
           </app-configuration-select-field>
 
-        </div>
+        </div> -->
 
-        <div *ngIf="showCCCAccountsPayableField() && !showReimbursableAccountsPayableField()">
+        <!-- <div *ngIf="showCCCAccountsPayableField() && !showReimbursableAccountsPayableField()">
           <app-configuration-select-field
             [form]="exportSettingsForm"
             [xeroAttributes]="accountsPayables"
@@ -192,9 +192,9 @@
             [formControllerName]="'accountsPayable'"
             >
           </app-configuration-select-field>
-        </div>
+        </div> -->
 
-        <div *ngIf="exportSettingsForm.value.creditCardExportType">
+        <!-- <div *ngIf="exportSettingsForm.value.creditCardExportType">
           <app-configuration-select-field
             [form]="exportSettingsForm"
             [options]="expenseGroupingFieldOptions"
@@ -207,7 +207,7 @@
             [formControllerName]="'creditCardExportGroup'"
             >
           </app-configuration-select-field>
-        </div>
+        </div> -->
 
         <div *ngIf="exportSettingsForm.value.creditCardExportType">
           <app-configuration-select-field

@@ -92,7 +92,7 @@ export class XeroConnectorComponent implements OnInit, OnDestroy {
 
   disconnectXero(): void {
     this.isLoading = true;
-    this.xeroConnectorService.revokeXeroConnection(+this.workspaceService.getWorkspaceId()).subscribe(() => {
+    this.xeroConnectorService.revokeXeroConnection(this.workspaceService.getWorkspaceId()).subscribe(() => {
       this.trackingService.onClickEvent(ClickEvent.RECONNECT_XERO, {oldCompanyName: this.xeroCompanyName});
       this.showDisconnectXero = false;
       this.xeroCompanyName = null;
@@ -137,7 +137,7 @@ export class XeroConnectorComponent implements OnInit, OnDestroy {
   }
 
   private postXeroCredentials(code: string, realmId: string): void {
-    this.xeroConnectorService.connectXero(+this.workspaceService.getWorkspaceId(), code).subscribe((xeroCredentials: XeroCredentials) => {
+    this.xeroConnectorService.connectXero(this.workspaceService.getWorkspaceId(), code).subscribe((xeroCredentials: XeroCredentials) => {
       this.workspaceService.refreshXeroDimensions().subscribe(() => {
         this.trackingService.onOnboardingStepCompletion(OnboardingStep.CONNECT_XERO, 1);
         this.workspaceService.setOnboardingState(OnboardingState.IMPORT_SETTINGS);
@@ -156,7 +156,7 @@ export class XeroConnectorComponent implements OnInit, OnDestroy {
   }
 
   private getSettings(): void {
-    this.xeroConnectorService.getXeroCredentials(+this.workspaceService.getWorkspaceId()).subscribe((xeroCredentials: XeroCredentials) => {
+    this.xeroConnectorService.getXeroCredentials(this.workspaceService.getWorkspaceId()).subscribe((xeroCredentials: XeroCredentials) => {
       // This.xeroCompanyName = xeroCredentials.company_name;
       this.showOrHideDisconnectXero();
     }, (error) => {

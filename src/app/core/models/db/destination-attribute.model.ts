@@ -15,3 +15,12 @@ export type DestinationAttribute = {
   workspace: number;
   detail: DestinationAttributeDetail;
 };
+
+export type GroupedDestinationAttribute = {
+  BANK_ACCOUNT: DestinationAttribute[];
+  CREDIT_CARD_ACCOUNT: DestinationAttribute[];
+  ACCOUNTS_PAYABLE: DestinationAttribute[];
+  VENDOR: DestinationAttribute[];
+  ACCOUNT: DestinationAttribute[];
+  TAX_CODE: DestinationAttribute[];
+};

@@ -7,7 +7,6 @@ import { WorkspaceGeneralSetting } from "../db/workspace-general-setting.model";
 
 export type ImportSettingWorkspaceGeneralSetting = {
   import_categories: boolean,
-  import_vendors_as_merchants: boolean,
   charts_of_accounts: string[],
   import_tax_codes: boolean
 }
@@ -21,7 +20,6 @@ export type ImportSettingMappingSetting = {
   destination_field: MappingDestinationField | string,
   import_to_fyle: boolean,
   is_custom: boolean,
-  source_placeholder: string | null
 }
 
 export type ImportSettingPost = {
@@ -57,8 +55,7 @@ export class ImportSettingModel {
       workspace_general_settings: {
         import_categories: importSettingsForm.get('chartOfAccount')?.value,
         charts_of_accounts: ImportSettingModel.formatChartOfAccounts(importSettingsForm.get('chartOfAccountTypes')?.value),
-        import_tax_codes: importSettingsForm.get('taxCode')?.value,
-        import_vendors_as_merchants: importSettingsForm.get('importVendorsAsMerchants')?.value
+        import_tax_codes: importSettingsForm.get('taxCode')?.value
       },
       general_mappings: {
         default_tax_code: importSettingsForm.get('defaultTaxCode')?.value ? importSettingsForm.get('defaultTaxCode')?.value : emptyDestinationAttribute
@@ -80,8 +77,7 @@ export class ImportSettingModel {
           source_field: expenseField.source_field,
           destination_field: expenseField.destination_field,
           import_to_fyle: expenseField.import_to_fyle,
-          is_custom: expenseField.source_field === MappingSourceField.COST_CENTER || expenseField.source_field === MappingSourceField.PROJECT ? false : true,
-          source_placeholder: expenseField.source_placeholder ? expenseField.source_placeholder : null
+          is_custom: expenseField.source_field === MappingSourceField.COST_CENTER || expenseField.source_field === MappingSourceField.PROJECT ? false : true
         });
       }
     });
@@ -93,8 +89,7 @@ export class ImportSettingModel {
           source_field: existingMappingSetting.source_field,
           destination_field: existingMappingSetting.destination_field,
           import_to_fyle: existingMappingSetting.import_to_fyle,
-          is_custom: existingMappingSetting.is_custom,
-          source_placeholder: existingMappingSetting.source_placeholder
+          is_custom: existingMappingSetting.is_custom
         });
       }
     });

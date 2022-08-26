@@ -13,7 +13,6 @@ export type ExpenseGroup = {
   id: number;
   fund_source: string;
   description: ExpenseGroupDescription;
-  response_logs: any;
   export_type: string;
   employee_name: string;
   exported_at: Date;

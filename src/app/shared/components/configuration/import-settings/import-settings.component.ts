@@ -108,7 +108,7 @@ export class ImportSettingsComponent implements OnInit, OnDestroy {
   }
 
   private updateTaxGroupVisibility(): void {
-    this.xeroConnectorService.getXeroCredentials(+this.workspaceService.getWorkspaceId()).subscribe((xeroCredentials: XeroCredentials) => {
+    this.xeroConnectorService.getXeroCredentials(this.workspaceService.getWorkspaceId()).subscribe((xeroCredentials: XeroCredentials) => {
       if (xeroCredentials && xeroCredentials.country !== 'US') {
         this.isTaxGroupSyncAllowed = true;
       }
