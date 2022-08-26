@@ -16,6 +16,7 @@ import { OnboardingState, PaymentSyncDirection } from '../../../../core/models/e
 import { By } from '@angular/platform-browser';
 import { environment } from 'src/environments/environment';
 import { MatDialog } from '@angular/material/dialog';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 describe('AdvancedSettingsComponent', () => {
   let component: AdvancedSettingsComponent;
@@ -62,7 +63,8 @@ describe('AdvancedSettingsComponent', () => {
         { provide: AdvancedSettingService, useValue: service1 },
         { provide: MappingService, useValue: service2 },
         { provide: WorkspaceService, useValue: service3 }
-      ]
+      ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
     })
     .compileComponents();
   });
@@ -81,7 +83,7 @@ describe('AdvancedSettingsComponent', () => {
       exportSchedule: [component.advancedSettings.workspace_schedules?.enabled ? component.advancedSettings.workspace_schedules.interval_hours : false],
       exportScheduleFrequency: [component.advancedSettings.workspace_schedules?.enabled ? component.advancedSettings.workspace_schedules.interval_hours : null],
       searchOption: [],
-      importCustomers: [component.advancedSettings.workspace_general_settings.import_customers]
+      
     });
     component.advancedSettingsForm = form;
     router = TestBed.inject(Router);
@@ -126,7 +128,7 @@ describe('AdvancedSettingsComponent', () => {
       exportSchedule: [component.advancedSettings.workspace_schedules?.enabled ? component.advancedSettings.workspace_schedules.interval_hours : false],
       exportScheduleFrequency: [component.advancedSettings.workspace_schedules?.enabled ? component.advancedSettings.workspace_schedules.interval_hours : null],
       searchOption: [],
-      importCustomers: [component.advancedSettings.workspace_general_settings.import_customers]
+      
     });
     component.saveInProgress = false;
     component.advancedSettingsForm = form;
@@ -151,7 +153,7 @@ describe('AdvancedSettingsComponent', () => {
       exportSchedule: [component.advancedSettings.workspace_schedules?.enabled ? component.advancedSettings.workspace_schedules.interval_hours : false],
       exportScheduleFrequency: [component.advancedSettings.workspace_schedules?.enabled ? component.advancedSettings.workspace_schedules.interval_hours : null],
       searchOption: [],
-      importCustomers: [component.advancedSettings.workspace_general_settings.import_customers]
+      
     });
     component.saveInProgress = false;
     component.advancedSettingsForm = form;
@@ -174,7 +176,7 @@ describe('AdvancedSettingsComponent', () => {
       exportSchedule: [component.advancedSettings.workspace_schedules?.enabled ? component.advancedSettings.workspace_schedules.interval_hours : false],
       exportScheduleFrequency: [component.advancedSettings.workspace_schedules?.enabled ? component.advancedSettings.workspace_schedules.interval_hours : null],
       searchOption: [],
-      importCustomers: [component.advancedSettings.workspace_general_settings.import_customers]
+      
     });
     component.saveInProgress = false;
     component.advancedSettingsForm = form;

@@ -5,6 +5,7 @@ import { OnboardingLandingComponent } from './onboarding-landing.component';
 import { AuthService } from 'src/app/core/services/core/auth.service';
 import { WorkspaceService } from 'src/app/core/services/workspace/workspace.service';
 import { OnboardingState } from 'src/app/core/models/enum/enum.model';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 describe('OnboardingLandingComponent', () => {
   let component: OnboardingLandingComponent;
@@ -13,7 +14,7 @@ describe('OnboardingLandingComponent', () => {
   let workspace: WorkspaceService;
   beforeEach(async () => {
     const service1 = {
-      redirectToQboOAuth: () => undefined
+      redirectToXeroOAuth: () => undefined
     };
     const service2 = {
       getOnboardingState: () => OnboardingState.COMPLETE
@@ -24,7 +25,8 @@ describe('OnboardingLandingComponent', () => {
       providers: [
         { provide: AuthService, useValue: service1},
         { provide: WorkspaceService, useValue: service2}
-      ]
+      ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
     })
     .compileComponents();
   });
@@ -52,9 +54,9 @@ describe('OnboardingLandingComponent', () => {
   });
 
   it('connectQbo function check', () => {
-    spyOn(authService, 'redirectToQboOAuth').and.callThrough();
+    spyOn(authService, 'redirectToXeroOAuth').and.callThrough();
     expect(component.connectQbo()).toBeUndefined();
     fixture.detectChanges();
-    expect(authService.redirectToQboOAuth).toHaveBeenCalled();
+    expect(authService.redirectToXeroOAuth).toHaveBeenCalled();
   });
 });

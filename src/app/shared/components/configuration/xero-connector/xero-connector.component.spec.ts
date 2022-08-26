@@ -14,6 +14,7 @@ import { ConfirmationDialog } from 'src/app/core/models/misc/confirmation-dialog
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { AuthService } from 'src/app/core/services/core/auth.service';
 import { environment } from 'src/environments/environment';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 describe('XeroConnectorComponent', () => {
   let component: XeroConnectorComponent;
@@ -61,6 +62,7 @@ describe('XeroConnectorComponent', () => {
     await TestBed.configureTestingModule({
       imports: [RouterTestingModule, HttpClientTestingModule, SharedModule, MatSnackBarModule],
       declarations: [XeroConnectorComponent],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
       providers: [
         { provide: XeroConnectorService, useValue: service },
         { provide: ExportSettingService, useValue: service2 },

@@ -43,39 +43,39 @@ export class DashboardExportLogDialogComponent implements OnInit {
     const expenseGroups: ExpenseGroupList[] = [];
     const state: string = this.data.exportState === ExportState.SUCCESS ? 'COMPLETE' : 'FAILED';
 
-    this.exportLogService.getExpenseGroups(state, 500, 0, null, this.data.lastExportedAt).subscribe((expenseGroupResponse: ExpenseGroupResponse) => {
-      expenseGroupResponse.results.forEach((expenseGroup: ExpenseGroup) => {
-        let type: string = '', id: string = '', exportType: string = '';
+    // this.exportLogService.getExpenseGroups(state, 500, 0, null, this.data.lastExportedAt).subscribe((expenseGroupResponse: ExpenseGroupResponse) => {
+    //   expenseGroupResponse.results.forEach((expenseGroup: ExpenseGroup) => {
+    //     let type: string = '', id: string = '', exportType: string = '';
 
-        if (this.data.exportState === ExportState.SUCCESS) {
-          [type, id, exportType] = this.exportLogService.generateExportTypeAndId(expenseGroup);
-        }
-        const referenceType: FyleReferenceType = this.exportLogService.getReferenceType(expenseGroup.description);
-        let referenceNumber: string = expenseGroup.description[referenceType];
+    //     if (this.data.exportState === ExportState.SUCCESS) {
+    //       [type, id, exportType] = this.exportLogService.generateExportTypeAndId(expenseGroup);
+    //     }
+    //     const referenceType: FyleReferenceType = this.exportLogService.getReferenceType(expenseGroup.description);
+    //     let referenceNumber: string = expenseGroup.description[referenceType];
 
-        if (referenceType === FyleReferenceType.EXPENSE) {
-          referenceNumber = expenseGroup.expenses[0].expense_number;
-        } else if (referenceType === FyleReferenceType.PAYMENT) {
-          referenceNumber = expenseGroup.expenses[0].settlement_id;
-        }
+    //     if (referenceType === FyleReferenceType.EXPENSE) {
+    //       referenceNumber = expenseGroup.expenses[0].expense_number;
+    //     } else if (referenceType === FyleReferenceType.PAYMENT) {
+    //       referenceNumber = expenseGroup.expenses[0].settlement_id;
+    //     }
 
-        const fyleUrl = this.exportLogService.generateFyleUrl(expenseGroup, referenceType);
+    //     const fyleUrl = this.exportLogService.generateFyleUrl(expenseGroup, referenceType);
 
-        expenseGroups.push({
-          exportedAt: expenseGroup.exported_at,
-          employee: [expenseGroup.employee_name, expenseGroup.description.employee_email],
-          expenseType: expenseGroup.fund_source === 'CCC' ? 'Credit Card' : 'Reimbursable',
-          fyleReferenceType: referenceType,
-          referenceNumber: referenceNumber,
-          exportedAs: exportType,
-          fyleUrl: fyleUrl,
-          xeroUrl: this.data.exportState === ExportState.SUCCESS ? `${environment.app_url}/app/${type}?txnId=${id}` : fyleUrl,
-          expenses: expenseGroup.expenses
-        });
-      });
-      this.expenseGroups = new MatTableDataSource(expenseGroups);
-      this.isLoading = false;
-    });
+    //     expenseGroups.push({
+    //       exportedAt: expenseGroup.exported_at,
+    //       employee: [expenseGroup.employee_name, expenseGroup.description.employee_email],
+    //       expenseType: expenseGroup.fund_source === 'CCC' ? 'Credit Card' : 'Reimbursable',
+    //       fyleReferenceType: referenceType,
+    //       referenceNumber: referenceNumber,
+    //       exportedAs: exportType,
+    //       fyleUrl: fyleUrl,
+    //       xeroUrl: this.data.exportState === ExportState.SUCCESS ? `${environment.app_url}/app/${type}?txnId=${id}` : fyleUrl,
+    //       expenses: expenseGroup.expenses
+    //     });
+    //   });
+    //   this.expenseGroups = new MatTableDataSource(expenseGroups);
+    //   this.isLoading = false;
+    // });
   }
 
   ngOnInit(): void {

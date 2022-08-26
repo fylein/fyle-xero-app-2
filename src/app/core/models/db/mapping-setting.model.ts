@@ -1,4 +1,4 @@
-import { MappingDestinationField, MappingSourceField, XeroField } from "../enum/enum.model";
+import { MappingDestinationField, MappingSourceField } from "../enum/enum.model";
 
 export type MappingSetting = {
   id: number;
@@ -22,7 +22,7 @@ export type MappingSettingPost = {
 
 export type MinimalMappingSetting = {
   source_field: MappingSourceField | string;
-  destination_field: MappingDestinationField | XeroField | string;
+  destination_field: MappingDestinationField  | string;
 };
 
 export type MappingSettingResponse = {

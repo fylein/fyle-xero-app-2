@@ -5,6 +5,8 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import { environment } from 'src/environments/environment';
 import { HttpErrorResponse, HttpEventType, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { OnboardingState } from '../../models/enum/enum.model';
+import { AdvancedSettingGet, AdvancedSettingPost } from '../../models/configuration/advanced-setting.model';
 
 describe('ApiService', () => {
   let service: ApiService;
@@ -37,6 +39,7 @@ describe('ApiService', () => {
       last_synced_at: new Date("2022-04-13T10:29:18.796760Z"),
       source_synced_at: new Date("2022-04-13T10:29:18.796760Z"),
       destination_synced_at: new Date("2022-04-13T10:29:18.796760Z"),
+      onboarding_state: OnboardingState.CONNECTION,
       created_at: new Date("2022-04-13T10:29:18.796760Z"),
       updated_at: new Date("2022-04-13T10:29:18.796760Z")
     };
@@ -75,6 +78,7 @@ describe('ApiService', () => {
       last_synced_at: new Date("2022-04-13T10:29:18.796760Z"),
       source_synced_at: new Date("2022-04-13T10:29:18.796760Z"),
       destination_synced_at: new Date("2022-04-13T10:29:18.796760Z"),
+      onboarding_state: OnboardingState.CONNECTION,
       created_at: new Date("2022-04-13T10:29:18.796760Z"),
       updated_at: new Date("2022-04-13T10:29:18.796760Z")
     };
@@ -102,47 +106,99 @@ describe('ApiService', () => {
     req.flush('', responseKeys);
   });
 
-  // It('Put service check', () => {
-  //   Const employeeSettingPayload: EmployeeSettingPost = {
-  //     Workspace_general_settings: {
-  //       Employee_field_mapping: EmployeeFieldMapping.EMPLOYEE,
-  //       Auto_map_employees: AutoMapEmployee.EMPLOYEE_CODE
-  //     }
-  //   };
-  //   Const response: EmployeeSettingGet = {
-  //     Workspace_general_settings: { employee_field_mapping: EmployeeFieldMapping.EMPLOYEE, auto_map_employees: AutoMapEmployee.EMPLOYEE_CODE },
-  //     Workspace_id: 1
-  //   };
-  //   Service.put('/v2/workspaces/'+workspace_id+'/map_employees/', employeeSettingPayload).subscribe(value => {
-  //     Expect(value).toEqual(response);
-  //   });
-  //   Const req = httpMock.expectOne({
-  //     Method: 'PUT',
-  //     Url: `${API_BASE_URL}/v2/workspaces/${workspace_id}/map_employees/`
-  //   });
-  //   Req.flush(response);
-  // });
+  it('Put service check', () => {
+    const advancedSettingPayload: AdvancedSettingPost = {
+      workspace_general_settings: {
+        sync_fyle_to_xero_payments: false,
+        sync_xero_to_fyle_payments: false,
+        auto_create_destination_entity: true,
+        change_accounting_period: true,
+      },
+      general_mappings: {
+        bill_payment_account: { id: '1', name: 'Fyle' }
+      },
+      workspace_schedules: {
+        enabled: true,
+        interval_hours: 10,
+        start_datetime: new Date()
+      }
+    };
 
-  // It('Put service error', () => {
-  //   Const employeeSettingPayload: EmployeeSettingPost = {
-  //     Workspace_general_settings: {
-  //       Employee_field_mapping: EmployeeFieldMapping.EMPLOYEE,
-  //       Auto_map_employees: AutoMapEmployee.EMPLOYEE_CODE
-  //     }
-  //   };
-  //   Const responseKeys = { status: 404, statusText: "Not Found" };
-  //   Service.put('/v2/workspaces/'+workspace_id+'/map_employees/', employeeSettingPayload).subscribe(value => {
-  //     Expect(value).toEqual(responseKeys);
-  //   },
-  //   Error => {
-  //     Expect(error.status).toBe(404);
-  //   });
-  //   Const req = httpMock.expectOne({
-  //     Method: 'PUT',
-  //     Url: `${API_BASE_URL}/v2/workspaces/${workspace_id}/map_employees/`
-  //   });
-  // Req.flush('', responseKeys);
-  // });
+    const advancedSettingResponse:AdvancedSettingGet = {
+      workspace_general_settings: {
+        sync_fyle_to_xero_payments: false,
+        sync_xero_to_fyle_payments: false,
+        auto_create_destination_entity: true,
+        change_accounting_period: true,
+      },
+      general_mappings: {
+        bill_payment_account: { id: '1', name: 'Fyle' }
+      },
+      workspace_schedules: {
+        enabled: true,
+        interval_hours: 10,
+        start_datetime: new Date()
+      },
+      workspace_id: 1
+    };
+    service.put(`/v2/workspaces/${workspace_id}/advanced_configurations/`,advancedSettingPayload).subscribe(value => {
+      expect(value).toEqual(advancedSettingResponse);
+    });
+    const req = httpMock.expectOne({
+      method: 'PUT',
+      url: `${API_BASE_URL}/v2/workspaces/${workspace_id}/advanced_configurations/`
+    });
+  req.flush(advancedSettingResponse);
+  });
+
+  it('Put service error', () => {
+    const advancedSettingPayload: AdvancedSettingPost = {
+      workspace_general_settings: {
+        sync_fyle_to_xero_payments: false,
+        sync_xero_to_fyle_payments: false,
+        auto_create_destination_entity: true,
+        change_accounting_period: true,
+      },
+      general_mappings: {
+        bill_payment_account: { id: '1', name: 'Fyle' }
+      },
+      workspace_schedules: {
+        enabled: true,
+        interval_hours: 10,
+        start_datetime: new Date()
+      }
+    };
+
+    const advancedSettingResponse:AdvancedSettingGet = {
+      workspace_general_settings: {
+        sync_fyle_to_xero_payments: false,
+        sync_xero_to_fyle_payments: false,
+        auto_create_destination_entity: true,
+        change_accounting_period: true,
+      },
+      general_mappings: {
+        bill_payment_account: { id: '1', name: 'Fyle' }
+      },
+      workspace_schedules: {
+        enabled: true,
+        interval_hours: 10,
+        start_datetime: new Date()
+      },
+      workspace_id: 1
+    };
+    const response = { status: 404, statusText: "Not Found" };
+    service.put(`/v2/workspaces/${workspace_id}/advanced_configurations/`,advancedSettingPayload).subscribe(value => {
+      expect(value).toEqual(advancedSettingResponse);
+    },
+    error => {
+      expect(error.status).toBe(404);
+    });
+    const req = httpMock.expectOne({
+      method: 'PUT',
+      url: `${API_BASE_URL}/v2/workspaces/${workspace_id}/advanced_configurations/`
+    });
+  req.flush('', response);
+  });
 
   it('patch service check', () => {
     const response = {

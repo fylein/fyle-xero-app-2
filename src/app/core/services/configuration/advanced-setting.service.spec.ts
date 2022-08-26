@@ -34,7 +34,6 @@ describe('AdvancedSettingService', () => {
         sync_xero_to_fyle_payments: false,
         auto_create_destination_entity: true,
         change_accounting_period: true,
-        import_customers: true
       },
       general_mappings: {
         bill_payment_account: { id: '1', name: 'Fyle' }
@@ -63,7 +62,6 @@ describe('AdvancedSettingService', () => {
         sync_xero_to_fyle_payments: false,
         auto_create_destination_entity: true,
         change_accounting_period: true,
-        import_customers: true
       },
       general_mappings: {
         bill_payment_account: { id: '1', name: 'Fyle' }
@@ -81,7 +79,6 @@ describe('AdvancedSettingService', () => {
         sync_xero_to_fyle_payments: false,
         auto_create_destination_entity: true,
         change_accounting_period: true,
-        import_customers: true
       },
       general_mappings: {
         bill_payment_account: { id: '1', name: 'Fyle' }

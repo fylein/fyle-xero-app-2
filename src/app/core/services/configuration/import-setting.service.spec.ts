@@ -61,13 +61,15 @@ describe('ImportSettingService', () => {
         source_field: MappingSourceField.PROJECT,
         destination_field: MappingDestinationField.ACCOUNT,
         import_to_fyle: true,
-        is_custom: false
+        is_custom: false,
+        source_placeholder: ''
       },
       {
         source_field: MappingSourceField.COST_CENTER,
         destination_field: MappingDestinationField.BANK_ACCOUNT,
         import_to_fyle: false,
-        is_custom: false
+        is_custom: false,
+        source_placeholder: ''
       }]
     };
     const response={
@@ -83,13 +85,15 @@ describe('ImportSettingService', () => {
         source_field: MappingSourceField.PROJECT,
         destination_field: MappingDestinationField.ACCOUNT,
         import_to_fyle: true,
-        is_custom: false
+        is_custom: false,
+        source_placeholder: ''
       },
       {
         source_field: MappingSourceField.COST_CENTER,
         destination_field: MappingDestinationField.BANK_ACCOUNT,
         import_to_fyle: false,
-        is_custom: false
+        is_custom: false,
+        source_placeholder: ''
       }],
       workspace_id: 1
     };

@@ -51,11 +51,7 @@ export class MappingService {
         return groupedAttributes;
       }, {
         BANK_ACCOUNT: [],
-        CONTACT: [],
-        TENANT: [],
-        ACCOUNT: [],
-        TAX_CODE: [],
-        REGION: []
+        TAX_CODE: []
       });
     }));
   }

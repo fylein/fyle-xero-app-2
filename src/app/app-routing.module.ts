@@ -8,11 +8,11 @@ const routes: Routes = [
     redirectTo: '/workspaces',
     pathMatch: 'full'
   },
-  // {
-  //   Path: 'workspaces',
-  //   LoadChildren: () => import('./integration/integration.module').then(m => m.IntegrationModule),
-  //   CanActivate: [AuthGuard]
-  // },
+  {
+    path: 'workspaces',
+    loadChildren: () => import('./integration/integration.module').then(m => m.IntegrationModule),
+    canActivate: [AuthGuard]
+  },
   {
     path: 'auth',
     loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule)

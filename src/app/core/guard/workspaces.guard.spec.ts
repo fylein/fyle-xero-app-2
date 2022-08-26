@@ -25,7 +25,7 @@ describe('WorkspacesGuard', () => {
   beforeEach(() => {
     const service1 = {
       getXeroCredentials: () => of(Xeroresponse),
-      getXeroTokenHealth: () => of(XeroPreferenceresponse)
+      getXeroTokenHealth: () => of({})
     };
     const service2 = {
       getOnboardingState: () => 'COMPLETE',

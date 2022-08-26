@@ -95,13 +95,6 @@ export enum FyleField {
   CORPORATE_CARD = 'CORPORATE_CARD'
 }
 
-export enum XeroField {
-  ACCOUNT = 'ACCOUNT',
-  CUSTOMER = 'CUSTOMER',
-  DEPARTMENT = 'DEPARTMENT',
-  TAX_CODE = 'TAX_CODE',
-}
-
 export enum ExportState {
   SUCCESS = 'SUCCESS',
   FAILED = 'FAILED'

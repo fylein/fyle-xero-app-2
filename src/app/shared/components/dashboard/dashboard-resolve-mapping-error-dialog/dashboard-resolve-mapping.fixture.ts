@@ -39,7 +39,8 @@ export const expencegroup:ExpenseGroup = {
   created_at: new Date(),
   updated_at: new Date(),
   workspace: 2,
-  expenses: []
+  expenses: [],
+  response_logs: []
 };
 export const model: any = {
   sourceType: TenantFieldMapping.TENANT,

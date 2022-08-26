@@ -16,6 +16,7 @@ import { XeroConnectorService } from 'src/app/core/services/configuration/xero-c
 import { MappingService } from '../../../../core/services/misc/mapping.service';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { environment } from 'src/environments/environment';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 describe('ImportSettingsComponent', () => {
   let component: ImportSettingsComponent;
@@ -60,6 +61,7 @@ describe('ImportSettingsComponent', () => {
     await TestBed.configureTestingModule({
       imports: [ MatDialogModule, NoopAnimationsModule, RouterTestingModule, HttpClientModule, FormsModule, ReactiveFormsModule, MatDialogModule, MatSnackBarModule, SharedModule],
       declarations: [ ImportSettingsComponent ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
       providers: [ FormBuilder,
         { provide: Router, useValue: routerSpy },
         { provide: ImportSettingService, useValue: service1 },

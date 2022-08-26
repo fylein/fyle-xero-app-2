@@ -1,5 +1,5 @@
 import { ExportSettingFormOption, ExportSettingGet } from "src/app/core/models/configuration/export-setting.model";
-// Import { GroupedDestinationAttribute } from "src/app/core/models/db/destination-attribute.model";
+import { GroupedDestinationAttribute } from "src/app/core/models/db/destination-attribute.model";
 import { WorkspaceGeneralSetting } from "src/app/core/models/db/workspace-general-setting.model";
 import { CorporateCreditCardExpensesObject, TenantFieldMapping, ExpenseState, ExportDateType, ReimbursableExpensesObject, AutoMapEmployee } from "src/app/core/models/enum/enum.model";
 
@@ -10,7 +10,7 @@ export const export_settings: ExportSettingFormOption[] = [
   }
 ];
 
-export const workspaceResponse:WorkspaceGeneralSetting = {
+export const workspaceResponse: WorkspaceGeneralSetting = {
   auto_create_destination_entity: true,
   auto_map_employees: 'Email',
   change_accounting_period: true,
@@ -30,37 +30,7 @@ export const workspaceResponse:WorkspaceGeneralSetting = {
   import_customers: false,
   map_merchant_to_contact: false
 };
-export const destinationAttribute ={
-  ACCOUNTS_PAYABLE: [{
-    id: 1,
-    attribute_type: 'ACCOUNTS_PAYABLE',
-    display_name: "string",
-    value: "string",
-    destination_id: "string",
-    active: true,
-    created_at: new Date(),
-    updated_at: new Date(),
-    workspace: 2,
-    detail: {
-      email: 'String',
-      fully_qualified_name: 'string'
-    }
-  }],
-  VENDOR: [{
-    id: 2,
-    attribute_type: 'VENDOR',
-    display_name: "string",
-    value: "string",
-    destination_id: "string",
-    active: true,
-    created_at: new Date(),
-    updated_at: new Date(),
-    workspace: 2,
-    detail: {
-      email: 'String',
-      fully_qualified_name: 'string'
-    }
-  }],
+export const destinationAttribute: GroupedDestinationAttribute={
   BANK_ACCOUNT: [{
     id: 3,
     attribute_type: 'BANK_ACCOUNT',
@@ -76,22 +46,6 @@ export const destinationAttribute ={
       fully_qualified_name: 'string'
     }
   }],
-  CREDIT_CARD_ACCOUNT: [{
-    id: 4,
-    attribute_type: 'CREDIT_CARD_ACCOUNT',
-    display_name: "string",
-    value: "string",
-    destination_id: "string",
-    active: true,
-    created_at: new Date(),
-    updated_at: new Date(),
-    workspace: 2,
-    detail: {
-      email: 'String',
-      fully_qualified_name: 'string'
-    }
-  }],
-  ACCOUNT: [],
   TAX_CODE: []
 };
 export const exportResponse: ExportSettingGet = {

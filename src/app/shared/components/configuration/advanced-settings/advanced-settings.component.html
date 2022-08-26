@@ -42,18 +42,6 @@
               </h5>
             </div>
           </div>
-          <!-- <div class="configuration--input-section advanced-settings--memo-preview-select">
-            <mat-form-field floatLabel="always" appearance="outline" class="configuration--form-field">
-              <mat-select placeholder="Select and reorder the memo fields" formControlName="memoStructure" multiple>
-                <div cdkDropList (cdkDropListDropped)="drop($event)">
-                  <mat-option *ngFor="let option of defaultMemoFields" [value]="option" cdkDrag>
-                    {{ option | titlecase | snakeCaseToSpaceCase }}
-                  </mat-option>
-                </div>
-              </mat-select>
-              <div class="mat-select-arrow-closed"></div>
-            </mat-form-field>
-          </div> -->
         </div>
 
         <div class="advanced-settings--memo-preview-section">
@@ -74,12 +62,6 @@
         [subLabel]="'If the accounting period in Xero is closed, the expenses from Fyle will be exported with a date stamp of the first day next open accounting period.'"
         [formControllerName]="'changeAccountingPeriod'">
       </app-configuration-toggle-field>
-
-      <!-- <app-configuration-toggle-field *ngIf="showAutoCreateVendorsField()" [form]="advancedSettingsForm"
-        [iconPath]="'assets/images/svgs/general/building.svg'" [label]="'Auto-Create Vendors'"
-        [subLabel]="'While exporting reimbursable expenses from Fyle, the integration will automatically create a vendor if a match does not exist in Xero already.'"
-        [formControllerName]="'autoCreateVendors'">
-      </app-configuration-toggle-field> -->
 
       <app-configuration-select-field *ngIf="showPaymentSyncField()" [form]="advancedSettingsForm"
         [options]="paymentSyncOptions" [iconPath]="'assets/images/svgs/actions/sync.svg'"

@@ -78,7 +78,4 @@ export class WorkspaceService {
     return this.apiService.post(`/workspaces/${workspaceId}/fyle/refresh_dimensions/`, {});
   }
 
-  getFyleCurrency(): string {
-    return this.storageService.get('currency');
-  }
 }

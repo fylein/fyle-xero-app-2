@@ -85,7 +85,7 @@ export class AuthService {
   }
 
   isLoggedIn() {
-    return this.storageService.get('access_token') !== null;
+    return this.userService.getUserProfile() !== null;
   }
 
   logout() {

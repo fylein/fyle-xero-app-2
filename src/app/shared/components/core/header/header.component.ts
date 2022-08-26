@@ -30,8 +30,6 @@ export class HeaderComponent implements OnInit {
 
   isHelpSectionExpanded: boolean;
 
-  currency: string = this.workspaceService.getFyleCurrency();
-
   xeroCompanyName: string;
 
   showBackButton: boolean;

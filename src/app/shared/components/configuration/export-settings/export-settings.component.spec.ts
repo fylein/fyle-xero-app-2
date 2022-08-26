@@ -14,6 +14,7 @@ import { of, throwError } from 'rxjs';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 describe('ExportSettingsComponent', () => {
   let component: ExportSettingsComponent;
@@ -47,6 +48,7 @@ describe('ExportSettingsComponent', () => {
     await TestBed.configureTestingModule({
       imports: [FormsModule, ReactiveFormsModule, HttpClientModule, RouterTestingModule, MatSnackBarModule, SharedModule, NoopAnimationsModule],
       declarations: [ ExportSettingsComponent ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
       providers: [ FormBuilder,
         { provide: Router, useValue: routerSpy },
         { provide: ExportSettingService, useValue: service1 },

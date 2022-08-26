@@ -41,14 +41,14 @@ export class IntegrationComponent implements OnInit {
     if (pathName === '/workspaces') {
       const onboardingStateComponentMap = {
         [OnboardingState.CONNECTION]: '/workspaces/onboarding/landing',
-        [OnboardingState.MAP_EMPLOYEES]: '/workspaces/onboarding/employee_settings',
         [OnboardingState.EXPORT_SETTINGS]: '/workspaces/onboarding/export_settings',
         [OnboardingState.IMPORT_SETTINGS]: '/workspaces/onboarding/import_settings',
         [OnboardingState.ADVANCED_CONFIGURATION]: '/workspaces/onboarding/advanced_settings',
         [OnboardingState.COMPLETE]: '/workspaces/main'
       };
-
-      this.router.navigateByUrl(onboardingStateComponentMap[this.workspace.onboarding_state]);
+      //TODO 
+      //this.router.navigateByUrl(onboardingStateComponentMap[this.workspace.onboarding_state]);
+      this.router.navigateByUrl(onboardingStateComponentMap['COMPLETE']);
     }
   }
 
@@ -75,11 +75,12 @@ export class IntegrationComponent implements OnInit {
         workspaceId: workspace.id
       });
       this.storageService.set('workspaceId', this.workspace.id);
-      this.storageService.set('currency', workspace.fyle_currency);
-      this.storageService.set('onboardingState', workspace.onboarding_state);
+      // TODO after api
+      //this.storageService.set('onboardingState', workspace.onboarding_state);
+      this.storageService.set('onboardingState', 'COMPLETE');
       this.storageService.set('workspaceCreatedAt', workspace.created_at);
       this.workspaceService.syncFyleDimensions().subscribe();
-      this.workspaceService.syncQBODimensions().subscribe();
+      this.workspaceService.syncXeroDimensions().subscribe();
       this.isLoading = false;
       this.navigate();
     });

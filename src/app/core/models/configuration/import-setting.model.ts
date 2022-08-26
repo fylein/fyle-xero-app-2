@@ -20,6 +20,7 @@ export type ImportSettingMappingSetting = {
   destination_field: MappingDestinationField | string,
   import_to_fyle: boolean,
   is_custom: boolean,
+  source_placeholder: string | null
 }
 
 export type ImportSettingPost = {
@@ -77,7 +78,8 @@ export class ImportSettingModel {
           source_field: expenseField.source_field,
           destination_field: expenseField.destination_field,
           import_to_fyle: expenseField.import_to_fyle,
-          is_custom: expenseField.source_field === MappingSourceField.COST_CENTER || expenseField.source_field === MappingSourceField.PROJECT ? false : true
+          is_custom: expenseField.source_field === MappingSourceField.COST_CENTER || expenseField.source_field === MappingSourceField.PROJECT ? false : true,
+          source_placeholder: expenseField.source_placeholder ? expenseField.source_placeholder : null
         });
       }
     });
@@ -89,7 +91,8 @@ export class ImportSettingModel {
           source_field: existingMappingSetting.source_field,
           destination_field: existingMappingSetting.destination_field,
           import_to_fyle: existingMappingSetting.import_to_fyle,
-          is_custom: existingMappingSetting.is_custom
+          is_custom: existingMappingSetting.is_custom,
+          source_placeholder: existingMappingSetting.source_placeholder
         });
       }
     });

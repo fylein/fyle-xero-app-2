@@ -141,7 +141,6 @@ export class AdvancedSettingsComponent implements OnInit, OnDestroy {
       autoCreateVendors: [this.advancedSettings.workspace_general_settings.auto_create_destination_entity],
       exportSchedule: [this.advancedSettings.workspace_schedules?.enabled ? this.advancedSettings.workspace_schedules.interval_hours : false],
       exportScheduleFrequency: [this.advancedSettings.workspace_schedules?.enabled ? this.advancedSettings.workspace_schedules.interval_hours : null],
-      importCustomers: [this.advancedSettings.workspace_general_settings.import_customers],
       searchOption: []
     });
 

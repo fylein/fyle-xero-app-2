@@ -14,6 +14,7 @@ export const modelData: Error = {
     created_at: new Date(),
     updated_at: new Date(),
     workspace: 1,
+    response_logs: [],
     expenses: [
       {
         amount: 1,
@@ -92,6 +93,7 @@ export const modelData1: Error = {
     created_at: new Date(),
     updated_at: new Date(),
     workspace: 1,
+    response_logs: [],
     expenses: [
       {
         amount: 1,

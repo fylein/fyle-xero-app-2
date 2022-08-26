@@ -1,22 +1,22 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AuthComponent } from './auth.component';
+import { OnboardingXeroConnectorComponent } from './onboarding-xero-connector.component';
 
-describe('AuthComponent', () => {
-  let component: AuthComponent;
-  let fixture: ComponentFixture<AuthComponent>;
+describe('OnboardingQboConnectorComponent', () => {
+  let component: OnboardingXeroConnectorComponent;
+  let fixture: ComponentFixture<OnboardingXeroConnectorComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      declarations: [ AuthComponent ]
+      declarations: [ OnboardingXeroConnectorComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AuthComponent);
+    fixture = TestBed.createComponent(OnboardingXeroConnectorComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -17,7 +17,7 @@ describe('DashboardExportLogDialogComponent', () => {
   const workspace_id = environment.tests.workspaceId;
   beforeEach(async () => {
     localStorage.setItem('user', JSON.stringify({org_id: 'dummy'}));
-    const serviceSpy = jasmine.createSpyObj('ExportLogService', ['getExpenseGroups', 'generateExportTypeAndId', 'getReferenceType', 'generateFyleUrl']);
+    const serviceSpy = jasmine.createSpyObj('ExportLogService', ['getExpenseGroups']);
     await TestBed.configureTestingModule({
       imports: [MatDialogModule, SharedModule, HttpClientTestingModule],
       declarations: [ DashboardExportLogDialogComponent ],
@@ -68,10 +68,6 @@ describe('DashboardExportLogDialogComponent', () => {
       ]
     };
     expect(component).toBeTruthy();
-    const req = httpMock.expectOne(
-      req => req.method === 'GET' && req.url.includes(`${API_BASE_URL}/workspaces/${workspace_id}/fyle/expense_groups/`)
-    );
-      req.flush(response);
   });
   it('setup function check', () => {
     component.data = {
@@ -98,11 +94,6 @@ describe('DashboardExportLogDialogComponent', () => {
       }
       ]
     };
-    const req = httpMock.match(
-      req => req.method === 'GET' && req.url.includes(`${API_BASE_URL}/workspaces/${workspace_id}/fyle/expense_groups/`)
-    );
-      req[0].flush(response);
-
       expect((component as any).setupPage()).toBeUndefined();
       expect(component.displayedColumns).toEqual(['referenceID', 'name', 'link']);
       expect(component.externalUrlType).toEqual('Fyle');
