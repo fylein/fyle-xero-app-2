@@ -65,7 +65,7 @@ describe('XeroConnectorComponent', () => {
       redirectToXeroOAuth: () => undefined
     };
     await TestBed.configureTestingModule({
-      imports: [RouterTestingModule, HttpClientTestingModule, SharedModule, MatSnackBarModule,NoopAnimationsModule],
+      imports: [RouterTestingModule, HttpClientTestingModule, SharedModule, MatSnackBarModule, NoopAnimationsModule],
       declarations: [XeroConnectorComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
       providers: [
@@ -204,9 +204,9 @@ describe('XeroConnectorComponent', () => {
 
   it('connectXero() function check', () => {
     const form = formbuilder.group({
-      xeroTenant:'25d7b4cd-ed1c-4c5c-80e5-c058b87db8a1'
-      })
-    component.tenantList = tenant
+      xeroTenant: '25d7b4cd-ed1c-4c5c-80e5-c058b87db8a1'
+      });
+    component.tenantList = tenant;
     expect(component.connectXero()).toBeUndefined();
   });
 

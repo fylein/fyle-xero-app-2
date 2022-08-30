@@ -32,7 +32,7 @@ export class ExportSettingService {
       },
       workspace_id: 1
     };
-    // return of(response);
+    // Return of(response);
     return this.apiService.get(`/v2/workspaces/${this.workspaceService.getWorkspaceId()}/export_settings/`, {});
   }
 

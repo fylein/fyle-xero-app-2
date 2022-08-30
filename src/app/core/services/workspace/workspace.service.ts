@@ -32,7 +32,7 @@ export class WorkspaceService {
       fyle_currency: 'USD',
       xero_currency: 'USD'
     };
-    //return of(responseKeys);
+    // Return of(responseKeys);
     return this.apiService.post('/workspaces/', {});
   }
 
@@ -52,7 +52,7 @@ export class WorkspaceService {
       fyle_currency: 'USD',
       xero_currency: 'USD'
     }];
-    //return of(responseKeys);
+    // Return of(responseKeys);
     return this.apiService.get(`/workspaces/`, {
       org_id: orgId
     });
@@ -74,7 +74,7 @@ export class WorkspaceService {
       fyle_currency: 'USD',
       xero_currency: 'USD'
     };
-    //return of(responseKeys);
+    // Return of(responseKeys);
     return this.apiService.get(`/workspaces/${id}/`, {});
   }
 
@@ -97,7 +97,7 @@ export class WorkspaceService {
   syncXeroDimensions() {
     const workspaceId = this.getWorkspaceId();
 
-    //return of({});
+    // Return of({});
     return this.apiService.post(`/workspaces/${workspaceId}/xero/sync_dimensions/`, {}).pipe(
         map(data => data),
         publishReplay(1),
@@ -108,7 +108,7 @@ export class WorkspaceService {
   syncFyleDimensions() {
     const workspaceId = this.getWorkspaceId();
 
-    //return of({});
+    // Return of({});
     return this.apiService.post(`/workspaces/${workspaceId}/fyle/sync_dimensions/`, {}).pipe(
         map(data => data),
         publishReplay(1),
@@ -117,7 +117,7 @@ export class WorkspaceService {
   }
 
   refreshXeroDimensions() {
-    //return of({});
+    // Return of({});
     const workspaceId = this.getWorkspaceId();
 
     return this.apiService.post(`/workspaces/${workspaceId}/xero/refresh_dimensions/`, {});

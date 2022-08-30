@@ -35,7 +35,7 @@ export class XeroConnectorService {
       updated_at: new Date("2022-05-06T13:13:25.893837Z"),
       workspace: 1
     };
-    //return of(response);
+    // Return of(response);
     return this.apiService.post(`/workspaces/${workspaceId}/connect_xero/authorization_code/`, code
     );
   }
@@ -62,8 +62,8 @@ export class XeroConnectorService {
         company_name: 'Xero'
       }
     };
-    //Return throwError(errorResponse)
-    //return of(response);
+    // Return throwError(errorResponse)
+    // Return of(response);
     return this.apiService.get(`/workspaces/${workspaceId}/credentials/xero/`, {});
   }
 
@@ -71,7 +71,7 @@ export class XeroConnectorService {
     cacheBusterNotifier: xeroCredentialsCache
   })
   revokeXeroConnection(workspaceId: string) {
-    //return of({});
+    // Return of({});
     return this.apiService.post(`/workspaces/${workspaceId}/connection/xero/revoke/`, {});
   }
 
@@ -98,7 +98,7 @@ export class XeroConnectorService {
         workspace: 162
       }
     ];
-    // return of(response);
+    // Return of(response);
     const workspaceId = this.workspaceService.getWorkspaceId();
 
     return this.apiService.get(`/workspaces/${workspaceId}/xero/tenants/`, {});
@@ -114,7 +114,7 @@ export class XeroConnectorService {
       updated_at: new Date("2022-08-29T08:02:06.216097Z"),
       workspace: +workspaceId
     };
-    // return of(response);
+    // Return of(response);
     return this.apiService.post(`/workspaces/${workspaceId}/mappings/tenant/`, {
       tenant_name: tenantName,
       tenant_id: tenantId
