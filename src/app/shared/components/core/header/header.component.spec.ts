@@ -156,7 +156,6 @@ describe('HeaderComponent', () => {
     expect((component as any).getActivePageName('/workspaces/main/dashboard')).toBe('Dashboard');
     expect((component as any).getActivePageName('/workspaces/main/export_log')).toBe('Export Log');
     expect((component as any).getActivePageName('/workspaces/main/mapping/project')).toBe('project mapping');
-    expect((component as any).getActivePageName('/workspaces/main/configuration/employee_settings')).toBe('Map Employees');
     expect((component as any).getActivePageName('/workspaces/main/configuration/export_settings')).toBe('Export Settings');
     expect((component as any).getActivePageName('/workspaces/main/configuration/import_settings')).toBe('Import Settings');
     expect((component as any).getActivePageName('/workspaces/main/configuration/advanced_settings')).toBe('Advanced Settings');

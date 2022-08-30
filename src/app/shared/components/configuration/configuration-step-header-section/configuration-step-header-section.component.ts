@@ -43,22 +43,16 @@ export class ConfigurationStepHeaderSectionComponent implements OnInit {
 
   private setupContent(): void {
     const route = this.router.url;
-    if (route.includes('realmId')) {
+    if (route.includes('code')) {
       this.activePage = 'xero_connector';
     } else {
       this.activePage = route.split('/').pop();
     }
-
     switch (this.activePage) {
       case 'xero_connector':
-        this.headerText = 'Connect to Xero';
-        this.contentText = 'Connect to the Xero Company from which you would like to import and export data. The Fyle org and Xero company cannot be changed once the configuration steps are complete.';
+        this.headerText = 'Connect to Xero Tenant';
+        this.contentText = 'Connect to the Xero Tenant from which you would like to import and export data. The Fyle org and Xero Tenant cannot be changed once the configuration steps are complete.';
         this.helpArticleLink = RedirectLink.CONFIGURATION_XERO_CONNECTOR;
-        break;
-      case 'employee_settings':
-        this.headerText = 'Map Employees';
-        this.contentText = 'Choose appropriate representation of your Employees in Xero.';
-        this.helpArticleLink = RedirectLink.CONFIGURATION_EMPLOYEE_SETTING;
         break;
       case 'export_settings':
         this.headerText = 'Export Settings';

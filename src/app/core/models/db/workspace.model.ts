@@ -5,6 +5,8 @@ export type Workspace = {
   id: number;
   name: string;
   user: number[];
+  fyle_currency: string;
+  xero_currency: string;
   fyle_org_id: string;
   xero_short_code: string;
   last_synced_at?: Date;

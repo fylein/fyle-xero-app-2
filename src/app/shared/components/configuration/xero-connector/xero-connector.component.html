@@ -1,10 +1,10 @@
-<div fxLayout="row" fxLayoutAlign="center center" class="configuration--section" [ngClass]="[isOnboarding ? 'configuration--onboarding-section' : '', !isOnboarding ? 'configuration--post-onboarding-section': '']">
+<div fxLayout="row"  [formGroup]="xeroConnectorForm" fxLayoutAlign="center center" class="configuration--section" [ngClass]="[isOnboarding ? 'configuration--onboarding-section' : '', !isOnboarding ? 'configuration--post-onboarding-section': '']">
   <app-loader [phase]="'pre_onboarding'" *ngIf="isLoading"></app-loader>
   <div *ngIf="!isLoading" class="configuration--contents">
     <app-configuration-step-header-section></app-configuration-step-header-section>
     <div fxLayout="row" fxLayoutAlign="space-between center">
       <div class="xero-connector--connection-blocks">
-        <div class="xero-connector--xero-org-section">
+        <div class="xero-connector--fyle-org-section">
           <h5 class="xero-connector--fyle-section-text align-center sub-text-color bold">
             FYLE
           </h5>
@@ -34,9 +34,9 @@
         </div>
       </div>
       <div class="xero-connector--connection-blocks">
-        <div class="xero-connector--fyle-org-section">
+        <div class="xero-connector--xero-org-section">
           <h5 class="xero-connector--fyle-section-text align-center sub-text-color bold">
-            Xero Tenant
+            XERO TENTANT
           </h5>
           <h3 [matTooltip]="xeroCompanyName" [matTooltipDisabled]="xeroCompanyName.length > 26 === false" matTooltipPosition="right" matTooltipClass="right" *ngIf="!xeroConnectionInProgress && xeroCompanyName" class="default-cursor single-line-text align-center">
             {{ xeroCompanyName | trimCharacter: 26 }}
@@ -45,20 +45,31 @@
             <app-loader [size]="'small'"></app-loader>
           </p>
         </div>
+        <div *ngIf="!isXeroConnected && !xeroConnectionInProgress && !xeroTokenExpired" class="align-center default-cursor">
+          <mat-form-field floatLabel="always" appearance="outline">
+            <mat-select placeholder="Select a Xero tenant" formControlName="xeroTenant">
+              <mat-option *ngFor="let option of tenantList" [value]="option.destination_id">
+                {{ option.value }}
+                <!-- <img *ngIf="xeroConnectorForm.value.xeroTenant === option.value" src="assets/images/svgs/general/tick-pink.svg" class="selected-value-check-mark"> -->
+              </mat-option>
+            </mat-select>
+            <div class="mat-select-arrow-closed"></div>
+          </mat-form-field>
+        </div>
         <div class="xero-connector--switch-org-section">
-          <div class="xero-connector--org-switch-separator"></div>
           <div class="xero-connector--switch-org-inner-section">
-            <h4 *ngIf="!isXeroConnected && !xeroConnectionInProgress && !xeroTokenExpired" class="xero-connector--connection-in-progress-text align-center sub-text-color">
-              No Xero company is connected yet.
+            <div class="xero-connector--org-switch-separator"></div>
+            <h4 *ngIf="!isXeroConnected && !xeroConnectionInProgress && !xeroTokenExpired" class="xero-connector--connection-in-progress-text align-center sub-text-color"> 
+              will need to select a tenant to proceed with the onboarding.
             </h4>
             <h4 *ngIf="!isXeroConnected && !xeroConnectionInProgress && !xeroTokenExpired" (click)="connectXero()" class="xero-connector--switch-org-text actionable-text align-center">
               Connect to Xero
             </h4>
             <h4 *ngIf="!xeroConnectionInProgress && !xeroTokenExpired && showDisconnectXero" class="xero-connector--switch-org-info-text align-center sub-text-color single-line-text">
-              Not the company that you wish to connect with?
+              Not the Tenant that you wish to connect with?
             </h4>
             <h4 *ngIf="xeroConnectionInProgress" class="xero-connector--connection-in-progress-text align-center sub-text-color">
-              Please hold on; we are fetching data from your Xero account, which may take a few seconds.
+              Please hold on; we are fetching data from your Xero Tenant, which may take a few seconds.
             </h4>
             <h4 *ngIf="xeroTokenExpired && !xeroConnectionInProgress" class="xero-connector--connection-in-progress-text align-center sub-text-color">
               Token expired

@@ -30,6 +30,8 @@ export class HeaderComponent implements OnInit {
 
   isHelpSectionExpanded: boolean;
 
+  currency: any = this.workspaceService.getFyleCurrency();
+
   xeroCompanyName: string;
 
   showBackButton: boolean;
@@ -82,8 +84,6 @@ export class HeaderComponent implements OnInit {
       return 'Export Log';
     } else if (currentPageUrl.indexOf('mapping') > -1) {
       return currentPageUrl.split('/')[4] + ' mapping';
-    } else if (currentPageUrl.indexOf('/configuration/employee_settings') > -1) {
-      return 'Map Employees';
     } else if (currentPageUrl.indexOf('/configuration/export_settings') > -1) {
       return 'Export Settings';
     } else if (currentPageUrl.indexOf('/configuration/import_settings') > -1) {
@@ -102,7 +102,7 @@ export class HeaderComponent implements OnInit {
     this.user = this.userService.getUserProfile();
 
     this.xeroConnectorService.getXeroCredentials(this.workspaceService.getWorkspaceId()).subscribe((credentials: XeroCredentials) => {
-      this.xeroCompanyName = 'credentials.company_name';
+      this.xeroCompanyName = credentials.company_name;
     }, (error) => {
       this.isXeroConnected = false;
       if ('id' in error.error) {

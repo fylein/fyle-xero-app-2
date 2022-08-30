@@ -10,8 +10,8 @@ const routes: Routes = [
   },
   {
     path: 'workspaces',
-    loadChildren: () => import('./integration/integration.module').then(m => m.IntegrationModule),
-    canActivate: [AuthGuard]
+    loadChildren: () => import('./integration/integration.module').then(m => m.IntegrationModule)
+    // CanActivate: [AuthGuard]
   },
   {
     path: 'auth',

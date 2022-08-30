@@ -15,6 +15,10 @@ import { ConfirmationDialog } from 'src/app/core/models/misc/confirmation-dialog
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationDialogComponent } from '../../core/confirmation-dialog/confirmation-dialog.component';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
+import { tenant } from './xero-connector.fixture';
+import { TenantMapping } from 'src/app/core/models/db/tenant-mapping.model';
 
 @Component({
   selector: 'app-xero-connector',
@@ -27,11 +31,13 @@ export class XeroConnectorComponent implements OnInit, OnDestroy {
 
   xeroConnectionInProgress: boolean;
 
-  isXeroConnected: boolean = true;
+  isXeroConnected: boolean = false;
 
   xeroTokenExpired: boolean;
 
   showDisconnectXero: boolean;
+
+  tenantList: DestinationAttribute[];
 
   isContinueDisabled: boolean = true;
 
@@ -42,6 +48,8 @@ export class XeroConnectorComponent implements OnInit, OnDestroy {
   fyleOrgName: string = this.userService.getUserProfile().org_name;
 
   windowReference: Window;
+
+  xeroConnectorForm: FormGroup;
 
   ConfigurationCtaText = ConfigurationCtaText;
 
@@ -60,9 +68,13 @@ export class XeroConnectorComponent implements OnInit, OnDestroy {
     private trackingService: TrackingService,
     private userService: UserService,
     private windowService: WindowService,
-    private workspaceService: WorkspaceService
+    private workspaceService: WorkspaceService,
+    private formBuilder: FormBuilder
   ) {
     this.windowReference = this.windowService.nativeWindow;
+    this.xeroConnectorForm = this.formBuilder.group({
+      xeroTenant: ['', Validators.required]
+    });
   }
 
   private trackSessionTime(eventState: 'success' | 'navigated'): void {
@@ -78,7 +90,7 @@ export class XeroConnectorComponent implements OnInit, OnDestroy {
     }
 
     this.trackSessionTime('success');
-    this.router.navigate([`/workspaces/onboarding/employee_settings`]);
+    this.router.navigate([`/workspaces/onboarding/export_settings`]);
   }
 
   switchFyleOrg(): void {
@@ -87,7 +99,18 @@ export class XeroConnectorComponent implements OnInit, OnDestroy {
   }
 
   connectXero(): void {
-    this.authService.redirectToXeroOAuth();
+    const tenantId = this.xeroConnectorForm.value.xeroTenant;
+    const xeroTenant = this.tenantList.filter(filteredTenant => filteredTenant.destination_id === tenantId)[0];
+    if (tenantId) {
+      this.xeroConnectionInProgress = true;
+      this.xeroConnectorService.postTenantMappings(xeroTenant.workspace, xeroTenant.value, xeroTenant.destination_id).subscribe((response:TenantMapping) => {
+        this.xeroConnectionInProgress = false;
+        this.xeroTokenExpired = false;
+        this.showDisconnectXero = true;
+        this.isXeroConnected = true;
+        this.xeroCompanyName = response.tenant_name;
+      });
+    }
   }
 
   disconnectXero(): void {
@@ -96,7 +119,24 @@ export class XeroConnectorComponent implements OnInit, OnDestroy {
       this.trackingService.onClickEvent(ClickEvent.RECONNECT_XERO, {oldCompanyName: this.xeroCompanyName});
       this.showDisconnectXero = false;
       this.xeroCompanyName = null;
-      this.getSettings();
+      this.xeroConnectionInProgress = false;
+      this.isXeroConnected = false;
+      this.xeroConnectorService.getXeroCredentials(this.workspaceService.getWorkspaceId()).subscribe((xeroCredentials: XeroCredentials) => {
+        this.showOrHideDisconnectXero();
+      }, (error) => {
+        // Token expired
+        if ('id' in error.error) {
+          // We have a Xero row present in DB
+          this.xeroTokenExpired = error.error.is_expired;
+          if (this.xeroTokenExpired) {
+            this.xeroCompanyName = error.error.company_name;
+          }
+        }
+
+        this.isXeroConnected = false;
+        this.isContinueDisabled = true;
+        this.isLoading = false;
+      });
     });
   }
 
@@ -136,11 +176,11 @@ export class XeroConnectorComponent implements OnInit, OnDestroy {
     });
   }
 
-  private postXeroCredentials(code: string, realmId: string): void {
+  private postXeroCredentials(code: string): void {
     this.xeroConnectorService.connectXero(this.workspaceService.getWorkspaceId(), code).subscribe((xeroCredentials: XeroCredentials) => {
       this.workspaceService.refreshXeroDimensions().subscribe(() => {
         this.trackingService.onOnboardingStepCompletion(OnboardingStep.CONNECT_XERO, 1);
-        this.workspaceService.setOnboardingState(OnboardingState.IMPORT_SETTINGS);
+        this.workspaceService.setOnboardingState(OnboardingState.EXPORT_SETTINGS);
         this.xeroConnectionInProgress = false;
         this.showOrHideDisconnectXero();
       });
@@ -157,7 +197,7 @@ export class XeroConnectorComponent implements OnInit, OnDestroy {
 
   private getSettings(): void {
     this.xeroConnectorService.getXeroCredentials(this.workspaceService.getWorkspaceId()).subscribe((xeroCredentials: XeroCredentials) => {
-      // This.xeroCompanyName = xeroCredentials.company_name;
+      this.xeroCompanyName = xeroCredentials.company_name;
       this.showOrHideDisconnectXero();
     }, (error) => {
       // Token expired
@@ -177,12 +217,14 @@ export class XeroConnectorComponent implements OnInit, OnDestroy {
 
   private setupPage(): void {
     const code = this.route.snapshot.queryParams.code;
-    const realmId = this.route.snapshot.queryParams.realmId;
     this.isOnboarding = this.windowReference.location.pathname.includes('onboarding');
-    if (code && realmId) {
+    if (code) {
       this.isLoading = false;
-      this.xeroConnectionInProgress = true;
-      this.postXeroCredentials(code, realmId);
+      this.xeroConnectorService.getXeroTenants().subscribe((tenantList: DestinationAttribute[]) => {
+        this.tenantList = tenantList;
+        this.xeroConnectionInProgress = true;
+      });
+      this.postXeroCredentials(code);
     } else {
       this.getSettings();
     }

@@ -65,18 +65,10 @@ describe('ConfigurationStepHeaderSectionComponent', () => {
 
   it('setupContent function with router url as realmid check', () => {
     // @ts-ignore: force this private property value for testing.
-    router.url = '/path/to/realmId';
+    router.url = '/path/to/code';
     component.ngOnInit();
-    expect(component.headerText).toEqual('Connect to Xero');
-    expect(component.contentText).toEqual('Connect to the Xero Company from which you would like to import and export data. The Fyle org and Xero company cannot be changed once the configuration steps are complete.');
-  });
-
-  it('setupContent function with router url as employee_settings check', () => {
-    // @ts-ignore: force this private property value for testing.
-    router.url = '/path/to/employee_settings';
-    component.ngOnInit();
-    expect(component.headerText).toEqual('Map Employees');
-    expect(component.contentText).toEqual('Choose appropriate representation of your Employees in Xero.');
+    expect(component.headerText).toEqual('Connect to Xero Tenant');
+    expect(component.contentText).toEqual('Connect to the Xero Tenant from which you would like to import and export data. The Fyle org and Xero Tenant cannot be changed once the configuration steps are complete.');
   });
 
   it('setupContent function with router url as export_settings check', () => {

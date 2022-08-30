@@ -31,18 +31,6 @@ export class OnboardingStepperComponent implements OnInit {
       active: false,
       completed: false,
       number: 2,
-      step: 'Map Employees',
-      icon: 'employee-setting',
-      route: 'employee_settings',
-      size: {
-        height: '19px',
-        width: '20px'
-      }
-    },
-    {
-      active: false,
-      completed: false,
-      number: 3,
       step: 'Export Settings',
       icon: 'export-setting',
       route: 'export_settings',
@@ -54,7 +42,7 @@ export class OnboardingStepperComponent implements OnInit {
     {
       active: false,
       completed: false,
-      number: 4,
+      number: 3,
       step: 'Import Settings',
       icon: 'import-setting',
       route: 'import_settings',
@@ -66,7 +54,7 @@ export class OnboardingStepperComponent implements OnInit {
     {
       active: false,
       completed: false,
-      number: 5,
+      number: 4,
       step: 'Advanced Settings',
       icon: 'advanced-setting',
       route: 'advanced_settings',

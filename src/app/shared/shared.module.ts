@@ -46,7 +46,6 @@ import { PaginatorComponent } from './components/helpers/paginator/paginator.com
 // Import { ExportLogTableComponent } from './components/export-log/export-log-table/export-log-table.component';
 import { DashboardHeaderSectionComponent } from './components/dashboard/dashboard-header-section/dashboard-header-section.component';
 import { DashboardResolveMappingErrorDialogComponent } from './components/dashboard/dashboard-resolve-mapping-error-dialog/dashboard-resolve-mapping-error-dialog.component';
-import { DashboardExportLogDialogComponent } from './components/dashboard/dashboard-export-log-dialog/dashboard-export-log-dialog.component';
 import { DashboardXeroErrorDialogComponent } from './components/dashboard/dashboard-xero-error-dialog/dashboard-xero-error-dialog.component';
 // Import { ExportLogChildTableComponent } from './components/export-log/export-log-child-table/export-log-child-table.component';
 import { PreviewDialogComponent } from './components/configuration/preview-dialog/preview-dialog.component';
@@ -83,7 +82,6 @@ import { EmailMultiSelectFieldComponent } from './components/configuration/email
     // ExportLogTableComponent,
     DashboardHeaderSectionComponent,
     DashboardResolveMappingErrorDialogComponent,
-    DashboardExportLogDialogComponent,
     DashboardXeroErrorDialogComponent,
     // ExportLogChildTableComponent,
     PreviewDialogComponent,

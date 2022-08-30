@@ -1,11 +1,13 @@
 import { ExportSettingGet } from "src/app/core/models/configuration/export-setting.model";
+import { DestinationAttribute } from "src/app/core/models/db/destination-attribute.model";
+import { TenantMapping } from "src/app/core/models/db/tenant-mapping.model";
 import { ExpenseState, ReimbursableExpensesObject, CorporateCreditCardExpensesObject, AutoMapEmployee } from "src/app/core/models/enum/enum.model";
 
 export const response = {
   id: 1,
   refresh_token: 'fyle',
   is_expired: false,
-  realm_id: 'realmId',
+  code: 'realmId',
   country: 'india',
   company_name: 'Fyle',
   created_at: new Date(),
@@ -49,4 +51,30 @@ export const exportResponse: ExportSettingGet = {
     bank_account: {id: '1', name: 'Fyle'}
   },
   workspace_id: 1
+};
+export const tenant: DestinationAttribute[] = [
+  {
+    active: false,
+    attribute_type: "TENANT",
+    created_at: new Date("2022-08-29T08:02:06.216066Z"),
+    destination_id: "25d7b4cd-ed1c-4c5c-80e5-c058b87db8a1",
+    detail: {
+      email: "string",
+      fully_qualified_name: "string"
+    },
+    display_name: "Tenant",
+    id: 13671,
+    updated_at: new Date("2022-08-29T08:02:06.216097Z"),
+    value: "Demo Company (Global)",
+    workspace: 162
+  }
+];
+export const Tenantresponse: TenantMapping = {
+  id: 123,
+  tenant_name: 'Xero',
+  tenant_id: 'xcy',
+  connection_id: "string",
+  created_at: new Date("2022-08-29T08:02:06.216097Z"),
+  updated_at: new Date("2022-08-29T08:02:06.216097Z"),
+  workspace: 2
 };

@@ -47,7 +47,8 @@ export class IntegrationComponent implements OnInit {
         [OnboardingState.COMPLETE]: '/workspaces/main'
       };
       // TODO
-      this.router.navigateByUrl(onboardingStateComponentMap[this.workspace.onboarding_state]);
+
+      this.router.navigateByUrl(onboardingStateComponentMap.IMPORT_SETTINGS);
       // This.router.navigateByUrl(onboardingStateComponentMap.COMPLETE);
     }
   }
@@ -74,11 +75,16 @@ export class IntegrationComponent implements OnInit {
         email: this.user.email,
         workspaceId: workspace.id
       });
+      const currency = {
+        fyle_currency: workspace.fyle_currency,
+        xero_currency: workspace.xero_currency
+      };
       this.storageService.set('workspaceId', this.workspace.id);
       // TODO after api
       this.storageService.set('onboardingState', workspace.onboarding_state);
       // This.storageService.set('onboardingState', 'COMPLETE');
       this.storageService.set('workspaceCreatedAt', workspace.created_at);
+      this.storageService.set('currency', currency);
       this.workspaceService.syncFyleDimensions().subscribe();
       this.workspaceService.syncXeroDimensions().subscribe();
       this.isLoading = false;

@@ -41,7 +41,9 @@ describe('ApiService', () => {
       destination_synced_at: new Date("2022-04-13T10:29:18.796760Z"),
       onboarding_state: OnboardingState.CONNECTION,
       created_at: new Date("2022-04-13T10:29:18.796760Z"),
-      updated_at: new Date("2022-04-13T10:29:18.796760Z")
+      updated_at: new Date("2022-04-13T10:29:18.796760Z"),
+      fyle_currency: 'USD',
+      xero_currency: 'USD'
     };
     service.post('/workspaces/', {}).subscribe((value) => {
       expect(value).toEqual(responseKeys);
@@ -80,7 +82,9 @@ describe('ApiService', () => {
       destination_synced_at: new Date("2022-04-13T10:29:18.796760Z"),
       onboarding_state: OnboardingState.CONNECTION,
       created_at: new Date("2022-04-13T10:29:18.796760Z"),
-      updated_at: new Date("2022-04-13T10:29:18.796760Z")
+      updated_at: new Date("2022-04-13T10:29:18.796760Z"),
+      fyle_currency: 'USD',
+      xero_currency: 'USD'
     };
     service.get("/workspaces/", { org_id: 1 }).subscribe(value => {
       expect(value).toEqual(responseKeys);

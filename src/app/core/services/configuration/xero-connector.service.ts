@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { Observable, of, Subject, throwError } from 'rxjs';
 import { Cacheable, CacheBuster, globalCacheBusterNotifier } from 'ts-cacheable';
 import { XeroCredentials } from '../../models/configuration/xero-connector.model';
+import { DestinationAttribute } from '../../models/db/destination-attribute.model';
+import { TenantMapping } from '../../models/db/tenant-mapping.model';
 import { ApiService } from '../core/api.service';
 import { WorkspaceService } from '../workspace/workspace.service';
 
@@ -24,6 +26,16 @@ export class XeroConnectorService {
   })
   connectXero(workspaceId: string, code:string): Observable<XeroCredentials> {
     globalCacheBusterNotifier.next();
+    const response: XeroCredentials = {
+      country: "GB",
+      created_at: new Date("2021-10-05T11:56:13.883015Z"),
+      id: +workspaceId,
+      refresh_token: "AB",
+      company_name: 'Xero',
+      updated_at: new Date("2022-05-06T13:13:25.893837Z"),
+      workspace: 1
+    };
+    //return of(response);
     return this.apiService.post(`/workspaces/${workspaceId}/connect_xero/authorization_code/`, code
     );
   }
@@ -32,6 +44,26 @@ export class XeroConnectorService {
     cacheBusterObserver: xeroCredentialsCache
   })
   getXeroCredentials(workspaceId: string): Observable<XeroCredentials> {
+    const response: XeroCredentials = {
+      country: "GB",
+      created_at: new Date("2021-10-05T11:56:13.883015Z"),
+      id: +workspaceId,
+      refresh_token: "AB",
+      company_name: 'Xero',
+      updated_at: new Date("2022-05-06T13:13:25.893837Z"),
+      workspace: 1
+    };
+    const errorResponse = {
+      status: 404,
+      statusText: "Not Found",
+      error: {
+        id: 1,
+        is_expired: true,
+        company_name: 'Xero'
+      }
+    };
+    //Return throwError(errorResponse)
+    //return of(response);
     return this.apiService.get(`/workspaces/${workspaceId}/credentials/xero/`, {});
   }
 
@@ -39,12 +71,54 @@ export class XeroConnectorService {
     cacheBusterNotifier: xeroCredentialsCache
   })
   revokeXeroConnection(workspaceId: string) {
+    //return of({});
     return this.apiService.post(`/workspaces/${workspaceId}/connection/xero/revoke/`, {});
   }
 
   @Cacheable()
   getXeroTokenHealth(workspaceId: string): Observable<{}> {
     return this.apiService.get(`/workspaces/${workspaceId}/xero/token_health/`, {});
+  }
+
+  getXeroTenants(): Observable<DestinationAttribute[]> {
+    const response: DestinationAttribute[] = [
+      {
+        active: false,
+        attribute_type: "TENANT",
+        created_at: new Date("2022-08-29T08:02:06.216066Z"),
+        destination_id: "25d7b4cd-ed1c-4c5c-80e5-c058b87db8a1",
+        detail: {
+          email: "string",
+          fully_qualified_name: "string"
+        },
+        display_name: "Tenant",
+        id: 13671,
+        updated_at: new Date("2022-08-29T08:02:06.216097Z"),
+        value: "Demo Company (Global)",
+        workspace: 162
+      }
+    ];
+    // return of(response);
+    const workspaceId = this.workspaceService.getWorkspaceId();
+
+    return this.apiService.get(`/workspaces/${workspaceId}/xero/tenants/`, {});
+  }
+
+  postTenantMappings(workspaceId: number, tenantName: string, tenantId: string): Observable<TenantMapping> {
+    const response: TenantMapping = {
+      id: 123,
+      tenant_name: 'Xero',
+      tenant_id: 'xcy',
+      connection_id: "string",
+      created_at: new Date("2022-08-29T08:02:06.216097Z"),
+      updated_at: new Date("2022-08-29T08:02:06.216097Z"),
+      workspace: +workspaceId
+    };
+    // return of(response);
+    return this.apiService.post(`/workspaces/${workspaceId}/mappings/tenant/`, {
+      tenant_name: tenantName,
+      tenant_id: tenantId
+    });
   }
 
 }
