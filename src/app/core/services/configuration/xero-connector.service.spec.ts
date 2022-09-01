@@ -5,7 +5,7 @@ import { HttpTestingController, HttpClientTestingModule } from '@angular/common/
 import { environment } from 'src/environments/environment';
 import { WorkspaceService } from '../workspace/workspace.service';
 import { DestinationAttribute } from '../../models/db/destination-attribute.model';
-import { TenantMapping } from '../../models/db/tenant-mapping.model';
+import { TenantMapping, TenantMappingPayload } from '../../models/db/tenant-mapping.model';
 
 describe('XeroConnectorService', () => {
   let service: XeroConnectorService;
@@ -136,7 +136,11 @@ describe('XeroConnectorService', () => {
       updated_at: new Date("2022-08-29T08:02:06.216097Z"),
       workspace: +workspace_id
     };
-    service.postTenantMappings(+workspace_id, 'Xero', 'xcy').subscribe(value => {
+    const tenantMappingPayload: TenantMappingPayload = {
+      tenantId: 'xcy',
+      tenantName: 'Xero'
+    };
+    service.postTenantMappings(tenantMappingPayload).subscribe(value => {
       expect(value).toBe(response);
     });
     const req = httpMock.expectOne({

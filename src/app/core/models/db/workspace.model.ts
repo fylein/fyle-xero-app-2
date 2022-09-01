@@ -15,3 +15,8 @@ export type Workspace = {
   created_at: Date;
   updated_at: Date;
 };
+
+export type currency = {
+  xero_currency: string;
+  fyle_currency: string;
+}

@@ -18,7 +18,7 @@ import { TrackingService } from 'src/app/core/services/integration/tracking.serv
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { tenant } from './xero-connector.fixture';
-import { TenantMapping } from 'src/app/core/models/db/tenant-mapping.model';
+import { TenantMapping, TenantMappingPayload } from 'src/app/core/models/db/tenant-mapping.model';
 
 @Component({
   selector: 'app-xero-connector',
@@ -31,7 +31,7 @@ export class XeroConnectorComponent implements OnInit, OnDestroy {
 
   xeroConnectionInProgress: boolean;
 
-  isXeroConnected: boolean = false;
+  isXeroConnected: boolean = true;
 
   xeroTokenExpired: boolean;
 
@@ -99,14 +99,16 @@ export class XeroConnectorComponent implements OnInit, OnDestroy {
   }
 
   connectXero(): void {
-    const tenantId = this.xeroConnectorForm.value.xeroTenant;
-    const xeroTenant = this.tenantList.filter(filteredTenant => filteredTenant.destination_id === tenantId)[0];
-    if (tenantId) {
+    if (this.xeroConnectorForm.valid) {
       this.xeroConnectionInProgress = true;
-      this.xeroConnectorService.postTenantMappings(xeroTenant.workspace, xeroTenant.value, xeroTenant.destination_id).subscribe((response:TenantMapping) => {
+      const tenantMappingPayload: TenantMappingPayload = {
+        tenantId: this.xeroConnectorForm.value.xeroTenant.id,
+        tenantName: this.xeroConnectorForm.value.xeroTenant.name
+      };
+      this.xeroConnectorService.postTenantMappings(tenantMappingPayload).subscribe((response:TenantMapping) => {
         this.xeroConnectionInProgress = false;
         this.xeroTokenExpired = false;
-        this.showDisconnectXero = true;
+        this.showOrHideDisconnectXero();
         this.isXeroConnected = true;
         this.xeroCompanyName = response.tenant_name;
       });
@@ -219,6 +221,7 @@ export class XeroConnectorComponent implements OnInit, OnDestroy {
     const code = this.route.snapshot.queryParams.code;
     this.isOnboarding = this.windowReference.location.pathname.includes('onboarding');
     if (code) {
+      this.isXeroConnected = false;
       this.isLoading = false;
       this.xeroConnectorService.getXeroTenants().subscribe((tenantList: DestinationAttribute[]) => {
         this.tenantList = tenantList;

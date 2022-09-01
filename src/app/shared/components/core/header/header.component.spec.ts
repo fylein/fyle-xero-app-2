@@ -96,6 +96,10 @@ describe('HeaderComponent', () => {
     spyOn(renderer2, 'listen').and.callThrough();
     fixture.detectChanges();
     dialogSpy = spyOn(TestBed.get(MatDialog), 'open').and.returnValue(dialogRefSpyObj);
+    component.currency = {
+      fyle_currency: 'USD',
+      xero_currency: 'USD'
+    };
   });
 
   it('should create', () => {

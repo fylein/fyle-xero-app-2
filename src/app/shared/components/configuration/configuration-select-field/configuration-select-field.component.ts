@@ -42,6 +42,8 @@ export class ConfigurationSelectFieldComponent implements OnInit {
 
   @Input() phase: ProgressPhase;
 
+  @Input() note: string
+
   SimpleSearchPage = SimpleSearchPage;
 
   SimpleSearchType = SimpleSearchType;

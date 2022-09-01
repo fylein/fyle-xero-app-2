@@ -1,5 +1,5 @@
 import { EventEmitter, Injectable, Output } from '@angular/core';
-import { from, Observable } from 'rxjs';
+import { from, Observable, of } from 'rxjs';
 import { Cacheable } from 'ts-cacheable';
 import { DestinationAttribute, GroupedDestinationAttribute } from '../../models/db/destination-attribute.model';
 import { MappingSetting, MappingSettingPost, MappingSettingResponse } from '../../models/db/mapping-setting.model';
@@ -24,15 +24,15 @@ export class MappingService {
   ) { }
 
   getXeroDestinationAttributes(attributeTypes: string | string[], active:boolean = false): Observable<DestinationAttribute[]> {
-    const params: {attribute_types: string | string[], active?: boolean} = {
-      attribute_types: attributeTypes
-    };
+    // Const params: {attribute_types: string | string[], active?: boolean} = {
+    //   Attribute_types: attributeTypes
+    // };
 
-    if (active) {
-      params.active = true;
-    }
-
-    return this.apiService.get(`/workspaces/${this.workspaceId}/xero/destination_attributes/`, params);
+    // If (active) {
+    //   Params.active = true;
+    // }
+    return of([]);
+    // Return this.apiService.get(`/workspaces/${this.workspaceId}/xero/destination_attributes/`, params);
   }
 
   getDistinctXeroDestinationAttributes(attributeTypes: string[]): Observable<DestinationAttribute[]> {
@@ -58,7 +58,18 @@ export class MappingService {
 
   @Cacheable()
   getFyleExpenseFields(): Observable<ExpenseField[]> {
-    return this.apiService.get(`/workspaces/${this.workspaceId}/fyle/expense_fields/`, {});
+    const response:ExpenseField[]=[
+      {
+          "attribute_type": "BANK_ACCOUN",
+          "display_name": "Bank Account"
+      },
+      {
+          "attribute_type": "TAX_CODE",
+          "display_name": "Tax Code"
+      }
+    ];
+    return of(response);
+    // Return this.apiService.get(`/workspaces/${this.workspaceId}/fyle/expense_fields/`, {});
   }
 
   // TODO: cache this safely later

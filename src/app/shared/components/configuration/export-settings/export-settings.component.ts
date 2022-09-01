@@ -3,7 +3,7 @@ import { AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators } from
 import { Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
-import { ConfigurationCtaText, CorporateCreditCardExpensesObject, ExpenseGroupingFieldOption, ExpenseState, ExportDateType, OnboardingState, OnboardingStep, ProgressPhase, ReimbursableExpensesObject, TenantFieldMapping, UpdateEvent } from 'src/app/core/models/enum/enum.model';
+import { AutoMapEmployee, ConfigurationCtaText, CorporateCreditCardExpensesObject, ExpenseGroupingFieldOption, ExpenseState, ExportDateType, OnboardingState, OnboardingStep, ProgressPhase, ReimbursableExpensesObject, TenantFieldMapping, UpdateEvent } from 'src/app/core/models/enum/enum.model';
 import { ExportSettingGet, ExportSettingFormOption, ExportSettingModel } from 'src/app/core/models/configuration/export-setting.model';
 import { ExportSettingService } from 'src/app/core/services/configuration/export-setting.service';
 import { HelperService } from 'src/app/core/services/core/helper.service';
@@ -45,14 +45,18 @@ export class ExportSettingsComponent implements OnInit, OnDestroy {
 
   windowReference: Window;
 
-  expenseStateOptions: ExportSettingFormOption[] = [
+  autoMapEmployeeTypes: ExportSettingFormOption[] = [
     {
-      value: ExpenseState.PAYMENT_PROCESSING,
-      label: 'Payment Processing'
+      label: 'None',
+      value: AutoMapEmployee.EMPLOYEE_CODE
     },
     {
-      value: ExpenseState.PAID,
-      label: 'Paid'
+      label: 'Employee name on Fyle to contact name on Xero',
+      value: AutoMapEmployee.NAME
+    },
+    {
+      label: 'Employee email on Fyle to contact email  on Xero',
+      value: AutoMapEmployee.EMAIL
     }
   ];
 
@@ -70,6 +74,25 @@ export class ExportSettingsComponent implements OnInit, OnDestroy {
       value: ExpenseGroupingFieldOption.EXPENSE_ID
     }
   ];
+
+  reimbursableExpenseStateOptions: ExportSettingFormOption[] = [
+    {
+      label: 'Approved',
+      value: ExpenseState.PAID
+    },
+    {
+      label: 'Verified',
+      value: ExpenseState.PAID
+    },
+    {
+      label: 'Payment processing',
+      value: ExpenseState.PAID
+    },
+    {
+      label: 'Paid',
+      value: ExpenseState.PAID
+    }
+  ]
 
   reimbursableExpenseGroupingDateOptions: ExportSettingFormOption[] = [
     {
@@ -381,19 +404,11 @@ export class ExportSettingsComponent implements OnInit, OnDestroy {
   }
 
   navigateToPreviousStep(): void {
-    this.router.navigate([`/workspaces/onboarding/import_settings`]);
+    this.router.navigate([`/workspaces/onboarding/xero_connector`]);
   }
 
   private updateExportSettings(): boolean {
     return this.exportSettings.workspace_general_settings.reimbursable_expenses_object !== null || this.exportSettings.workspace_general_settings.corporate_credit_card_expenses_object !== null;
-  }
-
-  private singleItemizedJournalEntryAffected(): boolean {
-    return (this.exportSettings?.workspace_general_settings?.reimbursable_expenses_object !== ReimbursableExpensesObject.PURCHASE_BILL ) || (this.exportSettings?.workspace_general_settings?.corporate_credit_card_expenses_object !== CorporateCreditCardExpensesObject.BANK_TRANSACTION);
-  }
-
-  private paymentsSyncAffected(): boolean {
-    return this.exportSettings?.workspace_general_settings?.reimbursable_expenses_object !== ReimbursableExpensesObject.PURCHASE_BILL && this.exportSettingsForm.value.reimbursableExportType  === ReimbursableExpensesObject.PURCHASE_BILL;
   }
 
   private advancedSettingAffected(): boolean {
@@ -427,17 +442,11 @@ export class ExportSettingsComponent implements OnInit, OnDestroy {
     const updatedReimbursableExportType = this.exportSettingsForm.value.reimbursableExportType ? this.exportSettingsForm.value.reimbursableExportType : 'None';
     const updatedCorporateCardExportType = this.exportSettingsForm.value.creditCardExportType ? this.exportSettingsForm.value.creditCardExportType : 'None';
 
-    if (this.singleItemizedJournalEntryAffected()) {
       if (updatedReimbursableExportType !== existingReimbursableExportType) {
         content = this.replaceContentBasedOnConfiguration(updatedReimbursableExportType, existingReimbursableExportType, 'reimbursable');
       } else if (existingCorporateCardExportType !== updatedCorporateCardExportType) {
         content = this.replaceContentBasedOnConfiguration(updatedCorporateCardExportType, existingCorporateCardExportType, 'credit card');
       }
-    }
-
-    if (!this.singleItemizedJournalEntryAffected() && this.paymentsSyncAffected()) {
-      content = this.replaceContentBasedOnConfiguration(updatedReimbursableExportType, existingReimbursableExportType, 'reimbursable');
-    }
 
     return content;
   }
@@ -480,7 +489,7 @@ export class ExportSettingsComponent implements OnInit, OnDestroy {
 
     this.exportSettingService.postExportSettings(exportSettingPayload).subscribe((response: ExportSettingGet) => {
       if (this.workspaceService.getOnboardingState() === OnboardingState.EXPORT_SETTINGS) {
-        this.trackingService.onOnboardingStepCompletion(OnboardingStep.EXPORT_SETTINGS, 3, exportSettingPayload);
+        this.trackingService.onOnboardingStepCompletion(OnboardingStep.EXPORT_SETTINGS, 2, exportSettingPayload);
       } else {
         this.trackingService.onUpdateEvent(
           UpdateEvent.EXPORT_SETTINGS,
@@ -496,10 +505,10 @@ export class ExportSettingsComponent implements OnInit, OnDestroy {
       this.snackBar.open('Export settings saved successfully');
       this.trackSessionTime('success');
       if (this.isOnboarding) {
-        this.workspaceService.setOnboardingState(OnboardingState.ADVANCED_CONFIGURATION);
-        this.router.navigate([`/workspaces/main/configuration/advanced_settings`]);
-      // } else if (this.advancedSettingAffected()) {
-      //   This.router.navigate(['/workspaces/main/configuration/advanced_settings']);
+        this.workspaceService.setOnboardingState(OnboardingState.IMPORT_SETTINGS);
+        this.router.navigate([`/workspaces/main/configuration/import_setting`]);
+      } else if (this.advancedSettingAffected()) {
+        this.router.navigate(['/workspaces/main/configuration/advanced_settings']);
       } else {
         this.mappingService.refreshMappingPages();
         this.router.navigate(['/workspaces/main/dashboard']);

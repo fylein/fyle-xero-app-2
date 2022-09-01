@@ -48,7 +48,7 @@ export class IntegrationComponent implements OnInit {
       };
       // TODO
 
-      this.router.navigateByUrl(onboardingStateComponentMap.IMPORT_SETTINGS);
+      this.router.navigateByUrl(onboardingStateComponentMap.EXPORT_SETTINGS);
       // This.router.navigateByUrl(onboardingStateComponentMap.COMPLETE);
     }
   }
@@ -81,8 +81,8 @@ export class IntegrationComponent implements OnInit {
       };
       this.storageService.set('workspaceId', this.workspace.id);
       // TODO after api
-      this.storageService.set('onboardingState', workspace.onboarding_state);
-      // This.storageService.set('onboardingState', 'COMPLETE');
+      // This.storageService.set('onboardingState', workspace.onboarding_state);
+      this.storageService.set('onboardingState', 'EXPORT');
       this.storageService.set('workspaceCreatedAt', workspace.created_at);
       this.storageService.set('currency', currency);
       this.workspaceService.syncFyleDimensions().subscribe();

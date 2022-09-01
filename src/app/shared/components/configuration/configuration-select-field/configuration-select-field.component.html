@@ -12,7 +12,10 @@
     </div>
   </div>
   <div class="configuration--input-section">
-    <mat-form-field floatLabel="always" appearance="outline" class="configuration--form-field">
+    <div *ngIf="note&&options===null&&xeroAttributes===null" class="configuration--form-field">
+      <b class="configuration-select-field--note">{{note}}</b>
+    </div>
+    <mat-form-field *ngIf="placeholder !== null && options !== null || xeroAttributes !== null" floatLabel="always" appearance="outline" class="configuration--form-field">
       <mat-select [placeholder]="placeholder" [formControlName]="formControllerName" [compareWith]="helperService.compareObjects">
         <mat-option *ngFor="let option of options" [value]="option.value">
           {{ option.label }}
@@ -32,26 +35,26 @@
     </mat-form-field>
     <app-mandatory-error-message *ngIf="isFieldMandatory && form.controls[formControllerName].touched && !form.controls[formControllerName].valid && !form.controls[formControllerName].disabled" [listName]="mandatoryErrorListName" [customErrorMessage]="customErrorMessage"></app-mandatory-error-message>
     <div *ngIf="(formControllerName === 'reimbursableExportType' && form.value.reimbursableExportType) || (formControllerName === 'creditCardExportType' && form.value.creditCardExportType)" class="configuration-select-field--preview-text sub-text-color">
-      <p *ngIf="formControllerName === 'reimbursableExportType'">Click <span class="configuration-select-field--preview-btn pointer" (click)="showXeroExportPreview(form.value.reimbursableExportType, null)">here</span> to Preivew on how it looks on Xero</p>
-      <p *ngIf="formControllerName === 'creditCardExportType'">Click <span class="configuration-select-field--preview-btn pointer" (click)="showXeroExportPreview(null, form.value.creditCardExportType)">here</span> to Preivew on how it looks on Xero</p>
+      <p *ngIf="formControllerName === 'reimbursableExportType' && options !== null || xeroAttributes !== null">Click <span class="configuration-select-field--preview-btn pointer" (click)="showXeroExportPreview(form.value.reimbursableExportType, null)">here</span> to Preivew on how it looks on Xero</p>
+      <p *ngIf="formControllerName === 'creditCardExportType'  && options !== null || xeroAttributes !== null">Click <span class="configuration-select-field--preview-btn pointer" (click)="showXeroExportPreview(null, form.value.creditCardExportType)">here</span> to Preivew on how it looks on Xero</p>
     </div>
 
-    <div *ngIf="formControllerName === 'autoMapEmployee'" class="configuration-select-field--select-example-section paragraph">
-      <h5 *ngIf="form.value.autoMapEmployee === 'NAME'" class="sub-text-color">
+    <!-- <div *ngIf="formControllerName === 'autoMapEmployees'" class="configuration-select-field--select-example-section paragraph">
+      <h5 *ngIf="form.value.autoMapEmployees === 'NAME'" class="sub-text-color">
         Example: Ryan Clark will map to Ryan Clark in Xero.
       </h5>
-      <h5 *ngIf="form.value.autoMapEmployee === 'EMAIL'" class="sub-text-color">
+      <h5 *ngIf="form.value.autoMapEmployees === 'EMAIL'" class="sub-text-color">
         Example: ryan.clark@acme.com will map to ryan.clark@acme.com in Xero.
       </h5>
-      <h5 *ngIf="form.value.autoMapEmployee === 'EMPLOYEE_CODE'" class="sub-text-color">
+      <h5 *ngIf="form.value.autoMapEmployees === 'EMPLOYEE_CODE'" class="sub-text-color">
         Example: E0146 will map to E0146 in Xero.
       </h5>
-    </div>
+    </div> -->
   </div>
 </div>
-<div *ngIf="formControllerName === 'autoMapEmployee' || formControllerName === 'expenseState'" class="configuration-select-field--select-note-section paragraph">
+<div *ngIf="formControllerName === 'autoMapEmployees' || formControllerName === 'expenseState'" class="configuration-select-field--select-note-section paragraph">
   <div class="configuration-select-field--select-note-content sub-text-color">
-    <h5 *ngIf="formControllerName === 'autoMapEmployee'">Note: In case the employee records are not auto matched by the integration, you could still manually map the records from the Mappings section of the integration.</h5>
-    <h5 *ngIf="formControllerName === 'expenseState'">Note: Based on the selected state, the integration will automatically import the expenses from Fyle. You can then manually export expenses from the Dashboard or automate the export process in the Advance settings.</h5>
+    <h5 *ngIf="formControllerName === 'autoMapEmployees'">Note: In case the employee records are not auto matched by the integration, you could still <br> manually map the records from the Mappings section of the integration.</h5>
+    <h5 *ngIf="formControllerName === 'expenseState'">Note: Based on the selected state, the integration will automatically import the expenses from Fyle. <br> You can then manually export expenses from the <b>Dashboard</b> or automate the export process in the <b>Advance settings</b>.</h5>
   </div>
 </div>

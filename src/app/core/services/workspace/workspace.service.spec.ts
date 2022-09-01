@@ -155,11 +155,12 @@ describe('WorkspaceService', () => {
   });
 
   it('getFyleCurrency service', () => {
-    const currency = service.getFyleCurrency();
-    const response: {} = {
+    const response = {
       fyle_currency: 'USD',
       xero_currency: 'USD'
     };
+    localStorage.setItem('currency', JSON.stringify(response));
+    const currency = service.getCurrency();
     expect(currency).toEqual(response);
   });
 });

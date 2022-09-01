@@ -14,6 +14,7 @@ import { WindowService } from 'src/app/core/services/core/window.service';
 import { UserService } from 'src/app/core/services/misc/user.service';
 import { WorkspaceService } from 'src/app/core/services/workspace/workspace.service';
 import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
+import { currency } from 'src/app/core/models/db/workspace.model';
 
 @Component({
   selector: 'app-header',
@@ -30,7 +31,7 @@ export class HeaderComponent implements OnInit {
 
   isHelpSectionExpanded: boolean;
 
-  currency: any = this.workspaceService.getFyleCurrency();
+  currency: currency = this.workspaceService.getCurrency();
 
   xeroCompanyName: string;
 

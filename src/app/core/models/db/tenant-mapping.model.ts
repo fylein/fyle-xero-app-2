@@ -8,3 +8,8 @@ export type TenantMapping = {
     updated_at: Date;
     workspace: number;
 };
+
+export type TenantMappingPayload = {
+    tenantId: string;
+    tenantName: string;
+}
