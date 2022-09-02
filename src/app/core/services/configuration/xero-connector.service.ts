@@ -114,10 +114,7 @@ export class XeroConnectorService {
       workspace: +this.workspaceId
     };
     return of(response);
-    // Return this.apiService.post(`/workspaces/${this.workspaceId}/mappings/tenant/`, {
-    //   Tenant_name: tenantName,
-    //   Tenant_id: tenantId
-    // });
+    // Return this.apiService.post(`/workspaces/${this.workspaceId}/mappings/tenant/`, tenantMappingPayload);
   }
 
 }

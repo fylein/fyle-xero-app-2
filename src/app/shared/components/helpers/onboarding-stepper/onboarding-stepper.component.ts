@@ -81,8 +81,8 @@ export class OnboardingStepperComponent implements OnInit {
 
     const onboardingStateStepMap = {
       [OnboardingState.CONNECTION]: 1,
-      [OnboardingState.EXPORT_SETTINGS]: 3,
-      [OnboardingState.IMPORT_SETTINGS]: 2,
+      [OnboardingState.EXPORT_SETTINGS]: 2,
+      [OnboardingState.IMPORT_SETTINGS]: 3,
       [OnboardingState.ADVANCED_CONFIGURATION]: 4,
       [OnboardingState.COMPLETE]: 5
     };

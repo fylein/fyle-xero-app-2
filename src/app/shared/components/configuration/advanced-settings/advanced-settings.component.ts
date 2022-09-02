@@ -1,11 +1,10 @@
-import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
 import { AdvancedSettingFormOption, AdvancedSettingGet, AdvancedSettingModel } from 'src/app/core/models/configuration/advanced-setting.model';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
-import { ConfigurationCtaText, CorporateCreditCardExpensesObject, OnboardingState, OnboardingStep, PaymentSyncDirection, ProgressPhase, ReimbursableExpensesObject, UpdateEvent } from 'src/app/core/models/enum/enum.model';
+import { ConfigurationCtaText, OnboardingState, OnboardingStep, PaymentSyncDirection, ProgressPhase, ReimbursableExpensesObject, UpdateEvent } from 'src/app/core/models/enum/enum.model';
 import { WorkspaceService } from 'src/app/core/services/workspace/workspace.service';
 import { AdvancedSettingService } from 'src/app/core/services/configuration/advanced-setting.service';
 import { HelperService } from 'src/app/core/services/core/helper.service';
@@ -153,7 +152,7 @@ export class AdvancedSettingsComponent implements OnInit, OnDestroy {
     forkJoin([
       this.advancedSettingService.getAdvancedSettings(),
       this.mappingService.getXeroDestinationAttributes('BANK_ACCOUNT'),
-      this.workspaceService.getWorkspaceGeneralSettings
+      this.workspaceService.getWorkspaceGeneralSettings()
     ]).subscribe(response => {
       this.advancedSettings = response[0];
       this.billPaymentAccounts = response[1];

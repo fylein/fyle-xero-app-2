@@ -37,9 +37,7 @@ export class AuthService {
   }
 
   redirectToXeroOAuth(): void {
-    // Console.log("sss",`${environment.xero_authorize_uri}?client_id=${environment.xero_client_id}&scope=${environment.xero_scope}&response_type=code&redirect_uri=${environment.xero_callback_uri}&state=${this.workspaceService.getWorkspaceId()}`)
     this.windowReference.location.href = `${environment.xero_authorize_uri}?client_id=${environment.xero_client_id}&scope=${environment.xero_scope}&response_type=code&redirect_uri=${environment.xero_callback_uri}&state=${this.workspaceService.getWorkspaceId()}`;
-
   }
 
   redirectToFyleOAuth(): void {

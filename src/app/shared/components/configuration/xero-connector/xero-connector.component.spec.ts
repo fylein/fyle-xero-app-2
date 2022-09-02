@@ -206,7 +206,9 @@ describe('XeroConnectorComponent', () => {
     const form = formbuilder.group({
       xeroTenant: '25d7b4cd-ed1c-4c5c-80e5-c058b87db8a1'
       });
+    component.xeroConnectorForm = form;
     component.tenantList = tenant;
+    fixture.detectChanges();
     expect(component.connectXero()).toBeUndefined();
   });
 

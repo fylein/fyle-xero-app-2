@@ -60,4 +60,15 @@ describe('DashboardResolveMappingErrorDialogComponent', () => {
     });
       req.flush([]);
   });
+
+  it('function check', () => {
+    const form = formBuilder.group({
+      xeroTenant: '25d7b4cd-ed1c-4c5c-80e5-c058b87db8a1',
+      source: 'ss'
+      });
+    expect((component as any).showSuccessMessage()).toBeUndefined();
+    expect(component.saveMapping([], destinationAttributes, form));
+  });
 });
+
+

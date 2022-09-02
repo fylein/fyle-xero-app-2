@@ -117,7 +117,9 @@ describe('XeroConnectorService', () => {
       }
     ];
     service.getXeroTenants().subscribe(value => {
-      expect(value).toBe(response);
+      const keys = Object.keys(value).sort();
+      const responseKeys = Object.keys(response).sort();
+      expect(keys).toEqual(responseKeys);
     });
     const req = httpMock.expectOne({
       method: 'GET',

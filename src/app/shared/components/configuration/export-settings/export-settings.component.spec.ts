@@ -100,7 +100,7 @@ describe('ExportSettingsComponent', () => {
 
   it('navigateToPreviousStep function check', () => {
     expect(component.navigateToPreviousStep()).toBeUndefined();
-    expect(routerSpy.navigate).toHaveBeenCalledWith(['/workspaces/onboarding/import_settings']);
+    expect(routerSpy.navigate).toHaveBeenCalledWith(['/workspaces/onboarding/xero_connector']);
   });
 
   it('showConfirmationDialog function check', () => {
@@ -221,7 +221,7 @@ describe('ExportSettingsComponent', () => {
     component.saveInProgress = false;
     expect(component.save()).toBeUndefined();
     fixture.detectChanges();
-    expect(routerSpy.navigate).toHaveBeenCalledWith(['/workspaces/main/configuration/advanced_settings']);
+    expect(routerSpy.navigate).toHaveBeenCalledWith(['/workspaces/main/configuration/import_setting']);
   });
 
   it('constructPayloadAndSave function check', () => {
