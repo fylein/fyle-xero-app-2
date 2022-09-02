@@ -268,7 +268,7 @@ export class ImportSettingsComponent implements OnInit, OnDestroy {
 
       this.importSettingService.postImportSettings(importSettingsPayload).subscribe((response: ImportSettingGet) => {
         if (this.workspaceService.getOnboardingState() === OnboardingState.IMPORT_SETTINGS) {
-          this.trackingService.onOnboardingStepCompletion(OnboardingStep.IMPORT_SETTINGS, 4, importSettingsPayload);
+          this.trackingService.onOnboardingStepCompletion(OnboardingStep.IMPORT_SETTINGS, 3, importSettingsPayload);
         } else {
           this.trackingService.onUpdateEvent(
             UpdateEvent.IMPORT_SETTINGS,

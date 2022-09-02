@@ -1,12 +1,14 @@
 <div class="import-settings">
-  <div fxLayout="row" fxLayoutAlign="center center" class="configuration--section" [ngClass]="[isOnboarding ? 'configuration--onboarding-section' : '', !isOnboarding ? 'configuration--post-onboarding-section': '']">
+  <div fxLayout="row" fxLayoutAlign="center center" class="configuration--section"
+    [ngClass]="[isOnboarding ? 'configuration--onboarding-section' : '', !isOnboarding ? 'configuration--post-onboarding-section': '']">
     <app-loader [ngClass]="{'loader-main': !isOnboarding}" [phase]="'pre_onboarding'" *ngIf="isLoading"></app-loader>
     <div *ngIf="!isLoading" class="configuration--contents">
-      <app-configuration-step-header-section [showSyncButton]="isOnboarding" [phase]="isOnboarding ? ProgressPhase.ONBOARDING : ProgressPhase.POST_ONBOARDING"></app-configuration-step-header-section>
+      <app-configuration-step-header-section [showSyncButton]="isOnboarding"
+        [phase]="isOnboarding ? ProgressPhase.ONBOARDING : ProgressPhase.POST_ONBOARDING">
+      </app-configuration-step-header-section>
       <form [formGroup]="importSettingsForm" class="import-settings--field">
-        <app-configuration-toggle-field
-          [form]="importSettingsForm"
-          [label]="'Import Chart of Accounts from Xero'"
+        <app-configuration-toggle-field [form]="importSettingsForm"
+          [label]="'Import Chart of accounts from Xero as Category in Fyle'"
           [subLabel]="'Imported accounts will be available as Categories in Fyle.'"
           [formControllerName]="'chartOfAccount'">
         </app-configuration-toggle-field>
@@ -20,8 +22,8 @@
             </div>
             <div formArrayName="chartOfAccountTypes" class="import-settings--chart-of-account-list-section">
               <div fxLayout="row wrap">
-                <div *ngFor="let chartOfAccountType of chartOfAccountTypes.controls; let i = index"
-                  [formGroupName]="i" fxFlex="33" class="import-settings--chart-of-account-list">
+                <div *ngFor="let chartOfAccountType of chartOfAccountTypes.controls; let i = index" [formGroupName]="i"
+                  fxFlex="33" class="import-settings--chart-of-account-list">
                   <mat-checkbox formControlName="enabled" [checked]="chartOfAccountType.value.enabled"
                     [disabled]="chartOfAccountType.value.name === 'Expense'">
                     <h5>{{ chartOfAccountType.value.name }}</h5>
@@ -33,42 +35,71 @@
         </div>
 
         <div formArrayName="expenseFields" class="paragraph">
+          <div class="import-settings--field-toggle-section">
+            <div fxLayout="row" fxLayoutAlign="space-between center">
+              <div class="import-settings--field-label-section import-settings--import-area">
+                Import Xero customers as Projects in Fyle
+                <h5 class="configuration--field-label sub-text-color">
+                  The imported Departments from Xero will be a selectable field while creating an expense.
+                </h5>
+                <h5 class="configuration--field-label sub-text-color">
+                  NOTE: To export billable expenses from Fyle, map Customers in Xero to Projects in Fyle.
+                </h5>
+              </div>
+              <div class="configuration--input-toggle-section">
+                <mat-slide-toggle class="configuration--toggle-form-field" color="accent"
+                  [disabled]="expenseFields.value.disable_import_to_fyle" formControlName="import_to_fyle">
+                </mat-slide-toggle>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div formArrayName="expenseFields" class="paragraph">
           <div *ngFor="let expenseField of expenseFields.controls; let i = index" [formGroupName]="i">
             <div class="import-settings--field-toggle-section">
               <div fxLayout="row" fxLayoutAlign="space-between center">
                 <div class="import-settings--field-label-section import-settings--import-area">
-                  Import {{ expenseField.value.destination_field | titlecase }} from Xero
+                  Import specific tracking category {{ i !==0 ? i+1 : '' }}
                   <h5 class="configuration--field-label sub-text-color">
-                    The imported {{ expenseField.value.destination_field | titlecase }} from Xero will be a
-                    selectable field while creating an expense.
+                    The imported Customers/Projects from Xero will be a selectable field while creating an expense.
                   </h5>
                 </div>
                 <div class="configuration--input-toggle-section">
-                  <mat-slide-toggle class="configuration--toggle-form-field" color="accent" [disabled]="expenseField.value.disable_import_to_fyle"
-                    formControlName="import_to_fyle"></mat-slide-toggle>
+                  <mat-slide-toggle class="configuration--toggle-form-field" color="accent"
+                    [disabled]="expenseField.value.disable_import_to_fyle" formControlName="import_to_fyle">
+                  </mat-slide-toggle>
                 </div>
               </div>
               <div *ngIf="expenseField.value.import_to_fyle" fxLayout="row" fxLayoutAlign="space-between center">
                 <div fxLayout="row">
                   <div fxLayout="row" class="import-settings--mapping-xero-fyle-section">
-                    <div class="import-settings--xero-field">
-                      <h5 class="import-settings--xero-field-text single-line-text">
-                        {{ expenseField.value.destination_field | titlecase }} in Xero
-                      </h5>
-                    </div>
+                    <mat-form-field floatLabel="always" appearance="outline" class="import-settings--fyle-field">
+                      <mat-select placeholder="Select a field from Xero" formControlName="source_field">
+                        <mat-option *ngFor="let fyleExpenseField of fyleExpenseFields" [value]="fyleExpenseField">
+                          {{ fyleExpenseField.split('_').join(' ') | titlecase }}
+                          <img *ngIf="fyleExpenseField === expenseField.value.source_field"
+                            src="assets/images/svgs/general/tick-pink.svg" class="selected-value-check-mark">
+                        </mat-option>
+                      </mat-select>
+                      <div class="mat-select-arrow-closed"></div>
+                    </mat-form-field>
                     <div class="import-settings--fields-separator"></div>
                     <div>
                       <mat-form-field floatLabel="always" appearance="outline" class="import-settings--fyle-field">
                         <mat-select placeholder="Select a field from Fyle" formControlName="source_field">
                           <mat-option *ngFor="let fyleExpenseField of fyleExpenseFields" [value]="fyleExpenseField">
                             {{ fyleExpenseField.split('_').join(' ') | titlecase }}
-                            <img *ngIf="fyleExpenseField === expenseField.value.source_field" src="assets/images/svgs/general/tick-pink.svg" class="selected-value-check-mark">
+                            <img *ngIf="fyleExpenseField === expenseField.value.source_field"
+                              src="assets/images/svgs/general/tick-pink.svg" class="selected-value-check-mark">
                           </mat-option>
                         </mat-select>
                         <div class="mat-select-arrow-closed"></div>
                       </mat-form-field>
                       <div class="import-settings--preview-text sub-text-color">
-                        <p>Click <span class="import-settings--preview-btn pointer" (click)="showFyleExpenseFormPreview()">here</span> to preview on how it looks on Expense Form</p>
+                        <p>Click <span class="import-settings--preview-btn pointer"
+                            (click)="showFyleExpenseFormPreview()">here</span> to preview on how it looks on Expense
+                          Form</p>
                       </div>
                     </div>
                   </div>
@@ -88,49 +119,63 @@
         </div>
 
         <div class="import-settings--tax-section" *ngIf="isTaxGroupSyncAllowed">
-          <app-configuration-toggle-field
-            [form]="importSettingsForm"
-            [label]="'Import Tax from Xero'"
-            [subLabel]="'The imported Tax codes from Xero will be set as Tax group in Fyle. This will be a selectable field while creating an expense.'"
+          <app-configuration-toggle-field [form]="importSettingsForm"
+            [label]="'Import tax codes from Xero as Tax group in Fyle'"
+            [subLabel]="'The imported Classes from Xero will be a selectable field while creating an expense.'"
             [formControllerName]="'taxCode'">
           </app-configuration-toggle-field>
-        </div>
 
-        <div *ngIf="importSettingsForm.value.taxCode" class="import-settings--default-tax-section sub-text-color">
-          <div class="import-settings--default-tax-contents">
-            <div class="import-settings--default-tax-field">
-              <h5 class="import-settings--default-tax-header">
-                Default Tax Code
-                <app-mandatory-field></app-mandatory-field>
-              </h5>
-              <div>
-                <mat-form-field floatLabel="always" appearance="outline" class="import-settings--default-tax-input">
-                  <mat-select placeholder="Select Default Tax Code" formControlName="defaultTaxCode" (closed)="helperService.clearSearchText(importSettingsForm)" [compareWith]="helperService.compareObjects">
-                    <app-simple-text-search [form]="importSettingsForm" [page]="SimpleSearchPage.CONFIGURATION" [searchType]="SimpleSearchType.SELECT_FIELD"></app-simple-text-search>
-                    <div *ngFor="let option of taxCodes | search : importSettingsForm.value.searchOption">
-                      <mat-option [ngClass]="{'search-zero-state': option && option.value === 'No result found'}" [matTooltip]="option.value" [matTooltipDisabled]="option.value.length <= 40" matTooltipPosition="above" matTooltipClass="above" (click)="helperService.clearSearchText(importSettingsForm)" [value]="{name: option.value, id: option.destination_id}">
-                        <p (click)="$event.stopPropagation()" *ngIf="option.value === 'No result found'" class="align-center italic">{{ option.value }}</p>
-                        <p *ngIf="option.value !== 'No result found'">{{ option.value }}</p>
-                        <img *ngIf="(importSettingsForm.value.defaultTaxCode | json) === ({name: option.value, id: option.destination_id} | json)" src="assets/images/svgs/general/tick-pink.svg" class="selected-value-check-mark">
-                      </mat-option>
-                    </div>
-                  </mat-select>
-                  <div class="mat-select-arrow-closed"></div>
-                </mat-form-field>
-                <app-mandatory-error-message *ngIf="importSettingsForm.controls.defaultTaxCode.touched && !importSettingsForm.controls.defaultTaxCode.valid" [listName]="'tax code'"></app-mandatory-error-message>
+          <div *ngIf="importSettingsForm.value.taxCode" class="import-settings--default-tax-section sub-text-color">
+            <div class="import-settings--default-tax-contents">
+              <div class="import-settings--default-tax-field">
+                <h5 class="import-settings--default-tax-header">
+                  Default Tax Code
+                  <app-mandatory-field></app-mandatory-field>
+                </h5>
+                <div>
+                  <mat-form-field floatLabel="always" appearance="outline" class="import-settings--default-tax-input">
+                    <mat-select placeholder="Select Default Tax Code" formControlName="defaultTaxCode"
+                      (closed)="helperService.clearSearchText(importSettingsForm)"
+                      [compareWith]="helperService.compareObjects">
+                      <app-simple-text-search [form]="importSettingsForm" [page]="SimpleSearchPage.CONFIGURATION"
+                        [searchType]="SimpleSearchType.SELECT_FIELD"></app-simple-text-search>
+                      <div *ngFor="let option of taxCodes | search : importSettingsForm.value.searchOption">
+                        <mat-option [ngClass]="{'search-zero-state': option && option.value === 'No result found'}"
+                          [matTooltip]="option.value" [matTooltipDisabled]="option.value.length <= 40"
+                          matTooltipPosition="above" matTooltipClass="above"
+                          (click)="helperService.clearSearchText(importSettingsForm)"
+                          [value]="{name: option.value, id: option.destination_id}">
+                          <p (click)="$event.stopPropagation()" *ngIf="option.value === 'No result found'"
+                            class="align-center italic">{{ option.value }}</p>
+                          <p *ngIf="option.value !== 'No result found'">{{ option.value }}</p>
+                          <img
+                            *ngIf="(importSettingsForm.value.defaultTaxCode | json) === ({name: option.value, id: option.destination_id} | json)"
+                            src="assets/images/svgs/general/tick-pink.svg" class="selected-value-check-mark">
+                        </mat-option>
+                      </div>
+                    </mat-select>
+                    <div class="mat-select-arrow-closed"></div>
+                  </mat-form-field>
+                  <app-mandatory-error-message
+                    *ngIf="importSettingsForm.controls.defaultTaxCode.touched && !importSettingsForm.controls.defaultTaxCode.valid"
+                    [listName]="'tax code'"></app-mandatory-error-message>
+                </div>
               </div>
-            </div>
-            <div class="import-settings--default-tax-note">
-              <h5>
-                NOTE: If an expense from Fyle does not contain any tax group information during export, the default
-                tax code will be used.
-              </h5>
+              <div class="import-settings--default-tax-note">
+                <h5>
+                  NOTE: If an expense from Fyle does not contain any tax group information during export, the default
+                  tax code will be used.
+                </h5>
+              </div>
             </div>
           </div>
         </div>
       </form>
 
-      <app-configuration-step-footer-section [ctaText]="!saveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING" [showBackButton]="isOnboarding" [isButtonDisabled]="!importSettingsForm.valid || saveInProgress" (navigateToPreviousStep)="navigateToPreviousStep()" (save)="save()"></app-configuration-step-footer-section>
+      <app-configuration-step-footer-section
+        [ctaText]="!saveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING"
+        [showBackButton]="isOnboarding" [isButtonDisabled]="!importSettingsForm.valid || saveInProgress"
+        (navigateToPreviousStep)="navigateToPreviousStep()" (save)="save()"></app-configuration-step-footer-section>
     </div>
   </div>
   <app-onboarding-footer *ngIf="isOnboarding && !isLoading"></app-onboarding-footer>
