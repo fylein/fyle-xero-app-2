@@ -5,7 +5,7 @@ import { HttpTestingController, HttpClientTestingModule } from '@angular/common/
 import { environment } from 'src/environments/environment';
 import { WorkspaceService } from '../workspace/workspace.service';
 import { DestinationAttribute } from '../../models/db/destination-attribute.model';
-import { TenantMapping, TenantMappingPayload } from '../../models/db/tenant-mapping.model';
+import { TenantMapping, TenantMappingPost } from '../../models/db/tenant-mapping.model';
 
 describe('XeroConnectorService', () => {
   let service: XeroConnectorService;
@@ -138,7 +138,7 @@ describe('XeroConnectorService', () => {
       updated_at: new Date("2022-08-29T08:02:06.216097Z"),
       workspace: +workspace_id
     };
-    const tenantMappingPayload: TenantMappingPayload = {
+    const tenantMappingPayload: TenantMappingPost = {
       tenantId: 'xcy',
       tenantName: 'Xero'
     };

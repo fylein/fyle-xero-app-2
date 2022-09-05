@@ -28,7 +28,7 @@ export type ExportSettingGet = {
 }
 
 export interface ExportSettingFormOption extends SelectFormOption {
-  value: ExpenseState | ReimbursableExpensesObject | CorporateCreditCardExpensesObject | ExpenseGroupingFieldOption | ExportDateType | string;
+  value: ExpenseState | ReimbursableExpensesObject | CorporateCreditCardExpensesObject | ExpenseGroupingFieldOption | ExportDateType | AutoMapEmployee | null;
 }
 
 export class ExportSettingModel {
@@ -36,9 +36,9 @@ export class ExportSettingModel {
     const emptyDestinationAttribute = {id: null, name: null};
     const exportSettingPayload: ExportSettingPost = {
       expense_group_settings: {
-        expense_state: exportSettingsForm.get('expenseState')?.value,
+        reimbursable_expense_state: exportSettingsForm.get('reimbursableExpenseState')?.value,
         reimbursable_export_date_type: exportSettingsForm.get('reimbursableExportDate')?.value,
-        ccc_export_date_type: exportSettingsForm.get('creditCardExportDate')?.value
+        ccc_expense_state: exportSettingsForm.get('cccExpenseState')?.value
       },
       workspace_general_settings: {
         reimbursable_expenses_object: exportSettingsForm.get('reimbursableExportType')?.value,

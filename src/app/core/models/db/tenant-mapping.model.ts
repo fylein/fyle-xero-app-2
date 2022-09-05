@@ -9,7 +9,7 @@ export type TenantMapping = {
     workspace: number;
 };
 
-export type TenantMappingPayload = {
+export type TenantMappingPost = {
     tenantId: string;
     tenantName: string;
 }

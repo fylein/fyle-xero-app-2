@@ -12,10 +12,10 @@
     </div>
   </div>
   <div class="configuration--input-section">
-    <div *ngIf="note && !options && !xeroAttributes" class="configuration--form-field">
-      <b class="configuration-select-field--note">{{note}}</b>
+    <div *ngIf="exportType" class="configuration--form-field">
+      <b class="configuration-select-field--exportType">{{exportType}}</b>
     </div>
-    <mat-form-field *ngIf="placeholder && options || xeroAttributes " floatLabel="always" appearance="outline" class="configuration--form-field">
+    <mat-form-field *ngIf="!exportType" floatLabel="always" appearance="outline" class="configuration--form-field">
       <mat-select [placeholder]="placeholder" [formControlName]="formControllerName" [compareWith]="helperService.compareObjects">
         <mat-option *ngFor="let option of options" [value]="option.value">
           {{ option.label }}
@@ -35,11 +35,11 @@
     </mat-form-field>
     <app-mandatory-error-message *ngIf="isFieldMandatory && form.controls[formControllerName].touched && !form.controls[formControllerName].valid && !form.controls[formControllerName].disabled" [listName]="mandatoryErrorListName" [customErrorMessage]="customErrorMessage"></app-mandatory-error-message>
     <div *ngIf="(formControllerName === 'reimbursableExportType' && form.value.reimbursableExportType) || (formControllerName === 'creditCardExportType' && form.value.creditCardExportType)" class="configuration-select-field--preview-text sub-text-color">
-      <p *ngIf="formControllerName === 'reimbursableExportType' && options || xeroAttributes ">Click <span class="configuration-select-field--preview-btn pointer" (click)="showXeroExportPreview(form.value.reimbursableExportType, null)">here</span> to Preivew on how it looks on Xero</p>
-      <p *ngIf="formControllerName === 'creditCardExportType'  && options || xeroAttributes ">Click <span class="configuration-select-field--preview-btn pointer" (click)="showXeroExportPreview(null, form.value.creditCardExportType)">here</span> to Preivew on how it looks on Xero</p>
+      <p *ngIf="formControllerName === 'reimbursableExportType' && !exportType ">Click <span class="configuration-select-field--preview-btn pointer" (click)="showXeroExportPreview(form.value.reimbursableExportType, null)">here</span> to Preivew on how it looks on Xero</p>
+      <p *ngIf="formControllerName === 'creditCardExportType'  && !exportType || xeroAttributes ">Click <span class="configuration-select-field--preview-btn pointer" (click)="showXeroExportPreview(null, form.value.creditCardExportType)">here</span> to Preivew on how it looks on Xero</p>
     </div>
 
-    <!-- <div *ngIf="formControllerName === 'autoMapEmployees'" class="configuration-select-field--select-example-section paragraph">
+    <div *ngIf="formControllerName === 'autoMapEmployees'" class="configuration-select-field--select-example-section paragraph">
       <h5 *ngIf="form.value.autoMapEmployees === 'NAME'" class="sub-text-color">
         Example: Ryan Clark will map to Ryan Clark in Xero.
       </h5>
@@ -49,7 +49,7 @@
       <h5 *ngIf="form.value.autoMapEmployees === 'EMPLOYEE_CODE'" class="sub-text-color">
         Example: E0146 will map to E0146 in Xero.
       </h5>
-    </div> -->
+    </div>
   </div>
 </div>
 <div *ngIf="formControllerName === 'autoMapEmployees' || formControllerName === 'expenseState'" class="configuration-select-field--select-note-section paragraph">

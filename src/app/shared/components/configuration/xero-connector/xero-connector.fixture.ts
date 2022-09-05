@@ -38,9 +38,9 @@ export const errorResponse2 = {
 
 export const exportResponse: ExportSettingGet = {
   expense_group_settings: {
-    expense_state: ExpenseState.PAID,
+    reimbursable_expense_state: ExpenseState.PAID,
     reimbursable_export_date_type: null,
-    ccc_export_date_type: null
+    ccc_expense_state: ExpenseState.PAID
   },
   workspace_general_settings: {
     reimbursable_expenses_object: ReimbursableExpensesObject.PURCHASE_BILL,

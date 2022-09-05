@@ -99,14 +99,6 @@ describe('AdvancedSettingsComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('showPaymentSyncField function check', () => {
-    expect(component.showPaymentSyncField()).toBeTrue();
-  });
-
-  it('showSingleCreditLineJEField function check', () => {
-    expect(component.showSingleCreditLineJEField()).toBeTrue();
-  });
-
   it('navigateToPreviousStep function check', () => {
     component.navigateToPreviousStep();
     expect(routerSpy.navigate).toHaveBeenCalledWith(['/workspaces/onboarding/import_settings']);

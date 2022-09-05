@@ -18,7 +18,7 @@ import { TrackingService } from 'src/app/core/services/integration/tracking.serv
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { tenant } from './xero-connector.fixture';
-import { TenantMapping, TenantMappingPayload } from 'src/app/core/models/db/tenant-mapping.model';
+import { TenantMapping, TenantMappingPost } from 'src/app/core/models/db/tenant-mapping.model';
 
 @Component({
   selector: 'app-xero-connector',
@@ -101,7 +101,7 @@ export class XeroConnectorComponent implements OnInit, OnDestroy {
   connectXero(): void {
     if (this.xeroConnectorForm.valid) {
       this.xeroConnectionInProgress = true;
-      const tenantMappingPayload: TenantMappingPayload = {
+      const tenantMappingPayload: TenantMappingPost = {
         tenantId: this.xeroConnectorForm.value.xeroTenant.id,
         tenantName: this.xeroConnectorForm.value.xeroTenant.name
       };

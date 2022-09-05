@@ -42,7 +42,7 @@ export class ConfigurationSelectFieldComponent implements OnInit {
 
   @Input() phase: ProgressPhase;
 
-  @Input() note: string
+  @Input() exportType: ReimbursableExpensesObject | CorporateCreditCardExpensesObject;
 
   SimpleSearchPage = SimpleSearchPage;
 

@@ -31,7 +31,7 @@
           [form]="exportSettingsForm"
           [iconPath]="'assets/images/svgs/general/expense.svg'"
           [label]="'Reimbursable expense in Fyle will exported to Xero as'"
-          [note] = "'Purchase Bill'"
+          [exportType] = "ReimbursableExpensesObject.PURCHASE_BILL"
           [formControllerName]="'reimbursableExportType'"
           [phase]="isOnboarding ? ProgressPhase.ONBOARDING : ProgressPhase.POST_ONBOARDING"
           >
@@ -41,7 +41,7 @@
             [form]="exportSettingsForm"
             [options]="reimbursableExpenseGroupingDateOptions"
             [isFieldMandatory]="true"
-            [mandatoryErrorListName]="'Purhase Bill'"
+            [mandatoryErrorListName]="'Purchase Bill Date'"
             [iconPath]="'assets/images/svgs/general/calendar.svg'"
             [label]="'Set the Purchase Bill date as'"
             [subLabel]="'The selected date will reflect in expenses exported to Xero'"
@@ -59,7 +59,7 @@
             [label]="'At which state should the expenses be ready to export from Fyle?'"
             [subLabel]="'You could choose to export expenses when they have been approved and are awaiting payment clearance, OR simply when they have been paid out.'"
             [placeholder]="'Select the Expense State'"
-            [formControllerName]="'expenseState'"
+            [formControllerName]="'reimbursableExpenseState'"
             >
         </app-configuration-select-field>
       </div>
@@ -77,7 +77,7 @@
           [form]="exportSettingsForm"
           [iconPath]="'assets/images/svgs/general/expense.svg'"
           [label]="'Corporate card expense in Fyle will be exported to Xero as'"
-          [note] = "'Bank Transaction'"
+          [exportType] = "CorporateCreditCardExpensesObject.BANK_TRANSACTION"
           [formControllerName]="'creditCardExportType'"
           [phase]="isOnboarding ? ProgressPhase.ONBOARDING : ProgressPhase.POST_ONBOARDING"
           >
@@ -85,7 +85,7 @@
 
         <app-configuration-select-field
           [form]="exportSettingsForm"
-          [options]="creditCardExportTypes"
+          [xeroAttributes]="bankAccounts"
           [isFieldMandatory]="true"
           [mandatoryErrorListName]="'Bank account'"
           [iconPath]="'assets/images/svgs/general/tabs.svg'"
@@ -99,14 +99,14 @@
 
           <app-configuration-select-field
             [form]="exportSettingsForm"
-            [options]="cccExpenseGroupingDateOptions"
+            [options]="reimbursableExpenseStateOptions"
             [isFieldMandatory]="true"
-            [mandatoryErrorListName]="'date'"
+            [mandatoryErrorListName]="'CCC Expense State'"
             [iconPath]="'assets/images/svgs/actions/question-mark.svg'"
             [label]="'At which state should the expenses be ready to export from Fyle?'"
             [subLabel]="'You could choose to export expenses when they have been approved and are awaiting payment clearance, OR simply when they have been paid out.'"
             [placeholder]="'Select expense state'"
-            [formControllerName]="'expenseState'"
+            [formControllerName]="'cccExpenseState'"
             >
           </app-configuration-select-field>
       </div>

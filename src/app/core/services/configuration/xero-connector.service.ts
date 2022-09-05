@@ -3,7 +3,7 @@ import { Observable, of, Subject, throwError } from 'rxjs';
 import { Cacheable, CacheBuster, globalCacheBusterNotifier } from 'ts-cacheable';
 import { XeroCredentials } from '../../models/configuration/xero-connector.model';
 import { DestinationAttribute } from '../../models/db/destination-attribute.model';
-import { TenantMapping, TenantMappingPayload } from '../../models/db/tenant-mapping.model';
+import { TenantMapping, TenantMappingPost } from '../../models/db/tenant-mapping.model';
 import { ApiService } from '../core/api.service';
 import { WorkspaceService } from '../workspace/workspace.service';
 
@@ -103,7 +103,7 @@ export class XeroConnectorService {
     // Return this.apiService.get(`/workspaces/${this.workspaceId}/xero/tenants/`, {});
   }
 
-  postTenantMappings(tenantMappingPayload: TenantMappingPayload): Observable<TenantMapping> {
+  postTenantMappings(tenantMappingPayload: TenantMappingPost): Observable<TenantMapping> {
     const response: TenantMapping = {
       id: 123,
       tenant_name: 'Xero',

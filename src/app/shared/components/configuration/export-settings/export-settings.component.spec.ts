@@ -6,7 +6,7 @@ import { ExportSettingsComponent } from './export-settings.component';
 import { HttpClientModule } from '@angular/common/http';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { CorporateCreditCardExpensesObject, ExpenseGroupingFieldOption, ExpenseState, OnboardingState, ReimbursableExpensesObject, TenantFieldMapping } from 'src/app/core/models/enum/enum.model';
-import { destinationAttribute, errorResponse, exportResponse, replacecontent1, replacecontent2, workspaceResponse } from './export-settings.fixture';
+import { destinationAttribute, errorResponse, exportResponse, replacecontent1, replacecontent2, replacecontent3, workspaceResponse } from './export-settings.fixture';
 import { MappingService } from 'src/app/core/services/misc/mapping.service';
 import { WorkspaceService } from 'src/app/core/services/workspace/workspace.service';
 import { ExportSettingService } from 'src/app/core/services/configuration/export-setting.service';
@@ -70,13 +70,13 @@ describe('ExportSettingsComponent', () => {
     dialogSpy = spyOn(TestBed.get(MatDialog), 'open').and.returnValue(dialogRefSpyObj);
     component.exportSettings = exportResponse;
     component.exportSettingsForm = formbuilder.group({
-      expenseState: [component.exportSettings.expense_group_settings?.expense_state, Validators.required],
+      cccExpenseState: [component.exportSettings.expense_group_settings?.ccc_expense_state, Validators.required],
+      reimbursableExpenseState: [component.exportSettings.expense_group_settings?.reimbursable_expense_state, Validators.required],
       reimbursableExpense: [component.exportSettings.workspace_general_settings?.reimbursable_expenses_object ? true : false, (component as any).exportSelectionValidator()],
       reimbursableExportType: [component.exportSettings.workspace_general_settings?.reimbursable_expenses_object],
       reimbursableExportDate: [component.exportSettings.expense_group_settings?.reimbursable_export_date_type],
       creditCardExpense: [component.exportSettings.workspace_general_settings?.corporate_credit_card_expenses_object ? true : false, (component as any).exportSelectionValidator()],
       creditCardExportType: [component.exportSettings.workspace_general_settings?.corporate_credit_card_expenses_object],
-      creditCardExportDate: [component.exportSettings.expense_group_settings?.ccc_export_date_type],
       bankAccount: [component.exportSettings.general_mappings?.bank_account?.id ? component.exportSettings.general_mappings.bank_account : 'dtd'],
       autoMapEmployees: [component.exportSettings.workspace_general_settings?.auto_map_employees],
       searchOption: []
@@ -188,23 +188,23 @@ describe('ExportSettingsComponent', () => {
     expect((component as any).replaceContentBasedOnConfiguration('None', 'None', 'reimbursable').length).toBeGreaterThan(replacecontent2.length);
   });
 
-  // It('constructWarningMessage function check', () => {
-  //   Component.exportSettings.workspace_general_settings.reimbursable_expenses_object = ReimbursableExpensesObject.PURCHASE_BILL;
-  //   Component.exportSettings.workspace_general_settings.corporate_credit_card_expenses_object = CorporateCreditCardExpensesObject.BANK_TRANSACTION;
-  //   Component.exportSettingsForm.controls.reimbursableExportType.patchValue(ReimbursableExpensesObject.PURCHASE_BILL);
-  //   Component.exportSettingsForm.controls.creditCardExportType.patchValue(CorporateCreditCardExpensesObject.BILL);
-  //   Expect((component as any).constructWarningMessage().length).toBeGreaterThan(replacecontent1.length);
-  //   Component.exportSettings.workspace_general_settings.reimbursable_expenses_object = ReimbursableExpensesObject.PURCHASE_BILL;
-  //   Component.exportSettings.workspace_general_settings.corporate_credit_card_expenses_object = CorporateCreditCardExpensesObject.BANK_TRANSACTION;
-  //   Component.exportSettingsForm.controls.reimbursableExportType.patchValue(ReimbursableExpensesObject.JOURNAL_ENTRY);
-  //   Component.exportSettingsForm.controls.creditCardExportType.patchValue(CorporateCreditCardExpensesObject.BILL);
-  //   Expect((component as any).constructWarningMessage().length).toBeGreaterThan(replacecontent1.length);
-  //   Component.exportSettings.workspace_general_settings.reimbursable_expenses_object = ReimbursableExpensesObject.JOURNAL_ENTRY;
-  //   Component.exportSettings.workspace_general_settings.corporate_credit_card_expenses_object = CorporateCreditCardExpensesObject.BANK_TRANSACTION;
-  //   Component.exportSettingsForm.controls.reimbursableExportType.patchValue(ReimbursableExpensesObject.JOURNAL_ENTRY);
-  //   Component.exportSettingsForm.controls.creditCardExportType.patchValue(CorporateCreditCardExpensesObject.JOURNAL_ENTRY);
-  //   Expect((component as any).constructWarningMessage().length).toBeGreaterThan(replacecontent3.length);
-  // });
+  it('constructWarningMessage function check', () => {
+    component.exportSettings.workspace_general_settings.reimbursable_expenses_object = ReimbursableExpensesObject.PURCHASE_BILL;
+    component.exportSettings.workspace_general_settings.corporate_credit_card_expenses_object = CorporateCreditCardExpensesObject.BANK_TRANSACTION;
+    component.exportSettingsForm.controls.reimbursableExportType.patchValue(ReimbursableExpensesObject.PURCHASE_BILL);
+    component.exportSettingsForm.controls.creditCardExportType.patchValue(CorporateCreditCardExpensesObject.BANK_TRANSACTION);
+    expect((component as any).constructWarningMessage().length).toBeGreaterThan(replacecontent1.length);
+    component.exportSettings.workspace_general_settings.reimbursable_expenses_object = ReimbursableExpensesObject.PURCHASE_BILL;
+    component.exportSettings.workspace_general_settings.corporate_credit_card_expenses_object = CorporateCreditCardExpensesObject.BANK_TRANSACTION;
+    component.exportSettingsForm.controls.reimbursableExportType.patchValue(ReimbursableExpensesObject.PURCHASE_BILL);
+    component.exportSettingsForm.controls.creditCardExportType.patchValue(CorporateCreditCardExpensesObject.BANK_TRANSACTION);
+    expect((component as any).constructWarningMessage().length).toBeGreaterThan(replacecontent1.length);
+    component.exportSettings.workspace_general_settings.reimbursable_expenses_object = ReimbursableExpensesObject.PURCHASE_BILL;
+    component.exportSettings.workspace_general_settings.corporate_credit_card_expenses_object = CorporateCreditCardExpensesObject.BANK_TRANSACTION;
+    component.exportSettingsForm.controls.reimbursableExportType.patchValue(ReimbursableExpensesObject.PURCHASE_BILL);
+    component.exportSettingsForm.controls.creditCardExportType.patchValue(CorporateCreditCardExpensesObject.BANK_TRANSACTION);
+    expect((component as any).constructWarningMessage().length).toBeGreaterThan(replacecontent3.length);
+  });
 
   it('save function check', () => {
     spyOn(exportSettingService, 'postExportSettings').and.callThrough();
@@ -214,7 +214,7 @@ describe('ExportSettingsComponent', () => {
     fixture.detectChanges();
     expect(exportSettingService.postExportSettings).toHaveBeenCalled();
     expect(workspace.getOnboardingState).toHaveBeenCalled();
-    // Expect(routerSpy.navigate).toHaveBeenCalledWith(['/workspaces/onboarding/import_settings']);
+    expect(routerSpy.navigate).toHaveBeenCalledWith(['/workspaces/onboarding/import_settings']);
     component.exportSettings.workspace_general_settings.corporate_credit_card_expenses_object = CorporateCreditCardExpensesObject.BANK_TRANSACTION;
     component.exportSettings.workspace_general_settings.reimbursable_expenses_object = ReimbursableExpensesObject.PURCHASE_BILL;
     component.exportSettingsForm.controls.reimbursableExportType.patchValue(ReimbursableExpensesObject.PURCHASE_BILL);

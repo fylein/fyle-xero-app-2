@@ -15,6 +15,7 @@ import { ConfirmationDialog } from 'src/app/core/models/misc/confirmation-dialog
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationDialogComponent } from '../../core/confirmation-dialog/confirmation-dialog.component';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
+import { destinationAttribute } from './export-settings.fixture';
 
 @Component({
   selector: 'app-export-settings',
@@ -48,14 +49,14 @@ export class ExportSettingsComponent implements OnInit, OnDestroy {
   autoMapEmployeeTypes: ExportSettingFormOption[] = [
     {
       label: 'None',
-      value: AutoMapEmployee.EMPLOYEE_CODE
+      value: null
     },
     {
       label: 'Employee name on Fyle to contact name on Xero',
       value: AutoMapEmployee.NAME
     },
     {
-      label: 'Employee email on Fyle to contact email  on Xero',
+      label: 'Employee email on Fyle to contact email on Xero',
       value: AutoMapEmployee.EMAIL
     }
   ];
@@ -77,16 +78,8 @@ export class ExportSettingsComponent implements OnInit, OnDestroy {
 
   reimbursableExpenseStateOptions: ExportSettingFormOption[] = [
     {
-      label: 'Approved',
-      value: ExpenseState.PAID
-    },
-    {
-      label: 'Verified',
-      value: ExpenseState.PAID
-    },
-    {
-      label: 'Payment processing',
-      value: ExpenseState.PAID
+      label: 'Payment Processing',
+      value: ExpenseState.PAYMENT_PROCESSING
     },
     {
       label: 'Paid',
@@ -131,6 +124,10 @@ export class ExportSettingsComponent implements OnInit, OnDestroy {
   ConfigurationCtaText = ConfigurationCtaText;
 
   ProgressPhase = ProgressPhase;
+
+  ReimbursableExpensesObject = ReimbursableExpensesObject;
+
+  CorporateCreditCardExpensesObject = CorporateCreditCardExpensesObject;
 
   private readonly sessionStartTime = new Date();
 
@@ -205,12 +202,12 @@ export class ExportSettingsComponent implements OnInit, OnDestroy {
     this.exportSettingsForm.controls.creditCardExpense.valueChanges.subscribe((isCreditCardExpenseSelected) => {
       if (isCreditCardExpenseSelected) {
         this.exportSettingsForm.controls.creditCardExportType.setValidators(Validators.required);
-        this.exportSettingsForm.controls.creditCardExportDate.setValidators(Validators.required);
+        this.exportSettingsForm.controls.cccExpenseState.setValidators(Validators.required);
       } else {
         this.exportSettingsForm.controls.creditCardExportType.clearValidators();
-        this.exportSettingsForm.controls.creditCardExportDate.clearValidators();
+        this.exportSettingsForm.controls.cccExpenseState.clearValidators();
+        this.exportSettingsForm.controls.cccExpenseState.setValue(null);
         this.exportSettingsForm.controls.creditCardExportType.setValue(null);
-        this.exportSettingsForm.controls.creditCardExportDate.setValue(null);
       }
 
       this.setGeneralMappingsValidator();
@@ -235,7 +232,7 @@ export class ExportSettingsComponent implements OnInit, OnDestroy {
   private exportSelectionValidator(): ValidatorFn {
     return (control: AbstractControl): {[key: string]: object} | null => {
       let forbidden = true;
-      if (this.exportSettingsForm && this.exportSettingsForm.value.expenseState) {
+      if (this.exportSettingsForm && this.exportSettingsForm.value.reimbursableExpenseState && this.exportSettingsForm.value.cccExpenseState) {
         if (typeof control.value === 'boolean') {
           if (control.value) {
             forbidden = false;
@@ -249,7 +246,6 @@ export class ExportSettingsComponent implements OnInit, OnDestroy {
         }
 
         if (!forbidden) {
-          control.parent?.get('expenseState')?.setErrors(null);
           control.parent?.get('reimbursableExpense')?.setErrors(null);
           control.parent?.get('creditCardExpense')?.setErrors(null);
           return null;
@@ -365,17 +361,18 @@ export class ExportSettingsComponent implements OnInit, OnDestroy {
 
   private getSettingsAndSetupForm(): void {
     this.isOnboarding = this.windowReference.location.pathname.includes('onboarding');
-    const destinationAttributes = ['BANK_ACCOUNT', 'CREDIT_CARD_ACCOUNT', 'ACCOUNTS_PAYABLE', 'VENDOR'];
+    const destinationAttributes = ['BANK_ACCOUNT', 'TAX_CODE'];
     forkJoin([
       this.exportSettingService.getExportSettings(),
-      // This.mappingService.getGroupedXeroDestinationAttributes(destinationAttributes),
+      this.mappingService.getGroupedXeroDestinationAttributes(destinationAttributes),
       this.workspaceService.getWorkspaceGeneralSettings()
     ]).subscribe(response => {
       this.exportSettings = response[0];
       // This.employeeFieldMapping = response[2].employee_field_mapping;
       // This.reimbursableExportTypes = this.getReimbursableExportTypes(this.employeeFieldMapping);
 
-      // This.bankAccounts = response[1].BANK_ACCOUNT;
+      this.bankAccounts = destinationAttribute.BANK_ACCOUNT;
+      // Response[1].BANK_ACCOUNT;
       // This.cccAccounts = response[1].CREDIT_CARD_ACCOUNT;
       // This.accountsPayables = response[1].ACCOUNTS_PAYABLE;
       // This.vendors = response[1].VENDOR;
@@ -387,13 +384,13 @@ export class ExportSettingsComponent implements OnInit, OnDestroy {
 
   private setupForm(): void {
     this.exportSettingsForm = this.formBuilder.group({
-      expenseState: [this.exportSettings.expense_group_settings?.expense_state, Validators.required],
+      reimbursableExpenseState: [this.exportSettings.expense_group_settings?.reimbursable_expense_state, Validators.required],
       reimbursableExpense: [this.exportSettings.workspace_general_settings?.reimbursable_expenses_object ? true : false, this.exportSelectionValidator()],
-      reimbursableExportType: [this.exportSettings.workspace_general_settings?.reimbursable_expenses_object],
+      reimbursableExportType: [this.exportSettings.workspace_general_settings?.reimbursable_expenses_object ? this.exportSettings.workspace_general_settings?.reimbursable_expenses_object : ReimbursableExpensesObject.PURCHASE_BILL],
       reimbursableExportDate: [this.exportSettings.expense_group_settings?.reimbursable_export_date_type],
+      cccExpenseState: [this.exportSettings.expense_group_settings?.ccc_expense_state, Validators.required],
       creditCardExpense: [this.exportSettings.workspace_general_settings?.corporate_credit_card_expenses_object ? true : false, this.exportSelectionValidator()],
-      creditCardExportType: [this.exportSettings.workspace_general_settings?.corporate_credit_card_expenses_object],
-      creditCardExportDate: [this.exportSettings.expense_group_settings?.ccc_export_date_type],
+      creditCardExportType: [this.exportSettings.workspace_general_settings?.corporate_credit_card_expenses_object ? this.exportSettings.workspace_general_settings?.corporate_credit_card_expenses_object : CorporateCreditCardExpensesObject.BANK_TRANSACTION],
       bankAccount: [this.exportSettings.general_mappings?.bank_account?.id ? this.exportSettings.general_mappings.bank_account : null],
       autoMapEmployees: [this.exportSettings.workspace_general_settings?.auto_map_employees],
       searchOption: []
@@ -409,6 +406,10 @@ export class ExportSettingsComponent implements OnInit, OnDestroy {
 
   private updateExportSettings(): boolean {
     return this.exportSettings.workspace_general_settings.reimbursable_expenses_object !== null || this.exportSettings.workspace_general_settings.corporate_credit_card_expenses_object !== null;
+  }
+
+  private paymentsSyncAffected(): boolean {
+    return this.exportSettings?.workspace_general_settings?.reimbursable_expenses_object !== ReimbursableExpensesObject.PURCHASE_BILL && this.exportSettingsForm.value.reimbursableExportType  === ReimbursableExpensesObject.PURCHASE_BILL;
   }
 
   private advancedSettingAffected(): boolean {
@@ -446,6 +447,10 @@ export class ExportSettingsComponent implements OnInit, OnDestroy {
         content = this.replaceContentBasedOnConfiguration(updatedReimbursableExportType, existingReimbursableExportType, 'reimbursable');
       } else if (existingCorporateCardExportType !== updatedCorporateCardExportType) {
         content = this.replaceContentBasedOnConfiguration(updatedCorporateCardExportType, existingCorporateCardExportType, 'credit card');
+      }
+
+      if (this.paymentsSyncAffected()) {
+        content = this.replaceContentBasedOnConfiguration(updatedReimbursableExportType, existingReimbursableExportType, 'reimbursable');
       }
 
     return content;
@@ -506,7 +511,7 @@ export class ExportSettingsComponent implements OnInit, OnDestroy {
       this.trackSessionTime('success');
       if (this.isOnboarding) {
         this.workspaceService.setOnboardingState(OnboardingState.IMPORT_SETTINGS);
-        this.router.navigate([`/workspaces/main/configuration/import_setting`]);
+        this.router.navigate([`/workspaces/onboarding/import_settings`]);
       } else if (this.advancedSettingAffected()) {
         this.router.navigate(['/workspaces/main/configuration/advanced_settings']);
       } else {

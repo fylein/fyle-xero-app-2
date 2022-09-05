@@ -30,9 +30,9 @@ describe('ExportSettingService', () => {
   it('getExportSettings service check attributes check', () => {
     const response: ExportSettingGet = {
       expense_group_settings: {
-        expense_state: ExpenseState.PAID,
+        reimbursable_expense_state: ExpenseState.PAID,
         reimbursable_export_date_type: null,
-        ccc_export_date_type: null
+        ccc_expense_state: ExpenseState.PAID
       },
       workspace_general_settings: {
         reimbursable_expenses_object: ReimbursableExpensesObject.PURCHASE_BILL,
@@ -58,9 +58,9 @@ describe('ExportSettingService', () => {
   it('postEmployeeSettings service check', () => {
     const exportSettingPayload: ExportSettingPost = {
       expense_group_settings: {
-        expense_state: ExpenseState.PAID,
+        reimbursable_expense_state: ExpenseState.PAID,
         reimbursable_export_date_type: null,
-        ccc_export_date_type: null
+        ccc_expense_state: ExpenseState.PAID
       },
       workspace_general_settings: {
         reimbursable_expenses_object: ReimbursableExpensesObject.PURCHASE_BILL,
@@ -73,9 +73,9 @@ describe('ExportSettingService', () => {
     };
     const response: ExportSettingGet={
       expense_group_settings: {
-        expense_state: ExpenseState.PAID,
+        reimbursable_expense_state: ExpenseState.PAID,
         reimbursable_export_date_type: null,
-        ccc_export_date_type: null
+        ccc_expense_state: ExpenseState.PAID
       },
       workspace_general_settings: {
         reimbursable_expenses_object: ReimbursableExpensesObject.PURCHASE_BILL,

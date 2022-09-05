@@ -48,7 +48,7 @@
         <div *ngIf="!isXeroConnected && !xeroConnectionInProgress && !xeroTokenExpired" class="align-center default-cursor">
           <mat-form-field floatLabel="always" appearance="outline">
             <mat-select placeholder="Select a Xero tenant" formControlName="xeroTenant">
-              <mat-option *ngFor="let option of tenantList" [value]="{id:option.destination_id,name:option.value}">
+              <mat-option *ngFor="let option of tenantList" [value]="{id: option.destination_id, name: option.value}">
                 {{ option.value }}
                 <img *ngIf="xeroConnectorForm.value.xeroTenant === option.value" src="assets/images/svgs/general/tick-pink.svg" class="selected-value-check-mark">
               </mat-option>

@@ -60,9 +60,9 @@
             <div class="import-settings--field-toggle-section">
               <div fxLayout="row" fxLayoutAlign="space-between center">
                 <div class="import-settings--field-label-section import-settings--import-area">
-                  Import specific tracking category {{ i !==0 ? i+1 : '' }}
+                  Import {{ expenseField.value.destination_field | titlecase }} from Xero
                   <h5 class="configuration--field-label sub-text-color">
-                    The imported Customers/Projects from Xero will be a selectable field while creating an expense.
+                    The imported {{ expenseField.value.destination_field | titlecase }} from Xero will be a selectable field while creating an expense.
                   </h5>
                 </div>
                 <div class="configuration--input-toggle-section">
@@ -74,16 +74,11 @@
               <div *ngIf="expenseField.value.import_to_fyle" fxLayout="row" fxLayoutAlign="space-between center">
                 <div fxLayout="row">
                   <div fxLayout="row" class="import-settings--mapping-xero-fyle-section">
-                    <mat-form-field floatLabel="always" appearance="outline" class="import-settings--fyle-field">
-                      <mat-select placeholder="Select a field from Xero" formControlName="source_field">
-                        <mat-option *ngFor="let fyleExpenseField of fyleExpenseFields" [value]="fyleExpenseField">
-                          {{ fyleExpenseField.split('_').join(' ') | titlecase }}
-                          <img *ngIf="fyleExpenseField === expenseField.value.source_field"
-                            src="assets/images/svgs/general/tick-pink.svg" class="selected-value-check-mark">
-                        </mat-option>
-                      </mat-select>
-                      <div class="mat-select-arrow-closed"></div>
-                    </mat-form-field>
+                    <div class="import-settings--xero-field">
+                      <h5 class="import-settings--xero-field-text single-line-text">
+                        {{ expenseField.value.destination_field | titlecase }} in Xero
+                      </h5>
+                    </div>
                     <div class="import-settings--fields-separator"></div>
                     <div>
                       <mat-form-field floatLabel="always" appearance="outline" class="import-settings--fyle-field">

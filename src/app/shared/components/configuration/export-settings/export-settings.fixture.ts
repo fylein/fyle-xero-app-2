@@ -35,8 +35,8 @@ export const destinationAttribute: GroupedDestinationAttribute={
     id: 3,
     attribute_type: 'BANK_ACCOUNT',
     display_name: "string",
-    value: "string",
-    destination_id: "string",
+    value: "Fyle",
+    destination_id: "1",
     active: true,
     created_at: new Date(),
     updated_at: new Date(),
@@ -50,9 +50,9 @@ export const destinationAttribute: GroupedDestinationAttribute={
 };
 export const exportResponse: ExportSettingGet = {
   expense_group_settings: {
-    expense_state: ExpenseState.PAID,
+    reimbursable_expense_state: ExpenseState.PAID,
     reimbursable_export_date_type: null,
-    ccc_export_date_type: null
+    ccc_expense_state: ExpenseState.PAID
   },
   workspace_general_settings: {
     reimbursable_expenses_object: ReimbursableExpensesObject.PURCHASE_BILL,
