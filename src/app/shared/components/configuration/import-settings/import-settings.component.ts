@@ -108,7 +108,7 @@ export class ImportSettingsComponent implements OnInit, OnDestroy {
   }
 
   private updateTaxGroupVisibility(): void {
-    this.xeroConnectorService.getXeroCredentials().subscribe((xeroCredentials: XeroCredentials) => {
+    this.xeroConnectorService.getXeroCredentials(this.workspaceService.getWorkspaceId()).subscribe((xeroCredentials: XeroCredentials) => {
       if (xeroCredentials && xeroCredentials.country !== 'US') {
         this.isTaxGroupSyncAllowed = true;
       }
@@ -154,8 +154,7 @@ export class ImportSettingsComponent implements OnInit, OnDestroy {
       expenseFields: this.formBuilder.array(expenseFieldsFormArray),
       taxCode: [this.importSettings.workspace_general_settings.import_tax_codes],
       defaultTaxCode: [this.importSettings.general_mappings?.default_tax_code?.id ? this.importSettings.general_mappings.default_tax_code : null],
-      searchOption: [],
-      importVendorsAsMerchants: [this.importSettings.workspace_general_settings.import_vendors_as_merchants]
+      searchOption: []
     });
 
     this.setCustomValidatorsAndWatchers();
@@ -180,7 +179,7 @@ export class ImportSettingsComponent implements OnInit, OnDestroy {
       }
 
       // Remove custom mapped Xero fields
-      const xeroAttributes = [MappingDestinationField.CLASS, MappingDestinationField.DEPARTMENT, MappingDestinationField.CUSTOMER].filter(
+      const xeroAttributes = [MappingDestinationField.ACCOUNT, MappingDestinationField.BANK_ACCOUNT, MappingDestinationField.CONTACT, MappingDestinationField.TAX_CODE].filter(
         field => !customMappedXeroFields.includes(field)
       );
 
@@ -269,7 +268,7 @@ export class ImportSettingsComponent implements OnInit, OnDestroy {
 
       this.importSettingService.postImportSettings(importSettingsPayload).subscribe((response: ImportSettingGet) => {
         if (this.workspaceService.getOnboardingState() === OnboardingState.IMPORT_SETTINGS) {
-          this.trackingService.onOnboardingStepCompletion(OnboardingStep.IMPORT_SETTINGS, 4, importSettingsPayload);
+          this.trackingService.onOnboardingStepCompletion(OnboardingStep.IMPORT_SETTINGS, 3, importSettingsPayload);
         } else {
           this.trackingService.onUpdateEvent(
             UpdateEvent.IMPORT_SETTINGS,

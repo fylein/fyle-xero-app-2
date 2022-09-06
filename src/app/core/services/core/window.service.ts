@@ -3,7 +3,10 @@ import { Injectable } from '@angular/core';
 @Injectable({
   providedIn: 'root'
 })
-export class WindowReferenceService {
+export class WindowService {
+
+  constructor() { }
+
   get nativeWindow(): Window {
     return window;
   }

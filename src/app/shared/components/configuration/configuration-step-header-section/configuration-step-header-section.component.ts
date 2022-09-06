@@ -43,31 +43,25 @@ export class ConfigurationStepHeaderSectionComponent implements OnInit {
 
   private setupContent(): void {
     const route = this.router.url;
-    if (route.includes('realmId')) {
+    if (route.includes('code')) {
       this.activePage = 'xero_connector';
     } else {
       this.activePage = route.split('/').pop();
     }
-
     switch (this.activePage) {
       case 'xero_connector':
-        this.headerText = 'Connect to Quickbooks Online';
-        this.contentText = 'Connect to the Quickbooks Online Company from which you would like to import and export data. The Fyle org and Quickbooks Online company cannot be changed once the configuration steps are complete.';
-        this.helpArticleLink = RedirectLink.CONFIGURATION_Xero_CONNECTOR;
-        break;
-      case 'employee_settings':
-        this.headerText = 'Map Employees';
-        this.contentText = 'Choose appropriate representation of your Employees in Quickbooks Online.';
-        this.helpArticleLink = RedirectLink.CONFIGURATION_EMPLOYEE_SETTING;
+        this.headerText = 'Connect to Xero Tenant';
+        this.contentText = 'Connect to the Xero Tenant from which you would like to import and export data. The Fyle org and Xero Tenant cannot be changed once the configuration steps are complete.';
+        this.helpArticleLink = RedirectLink.CONFIGURATION_XERO_CONNECTOR;
         break;
       case 'export_settings':
         this.headerText = 'Export Settings';
-        this.contentText = 'In this section, you will configure how and when expenses from Fyle can be exported to Quickbooks Online.';
+        this.contentText = 'In this section, you will configure how and when expenses from Fyle can be exported to Xero.';
         this.helpArticleLink = RedirectLink.CONFIGURATION_EXPORT_SETTING;
         break;
       case 'import_settings':
         this.headerText = 'Import Settings';
-        this.contentText = 'You can Enable all the data that you wish to import from Quickbooks Online. All the imported data from Quickbooks Online would be available in Fyle under Admin Setting > Organization.';
+        this.contentText = 'You can Enable all the data that you wish to import from Xero. All the imported data from Xero would be available in Fyle under Admin Setting > Organization.';
         this.helpArticleLink = RedirectLink.CONFIGURATION_IMPORT_SETTING;
         break;
       case 'advanced_settings':

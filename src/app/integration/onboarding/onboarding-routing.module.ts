@@ -25,7 +25,7 @@ const routes: Routes = [
         canActivate: [WorkspacesGuard]
       },
       {
-        path: 'qbo_connector',
+        path: 'xero_connector',
         component: OnboardingXeroConnectorComponent
       },
       {

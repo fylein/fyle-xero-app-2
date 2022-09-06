@@ -1,7 +1,7 @@
 import { getTestBed, TestBed } from '@angular/core/testing';
 import { ExportSettingService } from './export-setting.service';
 import { ExportSettingGet, ExportSettingPost } from '../../models/configuration/export-setting.model';
-import { ExpenseState, ReimbursableExpensesObject, CorporateCreditCardExpensesObject, ExportDateType } from '../../models/enum/enum.model';
+import { ExpenseState, ReimbursableExpensesObject, CorporateCreditCardExpensesObject, ExportDateType, AutoMapEmployee } from '../../models/enum/enum.model';
 import { HttpTestingController, HttpClientTestingModule } from '@angular/common/http/testing';
 import { environment } from 'src/environments/environment';
 
@@ -30,23 +30,17 @@ describe('ExportSettingService', () => {
   it('getExportSettings service check attributes check', () => {
     const response: ExportSettingGet = {
       expense_group_settings: {
-        expense_state: ExpenseState.PAID,
-        reimbursable_expense_group_fields: ['sample'],
-        reimbursable_export_date_type: ExportDateType.APPROVED_AT,
-        corporate_credit_card_expense_group_fields: ['sipper'],
-        ccc_export_date_type: ExportDateType.SPENT_AT
+        reimbursable_expense_state: ExpenseState.PAID,
+        reimbursable_export_date_type: null,
+        ccc_expense_state: ExpenseState.PAID
       },
       workspace_general_settings: {
-        reimbursable_expenses_object: ReimbursableExpensesObject.BILL,
-        corporate_credit_card_expenses_object: CorporateCreditCardExpensesObject.BILL
+        reimbursable_expenses_object: ReimbursableExpensesObject.PURCHASE_BILL,
+        corporate_credit_card_expenses_object: CorporateCreditCardExpensesObject.BANK_TRANSACTION,
+        auto_map_employees: AutoMapEmployee.EMAIL
       },
       general_mappings: {
-        bank_account: { id: '1', name: 'Fyle' },
-        default_ccc_account: { id: '1', name: 'Fyle' },
-        accounts_payable: { id: '1', name: 'Fyle' },
-        default_ccc_vendor: { id: '1', name: 'Fyle' },
-        qbo_expense_account: { id: '1', name: 'Fyle' },
-        default_debit_card_account: { id: '1', name: 'Fyle' }
+        bank_account: {id: '1', name: 'Fyle'}
       },
       workspace_id: 1
     };
@@ -64,44 +58,32 @@ describe('ExportSettingService', () => {
   it('postEmployeeSettings service check', () => {
     const exportSettingPayload: ExportSettingPost = {
       expense_group_settings: {
-        expense_state: ExpenseState.PAID,
-        reimbursable_expense_group_fields: ['sample'],
+        reimbursable_expense_state: ExpenseState.PAID,
         reimbursable_export_date_type: null,
-        corporate_credit_card_expense_group_fields: ['sipper'],
-        ccc_export_date_type: null
+        ccc_expense_state: ExpenseState.PAID
       },
       workspace_general_settings: {
-        reimbursable_expenses_object: ReimbursableExpensesObject.BILL,
-        corporate_credit_card_expenses_object: CorporateCreditCardExpensesObject.BILL
+        reimbursable_expenses_object: ReimbursableExpensesObject.PURCHASE_BILL,
+        corporate_credit_card_expenses_object: CorporateCreditCardExpensesObject.BANK_TRANSACTION,
+        auto_map_employees: AutoMapEmployee.EMAIL
       },
       general_mappings: {
-        bank_account: { id: '1', name: 'Fyle' },
-        default_ccc_account: { id: '1', name: 'Fyle' },
-        accounts_payable: { id: '1', name: 'Fyle' },
-        default_ccc_vendor: { id: '1', name: 'Fyle' },
-        qbo_expense_account: { id: '1', name: 'Fyle' },
-        default_debit_card_account: { id: '1', name: 'Fyle' }
+        bank_account: {id: '1', name: 'Fyle'}
       }
     };
-    const response={
+    const response: ExportSettingGet={
       expense_group_settings: {
-        expense_state: ExpenseState.PAID,
-        reimbursable_expense_group_fields: ['sample'],
+        reimbursable_expense_state: ExpenseState.PAID,
         reimbursable_export_date_type: null,
-        corporate_credit_card_expense_group_fields: ['sipper'],
-        ccc_export_date_type: null
+        ccc_expense_state: ExpenseState.PAID
       },
       workspace_general_settings: {
-        reimbursable_expenses_object: ReimbursableExpensesObject.BILL,
-        corporate_credit_card_expenses_object: CorporateCreditCardExpensesObject.BILL
+        reimbursable_expenses_object: ReimbursableExpensesObject.PURCHASE_BILL,
+        corporate_credit_card_expenses_object: CorporateCreditCardExpensesObject.BANK_TRANSACTION,
+        auto_map_employees: AutoMapEmployee.EMAIL
       },
       general_mappings: {
-        bank_account: { id: '1', name: 'Fyle' },
-        default_ccc_account: { id: '1', name: 'Fyle' },
-        accounts_payable: { id: '1', name: 'Fyle' },
-        default_ccc_vendor: { id: '1', name: 'Fyle' },
-        qbo_expense_account: { id: '1', name: 'Fyle' },
-        default_debit_card_account: { id: '1', name: 'Fyle' }
+        bank_account: {id: '1', name: 'Fyle'}
       },
       workspace_id: 1
     };

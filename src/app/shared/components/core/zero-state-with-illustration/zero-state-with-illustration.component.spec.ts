@@ -7,7 +7,7 @@ import { ExpenseGroupList } from 'src/app/core/models/db/expense-group.model';
 import { ZeroStatePage } from 'src/app/core/models/enum/enum.model';
 import { SelectedDateFilter } from 'src/app/core/models/misc/date-filter.model';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { EXPENSE_GROUP_LISTS } from '../../export-log/export-log-table/export-log-table.fixture';
+import { EXPENSE_GROUP_LISTS } from './zero-state-with-illustration.fixture';
 
 import { ZeroStateWithIllustrationComponent } from './zero-state-with-illustration.component';
 

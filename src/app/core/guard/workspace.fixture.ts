@@ -1,19 +1,16 @@
-import { QBOCredentials } from "../models/configuration/qbo-connector.model";
-import { QBOPreference } from "../models/misc/xero-preference.model";
+import { XeroCredentials } from "../models/configuration/xero-connector.model";
 
-export const QBOresponse: QBOCredentials = {
-  company_name: "Sandbox Company_FAE",
+export const Xeroresponse: XeroCredentials = {
   country: "GB",
   created_at: new Date("2021-10-05T11:56:13.883015Z"),
   id: 219,
-  is_expired: false,
-  realm_id: "123146326950399",
   refresh_token: "AB",
+  company_name: 'Xero',
   updated_at: new Date("2022-05-06T13:13:25.893837Z"),
   workspace: 1
 };
 
-export const QBOPreferenceresponse:QBOPreference = {
+export const XeroPreferenceresponse = {
   AccountingInfoPrefs: {
     BookCloseDate: "2018-01-31",
     ClassTrackingPerTxn: false,
@@ -133,6 +130,16 @@ export const QBOPreferenceresponse:QBOPreference = {
       ],
       TrackingByCustomer: true
     },
-    domain: "QBO",
+    domain: "xero",
     sparse: false
+  };
+
+  export const errorResponse = {
+    status: 400,
+    statusText: "Not Found",
+    error: {
+      id: 1,
+      is_expired: true,
+      company_name: 'Xero'
+    }
   };

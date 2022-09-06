@@ -13,8 +13,10 @@ import { MappingDestinationField, OnboardingState } from 'src/app/core/models/en
 import { ImportSettingService } from 'src/app/core/services/configuration/import-setting.service';
 import { WorkspaceService } from 'src/app/core/services/workspace/workspace.service';
 import { XeroConnectorService } from 'src/app/core/services/configuration/xero-connector.service';
-import { MappingService } from 'src/app/core/services/misc/mapping.service';
+import { MappingService } from '../../../../core/services/misc/mapping.service';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { environment } from 'src/environments/environment';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 describe('ImportSettingsComponent', () => {
   let component: ImportSettingsComponent;
@@ -32,7 +34,7 @@ describe('ImportSettingsComponent', () => {
   let service4: any;
   let dialogSpy: jasmine.Spy;
   const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of({source_field: MappingDestinationField.TAX_CODE,
-    destination_field: MappingDestinationField.CLASS,
+    destination_field: MappingDestinationField.ACCOUNT,
     import_to_fyle: true,
     name: MappingDestinationField.TAX_CODE,
     disable_import_to_fyle: true,
@@ -50,7 +52,8 @@ describe('ImportSettingsComponent', () => {
     };
     service3 = {
       getOnboardingState: () => 'IMPORT_SETTINGS',
-      setOnboardingState: () => undefined
+      setOnboardingState: () => undefined,
+      getWorkspaceId: () => environment.tests.workspaceId
     };
     service4 = {
       getXeroCredentials: () => of(XeroCredentialsResponse)
@@ -58,6 +61,7 @@ describe('ImportSettingsComponent', () => {
     await TestBed.configureTestingModule({
       imports: [ MatDialogModule, NoopAnimationsModule, RouterTestingModule, HttpClientModule, FormsModule, ReactiveFormsModule, MatDialogModule, MatSnackBarModule, SharedModule],
       declarations: [ ImportSettingsComponent ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
       providers: [ FormBuilder,
         { provide: Router, useValue: routerSpy },
         { provide: ImportSettingService, useValue: service1 },
@@ -99,8 +103,7 @@ describe('ImportSettingsComponent', () => {
       expenseFields: formbuilder.array(expenseFieldsFormArray),
       taxCode: [component.importSettings.workspace_general_settings.import_tax_codes],
       defaultTaxCode: [component.importSettings.general_mappings?.default_tax_code?.id ? component.importSettings.general_mappings.default_tax_code : null],
-      searchOption: [],
-      importVendorsAsMerchants: [component.importSettings.workspace_general_settings.import_vendors_as_merchants]
+      searchOption: []
     });
     component.fyleExpenseFields = expenseFieldresponse.map(field => field.attribute_type);
     fixture.detectChanges();
@@ -113,12 +116,10 @@ describe('ImportSettingsComponent', () => {
   it('ngOnigit function check', () => {
     spyOn(importSettingService, 'getImportSettings').and.callThrough();
     spyOn(mappingService, 'getFyleExpenseFields').and.callThrough();
-    spyOn(mappingService, 'getXeroDestinationAttributes').and.callThrough();
     expect(component.ngOnInit()).toBeUndefined();
     fixture.detectChanges();
     expect(importSettingService.getImportSettings).toHaveBeenCalled();
     expect(mappingService.getFyleExpenseFields).toHaveBeenCalled();
-    expect(mappingService.getXeroDestinationAttributes).toHaveBeenCalled();
     expect(component.isLoading).toBeFalse();
   });
 
@@ -145,10 +146,9 @@ describe('ImportSettingsComponent', () => {
       expenseFields: formbuilder.array(expenseFieldsFormArray),
       taxCode: [component.importSettings.workspace_general_settings.import_tax_codes],
       defaultTaxCode: [component.importSettings.general_mappings?.default_tax_code?.id ? component.importSettings.general_mappings.default_tax_code : null],
-      searchOption: [],
-      importVendorsAsMerchants: [component.importSettings.workspace_general_settings.import_vendors_as_merchants]
+      searchOption: []
     });
-    expect(component.createExpenseField(MappingDestinationField.CLASS)).toBeUndefined();
+    expect(component.createExpenseField(MappingDestinationField.ACCOUNT)).toBeUndefined();
     expect(dialogSpy).toHaveBeenCalled();
   });
 
@@ -207,8 +207,7 @@ describe('ImportSettingsComponent', () => {
       expenseFields: formbuilder.array(expenseFieldsFormArray),
       taxCode: [component.importSettings.workspace_general_settings.import_tax_codes],
       defaultTaxCode: [component.importSettings.general_mappings?.default_tax_code?.id ? component.importSettings.general_mappings.default_tax_code : null],
-      searchOption: [],
-      importVendorsAsMerchants: [component.importSettings.workspace_general_settings.import_vendors_as_merchants]
+      searchOption: []
     });
     expect(component.showFyleExpenseFormPreview()).toBeUndefined();
     fixture.detectChanges();

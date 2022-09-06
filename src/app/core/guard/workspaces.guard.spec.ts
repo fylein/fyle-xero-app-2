@@ -4,18 +4,17 @@ import { HttpClientModule } from '@angular/common/http';
 import { WorkspacesGuard } from './workspaces.guard';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { ActivatedRoute, ActivatedRouteSnapshot, Router, RouterStateSnapshot } from '@angular/router';
-import { QboConnectorService } from '../services/configuration/qbo-connector.service';
+import { XeroConnectorService } from '../services/configuration/xero-connector.service';
 import { of, throwError } from 'rxjs';
 import { WorkspaceService } from '../services/workspace/workspace.service';
-import { QBOPreferenceresponse, QBOresponse } from './workspace.fixture';
+import { XeroPreferenceresponse, Xeroresponse, errorResponse } from './workspace.fixture';
 import { environment } from 'src/environments/environment';
-import { errorResponse } from 'src/app/integration/integration.fixture';
 
 describe('WorkspacesGuard', () => {
   let guard: WorkspacesGuard;
   let act: ActivatedRouteSnapshot;
   let route: RouterStateSnapshot;
-  let qbo: QboConnectorService;
+  let xero: XeroConnectorService;
   let workspace: WorkspaceService;
   const router = {
     navigateByUrl: jasmine.createSpy('navigateByUrl')
@@ -25,8 +24,8 @@ describe('WorkspacesGuard', () => {
   dialogRefSpyObj.componentInstance = { body: '' };
   beforeEach(() => {
     const service1 = {
-      getQBOCredentials: () => of(QBOresponse),
-      getPreferences: () => of(QBOPreferenceresponse)
+      getXeroCredentials: () => of(Xeroresponse),
+      getXeroTokenHealth: () => of({})
     };
     const service2 = {
       getOnboardingState: () => 'COMPLETE',
@@ -35,13 +34,13 @@ describe('WorkspacesGuard', () => {
     TestBed.configureTestingModule({
       imports: [RouterTestingModule, HttpClientModule, MatSnackBarModule],
       providers: [
-        { provide: QboConnectorService, useValue: service1 },
+        { provide: XeroConnectorService, useValue: service1 },
         { provide: WorkspaceService, useValue: service2 },
         { provide: Router, useValue: router }
       ]
     });
     guard = TestBed.inject(WorkspacesGuard);
-    qbo = TestBed.inject(QboConnectorService);
+    xero = TestBed.inject(XeroConnectorService);
     workspace = TestBed.inject(WorkspaceService);
     dialogSpy = spyOn(TestBed.get(MatSnackBar), 'open').and.returnValue(dialogRefSpyObj);
   });
@@ -51,13 +50,11 @@ describe('WorkspacesGuard', () => {
   });
 
   it('canActivate function check', () => {
-    spyOn(qbo, 'getQBOCredentials').and.callThrough();
-    spyOn(qbo, 'getPreferences').and.callThrough();
+    spyOn(xero, 'getXeroCredentials').and.callThrough();
     spyOn(workspace, 'getWorkspaceId').and.returnValue(environment.tests.workspaceId);
     const rest = guard.canActivate(act, route).valueOf();
     expect(rest).toBeDefined();
-    expect(qbo.getQBOCredentials).toHaveBeenCalled();
-    expect(qbo.getPreferences).toHaveBeenCalled();
+    expect(xero.getXeroCredentials).toHaveBeenCalled();
     expect(workspace.getWorkspaceId).toHaveBeenCalled();
   });
 
@@ -69,16 +66,14 @@ describe('WorkspacesGuard', () => {
   });
 
   it('canActivate function check3', () => {
-    spyOn(qbo, 'getQBOCredentials').and.returnValue(throwError(errorResponse));
-    spyOn(qbo, 'getPreferences').and.returnValue(throwError(errorResponse));
+    spyOn(xero, 'getXeroCredentials').and.returnValue(throwError(errorResponse));
     spyOn(workspace, 'getWorkspaceId').and.returnValue(environment.tests.workspaceId);
     spyOn(workspace, 'getOnboardingState').and.callThrough();
     expect(guard.canActivate(act, route)).toBeDefined();
-    expect(qbo.getQBOCredentials).toHaveBeenCalled();
-    expect(qbo.getPreferences).toHaveBeenCalled();
+    expect(xero.getXeroCredentials).toHaveBeenCalled();
     expect(workspace.getWorkspaceId).toHaveBeenCalled();
     // Expect(workspace.getOnboardingState).toHaveBeenCalled();
-    // Expect(router.navigateByUrl).toHaveBeenCalledWith('workspaces/onboarding/qbo_connector');
+    // Expect(router.navigateByUrl).toHaveBeenCalledWith('workspaces/onboarding/xero_connector');
   });
 
 });

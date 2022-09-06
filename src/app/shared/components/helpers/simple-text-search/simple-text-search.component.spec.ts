@@ -70,4 +70,10 @@ describe('SimpleTextSearchComponent', () => {
     const placeholder2 = fixture.debugElement.query(By.css('input')).nativeElement;
     expect(placeholder2.placeholder).toEqual(component.placeholder);
   });
+
+  it('trackSimpleSearch() function check', () => {
+    component.form.controls.searchOption.patchValue('fyles');
+    fixture.detectChanges();
+    const tracking = (component as any).trackSimpleSearch();
+  });
 });

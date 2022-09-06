@@ -30,7 +30,7 @@ export class OnboardingLandingComponent implements OnInit, OnDestroy {
     this.trackingService.trackTimeSpent(OnboardingStep.LANDING, {phase: this.phase, durationInSeconds: Math.floor(differenceInMs / 1000), eventState: eventState});
   }
 
-  connectQbo(): void {
+  connectXero(): void {
     this.trackingService.onClickEvent(ClickEvent.CONNECT_XERO, {phase: this.phase});
     this.trackSessionTime('success');
     this.authService.redirectToXeroOAuth();

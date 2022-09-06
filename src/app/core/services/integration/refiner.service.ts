@@ -37,7 +37,7 @@ export class RefinerService {
           workspace_id: this.workspaceId,
           workspace_name: this.user.org_name
         },
-        source: 'Fyle Quickbooks Integration',
+        source: 'Fyle Xero Integration',
         action_name: actionName
       });
       this.refiner('showForm', actionName === RefinerSurveyType.ONBOARDING_DONE ? this.onboardingDoneSurveryID : this.exportDoneSurveryID);

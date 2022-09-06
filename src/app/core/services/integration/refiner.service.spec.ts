@@ -2,7 +2,6 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { compare } from '@rxweb/reactive-form-validators';
 import { of } from 'rxjs';
-import { user } from 'src/app/integration/main/dashboard/dashboard.fixture';
 import { environment } from 'src/environments/environment';
 import { RefinerSurveyType } from '../../models/enum/enum.model';
 import { UserService } from '../misc/user.service';
@@ -12,7 +11,15 @@ import { RefinerService } from './refiner.service';
 
 describe('RefinerService', () => {
   let service: RefinerService;
-
+  const user = {
+    access_token: "fyle",
+    email: "sravan.kumar@fyle.in",
+    full_name: "sravan k",
+    org_id: "orunxXsIajSE",
+    org_name: "Test Sample Statement - GBP",
+    refresh_token: "fyle",
+    user_id: "ust5Ga9HC3qc"
+  };
   beforeEach(() => {
     const service2 = {
       getUserProfile: () => of(user)

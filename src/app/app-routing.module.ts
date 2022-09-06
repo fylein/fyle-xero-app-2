@@ -1,7 +1,32 @@
-import { NgModule } from "@angular/core";
-import { RouterModule, Routes } from "@angular/router";
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from './core/guard/auth.guard';
 
-const routes: Routes = [];
+const routes: Routes = [
+  {
+    path: '',
+    redirectTo: '/workspaces',
+    pathMatch: 'full'
+  },
+  {
+    path: 'workspaces',
+    loadChildren: () => import('./integration/integration.module').then(m => m.IntegrationModule),
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'auth',
+    loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule)
+  },
+  {
+    path: 'xero_callback',
+    loadChildren: () => import('./xero-callback/xero-callback.module').then(m => m.XeroCallbackModule)
+  },
+  {
+    path: '**',
+    redirectTo: 'workspaces',
+    pathMatch: 'full'
+  }
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

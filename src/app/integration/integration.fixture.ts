@@ -13,7 +13,9 @@ export const workspaceResponse:Workspace[] = [{
   source_synced_at: new Date("2022-04-13T10:29:18.796760Z"),
   destination_synced_at: new Date("2022-04-13T10:29:18.796760Z"),
   created_at: new Date("2022-04-13T10:29:18.796760Z"),
-  updated_at: new Date("2022-04-13T10:29:18.796760Z")
+  updated_at: new Date("2022-04-13T10:29:18.796760Z"),
+  fyle_currency: 'USD',
+  xero_currency: 'USD'
 }];
 export const errorResponse = {
   status: 400,
@@ -21,6 +23,6 @@ export const errorResponse = {
   error: {
     id: 1,
     is_expired: true,
-    company_name: 'QBO'
+    company_name: 'Xero'
   }
 };

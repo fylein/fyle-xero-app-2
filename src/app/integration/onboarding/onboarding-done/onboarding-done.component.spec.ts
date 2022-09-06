@@ -3,6 +3,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientModule } from '@angular/common/http';
 import { OnboardingDoneComponent } from './onboarding-done.component';
 import { Router } from '@angular/router';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 describe('OnboardingDoneComponent', () => {
   let component: OnboardingDoneComponent;
@@ -16,7 +17,8 @@ describe('OnboardingDoneComponent', () => {
       declarations: [ OnboardingDoneComponent ],
       providers: [
         { provide: Router, useValue: routerSpy }
-      ]
+      ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
     })
     .compileComponents();
   });

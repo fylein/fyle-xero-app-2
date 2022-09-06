@@ -13,7 +13,6 @@ export type ExpenseGroup = {
   id: number;
   fund_source: string;
   description: ExpenseGroupDescription;
-  // Having any here is okay, different qbo exports has different structures
   response_logs: any;
   export_type: string;
   employee_name: string;
@@ -37,7 +36,7 @@ export interface ExpenseGroupList {
   expenseType: 'Credit Card' | 'Reimbursable';
   referenceNumber: string;
   exportedAs: string;
-  qboUrl: string;
+  xeroUrl: string;
   fyleUrl: string;
   fyleReferenceType: FyleReferenceType;
   expenses: Expense[];

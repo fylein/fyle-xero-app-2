@@ -12,9 +12,9 @@ export type Task = {
   cheque: number;
   created_at: Date;
   credit_card_purchase: number;
-  // Having any here is okay, didn't differentiate qbo errors and fyle errors
+  // Having any here is okay, didn't differentiate xero errors and fyle errors
   detail: any;
-  quickbooks_errors: XeroError[];
+  xero_errors: XeroError[];
   expense_group: number;
   id: number;
   journal_entry: number;

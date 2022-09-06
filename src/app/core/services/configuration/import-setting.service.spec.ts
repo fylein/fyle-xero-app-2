@@ -4,6 +4,7 @@ import { ImportSettingPost, ImportSettingModel } from '../../models/configuratio
 import { MappingSourceField, MappingDestinationField } from '../../models/enum/enum.model';
 import { HttpTestingController, HttpClientTestingModule } from '@angular/common/http/testing';
 import { environment } from 'src/environments/environment';
+import { getImportsettingResponse } from 'src/app/shared/components/configuration/import-settings/import-settings.fixture';
 
 describe('ImportSettingService', () => {
   let service: ImportSettingService;
@@ -28,66 +29,48 @@ describe('ImportSettingService', () => {
   });
 
   it('getImportSettings service attribute check', () => {
-    const response={
-      general_mappings: {default_tax_code: {name: null, id: null}},
-      mapping_settings: [],
-      workspace_general_settings: {charts_of_accounts: ["Expense"],
-      import_categories: false,
-      import_tax_codes: false,
-      import_vendors_as_merchants: false},
-      workspace_id: 1
-    };
     service.getImportSettings().subscribe((value) => {
-      expect(value).toEqual(response);
+      expect(value).toEqual(getImportsettingResponse);
     });
     const req = httpMock.expectOne({
       method: 'GET',
       url: `${API_BASE_URL}/v2/workspaces/${workspace_id}/import_settings/`
     });
-    req.flush(response);
+    req.flush(getImportsettingResponse);
   });
 
   it('postImportSettings service check', () => {
     const employeeSettingPayload: ImportSettingPost = {
       workspace_general_settings: {
         import_categories: true,
-        charts_of_accounts: ImportSettingModel.formatChartOfAccounts([{ enabled: true, name: 'expense' }]),
-        import_tax_codes: true,
-        import_vendors_as_merchants: true
+        charts_of_accounts: ImportSettingModel.formatChartOfAccounts([{enabled: true, name: 'expence'}]),
+        import_tax_codes: true
       },
       general_mappings: {
-        default_tax_code: { id: '1', name: 'Fyle' }
+        default_tax_code: {id: '1', name: 'Fyle'}
       },
       mapping_settings: [{
         source_field: MappingSourceField.PROJECT,
-        destination_field: MappingDestinationField.CLASS,
+        destination_field: MappingDestinationField.ACCOUNT,
         import_to_fyle: true,
         is_custom: false,
-        source_placeholder: 'Fyle'
+        source_placeholder: ''
+      },
+      {
+        source_field: MappingSourceField.COST_CENTER,
+        destination_field: MappingDestinationField.BANK_ACCOUNT,
+        import_to_fyle: false,
+        is_custom: false,
+        source_placeholder: ''
       }]
     };
-    const response={
-      general_mappings: {default_tax_code: {name: 'fyle', id: '1'}},
-      mapping_settings: [{
-        source_field: MappingSourceField.PROJECT,
-        destination_field: MappingDestinationField.CLASS,
-        import_to_fyle: true,
-        is_custom: false,
-        source_placeholder: 'Fyle'
-      }],
-      workspace_general_settings: {charts_of_accounts: ["Expense"],
-      import_categories: true,
-      import_tax_codes: true,
-      import_vendors_as_merchants: true},
-      workspace_id: 1
-    };
     service.postImportSettings(employeeSettingPayload).subscribe(value => {
-      expect(value).toEqual(response);
+      expect(value).toEqual(getImportsettingResponse);
     });
     const req = httpMock.expectOne({
       method: 'PUT',
       url: `${API_BASE_URL}/v2/workspaces/${workspace_id}/import_settings/`
     });
-    req.flush(response);
+    req.flush(getImportsettingResponse);
   });
 });

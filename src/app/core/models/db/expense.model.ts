@@ -30,8 +30,7 @@ export type Expense = {
   vendor: string;
   billable: boolean;
   verified_at: Date;
-  paid_on_qbo: boolean;
-  // Having any here is ok, since different expense have different properties
+  paid_on_xero: boolean;
   custom_properties: any[];
 };
 

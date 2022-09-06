@@ -7,13 +7,12 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { XeroConnectorService } from 'src/app/core/services/configuration/xero-connector.service';
 import { AuthService } from 'src/app/core/services/core/auth.service';
 import { WorkspaceService } from 'src/app/core/services/workspace/workspace.service';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { environment } from 'src/environments/environment';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { of, ReplaySubject, throwError } from 'rxjs';
 import { response } from '../../configuration/xero-connector/xero-connector.fixture';
 import { NavigationStart, Router, RouterEvent } from '@angular/router';
 import { Renderer2, Type } from '@angular/core';
-import { WindowService } from 'src/app/core/services/core/window.service';
+import { environment } from 'src/environments/environment';
 
 describe('HeaderComponent', () => {
   let component: HeaderComponent;
@@ -47,7 +46,7 @@ describe('HeaderComponent', () => {
     };
 
     service2 = {
-      disconnectXeroConnection: () => of(response),
+      revokeXeroConnection: () => of(response),
       getXeroCredentials: () => of(response)
     };
     const eve = new Event('click', {});
@@ -56,10 +55,10 @@ describe('HeaderComponent', () => {
     };
 
     service4 = {
-      getFyleCurrency: () => 'USD',
+      getCurrency: () => 'USD',
       patchWorkspace: () => of({ app: 'done' }),
-      getWorkspaceCreatedAt: () => new Date('2022-06-05T09:30:00.000Z')
-
+      getWorkspaceCreatedAt: () => new Date('2022-06-05T09:30:00.000Z'),
+      getWorkspaceId: () => environment.tests.workspaceId
     };
     const localStorageDump = {
       email: 'fyle@fyle.in',
@@ -97,6 +96,10 @@ describe('HeaderComponent', () => {
     spyOn(renderer2, 'listen').and.callThrough();
     fixture.detectChanges();
     dialogSpy = spyOn(TestBed.get(MatDialog), 'open').and.returnValue(dialogRefSpyObj);
+    component.currency = {
+      fyle_currency: 'USD',
+      xero_currency: 'USD'
+    };
   });
 
   it('should create', () => {
@@ -157,7 +160,6 @@ describe('HeaderComponent', () => {
     expect((component as any).getActivePageName('/workspaces/main/dashboard')).toBe('Dashboard');
     expect((component as any).getActivePageName('/workspaces/main/export_log')).toBe('Export Log');
     expect((component as any).getActivePageName('/workspaces/main/mapping/project')).toBe('project mapping');
-    expect((component as any).getActivePageName('/workspaces/main/configuration/employee_settings')).toBe('Map Employees');
     expect((component as any).getActivePageName('/workspaces/main/configuration/export_settings')).toBe('Export Settings');
     expect((component as any).getActivePageName('/workspaces/main/configuration/import_settings')).toBe('Import Settings');
     expect((component as any).getActivePageName('/workspaces/main/configuration/advanced_settings')).toBe('Advanced Settings');
@@ -184,11 +186,11 @@ describe('HeaderComponent', () => {
   });
 
   it('DisconnectXero function check', () => {
-    spyOn(xeroConnectorService, 'disconnectXeroConnection').and.callThrough();
+    spyOn(xeroConnectorService, 'revokeXeroConnection').and.callThrough();
     spyOn(authService, 'redirectToOnboardingLanding').and.callThrough();
     component.disconnectXero();
     fixture.detectChanges();
-    expect(xeroConnectorService.disconnectXeroConnection).toHaveBeenCalled();
+    expect(xeroConnectorService.revokeXeroConnection).toHaveBeenCalled();
     expect(authService.redirectToOnboardingLanding).toHaveBeenCalled();
     expect(dialogSpy).toHaveBeenCalled();
   });

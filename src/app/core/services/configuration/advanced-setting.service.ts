@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { Observable, of, Subject } from 'rxjs';
+import { advancedSettingResponse } from 'src/app/shared/components/configuration/advanced-settings/advanced-settings.fixture';
 import { Cacheable, CacheBuster } from 'ts-cacheable';
 import { AdvancedSettingGet, AdvancedSettingPost, AdvancedSettingWorkspaceSchedulePost } from '../../models/configuration/advanced-setting.model';
 import { WorkspaceSchedule, WorkspaceScheduleEmailOptions } from '../../models/db/workspace-schedule.model';
@@ -21,6 +22,24 @@ export class AdvancedSettingService {
     cacheBusterObserver: advancedSettingsCache$
   })
   getAdvancedSettings(): Observable<AdvancedSettingGet> {
+    const advancedSettingResponse:AdvancedSettingGet = {
+      workspace_general_settings: {
+        sync_fyle_to_xero_payments: false,
+        sync_xero_to_fyle_payments: false,
+        auto_create_destination_entity: true,
+        change_accounting_period: true
+      },
+      general_mappings: {
+        bill_payment_account: { id: '1', name: 'Fyle' }
+      },
+      workspace_schedules: {
+        enabled: true,
+        interval_hours: 10,
+        start_datetime: new Date()
+      },
+      workspace_id: 1
+    };
+    // Return of(advancedSettingResponse);
     return this.apiService.get(`/v2/workspaces/${this.workspaceService.getWorkspaceId()}/advanced_configurations/`, {});
   }
 
@@ -28,10 +47,8 @@ export class AdvancedSettingService {
     cacheBusterNotifier: advancedSettingsCache$
   })
   postAdvancedSettings(exportSettingsPayload: AdvancedSettingPost): Observable<AdvancedSettingGet> {
+    // Return of(advancedSettingResponse)
     return this.apiService.put(`/v2/workspaces/${this.workspaceService.getWorkspaceId()}/advanced_configurations/`, exportSettingsPayload);
   }
 
-  getWorkspaceAdmins(): Observable<[WorkspaceScheduleEmailOptions]> {
-    return this.apiService.get(`/workspaces/${this.workspaceService.getWorkspaceId()}/admins/`, {});
-  }
 }

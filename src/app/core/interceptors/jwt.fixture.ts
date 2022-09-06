@@ -8,9 +8,7 @@ export const response = {
 };
 export const response1: Token = {
   access_token: "",
-  expires_in: 3600,
   refresh_token: "ffff",
-  token_type: "Bearer",
   user: {
     access_token: "",
     email: "sravan.kumar@fyle.in",
@@ -33,6 +31,15 @@ export const errorResponse1 = {
   error: {
     id: 1,
     is_expired: true,
-    company_name: 'QBO'
+    company_name: 'Xero'
+  }
+};
+export const errorResponse = {
+  status: 404,
+  statusText: "Not Found",
+  error: {
+    id: 1,
+    is_expired: true,
+    company_name: 'Xero'
   }
 };

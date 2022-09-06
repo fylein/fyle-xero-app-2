@@ -7,6 +7,7 @@ import { WorkspaceService } from '../core/services/workspace/workspace.service';
 import { of, throwError } from 'rxjs';
 import { errorResponse, workspaceResponse } from './integration.fixture';
 import { environment } from 'src/environments/environment';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 describe('IntegrationComponent', () => {
   let component: IntegrationComponent;
@@ -22,12 +23,13 @@ describe('IntegrationComponent', () => {
       getWorkspaces: () => of(workspaceResponse),
       createWorkspace: () => of(workspaceResponse),
       syncFyleDimensions: () => of({}),
-      syncQBODimensions: () => of({}),
+      syncXeroDimensions: () => of({}),
       getWorkspaceId: () => environment.tests.workspaceId
     };
     await TestBed.configureTestingModule({
       imports: [RouterTestingModule, HttpClientModule, HttpClientTestingModule],
       declarations: [ IntegrationComponent ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
       providers: [
         { provide: WorkspaceService, useValue: service1 }
       ]

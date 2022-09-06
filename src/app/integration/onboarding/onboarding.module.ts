@@ -31,7 +31,7 @@ import { OnboardingRoutingModule } from './onboarding-routing.module';
     OnboardingDoneComponent,
     OnboardingComponent,
     OnboardingLandingComponent,
-    OnboardingXeroConnectorComponent,
+    OnboardingXeroConnectorComponent
   ],
   imports: [
     CommonModule,

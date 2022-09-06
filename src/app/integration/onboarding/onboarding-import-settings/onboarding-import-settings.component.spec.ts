@@ -1,3 +1,4 @@
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { OnboardingImportSettingsComponent } from './onboarding-import-settings.component';
@@ -8,6 +9,7 @@ describe('OnboardingImportSettingsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
       declarations: [ OnboardingImportSettingsComponent ]
     })
     .compileComponents();

@@ -4,8 +4,6 @@ import { ConfigurationSelectFieldComponent } from './configuration-select-field.
 import { MatDialog, MatDialogModule, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { EmployeeSettingFormOption } from 'src/app/core/models/configuration/employee-setting.model';
-import { EmployeeFieldMapping } from 'src/app/core/models/enum/enum.model';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { of } from 'rxjs';
 import { By } from '@angular/platform-browser';
@@ -34,25 +32,15 @@ describe('ConfigurationSelectFieldComponent', () => {
       autoMapEmployee: new FormControl([true]),
       emails: new FormControl(['fyle@fyle.in', 'integrations@fyle.in' ])
     });
-    const employeeMappingOptions: EmployeeSettingFormOption[] = [
-      {
-        value: EmployeeFieldMapping.EMPLOYEE,
-        label: 'Employees'
-      },
-      {
-        value: EmployeeFieldMapping.VENDOR,
-        label: 'Vendors'
-      }
-    ];
     const liveEntityExample = {EMPLOYEE: 'FYLE', VENDOR: 'Integration'};
     component.form = form;
-    component.options = employeeMappingOptions;
-    component.liveEntityExample = liveEntityExample;
+    // Component.options = employeeMappingOptions;
+    // Component.liveEntityExample = liveEntityExample;
     component.formControllerName = 'employeeMapping';
     component.isFieldMandatory = true;
     component.mandatoryErrorListName = 'option';
     component.iconPath = 'assets/images/svgs/general/employee.svg';
-    component.label = 'How are your Employees represented in Quickbooks Online?';
+    component.label = 'How are your Employees represented in Xero?';
     component.subLabel = 'Select how you represent your employees in Xero. This would help to export the expenses from Fyle to the correct employee/vendor record in Xero.';
     component.placeholder = 'Select representation';
     fixture.detectChanges();

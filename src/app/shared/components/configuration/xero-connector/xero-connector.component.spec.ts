@@ -7,12 +7,16 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { ActivatedRoute, Router } from '@angular/router';
 import { XeroConnectorService } from 'src/app/core/services/configuration/xero-connector.service';
 import { of, throwError } from 'rxjs';
-import { errorResponse, errorResponse2, exportResponse, response } from './xero-connector.fixture';
+import { errorResponse, errorResponse2, exportResponse, response, tenant, Tenantresponse } from './xero-connector.fixture';
 import { ExportSettingService } from 'src/app/core/services/configuration/export-setting.service';
 import { WorkspaceService } from 'src/app/core/services/workspace/workspace.service';
 import { ConfirmationDialog } from 'src/app/core/models/misc/confirmation-dialog.model';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { AuthService } from 'src/app/core/services/core/auth.service';
+import { environment } from 'src/environments/environment';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { FormBuilder } from '@angular/forms';
 
 describe('XeroConnectorComponent', () => {
   let component: XeroConnectorComponent;
@@ -22,6 +26,7 @@ describe('XeroConnectorComponent', () => {
   let exportService: ExportSettingService;
   let workspaceService: WorkspaceService ;
   let authService: AuthService;
+  let formbuilder: FormBuilder;
   let service: any;
   let service2: any;
   let service3: any;
@@ -42,14 +47,17 @@ describe('XeroConnectorComponent', () => {
     service = {
       getXeroCredentials: () => of(response),
       connectXero: () => of(response),
-      disconnectXeroConnection: () => of(response)
+      revokeXeroConnection: () => of(response),
+      getXeroTenants: () => of(tenant),
+      postTenantMappings: () => of(Tenantresponse)
     };
     service2 = {
       getExportSettings: () => of(exportResponse)
     };
     service3 = {
       refreshXeroDimensions: () => of({}),
-      setOnboardingState: () => undefined
+      setOnboardingState: () => undefined,
+      getWorkspaceId: () => environment.tests.workspaceId
     };
     service4 = {
       logout: () => undefined,
@@ -57,8 +65,9 @@ describe('XeroConnectorComponent', () => {
       redirectToXeroOAuth: () => undefined
     };
     await TestBed.configureTestingModule({
-      imports: [RouterTestingModule, HttpClientTestingModule, SharedModule, MatSnackBarModule],
+      imports: [RouterTestingModule, HttpClientTestingModule, SharedModule, MatSnackBarModule, NoopAnimationsModule],
       declarations: [XeroConnectorComponent],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
       providers: [
         { provide: XeroConnectorService, useValue: service },
         { provide: ExportSettingService, useValue: service2 },
@@ -73,6 +82,7 @@ describe('XeroConnectorComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(XeroConnectorComponent);
     component = fixture.componentInstance;
+    formbuilder = TestBed.inject(FormBuilder);
     router = TestBed.get(Router);
     xeroService = TestBed.inject(XeroConnectorService);
     exportService = TestBed.inject(ExportSettingService);
@@ -104,7 +114,7 @@ describe('XeroConnectorComponent', () => {
     spyOn(exportService, "getExportSettings").and.callThrough();
     expect(component.ngOnInit()).toBeUndefined();
     fixture.detectChanges();
-    expect(component.showDisconnectXero).toBeTrue();
+    // Expect(component.showDisconnectXero).toBeTrue();
     expect(component.isLoading).toBeFalse();
     expect(component.isContinueDisabled).toBeFalse();
     expect(xeroService.getXeroCredentials).toHaveBeenCalled();
@@ -126,7 +136,7 @@ describe('XeroConnectorComponent', () => {
     component.isContinueDisabled = false;
     fixture.detectChanges();
     expect(component.continueToNextStep()).toBeUndefined();
-    expect(router.navigate).toHaveBeenCalledWith([`/workspaces/onboarding/employee_settings`]);
+    expect(router.navigate).toHaveBeenCalledWith([`/workspaces/onboarding/export_settings`]);
   });
 
   it('continueToNextStep => isContinueDisabled = true function check', () => {
@@ -136,11 +146,11 @@ describe('XeroConnectorComponent', () => {
   });
 
   it('disconnectXero function check', () => {
-    spyOn(xeroService, 'disconnectXeroConnection').and.callThrough();
+    spyOn(xeroService, 'revokeXeroConnection').and.callThrough();
     component.xeroCompanyName = 'Xero-Fyle';
     fixture.detectChanges();
     expect(component.disconnectXero()).toBeUndefined();
-    expect(xeroService.disconnectXeroConnection).toHaveBeenCalled();
+    expect(xeroService.revokeXeroConnection).toHaveBeenCalled();
   });
 
   it('postXeroCredential function connectXero success check', () => {
@@ -193,10 +203,13 @@ describe('XeroConnectorComponent', () => {
   });
 
   it('connectXero() function check', () => {
-    spyOn(authService, 'redirectToXeroOAuth').and.callThrough();
-    expect(component.connectXero()).toBeUndefined();
+    const form = formbuilder.group({
+      xeroTenant: '25d7b4cd-ed1c-4c5c-80e5-c058b87db8a1'
+      });
+    component.xeroConnectorForm = form;
+    component.tenantList = tenant;
     fixture.detectChanges();
-    expect(authService.redirectToXeroOAuth).toHaveBeenCalled();
+    expect(component.connectXero()).toBeUndefined();
   });
 
   it('Activerouter values', () => {

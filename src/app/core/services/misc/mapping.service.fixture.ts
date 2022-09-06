@@ -3,7 +3,7 @@ import { MappingDestinationField, MappingSourceField } from "../../models/enum/e
 
 export const mappingSettingPayload: MappingSettingPost[] = [{
   source_field: MappingSourceField.COST_CENTER,
-  destination_field: MappingDestinationField.CUSTOMER,
+  destination_field: MappingDestinationField.ACCOUNT,
   import_to_fyle: false,
   is_custom: false,
   source_placeholder: null
@@ -15,7 +15,7 @@ export const postMappingSettingResponse: MappingSetting[] = [{
   updated_at: new Date(),
   workspace: 1,
   source_field: MappingSourceField.COST_CENTER,
-  destination_field: MappingDestinationField.CUSTOMER,
+  destination_field: MappingDestinationField.ACCOUNT,
   import_to_fyle: false,
   is_custom: false,
   source_placeholder: null

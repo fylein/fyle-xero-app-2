@@ -2,11 +2,9 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { AdvancedSettingFormOption } from 'src/app/core/models/configuration/advanced-setting.model';
-import { EmployeeSettingFormOption } from 'src/app/core/models/configuration/employee-setting.model';
 import { ExportSettingFormOption } from 'src/app/core/models/configuration/export-setting.model';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
-import { ClickEvent, CorporateCreditCardExpensesObject, EmployeeFieldMapping, ProgressPhase, ReimbursableExpensesObject, SimpleSearchPage, SimpleSearchType } from 'src/app/core/models/enum/enum.model';
-import { PreviewPage } from 'src/app/core/models/misc/preview-page.model';
+import { ClickEvent, CorporateCreditCardExpensesObject, ProgressPhase, ReimbursableExpensesObject, SimpleSearchPage, SimpleSearchType } from 'src/app/core/models/enum/enum.model';
 import { HelperService } from 'src/app/core/services/core/helper.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { PreviewDialogComponent } from '../preview-dialog/preview-dialog.component';
@@ -20,9 +18,9 @@ export class ConfigurationSelectFieldComponent implements OnInit {
 
   @Input() form: FormGroup;
 
-  @Input() options: EmployeeSettingFormOption[] | ExportSettingFormOption[] | AdvancedSettingFormOption[] | any[];
+  @Input() options: ExportSettingFormOption[] | AdvancedSettingFormOption[] | any[];
 
-  @Input() XeroAttributes: DestinationAttribute[];
+  @Input() xeroAttributes: DestinationAttribute[];
 
   @Input() iconPath: string;
 
@@ -36,13 +34,15 @@ export class ConfigurationSelectFieldComponent implements OnInit {
 
   @Input() isFieldMandatory: boolean;
 
-  @Input() liveEntityExample: {[EmployeeFieldMapping.EMPLOYEE]: string | undefined, [EmployeeFieldMapping.VENDOR]: string | undefined};
+  // @Input() liveEntityExample: {[EmployeeFieldMapping.EMPLOYEE]: string | undefined, [EmployeeFieldMapping.VENDOR]: string | undefined};
 
   @Input() mandatoryErrorListName: string;
 
   @Input() customErrorMessage: string;
 
   @Input() phase: ProgressPhase;
+
+  @Input() exportType: ReimbursableExpensesObject | CorporateCreditCardExpensesObject;
 
   SimpleSearchPage = SimpleSearchPage;
 
@@ -55,12 +55,12 @@ export class ConfigurationSelectFieldComponent implements OnInit {
   ) { }
 
   showXeroExportPreview(reimbursableExportType: ReimbursableExpensesObject | null, creditCardExportType: CorporateCreditCardExpensesObject | null): void {
-    const data: PreviewPage = {
+    const data = {
       XeroReimburse: reimbursableExportType,
       XeroCCC: creditCardExportType
     };
 
-    this.trackingService.onClickEvent(ClickEvent.PREVIEW_Xero_EXPORT, {phase: this.phase, exportType: reimbursableExportType || creditCardExportType});
+    this.trackingService.onClickEvent(ClickEvent.PREVIEW_XERO_EXPORT, {phase: this.phase, exportType: reimbursableExportType || creditCardExportType});
 
     this.dialog.open(PreviewDialogComponent, {
       width: '960px',

@@ -1,21 +1,17 @@
 import { FormGroup } from "@angular/forms";
-import { CorporateCreditCardExpensesObject, ExpenseGroupingFieldOption, ExpenseState, ExportDateType, ReimbursableExpensesObject } from "../enum/enum.model";
+import { AutoMapEmployee, CorporateCreditCardExpensesObject, ExpenseGroupingFieldOption, ExpenseState, ExportDateType, ReimbursableExpensesObject } from "../enum/enum.model";
 import { ExpenseGroupSettingGet, ExpenseGroupSettingPost } from "../db/expense-group-setting.model";
 import { DefaultDestinationAttribute, GeneralMapping } from "../db/general-mapping.model";
 import { SelectFormOption } from "../misc/select-form-option.model";
 
 export type ExportSettingWorkspaceGeneralSetting = {
   reimbursable_expenses_object: ReimbursableExpensesObject | null,
-  corporate_credit_card_expenses_object: CorporateCreditCardExpensesObject | null
+  corporate_credit_card_expenses_object: CorporateCreditCardExpensesObject | null,
+  auto_map_employees: AutoMapEmployee | null
 }
 
 export type ExportSettingGeneralMapping = {
-  bank_account: DefaultDestinationAttribute,
-  default_ccc_account: DefaultDestinationAttribute,
-  accounts_payable: DefaultDestinationAttribute,
-  default_ccc_vendor: DefaultDestinationAttribute,
-  qbo_expense_account: DefaultDestinationAttribute,
-  default_debit_card_account: DefaultDestinationAttribute
+  bank_account: DefaultDestinationAttribute
 }
 
 export type ExportSettingPost = {
@@ -32,7 +28,7 @@ export type ExportSettingGet = {
 }
 
 export interface ExportSettingFormOption extends SelectFormOption {
-  value: ExpenseState | ReimbursableExpensesObject | CorporateCreditCardExpensesObject | ExpenseGroupingFieldOption | ExportDateType;
+  value: ExpenseState | ReimbursableExpensesObject | CorporateCreditCardExpensesObject | ExpenseGroupingFieldOption | ExportDateType | AutoMapEmployee | null;
 }
 
 export class ExportSettingModel {
@@ -40,23 +36,17 @@ export class ExportSettingModel {
     const emptyDestinationAttribute = {id: null, name: null};
     const exportSettingPayload: ExportSettingPost = {
       expense_group_settings: {
-        expense_state: exportSettingsForm.get('expenseState')?.value,
-        reimbursable_expense_group_fields: exportSettingsForm.get('reimbursableExportGroup')?.value ? [exportSettingsForm.get('reimbursableExportGroup')?.value] : null,
+        reimbursable_expense_state: exportSettingsForm.get('reimbursableExpenseState')?.value,
         reimbursable_export_date_type: exportSettingsForm.get('reimbursableExportDate')?.value,
-        corporate_credit_card_expense_group_fields: exportSettingsForm.get('creditCardExportGroup')?.value ? [exportSettingsForm.get('creditCardExportGroup')?.value] : null,
-        ccc_export_date_type: exportSettingsForm.get('creditCardExportDate')?.value
+        ccc_expense_state: exportSettingsForm.get('cccExpenseState')?.value
       },
       workspace_general_settings: {
         reimbursable_expenses_object: exportSettingsForm.get('reimbursableExportType')?.value,
-        corporate_credit_card_expenses_object: exportSettingsForm.get('creditCardExportType')?.value
+        corporate_credit_card_expenses_object: exportSettingsForm.get('creditCardExportType')?.value,
+        auto_map_employees: exportSettingsForm.get('autoMapEmployees')?.value
       },
       general_mappings: {
-        bank_account: exportSettingsForm.get('bankAccount')?.value ? exportSettingsForm.get('bankAccount')?.value : emptyDestinationAttribute,
-        default_ccc_account: exportSettingsForm.get('defaultCCCAccount')?.value ? exportSettingsForm.get('defaultCCCAccount')?.value : emptyDestinationAttribute,
-        accounts_payable: exportSettingsForm.get('accountsPayable')?.value ? exportSettingsForm.get('accountsPayable')?.value : emptyDestinationAttribute,
-        default_ccc_vendor: exportSettingsForm.get('defaultCreditCardVendor')?.value ? exportSettingsForm.get('defaultCreditCardVendor')?.value : emptyDestinationAttribute,
-        qbo_expense_account: exportSettingsForm.get('qboExpenseAccount')?.value ? exportSettingsForm.get('qboExpenseAccount')?.value : emptyDestinationAttribute,
-        default_debit_card_account: exportSettingsForm.get('defaultDebitCardAccount')?.value ? exportSettingsForm.get('defaultDebitCardAccount')?.value : emptyDestinationAttribute
+        bank_account: exportSettingsForm.get('bankAccount')?.value ? exportSettingsForm.get('bankAccount')?.value : emptyDestinationAttribute
       }
     };
     return exportSettingPayload;

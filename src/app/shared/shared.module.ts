@@ -24,7 +24,6 @@ import { ConfigurationSelectFieldComponent } from './components/configuration/co
 import { ConfigurationToggleFieldComponent } from './components/configuration/configuration-toggle-field/configuration-toggle-field.component';
 
 // Components
-import { EmployeeSettingsComponent } from './components/configuration/employee-settings/employee-settings.component';
 import { LoaderComponent } from './components/core/loader/loader.component';
 import { OnboardingStepperComponent } from './components/helpers/onboarding-stepper/onboarding-stepper.component';
 import { ImportSettingsComponent } from './components/configuration/import-settings/import-settings.component';
@@ -40,25 +39,22 @@ import { ConfigurationStepFooterSectionComponent } from './components/configurat
 import { HeaderComponent } from './components/core/header/header.component';
 import { ZeroStateWithIllustrationComponent } from './components/core/zero-state-with-illustration/zero-state-with-illustration.component';
 import { PaginatorComponent } from './components/helpers/paginator/paginator.component';
-import { MappingHeaderSectionComponent } from './components/mapping/mapping-header-section/mapping-header-section.component';
-import { MappingFilterComponent } from './components/mapping/mapping-filter/mapping-filter.component';
-import { MappingTableComponent } from './components/mapping/mapping-table/mapping-table.component';
-import { GenericMappingComponent } from './components/mapping/generic-mapping/generic-mapping.component';
-import { ExportLogTableComponent } from './components/export-log/export-log-table/export-log-table.component';
+// Import { MappingHeaderSectionComponent } from './components/mapping/mapping-header-section/mapping-header-section.component';
+// Import { MappingFilterComponent } from './components/mapping/mapping-filter/mapping-filter.component';
+// Import { MappingTableComponent } from './components/mapping/mapping-table/mapping-table.component';
+// Import { GenericMappingComponent } from './components/mapping/generic-mapping/generic-mapping.component';
+// Import { ExportLogTableComponent } from './components/export-log/export-log-table/export-log-table.component';
 import { DashboardHeaderSectionComponent } from './components/dashboard/dashboard-header-section/dashboard-header-section.component';
 import { DashboardResolveMappingErrorDialogComponent } from './components/dashboard/dashboard-resolve-mapping-error-dialog/dashboard-resolve-mapping-error-dialog.component';
-import { DashboardExportLogDialogComponent } from './components/dashboard/dashboard-export-log-dialog/dashboard-export-log-dialog.component';
 import { DashboardXeroErrorDialogComponent } from './components/dashboard/dashboard-xero-error-dialog/dashboard-xero-error-dialog.component';
-import { ExportLogChildTableComponent } from './components/export-log/export-log-child-table/export-log-child-table.component';
+// Import { ExportLogChildTableComponent } from './components/export-log/export-log-child-table/export-log-child-table.component';
 import { PreviewDialogComponent } from './components/configuration/preview-dialog/preview-dialog.component';
 import { ConfirmationDialogComponent } from './components/core/confirmation-dialog/confirmation-dialog.component';
 import { MandatoryErrorMessageComponent } from './components/helpers/mandatory-error-message/mandatory-error-message.component';
-import { AddEmailDialogComponent } from './components/configuration/advanced-settings/add-email-dialog/add-email-dialog.component';
 import { EmailMultiSelectFieldComponent } from './components/configuration/email-multi-select-field/email-multi-select-field.component';
 
 @NgModule({
   declarations: [
-    EmployeeSettingsComponent,
     ImportSettingsComponent,
     ExportSettingsComponent,
     AdvancedSettingsComponent,
@@ -79,21 +75,19 @@ import { EmailMultiSelectFieldComponent } from './components/configuration/email
     HeaderComponent,
     ZeroStateWithIllustrationComponent,
     PaginatorComponent,
-    MappingHeaderSectionComponent,
-    MappingFilterComponent,
-    MappingTableComponent,
-    GenericMappingComponent,
-    ExportLogTableComponent,
+    // MappingHeaderSectionComponent,
+    // MappingFilterComponent,
+    // MappingTableComponent,
+    // GenericMappingComponent,
+    // ExportLogTableComponent,
     DashboardHeaderSectionComponent,
     DashboardResolveMappingErrorDialogComponent,
-    DashboardExportLogDialogComponent,
     DashboardXeroErrorDialogComponent,
-    ExportLogChildTableComponent,
+    // ExportLogChildTableComponent,
     PreviewDialogComponent,
     ConfirmationDialogComponent,
     ConfirmationDialogComponent,
     MandatoryErrorMessageComponent,
-    AddEmailDialogComponent,
     EmailMultiSelectFieldComponent
   ],
   imports: [
@@ -116,7 +110,6 @@ import { EmailMultiSelectFieldComponent } from './components/configuration/email
     LoaderComponent,
     OnboardingStepperComponent,
     XeroConnectorComponent,
-    EmployeeSettingsComponent,
     ImportSettingsComponent,
     ExportSettingsComponent,
     AdvancedSettingsComponent,
@@ -133,14 +126,14 @@ import { EmailMultiSelectFieldComponent } from './components/configuration/email
     HeaderComponent,
     ZeroStateWithIllustrationComponent,
     PaginatorComponent,
-    MappingHeaderSectionComponent,
-    MappingFilterComponent,
-    MappingTableComponent,
-    GenericMappingComponent,
-    ExportLogTableComponent,
+    // MappingHeaderSectionComponent,
+    // MappingFilterComponent,
+    // MappingTableComponent,
+    // GenericMappingComponent,
+    // ExportLogTableComponent,
     DashboardHeaderSectionComponent,
     DashboardResolveMappingErrorDialogComponent,
-    ExportLogChildTableComponent,
+    // ExportLogChildTableComponent,
     MandatoryErrorMessageComponent
   ],
   providers: []

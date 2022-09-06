@@ -8,13 +8,13 @@ export const modelData: Error = {
     id: 1,
     fund_source: 'Credit Card',
     description: {"report_id": "rp3YxnytLrgS", "claim_number": "C/2022/05/R/11", "employee_email": "sravan.kumar@fyle.in", "settlement_id": "ss", "expense_id": '1'},
-    response_logs: [],
     export_type: 'Fyle',
     employee_name: 'Aswin',
     exported_at: new Date(),
     created_at: new Date(),
     updated_at: new Date(),
     workspace: 1,
+    response_logs: [],
     expenses: [
       {
         amount: 1,
@@ -87,13 +87,13 @@ export const modelData1: Error = {
     id: 1,
     fund_source: 'CCC',
     description: {"report_id": "rp3YxnytLrgS", "claim_number": "C/2022/05/R/11", "employee_email": "sravan.kumar@fyle.in", "settlement_id": "ss", "expense_id": '1'},
-    response_logs: [],
     export_type: 'Fyle',
     employee_name: 'Aswin',
     exported_at: new Date(),
     created_at: new Date(),
     updated_at: new Date(),
     workspace: 1,
+    response_logs: [],
     expenses: [
       {
         amount: 1,

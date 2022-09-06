@@ -5,7 +5,7 @@ import { forkJoin, Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { globalCacheBusterNotifier } from 'ts-cacheable';
 import { OnboardingState } from '../models/enum/enum.model';
-import { QboConnectorService } from '../services/configuration/qbo-connector.service';
+import { XeroConnectorService } from '../services/configuration/xero-connector.service';
 import { TrackingService } from '../services/integration/tracking.service';
 import { WorkspaceService } from '../services/workspace/workspace.service';
 
@@ -15,7 +15,7 @@ import { WorkspaceService } from '../services/workspace/workspace.service';
 export class WorkspacesGuard implements CanActivate {
 
   constructor(
-    private qboConnectorService: QboConnectorService,
+    private xeroConnectorService: XeroConnectorService,
     private router: Router,
     private snackBar: MatSnackBar,
     private trackingService: TrackingService,
@@ -34,21 +34,21 @@ export class WorkspacesGuard implements CanActivate {
 
       return forkJoin(
         [
-          this.qboConnectorService.getQBOCredentials(),
-          this.qboConnectorService.getPreferences()
+          this.xeroConnectorService.getXeroCredentials(workspaceId),
+          this.xeroConnectorService.getXeroTokenHealth(workspaceId)
         ]
       ).pipe(
         map(response => !!response),
         catchError(error => {
           if (error.status === 400) {
             globalCacheBusterNotifier.next();
-            this.trackingService.onQBOAccountDisconnect();
-            this.snackBar.open('Oops! Your QBO connection expired, please connect again', '', { duration: 7000 });
+            this.trackingService.onXeroAccountDisconnect();
+            this.snackBar.open('Oops! Your Xero connection expired, please connect again', '', { duration: 7000 });
 
             const onboardingState: OnboardingState = this.workspaceService.getOnboardingState();
 
             if (onboardingState !== OnboardingState.COMPLETE) {
-              return this.router.navigateByUrl('workspaces/onboarding/qbo_connector');
+              return this.router.navigateByUrl('workspaces/onboarding/xero_connector');
             }
 
             return this.router.navigateByUrl('workspaces/onboarding/landing');

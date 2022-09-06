@@ -1,4 +1,4 @@
-import { EmployeeFieldMapping, MappingState, QBOField } from "../enum/enum.model";
+import { MappingState, TenantFieldMapping } from "../enum/enum.model";
 import { DestinationAttribute } from "./destination-attribute.model";
 import { Error } from "./error.model";
 import { ExpenseAttribute, ExtendedExpenseAttribute } from "./expense-attribute.model";
@@ -33,13 +33,10 @@ export type MappingList = {
     id: number;
     value: string;
   };
-  qbo: {
+  xero: {
     id: number | string;
     value: string;
   };
-  preserveDestination?: {
-    id: number | string;
-  }
   autoMapped: boolean;
   state: MappingState;
   index: number;
@@ -51,8 +48,8 @@ export type MappingStats = {
 };
 
 export type ResolveMappingError = {
-  sourceType: EmployeeFieldMapping;
-  destinationType: QBOField | EmployeeFieldMapping;
+  sourceType: TenantFieldMapping;
+  destinationType: TenantFieldMapping;
   fyleAttributes: Error[];
   workspaceId: string;
 };
@@ -63,8 +60,8 @@ export class MappingModel {
       source_type: mappingSetting.source_field,
       source_value: mappingRow.fyle.value,
       destination_type: mappingSetting.destination_field,
-      destination_id: mappingRow.qbo.id.toString(),
-      destination_value: mappingRow.qbo.value
+      destination_id: mappingRow.xero.id.toString(),
+      destination_value: mappingRow.xero.value
     };
   }
 }

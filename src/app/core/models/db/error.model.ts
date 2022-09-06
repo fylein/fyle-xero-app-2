@@ -19,7 +19,7 @@ export type GroupedErrors = {
   [ErrorType.EMPLOYEE_MAPPING]: Error[];
   [ErrorType.CATEGORY_MAPPING]: Error[];
   [ErrorType.TAX_MAPPING]: Error[];
-  [ErrorType.QBO_ERROR]: Error[];
+  [ErrorType.XERO_ERROR]: Error[];
 }
 
 export type ErrorStat = {

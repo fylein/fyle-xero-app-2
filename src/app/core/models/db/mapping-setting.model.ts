@@ -1,4 +1,4 @@
-import { MappingDestinationField, MappingSourceField, QBOField } from "../enum/enum.model";
+import { MappingDestinationField, MappingSourceField } from "../enum/enum.model";
 
 export type MappingSetting = {
   id: number;
@@ -22,7 +22,7 @@ export type MappingSettingPost = {
 
 export type MinimalMappingSetting = {
   source_field: MappingSourceField | string;
-  destination_field: MappingDestinationField | QBOField | string;
+  destination_field: MappingDestinationField  | string;
 };
 
 export type MappingSettingResponse = {
@@ -34,7 +34,7 @@ export type MappingSettingResponse = {
 
 export type MappingSettingList = {
   id?: number;
-  qboField: MappingDestinationField | string,
+  xeroField: MappingDestinationField | string,
   fyleField: MappingSourceField | string,
   index: number,
   existingMapping: boolean,

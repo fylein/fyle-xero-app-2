@@ -7,6 +7,11 @@
     padding: 24px 12px 8px 65px;
   }
 
+  &--schedule-dropdown {
+    padding-top: 24px;
+    padding-left: 65px;
+  }
+
   &--memo-preview-section {
     padding-top: 24px;
     padding-left: 40px;
@@ -41,7 +46,7 @@
     }
   }
 
-  &--add-btn{
+  &--add-btn {
     margin-bottom: 8px;
     height: 16px;
     width: 16px;
@@ -77,4 +82,8 @@
 
 .cdk-drag-animating {
   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.configuration--form-field {
+  padding-left: 0px;
 }

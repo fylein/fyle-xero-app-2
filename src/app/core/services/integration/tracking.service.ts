@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { AdvancedSettingPost } from '../../models/configuration/advanced-setting.model';
-import { EmployeeSettingPost } from '../../models/configuration/employee-setting.model';
 import { ExportSettingPost } from '../../models/configuration/export-setting.model';
 import { ImportSettingPost } from '../../models/configuration/import-setting.model';
 import { Action, ClickEvent, DeleteEvent, OnboardingStep, ProgressPhase, SimpleSearchPage, SimpleSearchType, UpdateEvent } from '../../models/enum/enum.model';
@@ -49,7 +48,7 @@ export class TrackingService {
     const flattenedObject = this.flattenObject(properties);
     properties = {
       ...flattenedObject,
-      Asset: 'QBO-2 Web'
+      Asset: 'Xero-2 Web'
     };
     if (this.tracking) {
       this.tracking.track(action, properties);
@@ -88,15 +87,15 @@ export class TrackingService {
     this.eventTrack('Switching Workspace');
   }
 
-  onQBOLanding(phase: ProgressPhase): void {
-    this.eventTrack('Landed in QBO', {phase});
+  onXeroLanding(phase: ProgressPhase): void {
+    this.eventTrack('Landed in Xero', {phase});
   }
 
   onClickEvent(eventName: ClickEvent, additionalProperties: Partial<ClickEventAdditionalProperty> | void): void {
     this.eventTrack(`Click event: ${eventName}`, additionalProperties);
   }
 
-  onOnboardingStepCompletion(eventName: OnboardingStep, stepNumber: number, additionalProperties: EmployeeSettingPost | ExportSettingPost | ImportSettingPost | AdvancedSettingPost | void): void {
+  onOnboardingStepCompletion(eventName: OnboardingStep, stepNumber: number, additionalProperties: ExportSettingPost | ImportSettingPost | AdvancedSettingPost | void): void {
     this.eventTrack(`Step ${stepNumber} completed: ${eventName}`, additionalProperties);
   }
 
@@ -112,8 +111,8 @@ export class TrackingService {
     this.eventTrack('Date filter', properties);
   }
 
-  onQBOAccountDisconnect(): void {
-    this.eventTrack('QBO account disconnected');
+  onXeroAccountDisconnect(): void {
+    this.eventTrack('Xero account disconnected');
   }
 
   onSimpleSearch(properties: {page: SimpleSearchPage, searchType: SimpleSearchType}): void {

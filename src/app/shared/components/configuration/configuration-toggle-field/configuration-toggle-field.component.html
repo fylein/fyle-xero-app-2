@@ -11,6 +11,9 @@
     </mat-slide-toggle>
   </div>
 </div>
+<div *ngIf="formControllerName === 'chartOfAccount'" class="configuration--field-toggle-section">
+  <h5 class="configuration--field-label sub-text-color paragraph">NOTE: If you have already created categories in Fyle, you can skip this and map your <br> categories to corresponding Xero accounts after completing configuration in <b>Integration <br> Dashboard > Mappings Section </b></h5>
+</div>
 
 <!-- Advanced Setting Page - with icon -->
 <div *ngIf="iconPath" [formGroup]="form" [ngClass]="formControllerName !== 'exportSchedule' ? 'configuration--field-section': 'export-schedule-section'">

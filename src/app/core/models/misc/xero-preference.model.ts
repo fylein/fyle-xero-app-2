@@ -1,5 +1,5 @@
 // Having any here is okay
-export type QBOPreference = {
+export type XeroPreference = {
   AccountingInfoPrefs: any;
   ProductAndServicesPrefs: any;
   SalesFormsPrefs: any;

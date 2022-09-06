@@ -1,6 +1,5 @@
 import { TestBed } from '@angular/core/testing';
 import { PaginatorPage } from '../../models/enum/enum.model';
-
 import { PaginatorService } from './paginator.service';
 
 describe('PaginatorService', () => {

@@ -14,6 +14,7 @@ import { WindowService } from 'src/app/core/services/core/window.service';
 import { UserService } from 'src/app/core/services/misc/user.service';
 import { WorkspaceService } from 'src/app/core/services/workspace/workspace.service';
 import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
+import { currency } from 'src/app/core/models/db/workspace.model';
 
 @Component({
   selector: 'app-header',
@@ -30,7 +31,7 @@ export class HeaderComponent implements OnInit {
 
   isHelpSectionExpanded: boolean;
 
-  currency: string = this.workspaceService.getFyleCurrency();
+  currency: currency = this.workspaceService.getCurrency();
 
   xeroCompanyName: string;
 
@@ -84,8 +85,6 @@ export class HeaderComponent implements OnInit {
       return 'Export Log';
     } else if (currentPageUrl.indexOf('mapping') > -1) {
       return currentPageUrl.split('/')[4] + ' mapping';
-    } else if (currentPageUrl.indexOf('/configuration/employee_settings') > -1) {
-      return 'Map Employees';
     } else if (currentPageUrl.indexOf('/configuration/export_settings') > -1) {
       return 'Export Settings';
     } else if (currentPageUrl.indexOf('/configuration/import_settings') > -1) {
@@ -103,7 +102,7 @@ export class HeaderComponent implements OnInit {
     this.phase = this.windowReference.location.pathname.includes('onboarding') ? ProgressPhase.ONBOARDING : ProgressPhase.POST_ONBOARDING;
     this.user = this.userService.getUserProfile();
 
-    this.xeroConnectorService.getXeroCredentials().subscribe((credentials: XeroCredentials) => {
+    this.xeroConnectorService.getXeroCredentials(this.workspaceService.getWorkspaceId()).subscribe((credentials: XeroCredentials) => {
       this.xeroCompanyName = credentials.company_name;
     }, (error) => {
       this.isXeroConnected = false;
@@ -131,17 +130,17 @@ export class HeaderComponent implements OnInit {
   }
 
   switchFyleOrg(): void {
-    this.authService.logout(true);
+    this.authService.logout();
     this.authService.redirectToFyleOAuth();
   }
 
   disconnectXero(): void {
     const data: ConfirmationDialog = {
-      title: 'Disconnect Quickbooks Online',
+      title: 'Disconnect Xero',
       contents: `Exporting expenses from Fyle will no longer work if you disconnect your 
-        Quickbooks Online Company.
+        Xero Company.
         <br>
-        Are you sure you want to disconnect <b>${this.xeroCompanyName}</b> Quickbooks Online
+        Are you sure you want to disconnect <b>${this.xeroCompanyName}</b> Xero
         company?`,
       primaryCtaText: 'Disconnect'
     };
@@ -153,8 +152,8 @@ export class HeaderComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((disconnect) => {
       if (disconnect) {
-        this.trackingService.onClickEvent(ClickEvent.DISCONNECT_Xero, {phase: this.phase});
-        this.xeroConnectorService.disconnectXeroConnection().subscribe(() => {
+        this.trackingService.onClickEvent(ClickEvent.DISCONNECT_XERO, {phase: this.phase});
+        this.xeroConnectorService.revokeXeroConnection(this.workspaceService.getWorkspaceId()).subscribe(() => {
           this.authService.redirectToOnboardingLanding();
         });
       }

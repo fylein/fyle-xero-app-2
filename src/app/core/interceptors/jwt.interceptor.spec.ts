@@ -7,8 +7,7 @@ import { environment } from 'src/environments/environment';
 import { ApiService } from '../services/core/api.service';
 import { Observable, of } from 'rxjs';
 import { AuthService } from '../services/core/auth.service';
-import { errorResponse } from 'src/app/integration/main/dashboard/dashboard.fixture';
-import { response, response1, errorResponse1 } from './jwt.fixture';
+import { response, response1, errorResponse1, errorResponse } from './jwt.fixture';
 describe('JwtInterceptor', () => {
   let client: HttpClient;
   let controller: HttpTestingController;
@@ -99,7 +98,7 @@ describe('JwtInterceptor', () => {
       }
     };
 
-    const requestMock = new HttpRequest('GET', `${API_BASE_URL}/api/auth/workspaces/${workspace_id}/qbo/employees/`);
+    const requestMock = new HttpRequest('GET', `${API_BASE_URL}/api/auth/workspaces/${workspace_id}/xero/employees/`);
     let response;
     interceptor.intercept(requestMock, next).subscribe((res) => {
       response = res;
@@ -108,7 +107,7 @@ describe('JwtInterceptor', () => {
   }));
   it('isTokenMandatory function check', () => {
     // @ts-ignore
-    expect(interceptor.isTokenMandatory(`${API_BASE_URL}/workspaces/${workspace_id}/qbo/employees/`)).toBeTrue();
+    expect(interceptor.isTokenMandatory(`${API_BASE_URL}/workspaces/${workspace_id}/xero/employees/`)).toBeTrue();
   });
 
   it('getAccessToken() function check', () => {

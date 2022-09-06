@@ -4,6 +4,8 @@ import { Workspace } from '../../models/db/workspace.model';
 import { OnboardingState } from '../../models/enum/enum.model';
 import { HttpTestingController, HttpClientTestingModule } from '@angular/common/http/testing';
 import { environment } from 'src/environments/environment';
+import { WorkspaceGeneralSetting } from '../../models/db/workspace-general-setting.model';
+import { Observable } from 'rxjs';
 
 describe('WorkspaceService', () => {
   let service: WorkspaceService;
@@ -23,15 +25,10 @@ describe('WorkspaceService', () => {
     httpMock = injector.inject(HttpTestingController);
   });
 
-  xit('getWorkspaceid service', () => {
-    const id = JSON.stringify(service.getWorkspaceId());
-    const org = +workspace_id;
-    if (id){
-      expect(+id).toEqual(org);
-    } else {
-      expect(id).toBeNull();
-    }
-
+  it('getWorkspaceid service', () => {
+    const id = service.getWorkspaceId();
+    const org = workspace_id;
+    expect(id.toString()).toEqual(org);
   });
 
   it('setOnboardingState and getOnboardingState service', () => {
@@ -43,7 +40,7 @@ describe('WorkspaceService', () => {
 
   it('createWorkspace service', () => {
     const responseKeys:Workspace = {
-      id: 1,
+      id: 2,
       name: "Test Sample Statement - GBP",
       user: [1],
       fyle_org_id: "orunxXsIajSE",
@@ -52,7 +49,10 @@ describe('WorkspaceService', () => {
       source_synced_at: new Date("2022-04-13T10:29:18.796760Z"),
       destination_synced_at: new Date("2022-04-13T10:29:18.796760Z"),
       created_at: new Date("2022-04-13T10:29:18.796760Z"),
-      updated_at: new Date("2022-04-13T10:29:18.796760Z")
+      updated_at: new Date("2022-04-13T10:29:18.796760Z"),
+      onboarding_state: OnboardingState.CONNECTION,
+      fyle_currency: 'USD',
+      xero_currency: 'USD'
     };
     service.createWorkspace().subscribe((value) => {
       expect(value).toEqual(responseKeys);
@@ -66,7 +66,7 @@ describe('WorkspaceService', () => {
 
   it('getWorkspace details service', () => {
     const responseKeys:Workspace[] = [{
-      id: 1,
+      id: 2,
       name: "Test Sample Statement - GBP",
       user: [1],
       fyle_org_id: "orunxXsIajSE",
@@ -75,7 +75,10 @@ describe('WorkspaceService', () => {
       source_synced_at: new Date("2022-04-13T10:29:18.796760Z"),
       destination_synced_at: new Date("2022-04-13T10:29:18.796760Z"),
       created_at: new Date("2022-04-13T10:29:18.796760Z"),
-      updated_at: new Date("2022-04-13T10:29:18.796760Z")
+      updated_at: new Date("2022-04-13T10:29:18.796760Z"),
+      onboarding_state: OnboardingState.CONNECTION,
+      fyle_currency: 'USD',
+      xero_currency: 'USD'
     }];
     service.getWorkspaces('1').subscribe(value => {
       expect(value).toEqual(responseKeys);
@@ -97,8 +100,11 @@ describe('WorkspaceService', () => {
       last_synced_at: new Date("2022-04-13T10:29:18.796760Z"),
       source_synced_at: new Date("2022-04-13T10:29:18.796760Z"),
       destination_synced_at: new Date("2022-04-13T10:29:18.796760Z"),
+      onboarding_state: OnboardingState.CONNECTION,
       created_at: new Date("2022-04-13T10:29:18.796760Z"),
-      updated_at: new Date("2022-04-13T10:29:18.796760Z")
+      updated_at: new Date("2022-04-13T10:29:18.796760Z"),
+      fyle_currency: 'USD',
+      xero_currency: 'USD'
     };
     service.getWorkspaceById(+workspace_id).subscribe(value => {
       expect(value).toEqual(responseKeys);
@@ -109,4 +115,52 @@ describe('WorkspaceService', () => {
   req.flush(responseKeys);
   });
 
+  it('WorkspacegeneralSetting service', () => {
+    const response:WorkspaceGeneralSetting = {
+      auto_create_destination_entity: true,
+      change_accounting_period: true,
+      charts_of_accounts: ['Expense'],
+      created_at: new Date("2022-04-27T11:07:17.694377Z"),
+      id: 1,
+      import_categories: false,
+      import_projects: false,
+      import_tax_codes: false,
+      skip_cards_mapping: false,
+      sync_fyle_to_xero_payments: false,
+      sync_xero_to_fyle_payments: false,
+      updated_at: new Date("2022-04-28T12:48:39.150177Z"),
+      workspace: 1,
+      reimbursable_expenses_object: '',
+      corporate_credit_card_expenses_object: '',
+      map_merchant_to_contact: false,
+      auto_map_employees: '',
+      import_customers: false
+    };
+    service.getWorkspaceGeneralSettings().subscribe((value) => {
+      expect(value).toEqual(response);
+    });
+    const req = httpMock.expectOne({
+      method: 'GET',
+      url: `${API_BASE_URL}/workspaces/${workspace_id}/settings/general/`
+    });
+  req.flush(response);
+  });
+
+  it('syncFyleDimensions service', () => {
+    expect(service.syncFyleDimensions()).toBeTruthy();
+  });
+
+  it('syncXeroDimensions service', () => {
+    expect(service.syncXeroDimensions()).toBeTruthy();
+  });
+
+  it('getFyleCurrency service', () => {
+    const response = {
+      fyle_currency: 'USD',
+      xero_currency: 'USD'
+    };
+    localStorage.setItem('currency', JSON.stringify(response));
+    const currency = service.getCurrency();
+    expect(currency).toEqual(response);
+  });
 });

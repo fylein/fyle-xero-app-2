@@ -21,20 +21,16 @@ describe('AdvancedSettingModel', () => {
       autoCreateVendors: new FormControl(true),
       exportSchedule: new FormControl(true),
       exportScheduleFrequency: new FormControl(10),
-      memoStructure: new FormControl(['Fyle']),
-      searchOption: new FormControl([]),
-      emails: new FormControl([]),
-      addedEmail: new FormControl([])
+      importCustomers: new FormControl(true),
+      searchOption: new FormControl([])
     });
 
     const advancedSettingPayload:AdvancedSettingPost = {
       workspace_general_settings: {
-        sync_fyle_to_qbo_payments: false,
-        sync_qbo_to_fyle_payments: false,
+        sync_fyle_to_xero_payments: false,
+        sync_xero_to_fyle_payments: false,
         auto_create_destination_entity: true,
-        je_single_credit_line: true,
-        change_accounting_period: true,
-        memo_structure: ['Fyle']
+        change_accounting_period: true
       },
       general_mappings: {
         bill_payment_account: {id: '1', name: 'Fyle'}
@@ -42,8 +38,7 @@ describe('AdvancedSettingModel', () => {
       workspace_schedules: {
         enabled: true,
         interval_hours: 10,
-        emails_selected: [],
-        additional_email_options: []
+        start_datetime: new Date()
       }
     };
     expect(AdvancedSettingModel.constructPayload(advancedSettingsForm)).toEqual(advancedSettingPayload);
