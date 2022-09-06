@@ -32,8 +32,8 @@ export class WorkspaceService {
       fyle_currency: 'USD',
       xero_currency: 'USD'
     };
-    return of(responseKeys);
-    // Return this.apiService.post('/workspaces/', {});
+    // Return of(responseKeys);
+    return this.apiService.post('/workspaces/', {});
   }
 
   getWorkspaces(orgId: any): Observable<Workspace[]> {
@@ -52,10 +52,10 @@ export class WorkspaceService {
       fyle_currency: 'USD',
       xero_currency: 'USD'
     }];
-    return of(responseKeys);
-    // Return this.apiService.get(`/workspaces/`, {
-    //   Org_id: orgId
-    // });
+    // Return of(responseKeys);
+    return this.apiService.get(`/workspaces/`, {
+      org_id: orgId
+    });
   }
 
   getWorkspaceById(id:number): Observable<Workspace> {
@@ -74,8 +74,8 @@ export class WorkspaceService {
       fyle_currency: 'USD',
       xero_currency: 'USD'
     };
-    return of(responseKeys);
-    // Return this.apiService.get(`/workspaces/${id}/`, {});
+    // Return of(responseKeys);
+    return this.apiService.get(`/workspaces/${id}/`, {});
   }
 
   getWorkspaceId(): string {
@@ -103,8 +103,8 @@ export class WorkspaceService {
       auto_map_employees: '',
       import_customers: false
     };
-    return of(response);
-    // Return this.apiService.get(`/workspaces/${this.getWorkspaceId()}/settings/general/`, {});
+    // Return of(response);
+    return this.apiService.get(`/workspaces/${this.getWorkspaceId()}/settings/general/`, {});
   }
 
   getOnboardingState(): OnboardingState {
@@ -118,30 +118,30 @@ export class WorkspaceService {
   syncXeroDimensions() {
     const workspaceId = this.getWorkspaceId();
 
-    return of({});
-    // Return this.apiService.post(`/workspaces/${workspaceId}/xero/sync_dimensions/`, {}).pipe(
-    //     Map(data => data),
-    //     PublishReplay(1),
-    //     RefCount()
-    // );
+    // Return of({});
+    return this.apiService.post(`/workspaces/${workspaceId}/xero/sync_dimensions/`, {}).pipe(
+        map(data => data),
+        publishReplay(1),
+        refCount()
+    );
   }
 
   syncFyleDimensions() {
     const workspaceId = this.getWorkspaceId();
 
-    return of({});
-    // Return this.apiService.post(`/workspaces/${workspaceId}/fyle/sync_dimensions/`, {}).pipe(
-    //     Map(data => data),
-    //     PublishReplay(1),
-    //     RefCount()
-    //   );
+    // Return of({});
+    return this.apiService.post(`/workspaces/${workspaceId}/fyle/sync_dimensions/`, {}).pipe(
+        map(data => data),
+        publishReplay(1),
+        refCount()
+      );
   }
 
   refreshXeroDimensions() {
-    return of({});
+    // Return of({});
     const workspaceId = this.getWorkspaceId();
 
-    // Return this.apiService.post(`/workspaces/${workspaceId}/xero/refresh_dimensions/`, {});
+    return this.apiService.post(`/workspaces/${workspaceId}/xero/refresh_dimensions/`, {});
   }
 
   refreshFyleDimensions() {

@@ -186,7 +186,9 @@ export class ExportSettingsComponent implements OnInit, OnDestroy {
     this.exportSettingsForm.controls.reimbursableExpense.valueChanges.subscribe((isReimbursableExpenseSelected) => {
       if (isReimbursableExpenseSelected) {
         this.exportSettingsForm.controls.reimbursableExportType.setValidators(Validators.required);
+        this.exportSettingsForm.controls.reimbursableExportType.patchValue(ReimbursableExpensesObject.PURCHASE_BILL);
         this.exportSettingsForm.controls.reimbursableExportDate.setValidators(Validators.required);
+        this.exportSettingsForm.controls.reimbursableExportDate.patchValue(this.exportSettings.expense_group_settings?.reimbursable_export_date_type ? this.exportSettings.expense_group_settings?.reimbursable_export_date_type : ExportDateType.APPROVED_AT);
       } else {
         this.exportSettingsForm.controls.reimbursableExportType.clearValidators();
         this.exportSettingsForm.controls.reimbursableExportDate.clearValidators();
@@ -201,8 +203,8 @@ export class ExportSettingsComponent implements OnInit, OnDestroy {
   private createCreditCardExpenseWatcher(): void {
     this.exportSettingsForm.controls.creditCardExpense.valueChanges.subscribe((isCreditCardExpenseSelected) => {
       if (isCreditCardExpenseSelected) {
-        this.exportSettingsForm.controls.creditCardExportType.setValidators(Validators.required);
         this.exportSettingsForm.controls.cccExpenseState.setValidators(Validators.required);
+        this.exportSettingsForm.controls.cccExpenseState.patchValue(this.exportSettings.expense_group_settings?.ccc_expense_state ? this.exportSettings.expense_group_settings?.ccc_expense_state : null);
       } else {
         this.exportSettingsForm.controls.creditCardExportType.clearValidators();
         this.exportSettingsForm.controls.cccExpenseState.clearValidators();
@@ -230,9 +232,9 @@ export class ExportSettingsComponent implements OnInit, OnDestroy {
   }
 
   private exportSelectionValidator(): ValidatorFn {
-    return (control: AbstractControl): {[key: string]: object} | null => {
+    return (control: AbstractControl): { [key: string]: object } | null => {
       let forbidden = true;
-      if (this.exportSettingsForm && this.exportSettingsForm.value.reimbursableExpenseState && this.exportSettingsForm.value.cccExpenseState) {
+      if (this.exportSettingsForm) {
         if (typeof control.value === 'boolean') {
           if (control.value) {
             forbidden = false;
@@ -264,32 +266,8 @@ export class ExportSettingsComponent implements OnInit, OnDestroy {
     return this.tenantFieldMapping === TenantFieldMapping.TENANT && this.exportSettingsForm.controls.reimbursableExportType.value && this.exportSettingsForm.controls.reimbursableExportType.value === ReimbursableExpensesObject.PURCHASE_BILL;
   }
 
-  showCreditCardAccountField(): boolean {
-    return this.exportSettingsForm.controls.creditCardExportType.value && this.exportSettingsForm.controls.creditCardExportType.value !== CorporateCreditCardExpensesObject.BANK_TRANSACTION;
-  }
-
-  showDebitCardAccountField(): boolean {
-    return this.exportSettingsForm.controls.creditCardExportType.value && this.exportSettingsForm.controls.creditCardExportType.value === CorporateCreditCardExpensesObject.BANK_TRANSACTION;
-  }
-
-  showDefaultCreditCardVendorField(): boolean {
-    return this.exportSettingsForm.controls.creditCardExportType.value === CorporateCreditCardExpensesObject.BANK_TRANSACTION;
-  }
-
-  showExpenseAccountField(): boolean {
-    return this.exportSettingsForm.controls.reimbursableExportType.value === ReimbursableExpensesObject.PURCHASE_BILL;
-  }
-
   showReimbursableAccountsPayableField(): boolean {
-    return (this.exportSettingsForm.controls.reimbursableExportType.value === ReimbursableExpensesObject.PURCHASE_BILL) ;
-  }
-
-  showCCCAccountsPayableField(): boolean {
-    return this.exportSettingsForm.controls.creditCardExportType.value === CorporateCreditCardExpensesObject.BANK_TRANSACTION;
-  }
-
-  getAccountsPayableLabel(): string {
-    return (this.exportSettingsForm.controls.reimbursableExportType.value === ReimbursableExpensesObject.PURCHASE_BILL) ? ReimbursableExpensesObject.PURCHASE_BILL : '';
+    return (this.exportSettingsForm.controls.reimbursableExportType.value === ReimbursableExpensesObject.PURCHASE_BILL);
   }
 
   private setGeneralMappingsValidator(): void {
@@ -373,10 +351,6 @@ export class ExportSettingsComponent implements OnInit, OnDestroy {
 
       this.bankAccounts = destinationAttribute.BANK_ACCOUNT;
       // Response[1].BANK_ACCOUNT;
-      // This.cccAccounts = response[1].CREDIT_CARD_ACCOUNT;
-      // This.accountsPayables = response[1].ACCOUNTS_PAYABLE;
-      // This.vendors = response[1].VENDOR;
-      // This.expenseAccounts = this.bankAccounts.concat(this.cccAccounts);
 
       this.setupForm();
     });
@@ -409,7 +383,7 @@ export class ExportSettingsComponent implements OnInit, OnDestroy {
   }
 
   private paymentsSyncAffected(): boolean {
-    return this.exportSettings?.workspace_general_settings?.reimbursable_expenses_object !== ReimbursableExpensesObject.PURCHASE_BILL && this.exportSettingsForm.value.reimbursableExportType  === ReimbursableExpensesObject.PURCHASE_BILL;
+    return this.exportSettings?.workspace_general_settings?.reimbursable_expenses_object !== ReimbursableExpensesObject.PURCHASE_BILL && this.exportSettingsForm.value.reimbursableExportType === ReimbursableExpensesObject.PURCHASE_BILL;
   }
 
   private advancedSettingAffected(): boolean {
@@ -443,15 +417,15 @@ export class ExportSettingsComponent implements OnInit, OnDestroy {
     const updatedReimbursableExportType = this.exportSettingsForm.value.reimbursableExportType ? this.exportSettingsForm.value.reimbursableExportType : 'None';
     const updatedCorporateCardExportType = this.exportSettingsForm.value.creditCardExportType ? this.exportSettingsForm.value.creditCardExportType : 'None';
 
-      if (updatedReimbursableExportType !== existingReimbursableExportType) {
-        content = this.replaceContentBasedOnConfiguration(updatedReimbursableExportType, existingReimbursableExportType, 'reimbursable');
-      } else if (existingCorporateCardExportType !== updatedCorporateCardExportType) {
-        content = this.replaceContentBasedOnConfiguration(updatedCorporateCardExportType, existingCorporateCardExportType, 'credit card');
-      }
+    if (updatedReimbursableExportType !== existingReimbursableExportType) {
+      content = this.replaceContentBasedOnConfiguration(updatedReimbursableExportType, existingReimbursableExportType, 'reimbursable');
+    } else if (existingCorporateCardExportType !== updatedCorporateCardExportType) {
+      content = this.replaceContentBasedOnConfiguration(updatedCorporateCardExportType, existingCorporateCardExportType, 'credit card');
+    }
 
-      if (this.paymentsSyncAffected()) {
-        content = this.replaceContentBasedOnConfiguration(updatedReimbursableExportType, existingReimbursableExportType, 'reimbursable');
-      }
+    if (this.paymentsSyncAffected()) {
+      content = this.replaceContentBasedOnConfiguration(updatedReimbursableExportType, existingReimbursableExportType, 'reimbursable');
+    }
 
     return content;
   }
@@ -485,7 +459,7 @@ export class ExportSettingsComponent implements OnInit, OnDestroy {
     const differenceInMs = new Date().getTime() - this.sessionStartTime.getTime();
 
     this.timeSpentEventRecorded = true;
-    this.trackingService.trackTimeSpent(OnboardingStep.EXPORT_SETTINGS, {phase: this.getPhase(), durationInSeconds: Math.floor(differenceInMs / 1000), eventState: eventState});
+    this.trackingService.trackTimeSpent(OnboardingStep.EXPORT_SETTINGS, { phase: this.getPhase(), durationInSeconds: Math.floor(differenceInMs / 1000), eventState: eventState });
   }
 
   private constructPayloadAndSave(): void {
@@ -521,7 +495,7 @@ export class ExportSettingsComponent implements OnInit, OnDestroy {
     }, () => {
       this.saveInProgress = false;
       this.snackBar.open('Error saving export settings, please try again later');
-      });
+    });
   }
 
   save(): void {

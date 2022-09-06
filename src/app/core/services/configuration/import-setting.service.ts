@@ -17,12 +17,12 @@ export class ImportSettingService {
   ) { }
 
   getImportSettings() {
-    return of(getImportsettingResponse);
-    // Return this.apiService.get(`/v2/workspaces/${this.workspaceService.getWorkspaceId()}/import_settings/`, {});
+    // Return of(getImportsettingResponse);
+    return this.apiService.get(`/v2/workspaces/${this.workspaceService.getWorkspaceId()}/import_settings/`, {});
   }
 
   postImportSettings(exportSettingsPayload: ImportSettingPost){
-    return of(getImportsettingResponse);
-    // Return this.apiService.put(`/v2/workspaces/${this.workspaceService.getWorkspaceId()}/import_settings/`, exportSettingsPayload);
+    // Return of(getImportsettingResponse);
+    return this.apiService.put(`/v2/workspaces/${this.workspaceService.getWorkspaceId()}/import_settings/`, exportSettingsPayload);
   }
 }

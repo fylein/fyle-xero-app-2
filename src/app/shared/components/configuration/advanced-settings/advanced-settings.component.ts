@@ -117,6 +117,10 @@ export class AdvancedSettingsComponent implements OnInit, OnDestroy {
     this.createScheduledWatcher();
   }
 
+  showPaymentSyncField(): boolean {
+    return this.workspaceGeneralSettings.reimbursable_expenses_object === ReimbursableExpensesObject.PURCHASE_BILL;
+  }
+
   private setupForm(): void {
     let paymentSync = '';
     if (this.advancedSettings.workspace_general_settings.sync_fyle_to_xero_payments) {

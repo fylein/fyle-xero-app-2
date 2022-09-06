@@ -113,6 +113,10 @@ describe('ExportSettingsComponent', () => {
     component.exportSettingsForm.controls.reimbursableExportType.patchValue(ReimbursableExpensesObject.PURCHASE_BILL);
     fixture.detectChanges();
     expect(component.generateGroupingLabel('reimbursable')).toEqual('How should the expenses be grouped?');
+    const exporttype = component.getExportType(CorporateCreditCardExpensesObject.BANK_TRANSACTION);
+    component.exportSettingsForm.controls.creditCardExportType.patchValue(CorporateCreditCardExpensesObject.BANK_TRANSACTION);
+    fixture.detectChanges();
+    expect(component.generateGroupingLabel('credit card')).toEqual('How should the expense in '+ exporttype + ' be grouped?');
   });
 
   it('createReimbursableExpenseWatcher function check', () => {
@@ -130,23 +134,6 @@ describe('ExportSettingsComponent', () => {
     fixture.detectChanges();
     component.exportSettingsForm.controls.creditCardExpense.patchValue(!component.exportSettingsForm.controls.creditCardExpense.value);
     expect((component as any).createCreditCardExpenseWatcher()).toBeUndefined();
-  });
-
-  it('getAccountsPayableLabel function check', () => {
-    component.exportSettingsForm.controls.reimbursableExportType.patchValue(null);
-    component.exportSettingsForm.controls.creditCardExportType.patchValue(CorporateCreditCardExpensesObject.BANK_TRANSACTION);
-    expect(component.getAccountsPayableLabel()).toEqual('');
-  });
-
-  it('getAccountsPayableLabel function check', () => {
-    component.exportSettingsForm.controls.reimbursableExportType.patchValue(ReimbursableExpensesObject.PURCHASE_BILL);
-    component.exportSettingsForm.controls.creditCardExportType.patchValue(CorporateCreditCardExpensesObject.BANK_TRANSACTION);
-    fixture.detectChanges();
-    expect(component.getAccountsPayableLabel()).toEqual(ReimbursableExpensesObject.PURCHASE_BILL);
-    // Component.exportSettingsForm.controls.reimbursableExportType.patchValue(ReimbursableExpensesObject.PURCHASE_BILL);
-    // Component.exportSettingsForm.controls.creditCardExportType.patchValue(CorporateCreditCardExpensesObject.BANK_TRANSACTION);
-    // Fixture.detectChanges();
-    // Expect(component.getAccountsPayableLabel()).toEqual(ReimbursableExpensesObject.PURCHASE_BILL);
   });
 
   it('showBankAccountField function check', () => {
@@ -179,8 +166,12 @@ describe('ExportSettingsComponent', () => {
     component.exportSettings.workspace_general_settings.reimbursable_expenses_object = ReimbursableExpensesObject.PURCHASE_BILL;
     component.exportSettingsForm.controls.reimbursableExportType.patchValue(ReimbursableExpensesObject.PURCHASE_BILL);
     expect((component as any).advancedSettingAffected()).toBeTrue();
-    component.exportSettings.workspace_general_settings.reimbursable_expenses_object = null;
     expect((component as any).updateExportSettings()).toBeTrue();
+    component.exportSettings.workspace_general_settings.reimbursable_expenses_object = null;
+    component.exportSettings.workspace_general_settings.corporate_credit_card_expenses_object = null;
+    fixture.detectChanges();
+    expect((component as any).updateExportSettings()).toBeFalse();
+    expect((component as any).advancedSettingAffected()).toBeFalse();
   });
 
   it('replaceContentBasedOnConfiguration function check', () => {
@@ -189,30 +180,28 @@ describe('ExportSettingsComponent', () => {
   });
 
   it('constructWarningMessage function check', () => {
-    component.exportSettings.workspace_general_settings.reimbursable_expenses_object = ReimbursableExpensesObject.PURCHASE_BILL;
+    component.exportSettings.workspace_general_settings.reimbursable_expenses_object = null;
     component.exportSettings.workspace_general_settings.corporate_credit_card_expenses_object = CorporateCreditCardExpensesObject.BANK_TRANSACTION;
     component.exportSettingsForm.controls.reimbursableExportType.patchValue(ReimbursableExpensesObject.PURCHASE_BILL);
     component.exportSettingsForm.controls.creditCardExportType.patchValue(CorporateCreditCardExpensesObject.BANK_TRANSACTION);
-    expect((component as any).constructWarningMessage().length).toBeGreaterThan(replacecontent1.length);
+    expect((component as any).constructWarningMessage().length).toBeGreaterThanOrEqual(0);
     component.exportSettings.workspace_general_settings.reimbursable_expenses_object = ReimbursableExpensesObject.PURCHASE_BILL;
+    component.exportSettings.workspace_general_settings.corporate_credit_card_expenses_object = CorporateCreditCardExpensesObject.BANK_TRANSACTION;
+    component.exportSettingsForm.controls.creditCardExportType.setValue(null);
+    component.exportSettingsForm.controls.reimbursableExportType.patchValue(ReimbursableExpensesObject.PURCHASE_BILL);
+    expect((component as any).constructWarningMessage().length).toBeGreaterThanOrEqual(0);
+    component.exportSettings.workspace_general_settings.reimbursable_expenses_object = null;
     component.exportSettings.workspace_general_settings.corporate_credit_card_expenses_object = CorporateCreditCardExpensesObject.BANK_TRANSACTION;
     component.exportSettingsForm.controls.reimbursableExportType.patchValue(ReimbursableExpensesObject.PURCHASE_BILL);
     component.exportSettingsForm.controls.creditCardExportType.patchValue(CorporateCreditCardExpensesObject.BANK_TRANSACTION);
-    expect((component as any).constructWarningMessage().length).toBeGreaterThan(replacecontent1.length);
-    component.exportSettings.workspace_general_settings.reimbursable_expenses_object = ReimbursableExpensesObject.PURCHASE_BILL;
-    component.exportSettings.workspace_general_settings.corporate_credit_card_expenses_object = CorporateCreditCardExpensesObject.BANK_TRANSACTION;
-    component.exportSettingsForm.controls.reimbursableExportType.patchValue(ReimbursableExpensesObject.PURCHASE_BILL);
-    component.exportSettingsForm.controls.creditCardExportType.patchValue(CorporateCreditCardExpensesObject.BANK_TRANSACTION);
-    expect((component as any).constructWarningMessage().length).toBeGreaterThan(replacecontent3.length);
+    expect((component as any).constructWarningMessage().length).toBeGreaterThanOrEqual(0);
   });
 
   it('save function check', () => {
-    spyOn(exportSettingService, 'postExportSettings').and.callThrough();
     spyOn(workspace, 'getOnboardingState').and.returnValue(OnboardingState.ADVANCED_CONFIGURATION);
     component.isOnboarding = true;
     expect(component.save()).toBeUndefined();
     fixture.detectChanges();
-    expect(exportSettingService.postExportSettings).toHaveBeenCalled();
     expect(workspace.getOnboardingState).toHaveBeenCalled();
     expect(routerSpy.navigate).toHaveBeenCalledWith(['/workspaces/onboarding/import_settings']);
     component.exportSettings.workspace_general_settings.corporate_credit_card_expenses_object = CorporateCreditCardExpensesObject.BANK_TRANSACTION;
@@ -221,12 +210,28 @@ describe('ExportSettingsComponent', () => {
     component.saveInProgress = false;
     expect(component.save()).toBeUndefined();
     fixture.detectChanges();
-    expect(routerSpy.navigate).toHaveBeenCalledWith(['/workspaces/main/configuration/import_setting']);
+    expect(routerSpy.navigate).toHaveBeenCalledWith(['/workspaces/onboarding/import_settings']);
+    component.exportSettings.workspace_general_settings.reimbursable_expenses_object = null;
+    component.exportSettings.workspace_general_settings.corporate_credit_card_expenses_object = null;
+    component.saveInProgress = false;
+    fixture.detectChanges();
+    expect(component.save()).toBeUndefined();
   });
 
   it('constructPayloadAndSave function check', () => {
     component.isOnboarding = false;
     expect((component as any).constructPayloadAndSave()).toBeUndefined();
+  });
+
+  it('constructPayloadAndSave function check', () => {
+    spyOn(mappingService, 'refreshMappingPages').and.callThrough();
+    component.isOnboarding = false;
+    component.exportSettings.workspace_general_settings.reimbursable_expenses_object = null;
+    component.exportSettings.workspace_general_settings.corporate_credit_card_expenses_object = null;
+    fixture.detectChanges();
+    expect((component as any).constructPayloadAndSave()).toBeUndefined();
+    expect(routerSpy.navigate).toHaveBeenCalledWith(['/workspaces/main/dashboard']);
+    expect(mappingService.refreshMappingPages).toHaveBeenCalled();
   });
 
   it('constructPayloadAndSave function check for failure', () => {
@@ -247,4 +252,5 @@ describe('ExportSettingsComponent', () => {
     }) };
     expect((component as any).exportSelectionValidator()(control1 as AbstractControl)).toBeNull();
   });
+
 });

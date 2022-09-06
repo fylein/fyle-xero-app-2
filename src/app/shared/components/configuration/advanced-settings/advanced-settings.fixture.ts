@@ -94,7 +94,7 @@ export const getadvancedSettingResponse:AdvancedSettingGet = {
 
 export const getadvancedSettingResponse2:AdvancedSettingGet = {
   workspace_general_settings: {
-    sync_fyle_to_xero_payments: false,
+    sync_fyle_to_xero_payments: true,
     sync_xero_to_fyle_payments: false,
     auto_create_destination_entity: true,
     change_accounting_period: true

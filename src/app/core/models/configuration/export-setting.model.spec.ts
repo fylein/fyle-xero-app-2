@@ -15,24 +15,22 @@ describe('ExportSettingModel', () => {
 
   it('Should return ExportSettingModel[]', () => {
     const exportSettingsForm= new FormGroup({
-      expenseState: new FormControl('PAID'),
+      reimbursableExpenseState: new FormControl('PAID'),
+      cccExpenseState: new FormControl('PAID'),
       reimbursableExpense: new FormControl(true),
       reimbursableExportType: new FormControl('PURCHASE BILL'),
-      reimbursableExportGroup: new FormControl('sample'),
       reimbursableExportDate: new FormControl(null),
       creditCardExpense: new FormControl(true),
       creditCardExportType: new FormControl('BANK TRANSACTION'),
-      creditCardExportGroup: new FormControl('sipper'),
-      creditCardExportDate: new FormControl(null),
       bankAccount: new FormControl({id: '1', name: 'Fyle'}),
       autoMapEmployees: new FormControl(AutoMapEmployee.EMAIL),
       searchOption: new FormControl([])
     });
     const exportSettingPayload: ExportSettingPost = {
       expense_group_settings: {
-        expense_state: ExpenseState.PAID,
+        reimbursable_expense_state: ExpenseState.PAID,
         reimbursable_export_date_type: null,
-        ccc_export_date_type: null
+        ccc_expense_state: ExpenseState.PAID
       },
       workspace_general_settings: {
         reimbursable_expenses_object: ReimbursableExpensesObject.PURCHASE_BILL,

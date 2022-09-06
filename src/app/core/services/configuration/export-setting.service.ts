@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { ExportSettingGet, ExportSettingPost } from '../../models/configuration/export-setting.model';
-import { AutoMapEmployee, CorporateCreditCardExpensesObject, ExpenseState, ReimbursableExpensesObject } from '../../models/enum/enum.model';
+import { AutoMapEmployee, CorporateCreditCardExpensesObject, ExpenseState, ExportDateType, ReimbursableExpensesObject } from '../../models/enum/enum.model';
 import { ApiService } from '../core/api.service';
 import { WorkspaceService } from '../workspace/workspace.service';
 
@@ -19,7 +19,7 @@ export class ExportSettingService {
     const response: ExportSettingGet = {
       expense_group_settings: {
         reimbursable_expense_state: ExpenseState.PAID,
-        reimbursable_export_date_type: null,
+        reimbursable_export_date_type: ExportDateType.APPROVED_AT,
         ccc_expense_state: ExpenseState.PAID
       },
       workspace_general_settings: {
@@ -32,8 +32,8 @@ export class ExportSettingService {
       },
       workspace_id: 1
     };
-    return of(response);
-    // Return this.apiService.get(`/v2/workspaces/${this.workspaceService.getWorkspaceId()}/export_settings/`, {});
+    // Return of(response);
+    return this.apiService.get(`/v2/workspaces/${this.workspaceService.getWorkspaceId()}/export_settings/`, {});
   }
 
   postExportSettings(exportSettingsPayload: ExportSettingPost): Observable<ExportSettingGet> {
@@ -53,7 +53,7 @@ export class ExportSettingService {
       },
       workspace_id: 1
     };
-    return of(response);
-    // Return this.apiService.put(`/v2/workspaces/${this.workspaceService.getWorkspaceId()}/export_settings/`, exportSettingsPayload);
+    // Return of(response);
+    return this.apiService.put(`/v2/workspaces/${this.workspaceService.getWorkspaceId()}/export_settings/`, exportSettingsPayload);
   }
 }

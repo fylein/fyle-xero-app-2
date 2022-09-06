@@ -24,15 +24,15 @@ export class MappingService {
   ) { }
 
   getXeroDestinationAttributes(attributeTypes: string | string[], active:boolean = false): Observable<DestinationAttribute[]> {
-    // Const params: {attribute_types: string | string[], active?: boolean} = {
-    //   Attribute_types: attributeTypes
-    // };
+    const params: {attribute_types: string | string[], active?: boolean} = {
+      attribute_types: attributeTypes
+    };
 
-    // If (active) {
-    //   Params.active = true;
-    // }
-    return of([]);
-    // Return this.apiService.get(`/workspaces/${this.workspaceId}/xero/destination_attributes/`, params);
+    if (active) {
+      params.active = true;
+    }
+    // Return of([]);
+    return this.apiService.get(`/workspaces/${this.workspaceId}/xero/destination_attributes/`, params);
   }
 
   getDistinctXeroDestinationAttributes(attributeTypes: string[]): Observable<DestinationAttribute[]> {
@@ -68,8 +68,8 @@ export class MappingService {
           "display_name": "Tax Code"
       }
     ];
-    return of(response);
-    // Return this.apiService.get(`/workspaces/${this.workspaceId}/fyle/expense_fields/`, {});
+    // Return of(response);
+    return this.apiService.get(`/workspaces/${this.workspaceId}/fyle/expense_fields/`, {});
   }
 
   // TODO: cache this safely later

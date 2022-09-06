@@ -109,6 +109,11 @@ describe('AdvancedSettingsComponent', () => {
     (component as any).setupForm();
     fixture.detectChanges();
     expect(component.isLoading).toBeFalse();
+    component.advancedSettings.workspace_general_settings.sync_xero_to_fyle_payments = true;
+    component.advancedSettings.workspace_general_settings.sync_fyle_to_xero_payments = false;
+    (component as any).setupForm();
+    fixture.detectChanges();
+    expect(component.isLoading).toBeFalse();
   });
 
   it('Save Function check', () => {
@@ -195,5 +200,10 @@ describe('AdvancedSettingsComponent', () => {
     component.advancedSettingsForm.controls.exportSchedule.patchValue(0);
     expect((component as any).createScheduledWatcher()).toBeUndefined();
   });
+
+  it('showPaymentSyncField function check', () => {
+    expect(component.showPaymentSyncField()).toBeTruthy();
+  });
+
 
 });

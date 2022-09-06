@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, of, Subject } from 'rxjs';
+import { advancedSettingResponse } from 'src/app/shared/components/configuration/advanced-settings/advanced-settings.fixture';
 import { Cacheable, CacheBuster } from 'ts-cacheable';
 import { AdvancedSettingGet, AdvancedSettingPost, AdvancedSettingWorkspaceSchedulePost } from '../../models/configuration/advanced-setting.model';
 import { WorkspaceSchedule, WorkspaceScheduleEmailOptions } from '../../models/db/workspace-schedule.model';
@@ -38,14 +39,15 @@ export class AdvancedSettingService {
       },
       workspace_id: 1
     };
-    return of(advancedSettingResponse);
-    // Return this.apiService.get(`/v2/workspaces/${this.workspaceService.getWorkspaceId()}/advanced_configurations/`, {});
+    // Return of(advancedSettingResponse);
+    return this.apiService.get(`/v2/workspaces/${this.workspaceService.getWorkspaceId()}/advanced_configurations/`, {});
   }
 
   @CacheBuster({
     cacheBusterNotifier: advancedSettingsCache$
   })
   postAdvancedSettings(exportSettingsPayload: AdvancedSettingPost): Observable<AdvancedSettingGet> {
+    // Return of(advancedSettingResponse)
     return this.apiService.put(`/v2/workspaces/${this.workspaceService.getWorkspaceId()}/advanced_configurations/`, exportSettingsPayload);
   }
 

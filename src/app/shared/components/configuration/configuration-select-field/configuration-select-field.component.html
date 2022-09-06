@@ -13,7 +13,7 @@
   </div>
   <div class="configuration--input-section">
     <div *ngIf="exportType" class="configuration--form-field">
-      <b class="configuration-select-field--exportType">{{exportType}}</b>
+      <b class="configuration-select-field--export-type">{{exportType}}</b>
     </div>
     <mat-form-field *ngIf="!exportType" floatLabel="always" appearance="outline" class="configuration--form-field">
       <mat-select [placeholder]="placeholder" [formControlName]="formControllerName" [compareWith]="helperService.compareObjects">

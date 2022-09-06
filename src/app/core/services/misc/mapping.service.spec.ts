@@ -161,4 +161,16 @@ describe('MappingService', () => {
     expect(service.getMappingPagesForSideNavBar.emit).toHaveBeenCalled();
   });
 
+  it('getDistinctQBODestinationAttributes() service check', () => {
+    service.getDistinctXeroDestinationAttributes([TenantFieldMapping.TENANT]).subscribe(value => {
+      expect(value).toEqual([]);
+    });
+    const req = httpMock.expectOne({
+      method: 'GET',
+      url: `${API_BASE_URL}/workspaces/${workspace_id}/xero/xero_attributes/?attribute_types=TENANT`
+    });
+      req.flush([]);
+
+  });
+
 });

@@ -35,8 +35,8 @@ export class XeroConnectorService {
       updated_at: new Date("2022-05-06T13:13:25.893837Z"),
       workspace: 1
     };
-    return of(response);
-    // Return this.apiService.post(`/workspaces/${workspaceId}/connect_xero/authorization_code/`, code);
+    // Return of(response);
+    return this.apiService.post(`/workspaces/${workspaceId}/connect_xero/authorization_code/`, code);
   }
 
   @Cacheable({
@@ -62,22 +62,22 @@ export class XeroConnectorService {
       }
     };
     // Return throwError(errorResponse)
-    return of(response);
-    // Return this.apiService.get(`/workspaces/${workspaceId}/credentials/xero/`, {});
+    // Return of(response);
+    return this.apiService.get(`/workspaces/${workspaceId}/credentials/xero/`, {});
   }
 
   @CacheBuster({
     cacheBusterNotifier: xeroCredentialsCache
   })
   revokeXeroConnection(workspaceId: string) {
-    return of({});
-    // Return this.apiService.post(`/workspaces/${workspaceId}/connection/xero/revoke/`, {});
+    // Return of({});
+    return this.apiService.post(`/workspaces/${workspaceId}/connection/xero/revoke/`, {});
   }
 
   @Cacheable()
   getXeroTokenHealth(workspaceId: string): Observable<{}> {
-    return of({});
-    // Return this.apiService.get(`/workspaces/${workspaceId}/xero/token_health/`, {});
+    // Return of({});
+    return this.apiService.get(`/workspaces/${workspaceId}/xero/token_health/`, {});
   }
 
   getXeroTenants(): Observable<DestinationAttribute[]> {
@@ -98,9 +98,9 @@ export class XeroConnectorService {
         workspace: 162
       }
     ];
-    return of(response);
+    // Return of(response);
 
-    // Return this.apiService.get(`/workspaces/${this.workspaceId}/xero/tenants/`, {});
+    return this.apiService.get(`/workspaces/${this.workspaceId}/xero/tenants/`, {});
   }
 
   postTenantMappings(tenantMappingPayload: TenantMappingPost): Observable<TenantMapping> {
@@ -113,8 +113,8 @@ export class XeroConnectorService {
       updated_at: new Date("2022-08-29T08:02:06.216097Z"),
       workspace: +this.workspaceId
     };
-    return of(response);
-    // Return this.apiService.post(`/workspaces/${this.workspaceId}/mappings/tenant/`, tenantMappingPayload);
+    // Return of(response);
+    return this.apiService.post(`/workspaces/${this.workspaceId}/mappings/tenant/`, tenantMappingPayload);
   }
 
 }

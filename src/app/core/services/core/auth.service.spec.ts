@@ -82,11 +82,29 @@ describe('AuthService', () => {
     const actualrespons = 'fyle';
     const response = service.getAccessToken();
     expect(response).toEqual(actualrespons);
+    expect(service.updateAccessToken('fyle')).toEqual('fyle');
   });
 
   it('getAccessToken() service check', () => {
     localStorage.removeItem('user');
     expect(service.getAccessToken()).toBeNull();
+    expect(service.updateAccessToken('fyle')).toBeNull();
+  });
+
+  it('getRefreshToken() service check', () => {
+    const user = {
+      refresh_token: 'fyle'
+    };
+    localStorage.setItem('user', JSON.stringify(user));
+    const actualrespons = 'fyle';
+    const response = service.getRefreshToken();
+    expect(response).toEqual(actualrespons);
+  });
+
+  it('getRefreshToken() service check', () => {
+    localStorage.removeItem('user');
+    const response = service.getRefreshToken();
+    expect(response).toBeNull();
   });
 
   it('checkLoginStatusAndLogout() service check', () => {
@@ -102,5 +120,25 @@ describe('AuthService', () => {
       expect(service.checkLoginStatusAndLogout()).toBeUndefined();
     }
   });
+
+  it('refreshAccessToken() service check', () => {
+    const response = {
+      access_token: "Fyle",
+      expires_in: 3600,
+      refresh_token: "ffff",
+      token_type: "Bearer"
+    };
+    service.refreshAccessToken('fyle').subscribe(value => {
+      const responseKeys = Object.keys(response).sort();
+      const actualResponseKeys = Object.keys(value).sort();
+      expect(actualResponseKeys).toEqual(responseKeys);
+    });
+    const req = httpMock.expectOne({
+      method: 'POST',
+      url: `${API_BASE_URL}/auth/refresh/`
+    });
+    req.flush(response);
+  });
+
 
 });

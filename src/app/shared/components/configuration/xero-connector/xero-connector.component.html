@@ -50,7 +50,7 @@
             <mat-select placeholder="Select a Xero tenant" formControlName="xeroTenant">
               <mat-option *ngFor="let option of tenantList" [value]="{id: option.destination_id, name: option.value}">
                 {{ option.value }}
-                <img *ngIf="xeroConnectorForm.value.xeroTenant === option.value" src="assets/images/svgs/general/tick-pink.svg" class="selected-value-check-mark">
+                <img *ngIf="(xeroConnectorForm.value.xeroTenant | json) === ({id: option.destination_id, name: option.value} | json)" src="assets/images/svgs/general/tick-pink.svg" class="selected-value-check-mark">
               </mat-option>
             </mat-select>
             <div class="mat-select-arrow-closed"></div>
