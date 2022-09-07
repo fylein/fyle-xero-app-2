@@ -64,7 +64,7 @@ const mappingSetting:MappingSetting[] = [{
   updated_at: new Date(),
   workspace: 2,
   source_field: MappingSourceField.PROJECT,
-  destination_field: MappingDestinationField.CUSTOMER,
+  destination_field: MappingDestinationField.ACCOUNT,
   import_to_fyle: true,
   is_custom: true,
   source_placeholder: 'string'

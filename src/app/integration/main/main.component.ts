@@ -1,7 +1,7 @@
 import { Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { NavigationStart, Router } from '@angular/router';
 import { MappingSetting, MappingSettingResponse } from 'src/app/core/models/db/mapping-setting.model';
-import { EmployeeFieldMapping, FyleField } from 'src/app/core/models/enum/enum.model';
+import { FyleField } from 'src/app/core/models/enum/enum.model';
 import { DashboardModule, DashboardModuleChild } from 'src/app/core/models/misc/dashboard-module.model';
 import { MappingService } from 'src/app/core/services/misc/mapping.service';
 
@@ -50,11 +50,6 @@ export class MainComponent implements OnInit {
       isExpanded: false,
       isActive: false,
       childPages: [
-        {
-          name: 'Map Employees',
-          route: 'configuration/employee_settings',
-          isActive: false
-        },
         {
           name: 'Export Settings',
           route: 'configuration/export_settings',
@@ -170,11 +165,11 @@ export class MainComponent implements OnInit {
     }];
 
     const sourceFieldRoutes: string[] = [`mapping/${FyleField.EMPLOYEE.toLowerCase()}`, `mapping/${FyleField.CATEGORY.toLowerCase()}`];
-    const importedFieldsFromQBO = [];
+    const importedFieldsFromXero = [];
     mappingSettingResponse.results.forEach((mappingSetting: MappingSetting) => {
-      if (mappingSetting.source_field !== EmployeeFieldMapping.EMPLOYEE && mappingSetting.source_field !== FyleField.CATEGORY) {
+      // if (mappingSetting.source_field !== EmployeeFieldMapping.EMPLOYEE && mappingSetting.source_field !== FyleField.CATEGORY) {
         if (mappingSetting.import_to_fyle) {
-          importedFieldsFromQBO.push(mappingSetting.destination_field);
+          importedFieldsFromXero.push(mappingSetting.destination_field);
         }
         sourceFieldRoutes.push(`mapping/${mappingSetting.source_field.toLowerCase()}`);
         this.modules[2].childPages.push({
@@ -182,11 +177,11 @@ export class MainComponent implements OnInit {
           route: `mapping/${mappingSetting.source_field.toLowerCase()}`,
           isActive: false
         });
-      }
+      // }
     });
 
-    // Show Custom Mapping menu if atleast one QBO field is available to be mapped
-    if (importedFieldsFromQBO.length < 3) {
+    // Show Custom Mapping menu if atleast one Xero field is available to be mapped
+    if (importedFieldsFromXero.length < 3) {
       this.modules[2].childPages.push({
         name: 'Custom Mapping',
         route: 'mapping/custom',
