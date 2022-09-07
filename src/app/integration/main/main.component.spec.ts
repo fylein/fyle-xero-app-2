@@ -67,7 +67,7 @@ describe('MainComponent', () => {
   it('ngOnInit function check', () => {
     spyOn(component, 'getSettingsAndSetupPage').and.callThrough();
     expect(component.ngOnInit()).toBeUndefined();
-    eventSubject.next(new NavigationStart(1, '/workspaces/main/configuration/employee_settings'));
+    eventSubject.next(new NavigationStart(1, '/workspaces/main/configuration/export_settings'));
     fixture.detectChanges();
     expect(component.getSettingsAndSetupPage).toHaveBeenCalled();
   });
