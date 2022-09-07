@@ -1,0 +1,89 @@
+.advanced-settings {
+  ::ng-deep .mat-select-value {
+    width: 91% !important;
+  }
+
+  &--schedule-note-content {
+    padding: 24px 12px 8px 65px;
+  }
+
+  &--schedule-dropdown {
+    padding-top: 24px;
+    padding-left: 65px;
+  }
+
+  &--memo-preview-section {
+    padding-top: 24px;
+    padding-left: 40px;
+  }
+
+  &--memo-preview-text {
+    font-weight: 500;
+  }
+
+  &--memo-preview-area {
+    padding: 12px 12px 0px 0px;
+  }
+
+  &--memo-preview {
+    padding: 8px 0px 8px 8px;
+    background: #F5F5F5;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+  }
+
+  &--memo-preview-select {
+    ::ng-deep .mat-select-panel-wrap {
+      // TODO: check this
+      margin-left: 7% !important;
+      flex-basis: 96% !important;
+    }
+
+    ::ng-deep .cdk-overlay-pane {
+      // TODO: check this
+      margin-left: 1.5% !important;
+    }
+  }
+
+  &--add-btn {
+    margin-bottom: 8px;
+    height: 16px;
+    width: 16px;
+    ;
+  }
+  &--span-or {
+    margin: 1px 15px 8px 5px ;
+    font-weight: 500;
+    font-size: 14px;
+    color: #2c304e;
+  }
+  &--bottom-name {
+    height: 15px;
+    font-size: 12px;
+    color: #a9acbc;
+  }
+  &--add-email-text {
+    padding-right: 210px;
+  }
+}
+
+.cdk-drag-preview {
+  box-sizing: border-box;
+  border-radius: 4px;
+  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
+              0 8px 10px 1px rgba(0, 0, 0, 0.14),
+              0 3px 14px 2px rgba(0, 0, 0, 0.12);
+}
+
+.cdk-drag-placeholder {
+  opacity: 0;
+}
+
+.cdk-drag-animating {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.configuration--form-field {
+  padding-left: 0px;
+}

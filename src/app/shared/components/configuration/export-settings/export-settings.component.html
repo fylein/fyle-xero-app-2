@@ -1,0 +1,118 @@
+<div fxLayout="row" fxLayoutAlign="center center" class="configuration--section" [ngClass]="[isOnboarding ? 'configuration--onboarding-section' : '', !isOnboarding ? 'configuration--post-onboarding-section': '']">
+  <app-loader [ngClass]="{'loader-main': !isOnboarding}" [phase]="'pre_onboarding'" *ngIf="isLoading"></app-loader>
+  <div *ngIf="!isLoading" class="configuration--contents">
+    <app-configuration-step-header-section [showSyncButton]="isOnboarding" [phase]="isOnboarding ? ProgressPhase.ONBOARDING : ProgressPhase.POST_ONBOARDING"></app-configuration-step-header-section>
+    <form [formGroup]="exportSettingsForm">
+      <app-configuration-toggle-field
+        [form]="exportSettingsForm"
+        [label]="'Export Reimbursable Expenses'"
+        [subLabel]="'Enable this to export the reimbursable expenses from Fyle. If not enabled, any <span class=bold>out-of-pocket</span> expenses will not be exported to Xero.'"
+        [formControllerName]="'reimbursableExpense'"
+      >
+      </app-configuration-toggle-field>
+
+      <div *ngIf="exportSettingsForm.value.reimbursableExpense">
+        
+        <app-configuration-select-field
+          [form]="exportSettingsForm"
+          [options]="autoMapEmployeeTypes"
+          [isFieldMandatory]="true"
+          [mandatoryErrorListName]="'Auto Map Employee'"
+          [iconPath]="'assets/images/svgs/general/user.svg'"
+          [label]="'How should Employees in Fyle be auto-mapped to Contact in Xero?'"
+          [subLabel]="'Automatically map the employees in Fyle to their corresponding records in Xero Contacts based on a unique parameter.'"
+          [placeholder]="'Select auto map employee type'"
+          [formControllerName]="'autoMapEmployees'"
+          [phase]="isOnboarding ? ProgressPhase.ONBOARDING : ProgressPhase.POST_ONBOARDING"
+          >
+        </app-configuration-select-field>
+        
+        <app-configuration-select-field
+          [form]="exportSettingsForm"
+          [iconPath]="'assets/images/svgs/general/expense.svg'"
+          [label]="'Reimbursable expense in Fyle will exported to Xero as'"
+          [exportType] = "ReimbursableExpensesObject.PURCHASE_BILL"
+          [formControllerName]="'reimbursableExportType'"
+          [phase]="isOnboarding ? ProgressPhase.ONBOARDING : ProgressPhase.POST_ONBOARDING"
+          >
+        </app-configuration-select-field>
+
+        <app-configuration-select-field
+            [form]="exportSettingsForm"
+            [options]="reimbursableExpenseGroupingDateOptions"
+            [isFieldMandatory]="true"
+            [mandatoryErrorListName]="'Purchase Bill Date'"
+            [iconPath]="'assets/images/svgs/general/calendar.svg'"
+            [label]="'Set the Purchase Bill date as'"
+            [subLabel]="'The selected date will reflect in expenses exported to Xero'"
+            [placeholder]="'Select the Purchase Bill date'"
+            [formControllerName]="'reimbursableExportDate'"
+            >
+        </app-configuration-select-field>
+
+        <app-configuration-select-field
+            [form]="exportSettingsForm"
+            [options]="reimbursableExpenseStateOptions"
+            [isFieldMandatory]="true"
+            [mandatoryErrorListName]="'Expense state'"
+            [iconPath]="'assets/images/svgs/actions/question-mark.svg'"
+            [label]="'At which state should the expenses be ready to export from Fyle?'"
+            [subLabel]="'You could choose to export expenses when they have been approved and are awaiting payment clearance, OR simply when they have been paid out.'"
+            [placeholder]="'Select the Expense State'"
+            [formControllerName]="'reimbursableExpenseState'"
+            >
+        </app-configuration-select-field>
+      </div>
+
+      <app-configuration-toggle-field
+        [form]="exportSettingsForm"
+        [label]="'Export Corporate Card Expenses'"
+        [subLabel]="'Enable this to export the corporate card expenses from Fyle. If not enabled, any expenses <span class=bold>Paid by Corporate Card</span> will not be exported to Xero.'"
+        [formControllerName]="'creditCardExpense'"
+      >
+      </app-configuration-toggle-field>
+
+      <div *ngIf="exportSettingsForm.value.creditCardExpense">
+        <app-configuration-select-field
+          [form]="exportSettingsForm"
+          [iconPath]="'assets/images/svgs/general/expense.svg'"
+          [label]="'Corporate card expense in Fyle will be exported to Xero as'"
+          [exportType] = "CorporateCreditCardExpensesObject.BANK_TRANSACTION"
+          [formControllerName]="'creditCardExportType'"
+          [phase]="isOnboarding ? ProgressPhase.ONBOARDING : ProgressPhase.POST_ONBOARDING"
+          >
+        </app-configuration-select-field>
+
+        <app-configuration-select-field
+          [form]="exportSettingsForm"
+          [xeroAttributes]="bankAccounts"
+          [isFieldMandatory]="true"
+          [mandatoryErrorListName]="'Bank account'"
+          [iconPath]="'assets/images/svgs/general/tabs.svg'"
+          [label]="'To which Bank account should the transaction be posted?'"
+          [subLabel]="'All the offset entry in the Journal will be posted to the selected Bank account'"
+          [placeholder]="'Select bank account'"
+          [formControllerName]="'bankAccount'"
+          [phase]="isOnboarding ? ProgressPhase.ONBOARDING : ProgressPhase.POST_ONBOARDING"
+          >
+        </app-configuration-select-field>
+
+          <app-configuration-select-field
+            [form]="exportSettingsForm"
+            [options]="reimbursableExpenseStateOptions"
+            [isFieldMandatory]="true"
+            [mandatoryErrorListName]="'CCC Expense State'"
+            [iconPath]="'assets/images/svgs/actions/question-mark.svg'"
+            [label]="'At which state should the expenses be ready to export from Fyle?'"
+            [subLabel]="'You could choose to export expenses when they have been approved and are awaiting payment clearance, OR simply when they have been paid out.'"
+            [placeholder]="'Select expense state'"
+            [formControllerName]="'cccExpenseState'"
+            >
+          </app-configuration-select-field>
+      </div>
+
+      <app-configuration-step-footer-section [ctaText]="!saveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING" [showBackButton]="isOnboarding" [isButtonDisabled]="!exportSettingsForm.valid || saveInProgress" (navigateToPreviousStep)="navigateToPreviousStep()" (save)="save()"></app-configuration-step-footer-section>
+    </form>
+  </div>
+</div>
+<app-onboarding-footer *ngIf="isOnboarding && !isLoading"></app-onboarding-footer>

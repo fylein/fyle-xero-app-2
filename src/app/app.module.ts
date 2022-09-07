@@ -10,7 +10,7 @@ import * as Sentry from '@sentry/angular';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-// Import { JwtInterceptor } from './core/interceptors/jwt.interceptor';
+import { JwtInterceptor } from './core/interceptors/jwt.interceptor';
 import { GlobalErrorHandler } from './app.errorhandling';
 
 @NgModule({
@@ -32,11 +32,11 @@ import { GlobalErrorHandler } from './app.errorhandling';
       useValue: JWT_OPTIONS
     },
     JwtHelperService,
-    // {
-    //   Provide: HTTP_INTERCEPTORS,
-    //   UseClass: JwtInterceptor,
-    //   Multi: true
-    // },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: JwtInterceptor,
+      multi: true
+    },
     {
       provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {
         duration: 2500,

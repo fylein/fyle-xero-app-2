@@ -14,6 +14,7 @@ const environment = {
   sentry_env: `${process.env.SENTRY_ENV ? process.env.SENTRY_ENV : '{{SENTRY_ENV}}'}`,
   release: `${process.env.RELEASE ? process.env.RELEASE : '{{RELEASE}}'}`,
   fyle_app_url: `${process.env.FYLE_APP_URL ? process.env.FYLE_APP_URL : '{{FYLE_APP_URL}}'}`,
+  xero_callback_uri: `${process.env.XERO_CALLBACK_URI ? process.env.XERO_CALLBACK_URI : '{{XERO_CALLBACK_URI}}'}`,
   tests: {
     workspaceId: `${process.env.TESTS_WORKSPACEID ? process.env.TESTS_WORKSPACEID : '{{TESTS_WORKSPACEID}}'}`,
   },

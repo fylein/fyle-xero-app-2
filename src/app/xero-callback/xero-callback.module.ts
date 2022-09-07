@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { XeroCallbackRoutingModule } from './xero-callback-routing.module';
 import { XeroCallbackComponent } from './xero-callback.component';
-// Import { SharedModule } from '../shared/shared.module';
+import { SharedModule } from '../shared/shared.module';
 
 
 @NgModule({
@@ -12,8 +12,8 @@ import { XeroCallbackComponent } from './xero-callback.component';
   ],
   imports: [
     CommonModule,
-    XeroCallbackRoutingModule
-    // SharedModule
+    XeroCallbackRoutingModule,
+    SharedModule
   ]
 })
 export class XeroCallbackModule { }

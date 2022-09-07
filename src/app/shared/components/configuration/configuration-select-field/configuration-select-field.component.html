@@ -1,0 +1,60 @@
+<div [formGroup]="form" fxLayout="row" fxLayoutAlign="space-between center" class="configuration--field-section">
+  <div fxLayout="row" fxLayoutAlign="space-between start" class="configuration--field-label-section">
+    <img *ngIf="iconPath" src="{{ iconPath }}" class="configuration--icon">
+    <div class="configuration--field-label-text-section" [ngClass]="{'configuration-select-field--field-label-text-section-without-img': !iconPath}">
+      <div class="configuration--field-header">
+        {{ label }}
+        <app-mandatory-field *ngIf="isFieldMandatory"></app-mandatory-field>
+      </div>
+      <h5 class="configuration--field-label sub-text-color paragraph">
+        {{ subLabel }}
+      </h5>
+    </div>
+  </div>
+  <div class="configuration--input-section">
+    <div *ngIf="exportType" class="configuration--form-field">
+      <b class="configuration-select-field--export-type">{{exportType}}</b>
+    </div>
+    <mat-form-field *ngIf="!exportType" floatLabel="always" appearance="outline" class="configuration--form-field">
+      <mat-select [placeholder]="placeholder" [formControlName]="formControllerName" [compareWith]="helperService.compareObjects">
+        <mat-option *ngFor="let option of options" [value]="option.value">
+          {{ option.label }}
+          <img *ngIf="form.value[formControllerName] === option.value" src="assets/images/svgs/general/tick-pink.svg" class="selected-value-check-mark">
+        </mat-option>
+
+        <app-simple-text-search *ngIf="xeroAttributes" [page]="SimpleSearchPage.CONFIGURATION" [searchType]="SimpleSearchType.SELECT_FIELD" [form]="form"></app-simple-text-search>
+        <div *ngFor="let option of xeroAttributes | search : form.value.searchOption">
+          <mat-option [ngClass]="{'search-zero-state': option && option.value === 'No result found'}" [matTooltip]="option.value" [matTooltipDisabled]="option.value.length <= 40" matTooltipPosition="above" matTooltipClass="above" (click)="helperService.clearSearchText(form)" [value]="{name: option.value, id: option.destination_id}">
+            <p (click)="$event.stopPropagation()" *ngIf="option.value === 'No result found'" class="align-center italic">{{ option.value }}</p>
+            <p *ngIf="option.value !== 'No result found'">{{ option.value }}</p>
+            <img *ngIf="(form.value[formControllerName] | json) === ({name: option.value, id: option.destination_id} | json)" src="assets/images/svgs/general/tick-pink.svg" class="selected-value-check-mark">
+          </mat-option>
+        </div>
+      </mat-select>
+      <div class="mat-select-arrow-closed"></div>
+    </mat-form-field>
+    <app-mandatory-error-message *ngIf="isFieldMandatory && form.controls[formControllerName].touched && !form.controls[formControllerName].valid && !form.controls[formControllerName].disabled" [listName]="mandatoryErrorListName" [customErrorMessage]="customErrorMessage"></app-mandatory-error-message>
+    <div *ngIf="(formControllerName === 'reimbursableExportType' && form.value.reimbursableExportType) || (formControllerName === 'creditCardExportType' && form.value.creditCardExportType)" class="configuration-select-field--preview-text sub-text-color">
+      <p *ngIf="formControllerName === 'reimbursableExportType' && !exportType ">Click <span class="configuration-select-field--preview-btn pointer" (click)="showXeroExportPreview(form.value.reimbursableExportType, null)">here</span> to Preivew on how it looks on Xero</p>
+      <p *ngIf="formControllerName === 'creditCardExportType'  && !exportType || xeroAttributes ">Click <span class="configuration-select-field--preview-btn pointer" (click)="showXeroExportPreview(null, form.value.creditCardExportType)">here</span> to Preivew on how it looks on Xero</p>
+    </div>
+
+    <div *ngIf="formControllerName === 'autoMapEmployees'" class="configuration-select-field--select-example-section paragraph">
+      <h5 *ngIf="form.value.autoMapEmployees === 'NAME'" class="sub-text-color">
+        Example: Ryan Clark will map to Ryan Clark in Xero.
+      </h5>
+      <h5 *ngIf="form.value.autoMapEmployees === 'EMAIL'" class="sub-text-color">
+        Example: ryan.clark@acme.com will map to ryan.clark@acme.com in Xero.
+      </h5>
+      <h5 *ngIf="form.value.autoMapEmployees === 'EMPLOYEE_CODE'" class="sub-text-color">
+        Example: E0146 will map to E0146 in Xero.
+      </h5>
+    </div>
+  </div>
+</div>
+<div *ngIf="formControllerName === 'autoMapEmployees' || formControllerName === 'expenseState'" class="configuration-select-field--select-note-section paragraph">
+  <div class="configuration-select-field--select-note-content sub-text-color">
+    <h5 *ngIf="formControllerName === 'autoMapEmployees'">Note: In case the employee records are not auto matched by the integration, you could still <br> manually map the records from the Mappings section of the integration.</h5>
+    <h5 *ngIf="formControllerName === 'expenseState'">Note: Based on the selected state, the integration will automatically import the expenses from Fyle. <br> You can then manually export expenses from the <b>Dashboard</b> or automate the export process in the <b>Advance settings</b>.</h5>
+  </div>
+</div>

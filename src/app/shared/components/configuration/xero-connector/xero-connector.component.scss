@@ -1,0 +1,67 @@
+.xero-connector {
+  &--connection-blocks {
+    padding-top: 9px;
+  }
+
+  &--fyle-org-section {
+    padding: 56px 114px 0px 114px;
+  }
+
+  &--fyle-section-text {
+    padding-bottom: 18px;
+  }
+
+  &--switch-org-section {
+    padding: 16px 94.5px 56px 94.5px
+  }
+
+  &--org-switch-separator {
+    border-top: 1px solid #F5F5F5;
+    width: 302px;
+  }
+
+  &--switch-org-inner-section {
+    padding-top: 8px;
+  }
+
+  &--switch-org-info-text {
+    width: 302px;
+  }
+
+  &--connection-in-progress-text {
+    width: 398px;
+  }
+
+  &--switch-org-text {
+    padding-top: 8px;
+  }
+
+  &--connection-top-block {
+    height: 88.62px;
+  }
+
+  &--connection-block-separator {
+    border-top: 1px solid #F5F5F5;
+    transform: rotate(90deg);
+    position: absolute;
+    margin-left: -82px;
+  }
+
+  &--connection-block-separator-1 {
+    @extend .xero-connector--connection-block-separator;
+    width: 102px;
+    height: 160px;
+    margin-top: -112px;
+  }
+
+  &--connection-block-separator-2 {
+    @extend .xero-connector--connection-block-separator;
+    width: 165px;
+    height: 100px;
+    margin-top: 7px;
+  }
+
+  &--xero-org-section {
+    padding: 55px 138.5px 0px 138.5px;
+  }
+}

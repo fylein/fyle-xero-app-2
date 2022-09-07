@@ -1,3 +1,8 @@
+export enum AutoMapEmployee {
+  EMAIL = 'EMAIL',
+  NAME = 'NAME',
+  EMPLOYEE_CODE = 'EMPLOYEE_CODE'
+}
 export enum TenantFieldMapping {
   TENANT = 'TENANT'
 }
@@ -47,12 +52,13 @@ export enum PaymentSyncDirection {
   XERO_TO_FYLE = 'xero_to_fyle'
 }
 
+
 export enum OnboardingState {
   CONNECTION = 'CONNECTION',
   EXPORT_SETTINGS = 'EXPORT_SETTINGS',
   IMPORT_SETTINGS = 'IMPORT_SETTINGS',
   ADVANCED_CONFIGURATION = 'ADVANCED_CONFIGURATION',
-  COMPLETE = 'COMPLETE'
+  COMPLETE = 'COMPLETE',
 }
 
 export enum PaginatorPage {

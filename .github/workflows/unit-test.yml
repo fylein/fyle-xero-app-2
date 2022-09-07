@@ -29,6 +29,7 @@ jobs:
         RELEASE: ${{secrets.RELEASE}} 
         FYLE_APP_URL: ${{secrets.FYLE_APP_URL}} 
         TESTS_WORKSPACEID: ${{secrets.TESTS_WORKSPACEID}}
+        XERO_CALLBACK_URI: ${{secrets.XERO_CALLBACK_URI}}
     - name: Comment Test Coverage
       uses: AthleticNet/comment-test-coverage@1.2.2
       with:
