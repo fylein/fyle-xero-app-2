@@ -161,7 +161,7 @@ describe('MappingService', () => {
     expect(service.getMappingPagesForSideNavBar.emit).toHaveBeenCalled();
   });
 
-  it('getDistinctQBODestinationAttributes() service check', () => {
+  it('getDistinctXeroDestinationAttributes() service check', () => {
     service.getDistinctXeroDestinationAttributes([TenantFieldMapping.TENANT]).subscribe(value => {
       expect(value).toEqual([]);
     });
