@@ -20,13 +20,20 @@ describe('ConfigurationStepHeaderSectionComponent', () => {
   const workspace_id = environment.tests.workspaceId;
   let router: Router;
   let dialogSpy: jasmine.Spy;
+  let service1: any;
   const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of({}), close: null });
   dialogRefSpyObj.componentInstance = { body: '' }; // Attach componentInstance to the spy object...
   beforeEach(async () => {
+    service1 = {
+      refreshXeroDimensions: () => of({})
+    };
     await TestBed.configureTestingModule({
       imports: [RouterTestingModule, HttpClientModule, MatSnackBarModule, BrowserAnimationsModule, HttpClientTestingModule],
       declarations: [ ConfigurationStepHeaderSectionComponent],
-      providers: [ WorkspaceService, {
+      providers: [ {
+        provide: WorkspaceService,
+        useValue: service1
+      }, {
         provide: Router,
         useValue: {
            url: '/path'
@@ -53,14 +60,11 @@ describe('ConfigurationStepHeaderSectionComponent', () => {
   });
 
   it('refreshXeroDimensions() function check', () => {
+    spyOn(service, 'refreshXeroDimensions').and.callThrough();
+    fixture.detectChanges();
     expect(component.refreshXeroDimensions()).toBeUndefined();
     expect(dialogSpy).toHaveBeenCalled();
-
-    const req = httpMock.expectOne({
-      method: 'POST',
-      url: `${API_BASE_URL}/workspaces/${workspace_id}/xero/refresh_dimensions/`
-    });
-  req.flush({});
+    expect(service.refreshXeroDimensions).toHaveBeenCalled();
   });
 
   it('setupContent function with router url as realmid check', () => {
