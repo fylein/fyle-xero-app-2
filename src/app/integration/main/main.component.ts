@@ -1,7 +1,7 @@
 import { Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { NavigationStart, Router } from '@angular/router';
 import { MappingSetting, MappingSettingResponse } from 'src/app/core/models/db/mapping-setting.model';
-import { FyleField } from 'src/app/core/models/enum/enum.model';
+import { FyleField, TenantFieldMapping } from 'src/app/core/models/enum/enum.model';
 import { DashboardModule, DashboardModuleChild } from 'src/app/core/models/misc/dashboard-module.model';
 import { MappingService } from 'src/app/core/services/misc/mapping.service';
 
@@ -167,7 +167,7 @@ export class MainComponent implements OnInit {
     const sourceFieldRoutes: string[] = [`mapping/${FyleField.EMPLOYEE.toLowerCase()}`, `mapping/${FyleField.CATEGORY.toLowerCase()}`];
     const importedFieldsFromXero = [];
     mappingSettingResponse.results.forEach((mappingSetting: MappingSetting) => {
-      // If (mappingSetting.source_field !== EmployeeFieldMapping.EMPLOYEE && mappingSetting.source_field !== FyleField.CATEGORY) {
+      if (mappingSetting.source_field !== TenantFieldMapping.TENANT && mappingSetting.source_field !== FyleField.CATEGORY && mappingSetting.source_field !== FyleField.TAX_GROUP && mappingSetting.source_field !== FyleField.CORPORATE_CARD) {
         if (mappingSetting.import_to_fyle) {
           importedFieldsFromXero.push(mappingSetting.destination_field);
         }
@@ -177,11 +177,11 @@ export class MainComponent implements OnInit {
           route: `mapping/${mappingSetting.source_field.toLowerCase()}`,
           isActive: false
         });
-      // }
+      }
     });
 
     // Show Custom Mapping menu if atleast one Xero field is available to be mapped
-    if (importedFieldsFromXero.length < 3) {
+    if (importedFieldsFromXero.length < 4) {
       this.modules[2].childPages.push({
         name: 'Custom Mapping',
         route: 'mapping/custom',
