@@ -298,5 +298,5 @@ describe('MappingService', () => {
 
     req.flush({});
   });
-  
+
 });
