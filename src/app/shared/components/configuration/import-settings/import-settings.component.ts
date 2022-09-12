@@ -46,7 +46,7 @@ export class ImportSettingsComponent implements OnInit, OnDestroy {
 
   xeroExpenseFields: ExpenseFieldsFormOption[];
 
-  chartOfAccountTypesList: string[] = ['Expense', 'Asset', 'Equity', 'Liability', 'Revenue',];
+  chartOfAccountTypesList: string[] = ['Expense', 'Asset', 'Equity', 'Liability', 'Revenue'];
 
   windowReference: Window;
 
