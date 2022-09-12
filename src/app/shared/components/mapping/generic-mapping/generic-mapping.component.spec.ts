@@ -50,16 +50,16 @@ describe('GenericMappingComponent', () => {
     httpMock = injector.inject(HttpTestingController);
     activatedRoute = TestBed.inject(ActivatedRoute);
     dialogSpy = spyOn(TestBed.get(MatSnackBar), 'open').and.returnValue(dialogRefSpyObj);
-    component.fyleQboMappingFormArray = mappinglist.map((mapping: MappingList) => {
+    component.fyleXeroMappingFormArray = mappinglist.map((mapping: MappingList) => {
       return formBuilder.group({
         searchOption: [''],
         source: [mapping.fyle.value],
-        destination: [mapping.qbo.value]
+        destination: [mapping.xero.value]
       });
     });
     const form = formBuilder.group({
       map: [''],
-      fyleQboMapping: formBuilder.array(component.fyleQboMappingFormArray),
+      fyleXeroMapping: formBuilder.array(component.fyleXeroMappingFormArray),
       filterOption: [['dh', 'fy']],
       sourceUpdated: [true],
       searchOption: [[' fyle ']]
@@ -69,16 +69,16 @@ describe('GenericMappingComponent', () => {
   });
 
   it('should create', () => {
-    component.fyleQboMappingFormArray = mappinglist.map((mapping: MappingList) => {
+    component.fyleXeroMappingFormArray = mappinglist.map((mapping: MappingList) => {
       return formBuilder.group({
         searchOption: [''],
         source: [mapping.fyle.value],
-        destination: [mapping.qbo.value]
+        destination: [mapping.xero.value]
       });
     });
     const form = formBuilder.group({
       map: [''],
-      fyleQboMapping: formBuilder.array(component.fyleQboMappingFormArray),
+      fyleXeroMapping: formBuilder.array(component.fyleXeroMappingFormArray),
       filterOption: [['dh', 'fy']],
       sourceUpdated: [true],
       searchOption: [[' fyle ']]
@@ -106,12 +106,12 @@ describe('GenericMappingComponent', () => {
     req.flush(response);
     const req2 = httpMock.expectOne({
       method: 'GET',
-      url: `${API_BASE_URL}/workspaces/${workspace_id}/mappings/stats/?source_type=PROJECT&destination_type=CUSTOMER`
+      url: `${API_BASE_URL}/workspaces/${workspace_id}/mappings/stats/?source_type=PROJECT&destination_type=ACCOUNT`
     });
     req2.flush(response2);
     const req3 = httpMock.expectOne({
       method: 'GET',
-      url: `${API_BASE_URL}/workspaces/${workspace_id}/qbo/destination_attributes/?attribute_types=CUSTOMER&active=true`
+      url: `${API_BASE_URL}/workspaces/${workspace_id}/xero/destination_attributes/?attribute_types=ACCOUNT`
     });
     req3.flush([]);
   });
@@ -142,12 +142,12 @@ describe('GenericMappingComponent', () => {
     req[0].flush(response);
     const req2 = httpMock.expectOne({
       method: 'GET',
-      url: `${API_BASE_URL}/workspaces/${workspace_id}/mappings/stats/?source_type=PROJECT&destination_type=ACCOUNT`
+      url: `${API_BASE_URL}/workspaces/${workspace_id}/mappings/stats/?source_type=PROJECT&destination_type=PROJECT`
     });
     req2.flush(response2);
     const req3 = httpMock.expectOne({
       method: 'GET',
-      url: `${API_BASE_URL}/workspaces/${workspace_id}/qbo/destination_attributes/?attribute_types=ACCOUNT&active=true`
+      url: `${API_BASE_URL}/workspaces/${workspace_id}/xero/destination_attributes/?attribute_types=PROJECT&active=true`
     });
     req3.flush([]);
   });
@@ -281,7 +281,7 @@ describe('GenericMappingComponent', () => {
     const limit = localStorage.getItem(`page-size.${PaginatorPage.MAPPING}`) || 50;
     const req = httpMock.expectOne({
       method: 'GET',
-      url: `${API_BASE_URL}/workspaces/${workspace_id}/mappings/expense_attributes/?limit=${limit}&offset=0&all_alphabets=true&mapped=ALL&mapping_source_alphabets=null&source_type=PROJECT&destination_type=CUSTOMER`
+      url: `${API_BASE_URL}/workspaces/${workspace_id}/mappings/expense_attributes/?limit=${limit}&offset=0&all_alphabets=true&mapped=ALL&mapping_source_alphabets=null&source_type=PROJECT&destination_type=ACCOUNT`
     });
     req.flush(response);
   });
@@ -324,16 +324,16 @@ describe('GenericMappingComponent', () => {
     expect(ans1).toBeFalse();
   });
   it('setupForm function check', () => {
-    component.fyleQboMappingFormArray = mappinglist.map((mapping: MappingList) => {
+    component.fyleXeroMappingFormArray = mappinglist.map((mapping: MappingList) => {
       return formBuilder.group({
         searchOption: [''],
         source: [mapping.fyle.value],
-        destination: [mapping.qbo.value]
+        destination: [mapping.xero.value]
       });
     });
     const form = formBuilder.group({
       map: [''],
-      fyleQboMapping: formBuilder.array(component.fyleQboMappingFormArray),
+      fyleXeroMapping: formBuilder.array(component.fyleXeroMappingFormArray),
       filterOption: [['dh', 'fy']],
       sourceUpdated: [true],
       searchOption: ['']

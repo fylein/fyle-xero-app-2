@@ -1,5 +1,5 @@
 import { MappingSetting, MappingSettingList, MappingSettingResponse } from "src/app/core/models/db/mapping-setting.model";
-import { FyleField, MappingDestinationField, MappingSourceField, QBOField } from "src/app/core/models/enum/enum.model";
+import { FyleField, MappingDestinationField, MappingSourceField} from "src/app/core/models/enum/enum.model";
 import { ExpenseField } from "src/app/core/models/misc/expense-field.model";
 
 export const fyleExpenseFields: ExpenseField[] = [
@@ -20,7 +20,7 @@ const mappingSettings: MappingSetting[] = [
     updated_at: new Date(),
     workspace: 2,
     source_field: MappingSourceField.PROJECT,
-    destination_field: MappingDestinationField.CUSTOMER,
+    destination_field: MappingDestinationField.ACCOUNT,
     import_to_fyle: true,
     is_custom: false,
     source_placeholder: null
@@ -31,7 +31,7 @@ const mappingSettings: MappingSetting[] = [
     updated_at: new Date(),
     workspace: 2,
     source_field: MappingSourceField.COST_CENTER,
-    destination_field: MappingDestinationField.DEPARTMENT,
+    destination_field: MappingDestinationField.ACCOUNT,
     import_to_fyle: false,
     is_custom: false,
     source_placeholder: null
@@ -46,8 +46,8 @@ export const mappingSettingResponse: MappingSettingResponse = {
 };
 
 export const mappingRow: MappingSettingList = {
-  qboField: MappingDestinationField.CLASS,
-  fyleField: MappingSourceField.PROJECT,
+  xeroField: MappingDestinationField.ACCOUNT,
+  fyleField: FyleField.COST_CENTER,
   index: 0,
   existingMapping: true,
   isDeleteButtonAllowed: true
@@ -57,7 +57,7 @@ export const mappedRowsFormArray = [
   {
     id: 1,
     sourceField: 'PROJECT',
-    qboField: QBOField.CUSTOMER,
+    xeroField: FyleField.CATEGORY,
     index: 0,
     existingMapping: false
   }

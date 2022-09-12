@@ -1,5 +1,4 @@
 import { DestinationAttribute } from "src/app/core/models/db/destination-attribute.model";
-import { EmployeeMapping } from "src/app/core/models/db/employee-mapping.model";
 import { MappingSetting, MappingSettingResponse, MinimalMappingSetting } from "src/app/core/models/db/mapping-setting.model";
 import { MappingList, MappingStats } from "src/app/core/models/db/mapping.model";
 import { MappingDestinationField, MappingSourceField, MappingState } from "src/app/core/models/enum/enum.model";
@@ -12,7 +11,7 @@ export const mappingSetting:MappingSetting[] = [{
   updated_at: new Date(),
   workspace: 2,
   source_field: MappingSourceField.PROJECT,
-  destination_field: MappingDestinationField.CUSTOMER,
+  destination_field: MappingDestinationField.ACCOUNT,
   import_to_fyle: true,
   is_custom: true,
   source_placeholder: 'string'
@@ -22,12 +21,9 @@ export const mappinglist: MappingList[] = [{
       id: 1,
       value: 'string'
   },
-  qbo: {
+  xero: {
       id: 'string',
       value: 'string'
-  },
-  preserveDestination: {
-      id: 'string'
   },
   autoMapped: true,
   state: MappingState.ALL,
@@ -38,12 +34,9 @@ export const mappinglist: MappingList[] = [{
       id: 1,
       value: 'string'
   },
-  qbo: {
+  xero: {
       id: 'string',
       value: 'string'
-  },
-  preserveDestination: {
-      id: 'string'
   },
   autoMapped: true,
   state: MappingState.UNMAPPED,
@@ -51,7 +44,7 @@ export const mappinglist: MappingList[] = [{
 }];
 export const minimaMappingSetting:MinimalMappingSetting = {
   source_field: MappingSourceField.PROJECT,
-  destination_field: MappingDestinationField.CUSTOMER
+  destination_field: MappingDestinationField.ACCOUNT
 };
 
 const destination:DestinationAttribute = {
@@ -69,35 +62,14 @@ const destination:DestinationAttribute = {
     fully_qualified_name: 'Fyle'
   }
 };
-export const response:EmployeeMapping = {
-  id: 1,
-  source_employee: {
-    id: 1,
-    attribute_type: 'VENDOR',
-    display_name: 'Vendor',
-    value: 'dummy',
-    source_id: 1,
-    auto_mapped: true,
-    active: true,
-    created_at: new Date(),
-    updated_at: new Date(),
-    workspace: 2,
-    detail: {
-      location: 'india',
-      full_name: 'Fyle Integrations',
-      department_id: '2',
-      department: 'Integrations',
-      department_code: 'FYI2',
-      employee_code: 'FYIE1'
-    }
-  },
-  destination_employee: destination,
-  destination_vendor: destination,
-  destination_card_account: destination,
-  created_at: new Date(),
-  updated_at: new Date(),
-  workspace: 2
+export const response = {
+    source_type: 'Payment',
+    source_value: 'dummy',
+    destination_type: 'Expence',
+    destination_id: '1',
+    destination_value: 'dummy'
 };
+
 export const response1 = {
   "count": 125,
   "next": `${API_BASE_URL}/workspaces/${workspace_id}/mappings/expense_attributes/?all_alphabets=true&destination_type=ACCOUNT&limit=3&mapped=ALL&mapping_source_alphabets=null&offset=6&source_type=CATEGORY`,

@@ -8,7 +8,7 @@ import { DestinationAttribute } from 'src/app/core/models/db/destination-attribu
 import { ExtendedExpenseAttribute, ExtendedExpenseAttributeResponse } from 'src/app/core/models/db/expense-attribute.model';
 import { MappingSettingResponse, MinimalMappingSetting } from 'src/app/core/models/db/mapping-setting.model';
 import { MappingList, MappingModel, MappingStats } from 'src/app/core/models/db/mapping.model';
-import { ClickEvent, FyleField, MappingState, PaginatorPage, QBOField, ZeroStatePage } from 'src/app/core/models/enum/enum.model';
+import { ClickEvent, FyleField, MappingState, PaginatorPage, ZeroStatePage } from 'src/app/core/models/enum/enum.model';
 import { Paginator } from 'src/app/core/models/misc/paginator.model';
 import { PaginatorService } from 'src/app/core/services/core/paginator.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
@@ -38,13 +38,13 @@ export class GenericMappingComponent implements OnInit {
 
   mappingStats: MappingStats;
 
-  qboData: DestinationAttribute[];
+  xeroData: DestinationAttribute[];
 
   mappings: MatTableDataSource<MappingList> = new MatTableDataSource<MappingList>([]);
 
   emptyMapping: MatTableDataSource<MappingList> = new MatTableDataSource<MappingList>([]);
 
-  fyleQboMappingFormArray: FormGroup[];
+  fyleXeroMappingFormArray: FormGroup[];
 
   filterOptions: string[] = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
 
@@ -87,7 +87,7 @@ export class GenericMappingComponent implements OnInit {
   private setupForm(filterOption: string[] = []): void {
     this.form = this.formBuilder.group({
       map: [''],
-      fyleQboMapping: this.formBuilder.array(this.fyleQboMappingFormArray),
+      fyleXeroMapping: this.formBuilder.array(this.fyleXeroMappingFormArray),
       searchOption: [''],
       filterOption: [filterOption],
       sourceUpdated: [false]
@@ -101,16 +101,16 @@ export class GenericMappingComponent implements OnInit {
       }
     });
 
-    const mappingForm = this.form.controls.fyleQboMapping as FormArray;
+    const mappingForm = this.form.controls.fyleXeroMapping as FormArray;
     this.mappingForm = mappingForm.controls as FormGroup[];
   }
 
-  private setupFyleQboMappingFormArray(mappings: MappingList[]): void {
-    this.fyleQboMappingFormArray = mappings.map((mapping: MappingList) => {
+  private setupFyleXeroMappingFormArray(mappings: MappingList[]): void {
+    this.fyleXeroMappingFormArray = mappings.map((mapping: MappingList) => {
       return this.formBuilder.group({
         searchOption: [''],
         source: [mapping.fyle.value],
-        destination: [mapping.qbo.value]
+        destination: [mapping.xero.value]
       });
     });
   }
@@ -157,7 +157,7 @@ export class GenericMappingComponent implements OnInit {
             id: extendedExpenseAttribute.id,
             value: extendedExpenseAttribute.value
           },
-          qbo: {
+          xero: {
             id: extendedExpenseAttribute.mapping.length ? extendedExpenseAttribute.mapping[0].destination.id : '',
             value: extendedExpenseAttribute.mapping.length ? extendedExpenseAttribute.mapping[0].destination.value : ''
           },
@@ -169,7 +169,7 @@ export class GenericMappingComponent implements OnInit {
 
       this.mappings = new MatTableDataSource(mappings);
       this.mappings.filterPredicate = this.searchByText;
-      this.setupFyleQboMappingFormArray(mappings);
+      this.setupFyleXeroMappingFormArray(mappings);
 
       // Reinitialize form when source type changes or when the component is loaded for first time
       if ((this.form && this.form.value.sourceUpdated) || !this.form) {
@@ -188,7 +188,7 @@ export class GenericMappingComponent implements OnInit {
     this.sourceType = this.route.snapshot.params.source_field;
     this.mappingService.getMappingSettings().subscribe((mappingSettingResponse: MappingSettingResponse) => {
       const mappingSetting = mappingSettingResponse.results.filter((mappingSetting) => mappingSetting.source_field === this.sourceType.toUpperCase());
-      this.mappingSetting = mappingSetting.length ? mappingSetting[0] : {source_field: FyleField.CATEGORY, destination_field: QBOField.ACCOUNT};
+      this.mappingSetting = mappingSetting.length ? mappingSetting[0] : {source_field: FyleField.CATEGORY, destination_field: FyleField.PROJECT};
       this.page = `${new TitleCasePipe().transform(new SnakeCaseToSpaceCase().transform(this.mappingSetting.source_field))} Mapping`;
       this.mappingService.getMappingStats(this.sourceType.toUpperCase(), this.mappingSetting.destination_field).subscribe((mappingStats: MappingStats) => {
         this.mappingStats = mappingStats;
@@ -198,8 +198,8 @@ export class GenericMappingComponent implements OnInit {
             active = true;
         }
 
-        this.mappingService.getQBODestinationAttributes(this.mappingSetting.destination_field, active).subscribe((qboData: DestinationAttribute[]) => {
-          this.qboData = qboData;
+        this.mappingService.getXeroDestinationAttributes(this.mappingSetting.destination_field, active).subscribe((xeroData: DestinationAttribute[]) => {
+          this.xeroData = xeroData;
           this.getMappings();
         });
       });
