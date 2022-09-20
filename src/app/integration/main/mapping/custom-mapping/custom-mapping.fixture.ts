@@ -68,4 +68,4 @@ export const xeroField = [
     attribute_type: 'REGION',
     display_name: 'Region'
   }
-]
+];

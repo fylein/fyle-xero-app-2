@@ -201,24 +201,22 @@ export class CustomMappingComponent implements OnInit {
     this.fyleFields = this.fyleFields.filter(field => {
       return !this.mappingSettings.some(mapping => mapping.source_field === field.attribute_type);
     });
-    // this.xeroFields = [MappingDestinationField.ACCOUNT, MappingDestinationField.BANK_ACCOUNT, MappingDestinationField.CONTACT, MappingDestinationField.TAX_CODE];
+    // This.xeroFields = [MappingDestinationField.ACCOUNT, MappingDestinationField.BANK_ACCOUNT, MappingDestinationField.CONTACT, MappingDestinationField.TAX_CODE];
     this.mappingService.getXeroField().subscribe(
       result => {
-        this.xeroFields = result
-      
-    const existingXeroFields = this.mappingSettings.filter((mappingSetting: MappingSetting) => {
+        this.xeroFields = result;
 
-    this.xeroFields.forEach(function(value){
-      if(mappingSetting.destination_field === value.display_name){
-        return true;
-      }
-      else
-        return false;
-    })
-      // return (mappingSetting.destination_field === MappingDestinationField.ACCOUNT || mappingSetting.destination_field === MappingDestinationField.BANK_ACCOUNT || mappingSetting.destination_field === MappingDestinationField.CONTACT || mappingSetting.destination_field === MappingDestinationField.TAX_CODE);
+    const existingXeroFields = this.mappingSettings.filter((mappingSetting: MappingSetting) => {
+    // This.xeroFields.forEach(function(value){
+    //   If (mappingSetting.destination_field === value.display_name){
+    //     Return true;
+    //   }
+    //   Return false;
+    // });
+    return (mappingSetting.destination_field === MappingDestinationField.ACCOUNT || mappingSetting.destination_field === MappingDestinationField.BANK_ACCOUNT || mappingSetting.destination_field === MappingDestinationField.CONTACT || mappingSetting.destination_field === MappingDestinationField.TAX_CODE);
     }).map((mappingSetting: MappingSetting) => mappingSetting.destination_field);
   });
-    // this.xeroFields = this.xeroFields.filter((xeroField: ExpenseField) => !existingXeroFields.includes(xeroField));
+    // This.xeroFields = this.xeroFields.filter((xeroField: ExpenseField) => !existingXeroFields.includes(xeroField));
 
     const mappedRows = this.mappingSettings.filter((mappingSetting: MappingSetting) => {
       return (mappingSetting.destination_field === MappingDestinationField.ACCOUNT || mappingSetting.destination_field === MappingDestinationField.BANK_ACCOUNT || mappingSetting.destination_field === MappingDestinationField.CONTACT || mappingSetting.destination_field === MappingDestinationField.TAX_CODE) && !mappingSetting.import_to_fyle;
