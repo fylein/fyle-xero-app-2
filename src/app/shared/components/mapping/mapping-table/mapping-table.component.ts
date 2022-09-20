@@ -3,7 +3,7 @@ import { FormGroup } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { MappingList } from 'src/app/core/models/db/mapping.model';
-import { EmployeeFieldMapping, SimpleSearchPage, SimpleSearchType } from 'src/app/core/models/enum/enum.model';
+import { TenantFieldMapping, SimpleSearchPage, SimpleSearchType } from 'src/app/core/models/enum/enum.model';
 import { HelperService } from 'src/app/core/services/core/helper.service';
 
 @Component({
@@ -21,11 +21,11 @@ export class MappingTableComponent implements OnInit {
 
   @Input() mappingForm: FormGroup[];
 
-  @Input() qboData: DestinationAttribute[];
+  @Input() xeroData: DestinationAttribute[];
 
   @Output() mappingSaveHandler = new EventEmitter<MappingList>();
 
-  displayedColumns: string[] = ['fyle', 'qbo', 'state'];
+  displayedColumns: string[] = ['fyle', 'xero', 'state'];
 
   SimpleSearchPage = SimpleSearchPage;
 
@@ -42,13 +42,13 @@ export class MappingTableComponent implements OnInit {
       source: searchForm.value.source
     });
 
-    if (this.sourceType?.toUpperCase() === EmployeeFieldMapping.EMPLOYEE) {
-      selectedRow.qbo.id = selectedOption.id;
+    if (this.sourceType?.toUpperCase() === TenantFieldMapping.TENANT) {
+      selectedRow.xero.id = selectedOption.id;
     } else {
-      selectedRow.qbo.id = selectedOption.destination_id;
+      selectedRow.xero.id = selectedOption.destination_id;
     }
 
-    selectedRow.qbo.value = selectedOption.value;
+    selectedRow.xero.value = selectedOption.value;
 
     this.mappingSaveHandler.emit(selectedRow);
   }

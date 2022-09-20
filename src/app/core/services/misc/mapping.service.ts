@@ -121,4 +121,11 @@ export class MappingService {
     return this.apiService.delete(`/workspaces/${this.workspaceId}/mappings/settings/${mappingSettingId}/`);
   }
 
+  triggerAutoMapEmployees(): Observable<{}> {
+    return this.apiService.post(`/workspaces/${this.workspaceId}/mappings/auto_map_employees/trigger/`, {});
+  }
+
+  getXeroField(): Observable<[]> {
+    return this.apiService.get(`/workspaces/${this.workspaceId}/xero/xero_fields/`, {});
+  }
 }

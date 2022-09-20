@@ -35,7 +35,7 @@ export class CustomMappingComponent implements OnInit {
 
   mappingRows:MappingSettingList[];
 
-  xeroFields: MappingDestinationField[];
+  xeroFields: ExpenseField[];
 
   fyleFields: ExpenseField[];
 
@@ -65,7 +65,7 @@ export class CustomMappingComponent implements OnInit {
     this.showMappingList = true;
   }
 
-  updateMappingRow(index: number, xeroField: MappingDestinationField | '', fyleField: MappingSourceField | string | '' = ''): void {
+  updateMappingRow(index: number, xeroField: MappingDestinationField | '' | string, fyleField: MappingSourceField | string | '' = ''): void {
     if (xeroField) {
       this.mappingRows[index].xeroField = xeroField;
     } else if (fyleField) {
@@ -201,13 +201,24 @@ export class CustomMappingComponent implements OnInit {
     this.fyleFields = this.fyleFields.filter(field => {
       return !this.mappingSettings.some(mapping => mapping.source_field === field.attribute_type);
     });
-    this.xeroFields = [MappingDestinationField.ACCOUNT, MappingDestinationField.BANK_ACCOUNT, MappingDestinationField.CONTACT, MappingDestinationField.TAX_CODE];
-
+    // this.xeroFields = [MappingDestinationField.ACCOUNT, MappingDestinationField.BANK_ACCOUNT, MappingDestinationField.CONTACT, MappingDestinationField.TAX_CODE];
+    this.mappingService.getXeroField().subscribe(
+      result => {
+        this.xeroFields = result
+      
     const existingXeroFields = this.mappingSettings.filter((mappingSetting: MappingSetting) => {
-      return (mappingSetting.destination_field === MappingDestinationField.ACCOUNT || mappingSetting.destination_field === MappingDestinationField.BANK_ACCOUNT || mappingSetting.destination_field === MappingDestinationField.CONTACT || mappingSetting.destination_field === MappingDestinationField.TAX_CODE);
-    }).map((mappingSetting: MappingSetting) => mappingSetting.destination_field);
 
-    this.xeroFields = this.xeroFields.filter((xeroField: MappingDestinationField) => !existingXeroFields.includes(xeroField));
+    this.xeroFields.forEach(function(value){
+      if(mappingSetting.destination_field === value.display_name){
+        return true;
+      }
+      else
+        return false;
+    })
+      // return (mappingSetting.destination_field === MappingDestinationField.ACCOUNT || mappingSetting.destination_field === MappingDestinationField.BANK_ACCOUNT || mappingSetting.destination_field === MappingDestinationField.CONTACT || mappingSetting.destination_field === MappingDestinationField.TAX_CODE);
+    }).map((mappingSetting: MappingSetting) => mappingSetting.destination_field);
+  });
+    // this.xeroFields = this.xeroFields.filter((xeroField: ExpenseField) => !existingXeroFields.includes(xeroField));
 
     const mappedRows = this.mappingSettings.filter((mappingSetting: MappingSetting) => {
       return (mappingSetting.destination_field === MappingDestinationField.ACCOUNT || mappingSetting.destination_field === MappingDestinationField.BANK_ACCOUNT || mappingSetting.destination_field === MappingDestinationField.CONTACT || mappingSetting.destination_field === MappingDestinationField.TAX_CODE) && !mappingSetting.import_to_fyle;

@@ -48,7 +48,7 @@ export class IntegrationComponent implements OnInit {
       };
       // TODO
 
-      this.router.navigateByUrl(onboardingStateComponentMap.EXPORT_SETTINGS);
+      this.router.navigateByUrl(onboardingStateComponentMap[this.workspace.onboarding_state]);
       // This.router.navigateByUrl(onboardingStateComponentMap.COMPLETE);
     }
   }
@@ -81,7 +81,7 @@ export class IntegrationComponent implements OnInit {
       };
       this.storageService.set('workspaceId', this.workspace.id);
       // TODO after api
-      // This.storageService.set('onboardingState', workspace.onboarding_state);
+      // this.storageService.set('onboardingState', workspace.onboarding_state);
       this.storageService.set('onboardingState', 'EXPORT_SETTINGS');
       this.storageService.set('workspaceCreatedAt', workspace.created_at);
       this.storageService.set('currency', currency);

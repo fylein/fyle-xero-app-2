@@ -11,7 +11,7 @@ import { MappingService } from 'src/app/core/services/misc/mapping.service';
 import { Router } from '@angular/router';
 import { of } from 'rxjs';
 import { postMappingSettingResponse } from 'src/app/core/services/misc/mapping.service.fixture';
-import { fyleExpenseFields, mappedRowsFormArray, mappingRow, mappingSettingResponse } from './custom-mapping.fixture';
+import { fyleExpenseFields, mappedRowsFormArray, mappingRow, mappingSettingResponse, xeroField } from './custom-mapping.fixture';
 import { FyleField, MappingDestinationField } from 'src/app/core/models/enum/enum.model';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -31,7 +31,8 @@ describe('CustomMappingComponent', () => {
       refreshMappingPages: () => undefined,
       deleteMappingSetting: () => of({}),
       getMappingSettings: () => of(mappingSettingResponse),
-      getFyleExpenseFields: () => of(fyleExpenseFields)
+      getFyleExpenseFields: () => of(fyleExpenseFields),
+      getXeroField: () => of(xeroField)
     };
 
     await TestBed.configureTestingModule({

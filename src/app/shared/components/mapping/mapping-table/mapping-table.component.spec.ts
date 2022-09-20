@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MappingList } from 'src/app/core/models/db/mapping.model';
-import { EmployeeFieldMapping } from 'src/app/core/models/enum/enum.model';
+import { TenantFieldMapping } from 'src/app/core/models/enum/enum.model';
 import { MatTableDataSource } from '@angular/material/table';
 import { MappingTableComponent } from './mapping-table.component';
 import { SharedModule } from 'src/app/shared/shared.module';
@@ -29,25 +29,25 @@ describe('MappingTableComponent', () => {
     component = fixture.componentInstance;
     component.mappings = new MatTableDataSource<MappingList>(mappingList);
     formBuilder = TestBed.inject(FormBuilder);
-    const fyleQboMappingFormArray = mappingList.map((mapping: MappingList) => {
+    const fyleXeroMappingFormArray = mappingList.map((mapping: MappingList) => {
       return formBuilder.group({
         searchOption: ['string'],
         source: [mapping.fyle.value],
-        destination: [mapping.qbo.value]
+        destination: [mapping.xero.value]
       });
     });
     const form = formBuilder.group({
       map: [''],
-      fyleQboMapping: formBuilder.array(fyleQboMappingFormArray),
+      fyleXeroMapping: formBuilder.array(fyleXeroMappingFormArray),
       searchOption: [''],
       filterOption: [[]],
       cardUpdated: [false]
     });
-    const mappingForm = form.controls.fyleQboMapping as FormArray;
+    const mappingForm = form.controls.fyleXeroMapping as FormArray;
     component.mappingForm = mappingForm.controls as FormGroup[];
     component.sourceType = 'EMPLOYEE';
-    component.destinationType = EmployeeFieldMapping.EMPLOYEE;
-    component.qboData = destinationAttribute;
+    component.destinationType = TenantFieldMapping.TENANT;
+    component.xeroData = destinationAttribute;
     fixture.detectChanges();
   });
 
@@ -69,7 +69,7 @@ describe('MappingTableComponent', () => {
     const mappingRow = fixture.debugElement.queryAll(By.css('h4'));
     const mappingRowP = fixture.debugElement.queryAll(By.css('td'));
     expect(mappingRow[0].nativeElement.innerText).toBe('Employee in Fyle');
-    expect(mappingRow[1].nativeElement.innerText).toBe('Employee in QBO');
+    expect(mappingRow[1].nativeElement.innerText).toBe('Tenant in Xero');
     expect(mappingRowP[1].children[0].children[0].children[1].children[0].nativeElement.innerText).toBe('');
   });
 });

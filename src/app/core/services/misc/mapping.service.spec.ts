@@ -299,4 +299,26 @@ describe('MappingService', () => {
     req.flush({});
   });
 
+  it('getXeroEmployees() service check', () => {
+    service.triggerAutoMapEmployees().subscribe(value => {
+      expect(value).toEqual({});
+    });
+    const req = httpMock.expectOne({
+      method: 'POST',
+      url: `${API_BASE_URL}/workspaces/${workspace_id}/mappings/auto_map_employees/trigger/`
+    });
+      req.flush({});
+  });
+
+  it('getXeroEmployees() service check', () => {
+    service.getXeroField().subscribe(value => {
+      expect(value).toEqual([]);
+    });
+    const req = httpMock.expectOne({
+      method: 'GET',
+      url: `${API_BASE_URL}/workspaces/${workspace_id}/xero/xero_fields/`
+    });
+      req.flush([]);
+  });
+
 });

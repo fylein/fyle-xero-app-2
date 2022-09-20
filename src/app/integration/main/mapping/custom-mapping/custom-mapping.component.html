@@ -27,9 +27,9 @@
                     <div class="custom-mapping--xero-field">
                       <mat-form-field *ngIf="!element.existingMapping" [formGroupName]="i" floatLabel="always" appearance="outline" class="custom-mapping--form-field">
                         <mat-select formControlName="xeroField" placeholder="Select a Dimension from Xero">
-                          <mat-option *ngFor="let option of xeroFields" [matTooltip]="option" [matTooltipDisabled]="option.length <= 40" matTooltipPosition="above" matTooltipClass="above" (click)="updateMappingRow(i, option)" [value]="option">
-                            <p>{{ option | titlecase | trimCharacter: 38 }}</p>
-                            <img *ngIf="option === mappingSetting.value[i].xeroField" src="assets/images/svgs/general/tick-pink.svg" class="selected-value-check-mark">
+                          <mat-option *ngFor="let option of xeroFields" [matTooltip]="option.display_name" [matTooltipDisabled]="option.display_name.length <= 40" matTooltipPosition="above" matTooltipClass="above" (click)="updateMappingRow(i, option.display_name)" [value]="option.attribute_type">
+                            <p>{{ option.display_name | titlecase | trimCharacter: 38 }}</p>
+                            <img *ngIf="option.display_name === mappingSetting.value[i].xeroField" src="assets/images/svgs/general/tick-pink.svg" class="selected-value-check-mark">
                           </mat-option>
                         </mat-select>
                         <div class="mat-select-arrow-closed"></div>
