@@ -91,7 +91,6 @@ export class CustomMappingComponent implements OnInit {
       is_custom: mappingRow.fyleField === MappingSourceField.COST_CENTER || mappingRow.fyleField === MappingSourceField.PROJECT ? false : true,
       source_placeholder: null
     }];
-
     this.mappingService.postMappingSettings(mappingSettingPayload).subscribe((response: MappingSetting[]) => {
       this.trackingService.onUpdateEvent(
         UpdateEvent.CUSTOM_MAPPING,
@@ -201,26 +200,13 @@ export class CustomMappingComponent implements OnInit {
     this.fyleFields = this.fyleFields.filter(field => {
       return !this.mappingSettings.some(mapping => mapping.source_field === field.attribute_type);
     });
-    // This.xeroFields = [MappingDestinationField.ACCOUNT, MappingDestinationField.BANK_ACCOUNT, MappingDestinationField.CONTACT, MappingDestinationField.TAX_CODE];
     this.mappingService.getXeroField().subscribe(
       result => {
         this.xeroFields = result;
+        this.xeroFields = this.xeroFields.filter((xeroField: any) => !this.mappingSettings.includes(xeroField));
+      });
 
-    const existingXeroFields = this.mappingSettings.filter((mappingSetting: MappingSetting) => {
-    // This.xeroFields.forEach(function(value){
-    //   If (mappingSetting.destination_field === value.display_name){
-    //     Return true;
-    //   }
-    //   Return false;
-    // });
-    return (mappingSetting.destination_field === MappingDestinationField.ACCOUNT || mappingSetting.destination_field === MappingDestinationField.BANK_ACCOUNT || mappingSetting.destination_field === MappingDestinationField.CONTACT || mappingSetting.destination_field === MappingDestinationField.TAX_CODE);
-    }).map((mappingSetting: MappingSetting) => mappingSetting.destination_field);
-  });
-    // This.xeroFields = this.xeroFields.filter((xeroField: ExpenseField) => !existingXeroFields.includes(xeroField));
-
-    const mappedRows = this.mappingSettings.filter((mappingSetting: MappingSetting) => {
-      return (mappingSetting.destination_field === MappingDestinationField.ACCOUNT || mappingSetting.destination_field === MappingDestinationField.BANK_ACCOUNT || mappingSetting.destination_field === MappingDestinationField.CONTACT || mappingSetting.destination_field === MappingDestinationField.TAX_CODE) && !mappingSetting.import_to_fyle;
-    }).map((mappingSetting, index) => {
+    const mappedRows = this.mappingSettings.map((mappingSetting, index) => {
       const mappedRow: MappingSettingList = {
         id: mappingSetting.id,
         xeroField: mappingSetting.destination_field,
@@ -262,9 +248,12 @@ export class CustomMappingComponent implements OnInit {
       this.mappingService.getMappingSettings(),
       this.mappingService.getFyleExpenseFields()
     ]).subscribe(responses => {
-      this.mappingSettings = responses[0].results;
-      this.fyleFields = responses[1];
-
+      this.mappingSettings = responses[0].results.filter((mappingSetting: MappingSetting) => {
+      return (mappingSetting.destination_field !== MappingDestinationField.ACCOUNT && mappingSetting.destination_field !== MappingDestinationField.BANK_ACCOUNT && mappingSetting.destination_field !== MappingDestinationField.CONTACT && mappingSetting.destination_field !== MappingDestinationField.TAX_CODE) && !mappingSetting.import_to_fyle;
+    });
+      this.fyleFields = responses[1].filter(field => {
+        return !this.mappingSettings.some(mapping => mapping.source_field === field.attribute_type);
+      });
       this.setupPage();
     });
   }

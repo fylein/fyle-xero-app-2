@@ -4,16 +4,17 @@ import { CustomMappingComponent } from './custom-mapping.component';
 import { MatDialog, MatDialogModule } from "@angular/material/dialog";
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientModule } from '@angular/common/http';
-import { FormArray, FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormArray, FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { MappingService } from 'src/app/core/services/misc/mapping.service';
 import { Router } from '@angular/router';
 import { of } from 'rxjs';
 import { postMappingSettingResponse } from 'src/app/core/services/misc/mapping.service.fixture';
-import { fyleExpenseFields, mappedRowsFormArray, mappingRow, mappingSettingResponse, xeroField } from './custom-mapping.fixture';
+import { fyleExpenseFields, mappedRowsFormArray, mappingRow, mappingRows, mappingSettingResponse, xeroField } from './custom-mapping.fixture';
 import { FyleField, MappingDestinationField } from 'src/app/core/models/enum/enum.model';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { RxwebValidators } from '@rxweb/reactive-form-validators';
 
 describe('CustomMappingComponent', () => {
   let component: CustomMappingComponent;
@@ -51,11 +52,30 @@ describe('CustomMappingComponent', () => {
     component = fixture.componentInstance;
     formbuilder = TestBed.inject(FormBuilder);
     dialogSpy = spyOn(TestBed.get(MatDialog), 'open').and.returnValue(dialogRefSpyObj);
-
-    component.mappingSettingForm = formbuilder.group({
-      mappingSetting: formbuilder.array([])
+    const row = formbuilder.group({
+      xeroField: [{
+        "attribute_type": "BANK_ACCOUN",
+        "display_name": "Bank Account"
+    }],
+      fyleField: [{
+        "attribute_type": "BANK_ACCOUN",
+        "display_name": "Bank Account"
+    }],
+      index: [0],
+      existingMapping: [false]
     });
-
+    const mappedRowsFormArrays = mappingRows.map((mappingSetting, index) => {
+      return formbuilder.group({
+        id: mappingSetting.id,
+        xeroField: [mappingSetting.xeroField, [Validators.required, RxwebValidators.unique()]],
+        fyleField: [mappingSetting.fyleField, [Validators.required, RxwebValidators.unique()]],
+        index: [index],
+        existingMapping: [true]
+      });
+    });
+    component.mappingSettingForm = formbuilder.group({
+      mappingSetting: formbuilder.array(mappedRowsFormArrays)
+    });
     fixture.detectChanges();
   });
 
@@ -82,36 +102,73 @@ describe('CustomMappingComponent', () => {
   });
 
   it('should delete mapping setting', () => {
-    component.mappingSettingForm.patchValue({
-      mappingSetting: mappedRowsFormArray
+    const mappedRowsFormArrays = mappingRows.map((mappingSetting, index) => {
+      return formbuilder.group({
+        id: mappingSetting.id,
+        xeroField: [mappingSetting.xeroField, [Validators.required, RxwebValidators.unique()]],
+        fyleField: [mappingSetting.fyleField, [Validators.required, RxwebValidators.unique()]],
+        index: [index],
+        existingMapping: [true]
+      });
+    });
+    component.mappingSettingForm = formbuilder.group({
+      mappingSetting: formbuilder.array(mappedRowsFormArrays)
     });
     fixture.detectChanges();
     expect(component.deleteMappingSetting(0)).toBeUndefined();
   });
 
   it('should clear mapping row', () => {
-    component.mappingSettingForm.patchValue({
-      mappingSetting: mappedRowsFormArray
+    const mappedRowsFormArrays = mappingRows.map((mappingSetting, index) => {
+      return formbuilder.group({
+        id: mappingSetting.id,
+        xeroField: [mappingSetting.xeroField, [Validators.required, RxwebValidators.unique()]],
+        fyleField: [mappingSetting.fyleField, [Validators.required, RxwebValidators.unique()]],
+        index: [index],
+        existingMapping: [true]
+      });
     });
+    component.mappingSettingForm = formbuilder.group({
+      mappingSetting: formbuilder.array(mappedRowsFormArrays)
+    });
+    fixture.detectChanges();
     const previousLength = component.mappingSettingForm.get('mappingSetting')?.value.length;
     expect(component.clearMappingRow(0)).toBeUndefined();
     expect(component.mappingSettingForm.get('mappingSetting')?.value.length).toEqual(previousLength - 1);
   });
 
   it('should save mapping setting', () => {
-    component.mappingSettingForm.patchValue({
-      mappingSetting: mappedRowsFormArray
+    const mappedRowsFormArrays = mappingRows.map((mappingSetting, index) => {
+      return formbuilder.group({
+        id: mappingSetting.id,
+        xeroField: [mappingSetting.xeroField, [Validators.required, RxwebValidators.unique()]],
+        fyleField: [mappingSetting.fyleField, [Validators.required, RxwebValidators.unique()]],
+        index: [index],
+        existingMapping: [true]
+      });
+    });
+    component.mappingSettingForm = formbuilder.group({
+      mappingSetting: formbuilder.array(mappedRowsFormArrays)
     });
     fixture.detectChanges();
     expect(component.saveMappingSetting(0)).toBeUndefined();
   });
 
   it('should update mapping row', () => {
-    component.mappingSettingForm.patchValue({
-      mappingSetting: mappedRowsFormArray
+    const mappedRowsFormArrays = mappingRows.map((mappingSetting, index) => {
+      return formbuilder.group({
+        id: mappingSetting.id,
+        xeroField: [mappingSetting.xeroField, [Validators.required, RxwebValidators.unique()]],
+        fyleField: [mappingSetting.fyleField, [Validators.required, RxwebValidators.unique()]],
+        index: [index],
+        existingMapping: [true]
+      });
     });
+    component.mappingSettingForm = formbuilder.group({
+      mappingSetting: formbuilder.array(mappedRowsFormArrays)
+    });
+    component.mappingRows = mappingRows;
     fixture.detectChanges();
-
     expect(component.updateMappingRow(0, MappingDestinationField.ACCOUNT)).toBeUndefined();
     expect(component.mappingRows[0].xeroField).toBe(MappingDestinationField.ACCOUNT);
 

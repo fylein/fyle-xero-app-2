@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { FormControl, FormGroup } from '@angular/forms';
-import { AutoMapEmployee, CorporateCreditCardExpensesObject, ExpenseState, ReimbursableExpensesObject } from '../enum/enum.model';
+import { AutoMapEmployee, CorporateCreditCardExpensesObject, ExpenseState, ExportDateType, ReimbursableExpensesObject } from '../enum/enum.model';
 import { ExportSettingModel, ExportSettingPost } from "./export-setting.model";
 
 describe('ExportSettingModel', () => {
@@ -29,7 +29,7 @@ describe('ExportSettingModel', () => {
     const exportSettingPayload: ExportSettingPost = {
       expense_group_settings: {
         reimbursable_expense_state: ExpenseState.PAID,
-        reimbursable_export_date_type: null,
+        reimbursable_export_date_type: ExportDateType.CURRENT_DATE,
         ccc_expense_state: ExpenseState.PAID
       },
       workspace_general_settings: {

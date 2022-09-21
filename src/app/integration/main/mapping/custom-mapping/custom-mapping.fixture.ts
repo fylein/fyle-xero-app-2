@@ -53,6 +53,14 @@ export const mappingRow: MappingSettingList = {
   isDeleteButtonAllowed: true
 };
 
+export const mappingRows: MappingSettingList[] = [{
+  xeroField: MappingDestinationField.ACCOUNT,
+  fyleField: FyleField.COST_CENTER,
+  index: 0,
+  existingMapping: true,
+  isDeleteButtonAllowed: true
+}];
+
 export const mappedRowsFormArray = [
   {
     id: 1,

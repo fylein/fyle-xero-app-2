@@ -188,7 +188,7 @@ export class ExportSettingsComponent implements OnInit, OnDestroy {
         this.exportSettingsForm.controls.reimbursableExportType.setValidators(Validators.required);
         this.exportSettingsForm.controls.reimbursableExportType.patchValue(ReimbursableExpensesObject.PURCHASE_BILL);
         this.exportSettingsForm.controls.reimbursableExportDate.setValidators(Validators.required);
-        this.exportSettingsForm.controls.reimbursableExportDate.patchValue(this.exportSettings.expense_group_settings?.reimbursable_export_date_type ? this.exportSettings.expense_group_settings?.reimbursable_export_date_type : ExportDateType.APPROVED_AT);
+        this.exportSettingsForm.controls.reimbursableExportDate.patchValue(this.exportSettings.expense_group_settings?.reimbursable_export_date_type ? this.exportSettings.expense_group_settings?.reimbursable_export_date_type : ExportDateType.CURRENT_DATE);
       } else {
         this.exportSettingsForm.controls.reimbursableExportType.clearValidators();
         this.exportSettingsForm.controls.reimbursableExportDate.clearValidators();
