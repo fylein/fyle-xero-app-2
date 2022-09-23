@@ -20,7 +20,7 @@ const mappingSettings: MappingSetting[] = [
     updated_at: new Date(),
     workspace: 2,
     source_field: MappingSourceField.PROJECT,
-    destination_field: MappingDestinationField.ACCOUNT,
+    destination_field: "REGION",
     import_to_fyle: true,
     is_custom: false,
     source_placeholder: null
@@ -30,8 +30,8 @@ const mappingSettings: MappingSetting[] = [
     created_at: new Date(),
     updated_at: new Date(),
     workspace: 2,
-    source_field: MappingSourceField.COST_CENTER,
-    destination_field: MappingDestinationField.ACCOUNT,
+    source_field: FyleField.PROJECT,
+    destination_field: FyleField.COST_CENTER,
     import_to_fyle: false,
     is_custom: false,
     source_placeholder: null
@@ -50,7 +50,8 @@ export const mappingRow: MappingSettingList = {
   fyleField: FyleField.COST_CENTER,
   index: 0,
   existingMapping: true,
-  isDeleteButtonAllowed: true
+  isDeleteButtonAllowed: true,
+  id: 1
 };
 
 export const mappingRows: MappingSettingList[] = [{
@@ -58,7 +59,26 @@ export const mappingRows: MappingSettingList[] = [{
   fyleField: FyleField.COST_CENTER,
   index: 0,
   existingMapping: true,
-  isDeleteButtonAllowed: true
+  isDeleteButtonAllowed: true,
+  id: 1
+}];
+
+export const mappingRows1: MappingSettingList[] = [{
+  xeroField: MappingDestinationField.ACCOUNT,
+  fyleField: MappingSourceField.PROJECT,
+  index: 0,
+  existingMapping: true,
+  isDeleteButtonAllowed: true,
+  id: 1
+}];
+
+export const mappingRows2: MappingSettingList[] = [{
+  xeroField: MappingDestinationField.ACCOUNT,
+  fyleField: MappingSourceField.TAX_GROUP,
+  index: 0,
+  existingMapping: true,
+  isDeleteButtonAllowed: true,
+  id: 1
 }];
 
 export const mappedRowsFormArray = [
