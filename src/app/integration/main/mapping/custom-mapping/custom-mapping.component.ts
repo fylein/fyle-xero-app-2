@@ -33,7 +33,7 @@ export class CustomMappingComponent implements OnInit {
 
   ZeroStatePage = ZeroStatePage;
 
-  mappingRows:MappingSettingList[];
+  mappingRows: MappingSettingList[];
 
   xeroFields: ExpenseField[];
 
@@ -96,7 +96,7 @@ export class CustomMappingComponent implements OnInit {
         UpdateEvent.CUSTOM_MAPPING,
         {
           phase: ProgressPhase.POST_ONBOARDING,
-          newState: {source_field: mappingSettingPayload[0].source_field, destination_field: mappingSettingPayload[0].destination_field}
+          newState: { source_field: mappingSettingPayload[0].source_field, destination_field: mappingSettingPayload[0].destination_field }
         }
       );
       this.mappingService.emitWalkThroughTooltip();
@@ -136,9 +136,9 @@ export class CustomMappingComponent implements OnInit {
 
           this.trackingService.onDeleteEvent(
             DeleteEvent.CUSTOM_MAPPING, {
-              source_field: mappingRow.fyleField,
-              destination_field: mappingRow.xeroField
-            }
+            source_field: mappingRow.fyleField,
+            destination_field: mappingRow.xeroField
+          }
           );
 
           this.mappingService.refreshMappingPages();
@@ -188,7 +188,7 @@ export class CustomMappingComponent implements OnInit {
   }
 
   get isExistingRowMapped(): boolean {
-   return this.mappingRows.filter(row => !row.existingMapping).length === 0;
+    return this.mappingRows.filter(row => !row.existingMapping).length === 0;
   }
 
   get mappingSetting() {
@@ -200,12 +200,6 @@ export class CustomMappingComponent implements OnInit {
     this.fyleFields = this.fyleFields.filter(field => {
       return !this.mappingSettings.some(mapping => mapping.source_field === field.attribute_type);
     });
-    this.mappingService.getXeroField().subscribe(
-      result => {
-        this.xeroFields = result;
-        this.xeroFields = this.xeroFields.filter((xeroField: any) => !this.mappingSettings.includes(xeroField));
-      });
-
     const mappedRows = this.mappingSettings.map((mappingSetting, index) => {
       const mappedRow: MappingSettingList = {
         id: mappingSetting.id,
@@ -246,13 +240,17 @@ export class CustomMappingComponent implements OnInit {
   private setupSettingsAndSetupPage(): void {
     forkJoin([
       this.mappingService.getMappingSettings(),
-      this.mappingService.getFyleExpenseFields()
+      this.mappingService.getFyleExpenseFields(),
+      this.mappingService.getXeroField()
     ]).subscribe(responses => {
       this.mappingSettings = responses[0].results.filter((mappingSetting: MappingSetting) => {
-      return (mappingSetting.destination_field !== MappingDestinationField.ACCOUNT && mappingSetting.destination_field !== MappingDestinationField.BANK_ACCOUNT && mappingSetting.destination_field !== MappingDestinationField.CONTACT && mappingSetting.destination_field !== MappingDestinationField.TAX_CODE) && !mappingSetting.import_to_fyle;
-    });
+        return (mappingSetting.destination_field !== MappingDestinationField.ACCOUNT && mappingSetting.destination_field !== MappingDestinationField.BANK_ACCOUNT && mappingSetting.destination_field !== MappingDestinationField.CONTACT && mappingSetting.destination_field !== MappingDestinationField.TAX_CODE) && !mappingSetting.import_to_fyle;
+      });
       this.fyleFields = responses[1].filter(field => {
         return !this.mappingSettings.some(mapping => mapping.source_field === field.attribute_type);
+      });
+      this.xeroFields = responses[2].filter(xeroField => {
+        return !this.mappingSettings.some(mapping => mapping.destination_field === xeroField.attribute_type);
       });
       this.setupPage();
     });

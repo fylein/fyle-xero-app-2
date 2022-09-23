@@ -8,7 +8,7 @@ import { DestinationAttribute } from 'src/app/core/models/db/destination-attribu
 import { ExtendedExpenseAttribute, ExtendedExpenseAttributeResponse } from 'src/app/core/models/db/expense-attribute.model';
 import { MappingSettingResponse, MinimalMappingSetting } from 'src/app/core/models/db/mapping-setting.model';
 import { MappingList, MappingModel, MappingStats } from 'src/app/core/models/db/mapping.model';
-import { ClickEvent, FyleField, MappingState, PaginatorPage, ZeroStatePage } from 'src/app/core/models/enum/enum.model';
+import { ClickEvent, FyleField, MappingDestinationField, MappingState, PaginatorPage, ZeroStatePage } from 'src/app/core/models/enum/enum.model';
 import { Paginator } from 'src/app/core/models/misc/paginator.model';
 import { PaginatorService } from 'src/app/core/services/core/paginator.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
@@ -188,7 +188,7 @@ export class GenericMappingComponent implements OnInit {
     this.sourceType = this.route.snapshot.params.source_field;
     this.mappingService.getMappingSettings().subscribe((mappingSettingResponse: MappingSettingResponse) => {
       const mappingSetting = mappingSettingResponse.results.filter((mappingSetting) => mappingSetting.source_field === this.sourceType.toUpperCase());
-      this.mappingSetting = mappingSetting.length ? mappingSetting[0] : {source_field: FyleField.CATEGORY, destination_field: FyleField.PROJECT};
+      this.mappingSetting = mappingSetting.length ? mappingSetting[0] : {source_field: FyleField.CATEGORY, destination_field: MappingDestinationField.ACCOUNT};
       this.page = `${new TitleCasePipe().transform(new SnakeCaseToSpaceCase().transform(this.mappingSetting.source_field))} Mapping`;
       this.mappingService.getMappingStats(this.sourceType.toUpperCase(), this.mappingSetting.destination_field).subscribe((mappingStats: MappingStats) => {
         this.mappingStats = mappingStats;

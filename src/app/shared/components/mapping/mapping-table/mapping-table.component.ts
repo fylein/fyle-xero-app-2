@@ -41,13 +41,7 @@ export class MappingTableComponent implements OnInit {
       searchOption: '',
       source: searchForm.value.source
     });
-
-    if (this.sourceType?.toUpperCase() === TenantFieldMapping.TENANT) {
-      selectedRow.xero.id = selectedOption.id;
-    } else {
-      selectedRow.xero.id = selectedOption.destination_id;
-    }
-
+    selectedRow.xero.id = selectedOption.destination_id;
     selectedRow.xero.value = selectedOption.value;
 
     this.mappingSaveHandler.emit(selectedRow);
