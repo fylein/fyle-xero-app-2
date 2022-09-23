@@ -249,7 +249,7 @@ export class CustomMappingComponent implements OnInit {
       this.fyleFields = responses[1].filter(field => {
         return !this.mappingSettings.some(mapping => mapping.source_field === field.attribute_type);
       });
-      this.xeroFields = responses[2].filter(xeroField => {
+      this.xeroFields = responses[2].filter((xeroField: ExpenseField) => {
         return !this.mappingSettings.some(mapping => mapping.destination_field === xeroField.attribute_type);
       });
       this.setupPage();
