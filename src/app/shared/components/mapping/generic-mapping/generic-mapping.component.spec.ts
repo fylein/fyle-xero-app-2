@@ -40,7 +40,7 @@ describe('GenericMappingComponent', () => {
       getXeroDestinationAttributes: () => of([]),
       postMapping: () => of(MappingPostpayload),
       getMappings: () => of(getMappingsresponse),
-      getMappingSettings: () => of(getMappingSettingResponse),
+      getMappingSettings: () => of(getMappingSettingResponse)
     };
     await TestBed.configureTestingModule({
       declarations: [GenericMappingComponent],

@@ -34,7 +34,7 @@ export class MappingService {
     if (active) {
       params.active = true;
     }
-    // return of([]);
+    // Return of([]);
     return this.apiService.get(`/workspaces/${this.workspaceId}/xero/destination_attributes/`, params);
   }
 

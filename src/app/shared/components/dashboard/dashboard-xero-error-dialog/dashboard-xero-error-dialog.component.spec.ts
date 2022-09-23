@@ -18,7 +18,7 @@ describe('DashboardXeroErrorDialogComponent', () => {
       declarations: [ DashboardXeroErrorDialogComponent ],
       imports: [
         MatDialogModule,
-        RouterTestingModule,BrowserAnimationsModule,
+        RouterTestingModule, BrowserAnimationsModule,
         SharedModule, HttpClientModule, HttpClientTestingModule
       ],
       providers: [

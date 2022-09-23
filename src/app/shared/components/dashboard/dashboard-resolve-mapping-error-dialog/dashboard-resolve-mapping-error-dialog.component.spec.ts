@@ -27,7 +27,7 @@ describe('DashboardResolveMappingErrorDialogComponent', () => {
   beforeEach(async () => {
     const service1 = {
       getXeroDestinationAttributes: () => of([])
-    }
+    };
     await TestBed.configureTestingModule({
       imports: [MatDialogModule, SharedModule, HttpClientTestingModule, MatSnackBarModule, NoopAnimationsModule],
       providers: [FormBuilder, {
