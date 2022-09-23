@@ -11,11 +11,12 @@ import { HttpTestingController, HttpClientTestingModule } from '@angular/common/
 import { environment } from 'src/environments/environment';
 import { MappingList, MappingStats } from 'src/app/core/models/db/mapping.model';
 import { ActivatedRoute } from '@angular/router';
-import { mappinglist, mappingSetting, minimaMappingSetting, response } from './generic-mapping.fixture';
+import { getMappingSettingResponse, getMappingsresponse, mappinglist, MappingPostpayload, mappingSetting, minimaMappingSetting, minimaMappingSetting1, response } from './generic-mapping.fixture';
 import { of } from 'rxjs';
 import { PaginatorPage } from 'src/app/core/models/enum/enum.model';
 import { MappingService } from 'src/app/core/services/misc/mapping.service';
 import { PaginatorService } from 'src/app/core/services/core/paginator.service';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('GenericMappingComponent', () => {
   let component: GenericMappingComponent;
@@ -34,10 +35,18 @@ describe('GenericMappingComponent', () => {
     unmapped_attributes_count: 4
   };
   beforeEach(async () => {
+    const service1 = {
+      getMappingStats: () => of(mappingState),
+      getXeroDestinationAttributes: () => of([]),
+      postMapping: () => of(MappingPostpayload),
+      getMappings: () => of(getMappingsresponse),
+      getMappingSettings: () => of(getMappingSettingResponse),
+    };
     await TestBed.configureTestingModule({
       declarations: [GenericMappingComponent],
-      imports: [RouterTestingModule, FormsModule, ReactiveFormsModule, HttpClientModule, MatSnackBarModule, SharedModule, HttpClientTestingModule],
-      providers: [FormBuilder, Validators, MappingService, PaginatorService]
+      imports: [NoopAnimationsModule, RouterTestingModule, FormsModule, ReactiveFormsModule, HttpClientModule, MatSnackBarModule, SharedModule, HttpClientTestingModule],
+      providers: [FormBuilder, Validators, PaginatorService,
+        { provide: MappingService, useValue: service1 }]
     })
       .compileComponents();
   });
@@ -92,28 +101,6 @@ describe('GenericMappingComponent', () => {
     component.sourceType = 'project';
     fixture.detectChanges();
     expect(component).toBeTruthy();
-    const response: MappingSettingResponse = {
-      count: 0, next: 'aa', previous: 'aa', results: mappingSetting
-    };
-    const response2: MappingStats = {
-      all_attributes_count: 3,
-      unmapped_attributes_count: 3
-    };
-    const req = httpMock.expectOne({
-      method: 'GET',
-      url: `${API_BASE_URL}/workspaces/${workspace_id}/mappings/settings/`
-    });
-    req.flush(response);
-    const req2 = httpMock.expectOne({
-      method: 'GET',
-      url: `${API_BASE_URL}/workspaces/${workspace_id}/mappings/stats/?source_type=PROJECT&destination_type=ACCOUNT`
-    });
-    req2.flush(response2);
-    const req3 = httpMock.expectOne({
-      method: 'GET',
-      url: `${API_BASE_URL}/workspaces/${workspace_id}/xero/destination_attributes/?attribute_types=ACCOUNT`
-    });
-    req3.flush([]);
   });
 
   it('nqOninte with form function', () => {
@@ -128,39 +115,13 @@ describe('GenericMappingComponent', () => {
     fixture.detectChanges();
     expect(component.ngOnInit()).toBeUndefined();
     fixture.detectChanges();
-    const response: MappingSettingResponse = {
-      count: 0, next: 'aa', previous: 'aa', results: []
-    };
-    const response2: MappingStats = {
-      all_attributes_count: 3,
-      unmapped_attributes_count: 3
-    };
-    const req = httpMock.match({
-      method: 'GET',
-      url: `${API_BASE_URL}/workspaces/${workspace_id}/mappings/settings/`
-    });
-    req[0].flush(response);
-    const req2 = httpMock.expectOne({
-      method: 'GET',
-      url: `${API_BASE_URL}/workspaces/${workspace_id}/mappings/stats/?source_type=PROJECT&destination_type=PROJECT`
-    });
-    req2.flush(response2);
-    const req3 = httpMock.expectOne({
-      method: 'GET',
-      url: `${API_BASE_URL}/workspaces/${workspace_id}/xero/destination_attributes/?attribute_types=PROJECT&active=true`
-    });
-    req3.flush([]);
   });
 
   it('Save function check', () => {
     component.mappingSetting = minimaMappingSetting;
     fixture.detectChanges();
     component.save(mappinglist[0]);
-    const req = httpMock.expectOne({
-      method: 'POST',
-      url: `${API_BASE_URL}/workspaces/${workspace_id}/mappings/`
-    });
-    req.flush(response);
+    fixture.detectChanges();
     expect(dialogSpy).toHaveBeenCalled();
   });
 
@@ -170,19 +131,16 @@ describe('GenericMappingComponent', () => {
     fixture.detectChanges();
     component.save(mappinglist[1]);
     fixture.detectChanges();
-    const req = httpMock.expectOne({
-      method: 'POST',
-      url: `${API_BASE_URL}/workspaces/${workspace_id}/mappings/`
-    });
-    req.flush(response);
     expect(component.mappingStats.unmapped_attributes_count).toBeLessThanOrEqual(4);
     expect(mappinglist[1].state).toEqual('MAPPED');
   });
   it('getMapping function check', () => {
-    const form = formBuilder.group({
+    const form =formBuilder.group({
+      map: [''],
+      fyleXeroMapping: formBuilder.array(component.fyleXeroMappingFormArray),
+      searchOption: ['fyle'],
       filterOption: [['dh', 'fy']],
-      sourceUpdated: [true],
-      searchOption: [[' fyle ']]
+      sourceUpdated: [false]
     });
     component.PaginatorPage = PaginatorPage;
     component.form = form;
@@ -193,104 +151,21 @@ describe('GenericMappingComponent', () => {
     component.mappingSetting = minimaMappingSetting;
     fixture.detectChanges();
     expect(component.getMappings(page)).toBeUndefined();
-    const response = {
-      "count": 125,
-      "next": `${API_BASE_URL}/workspaces/${workspace_id}/mappings/expense_attributes/?all_alphabets=true&destination_type=ACCOUNT&limit=3&mapped=ALL&mapping_source_alphabets=null&offset=6&source_type=CATEGORY`,
-      "previous": `${API_BASE_URL}/workspaces/${workspace_id}/mappings/expense_attributes/?all_alphabets=true&destination_type=ACCOUNT&limit=3&mapped=ALL&mapping_source_alphabets=null&source_type=CATEGORY`,
-      "results": [
-        {
-          "id": 36,
-          "mapping": [],
-          "attribute_type": "CUSTOMER",
-          "display_name": "Customer",
-          "value": "Advertising",
-          "source_id": 186449,
-          "auto_mapped": false,
-          "auto_created": false,
-          "active": false,
-          "detail": null,
-          "created_at": new Date("2022-04-29T07:14:58.746099Z"),
-          "updated_at": new Date("2022-04-29T07:14:58.746128Z"),
-          "workspace": 2
-        }
-      ]
-    };
-    const req = httpMock.expectOne({
-      method: 'GET',
-      url: `${API_BASE_URL}/workspaces/${workspace_id}/mappings/expense_attributes/?limit=10&offset=3&all_alphabets=false&mapped=ALL&mapping_source_alphabets=dh,fy&source_type=${minimaMappingSetting.source_field}&destination_type=${minimaMappingSetting.destination_field}`
-    });
-    req.flush(response);
   });
 
   it('getMapping function check', () => {
-    component.mappingSetting = minimaMappingSetting;
+    component.mappingSetting = minimaMappingSetting1;
     fixture.detectChanges();
     expect(component.getMappings()).toBeUndefined();
-    const response = {
-      "count": 125,
-      "next": `${API_BASE_URL}/workspaces/${workspace_id}/mappings/expense_attributes/?all_alphabets=true&destination_type=ACCOUNT&limit=3&mapped=ALL&mapping_source_alphabets=null&offset=6&source_type=CATEGORY`,
-      "previous": `${API_BASE_URL}/workspaces/${workspace_id}/mappings/expense_attributes/?all_alphabets=true&destination_type=ACCOUNT&limit=3&mapped=ALL&mapping_source_alphabets=null&source_type=CATEGORY`,
-      "results": [
-        {
-          mapping: [{
-            id: 1,
-            source: {
-              id: 1,
-              attribute_type: 'string',
-              display_name: 'string',
-              value: 'string',
-              source_id: 1,
-              auto_mapped: true,
-              active: true,
-              created_at: new Date(),
-              updated_at: new Date(),
-              workspace: 1,
-              detail: {
-                location: 'string',
-                full_name: 'string',
-                department_id: 'string',
-                department: 'string',
-                department_code: 'string',
-                employee_code: 'string'
-              }
-            },
-            destination: {
-              id: 1,
-              attribute_type: 'VENDOR',
-              display_name: 'Vendor',
-              value: 'dummy',
-              destination_id: '1',
-              active: true,
-              created_at: new Date(),
-              updated_at: new Date(),
-              workspace: +workspace_id,
-              detail: {
-                email: 'dummy@gmail.com',
-                fully_qualified_name: 'Fyle'
-              }
-            },
-            created_at: new Date(),
-            updated_at: new Date(),
-            workspace: 2
-          }
-          ]
-
-        }
-      ]
-    };
-    const limit = localStorage.getItem(`page-size.${PaginatorPage.MAPPING}`) || 50;
-    const req = httpMock.expectOne({
-      method: 'GET',
-      url: `${API_BASE_URL}/workspaces/${workspace_id}/mappings/expense_attributes/?limit=${limit}&offset=0&all_alphabets=true&mapped=ALL&mapping_source_alphabets=null&source_type=PROJECT&destination_type=ACCOUNT`
-    });
-    req.flush(response);
   });
 
   it('mappingCardUpdateHandler function check', () => {
-    const form = formBuilder.group({
+    const form =formBuilder.group({
+      map: [''],
+      fyleXeroMapping: formBuilder.array(component.fyleXeroMappingFormArray),
+      searchOption: ['fyle'],
       filterOption: [['dh', 'fy']],
-      sourceUpdated: [true],
-      searchOption: [[' fyle ']]
+      sourceUpdated: [false]
     });
     component.form = form;
     component.mappingSetting = minimaMappingSetting;
@@ -299,14 +174,15 @@ describe('GenericMappingComponent', () => {
     component.mappingCardUpdateHandler(true);
     fixture.detectChanges();
     expect(component.totalCardActive).toBeTrue();
-    expect(component.form.value.sourceUpdated).toBeTrue();
   });
 
   it('mappingCardUpdateHandler function check', () => {
-    const form = formBuilder.group({
+    const form =formBuilder.group({
+      map: [''],
+      fyleXeroMapping: formBuilder.array(component.fyleXeroMappingFormArray),
+      searchOption: ['fyle'],
       filterOption: [['dh', 'fy']],
-      sourceUpdated: [true],
-      searchOption: [[' fyle ']]
+      sourceUpdated: [false]
     });
     component.form = form;
     component.mappingSetting = minimaMappingSetting;
@@ -315,7 +191,6 @@ describe('GenericMappingComponent', () => {
     component.mappingCardUpdateHandler(false);
     fixture.detectChanges();
     expect(component.totalCardActive).toBeFalse();
-    expect(component.form.value.sourceUpdated).toBeTrue();
   });
   it('searchByText function check', () => {
     const ans = (component as any).searchByText(mappinglist[0], 'string');

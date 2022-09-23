@@ -2,6 +2,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
 import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 import { UserService } from 'src/app/core/services/misc/user.service';
 import { SharedModule } from 'src/app/shared/shared.module';
@@ -17,7 +18,7 @@ describe('DashboardXeroErrorDialogComponent', () => {
       declarations: [ DashboardXeroErrorDialogComponent ],
       imports: [
         MatDialogModule,
-        RouterTestingModule,
+        RouterTestingModule,BrowserAnimationsModule,
         SharedModule, HttpClientModule, HttpClientTestingModule
       ],
       providers: [

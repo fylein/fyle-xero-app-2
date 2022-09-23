@@ -34,7 +34,7 @@ export class MappingService {
     if (active) {
       params.active = true;
     }
-    // Return of([]);
+    // return of([]);
     return this.apiService.get(`/workspaces/${this.workspaceId}/xero/destination_attributes/`, params);
   }
 
@@ -125,7 +125,7 @@ export class MappingService {
     return this.apiService.post(`/workspaces/${this.workspaceId}/mappings/auto_map_employees/trigger/`, {});
   }
 
-  getXeroField(): Observable<[]> {
+  getXeroField(): Observable<ExpenseField[]> {
     return this.apiService.get(`/workspaces/${this.workspaceId}/xero/xero_fields/`, {});
   }
 }

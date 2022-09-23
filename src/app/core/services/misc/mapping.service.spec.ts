@@ -3,7 +3,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { MappingService } from './mapping.service';
 import { HttpTestingController, HttpClientTestingModule } from '@angular/common/http/testing';
 import { environment } from 'src/environments/environment';
-import { FyleField, MappingState, TenantFieldMapping } from '../../models/enum/enum.model';
+import { FyleField, MappingDestinationField, MappingState, TenantFieldMapping } from '../../models/enum/enum.model';
 import { ExpenseField } from '../../models/misc/expense-field.model';
 import { MappingSettingResponse } from '../../models/db/mapping-setting.model';
 import { destinationAttributes, FyleExpenseFieldsresponse, getMappingsresponse, GroupedXeroDestinationAttributesresponse, MappingPostpayload, mappingSettingPayload, MappingSettingsresponse, MappingStatsresponse, postMappingSettingResponse, response } from './mapping.service.fixture';
@@ -34,12 +34,12 @@ describe('MappingService', () => {
   });
 
   it('getXeroDestinationAttributes() service check', () => {
-    service.getXeroDestinationAttributes([TenantFieldMapping.TENANT], true).subscribe(value => {
+    service.getXeroDestinationAttributes([MappingDestinationField.ACCOUNT], true).subscribe(value => {
       expect(value).toEqual([]);
     });
     const req = httpMock.expectOne({
       method: 'GET',
-      url: `${API_BASE_URL}/workspaces/${workspace_id}/xero/destination_attributes/?attribute_types=TENANT&active=true`
+      url: `${API_BASE_URL}/workspaces/${workspace_id}/xero/destination_attributes/?attribute_types=ACCOUNT&active=true`
     });
       req.flush([]);
 
@@ -96,7 +96,7 @@ describe('MappingService', () => {
     expect(actualResponseKeys).toEqual(responseKeys);
     const req = httpMock.expectOne({
       method: 'GET',
-      url: `${API_BASE_URL}/workspaces/${workspace_id}/xero/destination_attributes/?attribute_types=BANK_ACCOUNT,CONTACT,ACCOUNT,TENTANT`
+      url: `${API_BASE_URL}/workspaces/${workspace_id}/xero/destination_attributes/?attribute_types=BANK_ACCOUNT,CONTACT,ACCOUNT,TENANT`
     });
       req.flush([]);
   });
