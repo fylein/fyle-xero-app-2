@@ -2,10 +2,11 @@ import { HttpClientModule } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, getTestBed, TestBed } from '@angular/core/testing';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { BrowserModule, By } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
+import { of } from 'rxjs';
 import { MappingStats } from 'src/app/core/models/db/mapping.model';
 import { AutoMapEmployee } from 'src/app/core/models/enum/enum.model';
 import { MappingService } from 'src/app/core/services/misc/mapping.service';
@@ -20,14 +21,20 @@ describe('MappingHeaderSectionComponent', () => {
   let service: MappingService;
   let injector: TestBed;
   let httpMock: HttpTestingController;
-  const API_BASE_URL = environment.api_url;
-  const workspace_id = environment.tests.workspaceId;
+  let dialogSpy: jasmine.Spy;
+  const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of({}), close: null });
+  dialogRefSpyObj.componentInstance = { body: '' };
 
   beforeEach(async () => {
+    const service1 = {
+      triggerAutoMapEmployees: () => of({})
+    };
     await TestBed.configureTestingModule({
       imports: [BrowserModule, HttpClientModule, HttpClientTestingModule, MatSnackBarModule, SharedModule, RouterTestingModule, MatSnackBarModule, BrowserAnimationsModule, HttpClientTestingModule],
       declarations: [MappingHeaderSectionComponent],
-      providers: [MappingService],
+      providers: [
+        { provide: MappingService, useValue: service1 }
+      ],
       schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
     })
       .compileComponents();
@@ -38,6 +45,7 @@ describe('MappingHeaderSectionComponent', () => {
     service = injector.inject(MappingService);
     httpMock = injector.inject(HttpTestingController);
     fixture = TestBed.createComponent(MappingHeaderSectionComponent);
+    dialogSpy = spyOn(TestBed.get(MatSnackBar), 'open').and.returnValue(dialogRefSpyObj);
     component = fixture.componentInstance;
     component.mappingStats = {
       all_attributes_count: 2,
@@ -75,11 +83,8 @@ describe('MappingHeaderSectionComponent', () => {
 
   it('trigger function check', () => {
     expect(component.triggerAutoMapEmployee()).toBeUndefined();
-    const req = httpMock.expectOne({
-      method: 'POST',
-      url: `${API_BASE_URL}/workspaces/${workspace_id}/mappings/auto_map_employees/trigger/`
-    });
-    req.flush({});
+    fixture.detectChanges();
+    expect(dialogSpy).toHaveBeenCalled();
   });
 
   it('Source type and totalCardActive is true check', () => {
