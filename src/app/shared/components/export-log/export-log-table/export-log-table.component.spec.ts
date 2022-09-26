@@ -64,7 +64,7 @@ describe('ExportLogTableComponent', () => {
     const fundSource = exportLogRow[2].nativeElement.innerText;
     const referenceID = exportLogRow[3].nativeElement.innerText;
     const exportType = exportLogRow[4].nativeElement.innerText;
-    const qboUrl = exportLogRow[5].nativeElement;
+    const xeroUrl = exportLogRow[5].nativeElement;
 
     expect(exportLogRow).toBeTruthy();
     expect(exportedAtDate).toBeTruthy();
@@ -74,7 +74,7 @@ describe('ExportLogTableComponent', () => {
     expect(fundSource).toBe(expectedExpenseGroupRow.expenseType);
     expect(referenceID).toBe(expectedExpenseGroupRow.referenceNumber);
     expect(exportType).toBe(expectedExpenseGroupRow.exportedAs);
-    expect(qboUrl).toBeTruthy();
+    expect(xeroUrl).toBeTruthy();
   });
 
   it('openChildExpenses function with FyleReferenceType.EXPENSE_REPORT check', () => {

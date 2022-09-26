@@ -8,7 +8,7 @@ export const EXPENSE_GROUP_LISTS: ExpenseGroupList[] = [
     expenseType: 'Credit Card',
     referenceNumber: 'E/2021/11/R/2',
     exportedAs: 'Journal Entry',
-    qboUrl: 'https://fylehq.com',
+    xeroUrl: 'https://fylehq.com',
     fyleUrl: 'https://fylehq.com',
     fyleReferenceType: FyleReferenceType.EXPENSE,
     expenses: []

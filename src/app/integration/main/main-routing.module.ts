@@ -14,11 +14,11 @@ const routes: Routes = [
       {
         path: 'mapping',
         loadChildren: () => import('./mapping/mapping.module').then(m => m.MappingModule)
+      },
+      {
+        path: 'export_log',
+        loadChildren: () => import('./export-log/export-log.module').then(m => m.ExportLogModule)
       }
-    //   {
-    //     Path: 'export_log',
-    //     LoadChildren: () => import('./export-log/export-log.module').then(m => m.ExportLogModule)
-    //   },
     //   {
     //     Path: 'dashboard',
     //     LoadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule)
