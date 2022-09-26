@@ -9,12 +9,9 @@ export const mappingList: MappingList[] = [{
     id: 1,
     value: 'string'
   },
-  qbo: {
+  xero: {
     id: 1,
     value: "string"
-  },
-  preserveDestination: {
-    id: 1
   },
   autoMapped: true,
   state: MappingState.MAPPED,

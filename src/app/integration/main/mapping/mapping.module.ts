@@ -12,14 +12,12 @@ import { SharedModule } from 'src/app/shared/shared.module';
 
 import { MappingRoutingModule } from './mapping-routing.module';
 import { MappingComponent } from './mapping.component';
-import { EmployeeMappingComponent } from './employee-mapping/employee-mapping.component';
 import { CustomMappingComponent } from './custom-mapping/custom-mapping.component';
 
 
 @NgModule({
   declarations: [
     MappingComponent,
-    EmployeeMappingComponent,
     CustomMappingComponent
   ],
   imports: [

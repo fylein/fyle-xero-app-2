@@ -21,6 +21,17 @@ export interface Mapping extends MappingPost {
   workspace: number;
 }
 
+export type PostMappingResponse = {
+  id: number;
+  source: ExpenseAttribute;
+  destination: DestinationAttribute;
+  created_at: Date;
+  updated_at: Date;
+  workspace: number;
+  source_type: string;
+  destination_type: string;
+}
+
 export type MappingResponse = {
   count: number;
   next: string;

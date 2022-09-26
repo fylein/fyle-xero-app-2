@@ -4,15 +4,15 @@
   <div class="custom-mapping">
     <div class="custom-mapping--content">
       <div class="custom-mapping--title-section">
-        <p class="custom-mapping--title">Select a dimension in QBO that you want to map to an expense field in Fyle</p>
-        <h5 class="sub-text-color">Mapping would help you export Fyle expenses with the correct dimension value to QBO.</h5>
+        <p class="custom-mapping--title">Select a dimension in Xero that you want to map to an expense field in Fyle</p>
+        <h5 class="sub-text-color">Mapping would help you export Fyle expenses with the correct dimension value to Xero.</h5>
       </div>
 
       <div class="custom-mapping--mapping-section" *ngIf="showMappingList || isLoading">
         <div>
           <div class="custom-mapping--table-header" fxLayout="row">
             <h5 fxLayoutAlign=" center" class="custom-mapping--table-header-text custom-mapping--table-header-col-1">
-              Dimension from QBO
+              Dimension from Xero
             </h5>
             <h5 fxLayoutAlign=" center" class="custom-mapping--table-header-text custom-mapping--table-header-col-2">
               Expense field from Fyle
@@ -24,18 +24,18 @@
               <div formArrayName="mappingSetting" fxLayout="column">
                 <div fxLayout="row" fxLayoutAlign="space-between center" (mouseenter)="showDeleteButton(element, true)" (mouseleave)="showDeleteButton(element, false)">
                   <div fxLayout="row">
-                    <div class="custom-mapping--qbo-field">
+                    <div class="custom-mapping--xero-field">
                       <mat-form-field *ngIf="!element.existingMapping" [formGroupName]="i" floatLabel="always" appearance="outline" class="custom-mapping--form-field">
-                        <mat-select formControlName="qboField" placeholder="Select a Dimension from QBO">
-                          <mat-option *ngFor="let option of qboFields" [matTooltip]="option" [matTooltipDisabled]="option.length <= 40" matTooltipPosition="above" matTooltipClass="above" (click)="updateMappingRow(i, option)" [value]="option">
-                            <p>{{ option | titlecase | trimCharacter: 38 }}</p>
-                            <img *ngIf="option === mappingSetting.value[i].qboField" src="assets/images/svgs/general/tick-pink.svg" class="selected-value-check-mark">
+                        <mat-select formControlName="xeroField" placeholder="Select a Dimension from Xero">
+                          <mat-option *ngFor="let option of xeroFields" [matTooltip]="option.display_name" [matTooltipDisabled]="option.display_name.length <= 40" matTooltipPosition="above" matTooltipClass="above" (click)="updateMappingRow(i, option.display_name)" [value]="option.attribute_type">
+                            <p>{{ option.display_name | titlecase | trimCharacter: 38 }}</p>
+                            <img *ngIf="option.display_name === mappingSetting.value[i].xeroField" src="assets/images/svgs/general/tick-pink.svg" class="selected-value-check-mark">
                           </mat-option>
                         </mat-select>
                         <div class="mat-select-arrow-closed"></div>
                       </mat-form-field>
                       <div fxLayoutAlign=" center" *ngIf="element.existingMapping" class="custom-mapping--mapped-row sub-text-color">
-                        <p class="custom-mapping--mapped-field-text">{{ element.qboField | titlecase | snakeCaseToSpaceCase }}</p>
+                        <p class="custom-mapping--mapped-field-text">{{ element.xeroField | titlecase | snakeCaseToSpaceCase }}</p>
                       </div>
                     </div>
 
@@ -88,14 +88,14 @@
         </div>
       </div>
 
-      <div fxLayout="row" *ngIf="!isLoading && showMappingList && qboFields.length > 0 && fyleFields.length > 0 && isExistingRowMapped" class="custom-mapping--add-section">
+      <div fxLayout="row" *ngIf="!isLoading && showMappingList && xeroFields && fyleFields && isExistingRowMapped" class="custom-mapping--add-section">
         <div fxLayout="row" class="pointer" (click)="createMappingRow()">
           <img class="custom-mapping--add-icon" width="15px" height="25px" src="assets/images/svgs/actions/plus.svg">
           <h4 class="actionable-text">Add New Mapping</h4>
         </div>
       </div>
 
-      <div fxLayout="row" *ngIf="!isLoading && showMappingList && isExistingRowMapped && !(qboFields.length > 0 && fyleFields.length > 0)" class="custom-mapping--limit-exceeded-section paragraph">
+      <div fxLayout="row" *ngIf="!isLoading && showMappingList && isExistingRowMapped && !(xeroFields && fyleFields)" class="custom-mapping--limit-exceeded-section paragraph">
         <div fxLayout="row" class="custom-mapping--limit-exceeded-content">
           <img class="custom-mapping--error-icon" width="17px" height="17px" src="assets/images/svgs/general/info-error.svg">
           <div>

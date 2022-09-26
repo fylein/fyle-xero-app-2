@@ -33,9 +33,9 @@ export class CustomMappingComponent implements OnInit {
 
   ZeroStatePage = ZeroStatePage;
 
-  mappingRows:MappingSettingList[];
+  mappingRows: MappingSettingList[];
 
-  qboFields: MappingDestinationField[];
+  xeroFields: ExpenseField[];
 
   fyleFields: ExpenseField[];
 
@@ -53,10 +53,10 @@ export class CustomMappingComponent implements OnInit {
   ) { }
 
   createMappingRow(): void {
-    this.mappingRows = this.mappingRows.concat([{ qboField: '', fyleField: '', index: this.mappingRows.length, existingMapping: false, isDeleteButtonAllowed: false }]);
+    this.mappingRows = this.mappingRows.concat([{ xeroField: '', fyleField: '', index: this.mappingRows.length, existingMapping: false, isDeleteButtonAllowed: false }]);
 
     const row = this.formBuilder.group({
-      qboField: ['', [Validators.required, RxwebValidators.unique()]],
+      xeroField: ['', [Validators.required, RxwebValidators.unique()]],
       fyleField: ['', [Validators.required, RxwebValidators.unique()]],
       index: [this.mappingRows.length],
       existingMapping: [false]
@@ -65,9 +65,9 @@ export class CustomMappingComponent implements OnInit {
     this.showMappingList = true;
   }
 
-  updateMappingRow(index: number, qboField: MappingDestinationField | '', fyleField: MappingSourceField | string | '' = ''): void {
-    if (qboField) {
-      this.mappingRows[index].qboField = qboField;
+  updateMappingRow(index: number, xeroField: MappingDestinationField | '' | string, fyleField: MappingSourceField | string | '' = ''): void {
+    if (xeroField) {
+      this.mappingRows[index].xeroField = xeroField;
     } else if (fyleField) {
       this.mappingRows[index].fyleField = fyleField;
     }
@@ -86,18 +86,17 @@ export class CustomMappingComponent implements OnInit {
     this.isLoading = true;
     const mappingSettingPayload = [{
       source_field: mappingRow.fyleField,
-      destination_field: mappingRow.qboField,
+      destination_field: mappingRow.xeroField,
       import_to_fyle: false,
       is_custom: mappingRow.fyleField === MappingSourceField.COST_CENTER || mappingRow.fyleField === MappingSourceField.PROJECT ? false : true,
       source_placeholder: null
     }];
-
     this.mappingService.postMappingSettings(mappingSettingPayload).subscribe((response: MappingSetting[]) => {
       this.trackingService.onUpdateEvent(
         UpdateEvent.CUSTOM_MAPPING,
         {
           phase: ProgressPhase.POST_ONBOARDING,
-          newState: {source_field: mappingSettingPayload[0].source_field, destination_field: mappingSettingPayload[0].destination_field}
+          newState: { source_field: mappingSettingPayload[0].source_field, destination_field: mappingSettingPayload[0].destination_field }
         }
       );
       this.mappingService.emitWalkThroughTooltip();
@@ -110,12 +109,12 @@ export class CustomMappingComponent implements OnInit {
 
   deleteMappingSetting(index: number): void {
     const mappingRow: MappingSettingList = this.mappingSettingForm.value.mappingSetting[index];
-    const qboField: string = this.helperService.getSpaceCasedTitleCase(mappingRow.qboField);
+    const xeroField: string = this.helperService.getSpaceCasedTitleCase(mappingRow.xeroField);
     const fyleField: string = this.helperService.getSpaceCasedTitleCase(mappingRow.fyleField);
 
     const data: ConfirmationDialog = {
       title: 'Delete Custom Mapping',
-      contents: `<li>You are deleting the custom mapping of <b>${qboField}</b> in QBO to ${fyleField} in Fyle.</li>
+      contents: `<li>You are deleting the custom mapping of <b>${xeroField}</b> in Xero to ${fyleField} in Fyle.</li>
         <li>This will delete all the mappings setup in the <b>${fyleField}</b> Mapping section.</li>
         <br>Do you wish to continue?`,
       primaryCtaText: 'Save and Continue'
@@ -137,9 +136,9 @@ export class CustomMappingComponent implements OnInit {
 
           this.trackingService.onDeleteEvent(
             DeleteEvent.CUSTOM_MAPPING, {
-              source_field: mappingRow.fyleField,
-              destination_field: mappingRow.qboField
-            }
+            source_field: mappingRow.fyleField,
+            destination_field: mappingRow.xeroField
+          }
           );
 
           this.mappingService.refreshMappingPages();
@@ -158,14 +157,14 @@ export class CustomMappingComponent implements OnInit {
   saveMappingSetting(index: number): void {
     if (this.mappingSettingForm.valid) {
       const mappingRow: MappingSettingList = this.mappingSettingForm.value.mappingSetting[index];
-      const qboField: string = this.helperService.getSpaceCasedTitleCase(mappingRow.qboField);
+      const xeroField: string = this.helperService.getSpaceCasedTitleCase(mappingRow.xeroField);
       const fyleField: string = this.helperService.getSpaceCasedTitleCase(mappingRow.fyleField);
 
       const data: ConfirmationDialog = {
         title: 'Create Custom Mapping',
-        contents: `You are creating a custom mapping between <b>${qboField}</b> in QBO and <b>${fyleField}</b> in Fyle.
+        contents: `You are creating a custom mapping between <b>${xeroField}</b> in Xero and <b>${fyleField}</b> in Fyle.
           This will open a separate mapping Page for ${fyleField} under the Mappings section of the integration.<br><br>
-          <li>In the ${fyleField} Mappings section, you can map the individual Fyle ${fyleField} to their corresponding ${qboField} values.</li>
+          <li>In the ${fyleField} Mappings section, you can map the individual Fyle ${fyleField} to their corresponding ${xeroField} values.</li>
           <li>Also, the Mappings cannot be edited once set up. However, you can delete the specific dimensions mapped and re-create if required.</li>
           <br><br>Do you wish to continue?`,
         primaryCtaText: 'Save and Continue'
@@ -189,7 +188,7 @@ export class CustomMappingComponent implements OnInit {
   }
 
   get isExistingRowMapped(): boolean {
-   return this.mappingRows.filter(row => !row.existingMapping).length === 0;
+    return this.mappingRows.filter(row => !row.existingMapping).length === 0;
   }
 
   get mappingSetting() {
@@ -201,20 +200,10 @@ export class CustomMappingComponent implements OnInit {
     this.fyleFields = this.fyleFields.filter(field => {
       return !this.mappingSettings.some(mapping => mapping.source_field === field.attribute_type);
     });
-    this.qboFields = [MappingDestinationField.CLASS, MappingDestinationField.DEPARTMENT, MappingDestinationField.CUSTOMER];
-
-    const existingQBOFields = this.mappingSettings.filter((mappingSetting: MappingSetting) => {
-      return (mappingSetting.destination_field === MappingDestinationField.CLASS || mappingSetting.destination_field === MappingDestinationField.DEPARTMENT || mappingSetting.destination_field === MappingDestinationField.CUSTOMER);
-    }).map((mappingSetting: MappingSetting) => mappingSetting.destination_field);
-
-    this.qboFields = this.qboFields.filter((qboField: MappingDestinationField) => !existingQBOFields.includes(qboField));
-
-    const mappedRows = this.mappingSettings.filter((mappingSetting: MappingSetting) => {
-      return (mappingSetting.destination_field === MappingDestinationField.CLASS || mappingSetting.destination_field === MappingDestinationField.DEPARTMENT || mappingSetting.destination_field === MappingDestinationField.CUSTOMER) && !mappingSetting.import_to_fyle;
-    }).map((mappingSetting, index) => {
+    const mappedRows = this.mappingSettings.map((mappingSetting, index) => {
       const mappedRow: MappingSettingList = {
         id: mappingSetting.id,
-        qboField: mappingSetting.destination_field,
+        xeroField: mappingSetting.destination_field,
         fyleField: mappingSetting.source_field,
         index: index,
         existingMapping: true,
@@ -228,7 +217,7 @@ export class CustomMappingComponent implements OnInit {
     const mappedRowsFormArray = mappedRows.map((mappingSetting, index) => {
       return this.formBuilder.group({
         id: mappingSetting.id,
-        qboField: [mappingSetting.qboField, [Validators.required, RxwebValidators.unique()]],
+        xeroField: [mappingSetting.xeroField, [Validators.required, RxwebValidators.unique()]],
         fyleField: [mappingSetting.fyleField, [Validators.required, RxwebValidators.unique()]],
         index: [index],
         existingMapping: [true]
@@ -251,11 +240,18 @@ export class CustomMappingComponent implements OnInit {
   private setupSettingsAndSetupPage(): void {
     forkJoin([
       this.mappingService.getMappingSettings(),
-      this.mappingService.getFyleExpenseFields()
+      this.mappingService.getFyleExpenseFields(),
+      this.mappingService.getXeroField()
     ]).subscribe(responses => {
-      this.mappingSettings = responses[0].results;
-      this.fyleFields = responses[1];
-
+      this.mappingSettings = responses[0].results.filter((mappingSetting: MappingSetting) => {
+        return (mappingSetting.destination_field !== MappingDestinationField.ACCOUNT && mappingSetting.destination_field !== MappingDestinationField.BANK_ACCOUNT && mappingSetting.destination_field !== MappingDestinationField.CONTACT && mappingSetting.destination_field !== MappingDestinationField.TAX_CODE) && !mappingSetting.import_to_fyle;
+      });
+      this.fyleFields = responses[1].filter(field => {
+        return !this.mappingSettings.some(mapping => mapping.source_field === field.attribute_type);
+      });
+      this.xeroFields = responses[2].filter((xeroField: ExpenseField) => {
+        return !this.mappingSettings.some(mapping => mapping.destination_field === xeroField.attribute_type);
+      });
       this.setupPage();
     });
   }

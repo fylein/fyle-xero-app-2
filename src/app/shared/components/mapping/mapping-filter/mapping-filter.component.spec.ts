@@ -26,16 +26,16 @@ describe('MappingFilterComponent', () => {
     fixture = TestBed.createComponent(MappingFilterComponent);
     component = fixture.componentInstance;
     formBuilder = TestBed.inject(FormBuilder);
-    const fyleQboMappingFormArray = mappingList.map((mapping: MappingList) => {
+    const fyleXeroMappingFormArray = mappingList.map((mapping: MappingList) => {
       return formBuilder.group({
         searchOption: ['string'],
         source: [mapping.fyle.value],
-        destination: [mapping.qbo.value]
+        destination: [mapping.xero.value]
       });
     });
     const form = formBuilder.group({
       map: [''],
-      fyleQboMapping: formBuilder.array(fyleQboMappingFormArray),
+      fyleXeroMapping: formBuilder.array(fyleXeroMappingFormArray),
       searchOption: [['Fyle', 'Apple']],
       filterOption: [[]],
       cardUpdated: [false]

@@ -1,5 +1,5 @@
 import { MappingSetting, MappingSettingList, MappingSettingResponse } from "src/app/core/models/db/mapping-setting.model";
-import { FyleField, MappingDestinationField, MappingSourceField, QBOField } from "src/app/core/models/enum/enum.model";
+import { FyleField, MappingDestinationField, MappingSourceField} from "src/app/core/models/enum/enum.model";
 import { ExpenseField } from "src/app/core/models/misc/expense-field.model";
 
 export const fyleExpenseFields: ExpenseField[] = [
@@ -20,7 +20,7 @@ const mappingSettings: MappingSetting[] = [
     updated_at: new Date(),
     workspace: 2,
     source_field: MappingSourceField.PROJECT,
-    destination_field: MappingDestinationField.CUSTOMER,
+    destination_field: "REGION",
     import_to_fyle: true,
     is_custom: false,
     source_placeholder: null
@@ -30,8 +30,8 @@ const mappingSettings: MappingSetting[] = [
     created_at: new Date(),
     updated_at: new Date(),
     workspace: 2,
-    source_field: MappingSourceField.COST_CENTER,
-    destination_field: MappingDestinationField.DEPARTMENT,
+    source_field: FyleField.PROJECT,
+    destination_field: FyleField.COST_CENTER,
     import_to_fyle: false,
     is_custom: false,
     source_placeholder: null
@@ -46,19 +46,54 @@ export const mappingSettingResponse: MappingSettingResponse = {
 };
 
 export const mappingRow: MappingSettingList = {
-  qboField: MappingDestinationField.CLASS,
+  xeroField: MappingDestinationField.ACCOUNT,
+  fyleField: FyleField.COST_CENTER,
+  index: 0,
+  existingMapping: true,
+  isDeleteButtonAllowed: true,
+  id: 1
+};
+
+export const mappingRows: MappingSettingList[] = [{
+  xeroField: MappingDestinationField.ACCOUNT,
+  fyleField: FyleField.COST_CENTER,
+  index: 0,
+  existingMapping: true,
+  isDeleteButtonAllowed: true,
+  id: 1
+}];
+
+export const mappingRows1: MappingSettingList[] = [{
+  xeroField: MappingDestinationField.ACCOUNT,
   fyleField: MappingSourceField.PROJECT,
   index: 0,
   existingMapping: true,
-  isDeleteButtonAllowed: true
-};
+  isDeleteButtonAllowed: true,
+  id: 1
+}];
+
+export const mappingRows2: MappingSettingList[] = [{
+  xeroField: MappingDestinationField.ACCOUNT,
+  fyleField: MappingSourceField.TAX_GROUP,
+  index: 0,
+  existingMapping: true,
+  isDeleteButtonAllowed: true,
+  id: 1
+}];
 
 export const mappedRowsFormArray = [
   {
     id: 1,
     sourceField: 'PROJECT',
-    qboField: QBOField.CUSTOMER,
+    xeroField: FyleField.CATEGORY,
     index: 0,
     existingMapping: false
+  }
+];
+
+export const xeroField = [
+  {
+    attribute_type: 'REGION',
+    display_name: 'Region'
   }
 ];

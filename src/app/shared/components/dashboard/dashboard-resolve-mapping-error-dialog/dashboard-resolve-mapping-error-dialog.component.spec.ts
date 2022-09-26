@@ -9,6 +9,7 @@ import { environment } from 'src/environments/environment';
 import { destinationAttributes, expenseAttribute, mappinglist, model, model2, response } from './dashboard-resolve-mapping.fixture';
 import { of } from 'rxjs';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 // Import { MappingList } from 'src/app/core/models/db/mapping.model';
 
 describe('DashboardResolveMappingErrorDialogComponent', () => {
@@ -24,9 +25,12 @@ describe('DashboardResolveMappingErrorDialogComponent', () => {
   const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of({}), close: null });
   dialogRefSpyObj.componentInstance = { body: '' }; // Attach componentInstance to the spy object...
   beforeEach(async () => {
+    const service1 = {
+      getXeroDestinationAttributes: () => of([])
+    };
     await TestBed.configureTestingModule({
-      imports: [MatDialogModule, SharedModule, HttpClientTestingModule, MatSnackBarModule],
-      providers: [MappingService, FormBuilder, {
+      imports: [MatDialogModule, SharedModule, HttpClientTestingModule, MatSnackBarModule, NoopAnimationsModule],
+      providers: [FormBuilder, {
         // I was expecting this will pass the desired value
         provide: MAT_DIALOG_DATA,
         useValue: model
@@ -35,7 +39,9 @@ describe('DashboardResolveMappingErrorDialogComponent', () => {
         // I was expecting this will pass the desired value
         provide: MatDialogRef,
         useValue: {}
-      }],
+      },
+      { provide: MappingService, useValue: service1 }
+    ],
       declarations: [ DashboardResolveMappingErrorDialogComponent ]
     })
     .compileComponents();
@@ -54,11 +60,6 @@ describe('DashboardResolveMappingErrorDialogComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
-    const req = httpMock.expectOne({
-      method: 'GET',
-      url: `${API_BASE_URL}/workspaces/${workspace_id}/xero/destination_attributes/?attribute_types=TENANT`
-    });
-      req.flush([]);
   });
 
   it('function check', () => {
