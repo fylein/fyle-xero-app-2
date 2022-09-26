@@ -10,6 +10,7 @@ import { WorkspaceService } from '../workspace/workspace.service';
 })
 export class ExportSettingService {
   workspaceId = this.workspaceService.getWorkspaceId();
+
   constructor(
     private apiService: ApiService,
     private workspaceService: WorkspaceService
