@@ -60,21 +60,9 @@ export class MappingService {
 
   @Cacheable()
   getFyleExpenseFields(): Observable<ExpenseField[]> {
-    const response:ExpenseField[]=[
-      {
-          "attribute_type": "BANK_ACCOUN",
-          "display_name": "Bank Account"
-      },
-      {
-          "attribute_type": "TAX_CODE",
-          "display_name": "Tax Code"
-      }
-    ];
-    // Return of(response);
     return this.apiService.get(`/workspaces/${this.workspaceId}/fyle/expense_fields/`, {});
   }
 
-  // TODO: cache this safely later
   getMappingSettings(): Observable<MappingSettingResponse> {
     return this.apiService.get(`/workspaces/${this.workspaceId}/mappings/settings/`, {});
   }
