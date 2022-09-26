@@ -9,7 +9,7 @@ import { WorkspaceService } from '../workspace/workspace.service';
   providedIn: 'root'
 })
 export class ExportSettingService {
-
+  workspaceId = this.workspaceService.getWorkspaceId();
   constructor(
     private apiService: ApiService,
     private workspaceService: WorkspaceService
@@ -33,10 +33,10 @@ export class ExportSettingService {
       workspace_id: 1
     };
     // Return of(response);
-    return this.apiService.get(`/v2/workspaces/${this.workspaceService.getWorkspaceId()}/export_settings/`, {});
+    return this.apiService.get(`/v2/workspaces/${this.workspaceId}/export_settings/`, {});
   }
 
   postExportSettings(exportSettingsPayload: ExportSettingPost): Observable<ExportSettingGet> {
-    return this.apiService.put(`/v2/workspaces/${this.workspaceService.getWorkspaceId()}/export_settings/`, exportSettingsPayload);
+    return this.apiService.put(`/v2/workspaces/${this.workspaceId}/export_settings/`, exportSettingsPayload);
   }
 }

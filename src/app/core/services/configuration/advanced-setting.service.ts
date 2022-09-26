@@ -12,7 +12,7 @@ const advancedSettingsCache$ = new Subject<void>();
   providedIn: 'root'
 })
 export class AdvancedSettingService {
-
+  workspaceId = this.workspaceService.getWorkspaceId()
   constructor(
     private apiService: ApiService,
     private workspaceService: WorkspaceService
@@ -40,7 +40,7 @@ export class AdvancedSettingService {
       workspace_id: 1
     };
     // Return of(advancedSettingResponse);
-    return this.apiService.get(`/v2/workspaces/${this.workspaceService.getWorkspaceId()}/advanced_configurations/`, {});
+    return this.apiService.get(`/v2/workspaces/${this.workspaceId}/advanced_configurations/`, {});
   }
 
   @CacheBuster({
@@ -48,7 +48,7 @@ export class AdvancedSettingService {
   })
   postAdvancedSettings(exportSettingsPayload: AdvancedSettingPost): Observable<AdvancedSettingGet> {
     // Return of(advancedSettingResponse)
-    return this.apiService.put(`/v2/workspaces/${this.workspaceService.getWorkspaceId()}/advanced_configurations/`, exportSettingsPayload);
+    return this.apiService.put(`/v2/workspaces/${this.workspaceId}/advanced_configurations/`, exportSettingsPayload);
   }
 
 }
