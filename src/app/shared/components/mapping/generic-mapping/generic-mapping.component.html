@@ -1,0 +1,31 @@
+<div class="mapping">
+  <app-mapping-header-section [mappingStats]="mappingStats" [totalCardActive]="totalCardActive" [sourceType]="sourceType" (mappingCardUpdateHandler)="mappingCardUpdateHandler($event)"></app-mapping-header-section>
+
+  <div class="mapping--core-section">
+    <div class="mapping--core-section-content">
+      <app-mapping-filter [page]="page" [form]="form" [searchTerm]="(sourceType | titlecase | snakeCaseToSpaceCase) + ' name'" (mappingFilterUpdateHandler)="getMappings()"></app-mapping-filter>
+
+      <div *ngIf="!isLoading" class="mapping--table">
+        <app-mapping-table [mappings]="mappings" [sourceType]="mappingSetting.source_field" [destinationType]="mappingSetting.destination_field" [xeroData]="xeroData" [mappingForm]="mappingForm" (mappingSaveHandler)="save($event)"></app-mapping-table>
+
+        <app-zero-state-with-illustration [page]="ZeroStatePage.mapping" [form]="form" [data]="mappings" [searchTerm]="(sourceType | titlecase | snakeCaseToSpaceCase) + ' name'"></app-zero-state-with-illustration>
+      </div>
+
+      <!-- shimmers -->
+      <div *ngIf="isLoading">
+        <app-mapping-table [mappings]="emptyMapping" [sourceType]="mappingSetting?.source_field" [destinationType]="mappingSetting?.destination_field" [xeroData]="[]" [mappingForm]="mappingForm"></app-mapping-table>
+        <div *ngFor="let i of [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]" fxLayout="row" fxLayoutAlign="start center" class="skeleton-loader-list-view--row-box">
+          <div class="skeleton-loader-list-view--init-box-section">
+            <div class="shimmers skeleton-loader-list-view--init-box"></div>
+          </div>
+          <div class="skeleton-loader-list-view--end-box-section">
+            <div class="shimmers skeleton-loader-list-view--end-box"></div>
+          </div>
+        </div>
+      </div>
+      <!-- shimmers -->
+
+      <app-paginator *ngIf="mappings.filteredData.length" [page]="PaginatorPage.MAPPING" [totalCount]="totalCount" [limit]="limit" [offset]="offset" (pageChangeEvent)="getMappings($event)"></app-paginator>
+    </div>
+  </div>
+</div>

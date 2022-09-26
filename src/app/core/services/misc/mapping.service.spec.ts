@@ -3,10 +3,13 @@ import { HttpClientModule } from '@angular/common/http';
 import { MappingService } from './mapping.service';
 import { HttpTestingController, HttpClientTestingModule } from '@angular/common/http/testing';
 import { environment } from 'src/environments/environment';
-import { TenantFieldMapping } from '../../models/enum/enum.model';
+import { FyleField, MappingDestinationField, MappingState, TenantFieldMapping } from '../../models/enum/enum.model';
 import { ExpenseField } from '../../models/misc/expense-field.model';
 import { MappingSettingResponse } from '../../models/db/mapping-setting.model';
-import { mappingSettingPayload, postMappingSettingResponse } from './mapping.service.fixture';
+import { destinationAttributes, FyleExpenseFieldsresponse, getMappingsresponse, GroupedXeroDestinationAttributesresponse, MappingPostpayload, mappingSettingPayload, MappingSettingsresponse, MappingStatsresponse, postMappingResponse, postMappingSettingResponse, response } from './mapping.service.fixture';
+import { Mapping, MappingPost, MappingStats } from '../../models/db/mapping.model';
+import { xeroField } from 'src/app/shared/components/configuration/import-settings/import-settings.fixture';
+import { DestinationAttribute } from '../../models/db/destination-attribute.model';
 
 describe('MappingService', () => {
   let service: MappingService;
@@ -31,46 +34,20 @@ describe('MappingService', () => {
   });
 
   it('getXeroDestinationAttributes() service check', () => {
-    service.getXeroDestinationAttributes([TenantFieldMapping.TENANT], true).subscribe(value => {
+    service.getXeroDestinationAttributes([MappingDestinationField.ACCOUNT], true).subscribe(value => {
       expect(value).toEqual([]);
     });
     const req = httpMock.expectOne({
       method: 'GET',
-      url: `${API_BASE_URL}/workspaces/${workspace_id}/xero/destination_attributes/?attribute_types=TENANT&active=true`
+      url: `${API_BASE_URL}/workspaces/${workspace_id}/xero/destination_attributes/?attribute_types=ACCOUNT&active=true`
     });
       req.flush([]);
 
   });
 
   it('getFyleExpenseFields() service check', () => {
-    const response:ExpenseField[]=[
-      {
-          "attribute_type": "COST_CENTER",
-          "display_name": "Cost Center"
-      },
-      {
-          "attribute_type": "PROJECT",
-          "display_name": "Project"
-      },
-      {
-          "attribute_type": "REGION",
-          "display_name": "Region"
-      },
-      {
-          "attribute_type": "XERO_REGION",
-          "display_name": "Xero Region"
-      },
-      {
-          "attribute_type": "XERO_ITEM",
-          "display_name": "Xero Item"
-      },
-      {
-          "attribute_type": "XERO_FIELD",
-          "display_name": "Xero Field"
-      }
-  ];
     service.getFyleExpenseFields().subscribe(value => {
-      const responseKeys = Object.keys(response).sort();
+      const responseKeys = Object.keys(FyleExpenseFieldsresponse).sort();
       const actualKeys = Object.keys(value).sort();
       expect(actualKeys).toEqual(responseKeys);
     });
@@ -78,14 +55,12 @@ describe('MappingService', () => {
       method: 'GET',
       url: `${API_BASE_URL}/workspaces/${workspace_id}/fyle/expense_fields/`
     });
-      req.flush(response);
+      req.flush(FyleExpenseFieldsresponse);
   });
 
   it('getMappingSettings() service check', () => {
-    const response:MappingSettingResponse = {
-      count: 0, next: 'aa', previous: 'aa', results: []};
     service.getMappingSettings().subscribe(value => {
-      const responseKeys = Object.keys(response).sort();
+      const responseKeys = Object.keys(MappingSettingsresponse).sort();
       const actualResponseKeys = Object.keys(value).sort();
       expect(actualResponseKeys).toEqual(responseKeys);
     });
@@ -93,15 +68,10 @@ describe('MappingService', () => {
       method: 'GET',
       url: `${API_BASE_URL}/workspaces/${workspace_id}/mappings/settings/`
     });
-      req.flush(response);
+      req.flush(MappingSettingsresponse);
   });
 
   it('getGroupedXeroDestinationAttributes() withdata service check', () => {
-    const destinationAttributes = ['BANK_ACCOUNT', 'CONTACT', 'ACCOUNT', 'TENANT'];
-    const response = {
-      BANK_ACCOUNT: [],
-        TAX_CODE: []
-    };
     let responseKeys;
     let actualResponseKeys;
     service.getGroupedXeroDestinationAttributes(destinationAttributes).subscribe((value) => {
@@ -113,15 +83,10 @@ describe('MappingService', () => {
       method: 'GET',
       url: `${API_BASE_URL}/workspaces/${workspace_id}/xero/destination_attributes/?attribute_types=BANK_ACCOUNT,CONTACT,ACCOUNT,TENANT`
     });
-      req.flush([{"id": 45531, "attribute_type": "CONTACT", "display_name": "Contact", "value": "2285 Fyle Credit Card", "destination_id": "106", "auto_created": false, "active": null, "detail": {"account_type": "Credit Card", "fully_qualified_name": "2285 Fyle Credit Card"}, "created_at": "2022-04-14T06:09:07.537182Z", "updated_at": "2022-04-14T06:09:07.537205Z", "workspace": 216}]);
+      req.flush(GroupedXeroDestinationAttributesresponse);
   });
 
   it('getGroupedXeroDestinationAttributes() without data service check', () => {
-    const destinationAttributes = ['BANK_ACCOUNT', 'CONTACT', 'ACCOUNT', 'TENTANT'];
-    const response = {
-      BANK_ACCOUNT: [],
-      TAX_CODE: []
-    };
     let responseKeys;
     let actualResponseKeys;
     service.getGroupedXeroDestinationAttributes(destinationAttributes).subscribe((value) => {
@@ -131,7 +96,7 @@ describe('MappingService', () => {
     expect(actualResponseKeys).toEqual(responseKeys);
     const req = httpMock.expectOne({
       method: 'GET',
-      url: `${API_BASE_URL}/workspaces/${workspace_id}/xero/destination_attributes/?attribute_types=BANK_ACCOUNT,CONTACT,ACCOUNT,TENTANT`
+      url: `${API_BASE_URL}/workspaces/${workspace_id}/xero/destination_attributes/?attribute_types=BANK_ACCOUNT,CONTACT,ACCOUNT,TENANT`
     });
       req.flush([]);
   });
@@ -171,6 +136,96 @@ describe('MappingService', () => {
     });
       req.flush([]);
 
+  });
+
+  it('getMappingStats() service check', () => {
+    service.getMappingStats(FyleField.CATEGORY, FyleField.PROJECT).subscribe((value) => {
+      const responseKeys = Object.keys(MappingStatsresponse).sort();
+      const actualKeys = Object.keys(value).sort();
+      expect(actualKeys).toEqual(responseKeys);
+    });
+    const req = httpMock.expectOne({
+      method: 'GET',
+      url: `${API_BASE_URL}/workspaces/${workspace_id}/mappings/stats/?source_type=CATEGORY&destination_type=PROJECT`
+    });
+      req.flush(MappingStatsresponse);
+  });
+
+  it('postmapping() service check', () => {
+    service.postMapping(MappingPostpayload).subscribe((value) => {
+      expect(value).toEqual(postMappingResponse);
+    });
+    const req = httpMock.expectOne({
+      method: 'POST',
+      url: `${API_BASE_URL}/workspaces/${workspace_id}/mappings/`
+    });
+      req.flush(postMappingResponse);
+  });
+
+  it('getMappings() service check', () => {
+    service.getMappings(MappingState.ALL, true, 1, 1, [], FyleField.CATEGORY, FyleField.TAX_GROUP).subscribe(value => {
+      const responseKeys = Object.keys(getMappingsresponse).sort();
+      const actualResponseKeys = Object.keys(value).sort();
+      expect(actualResponseKeys).toEqual(responseKeys);
+    });
+    const req = httpMock.expectOne({
+      method: 'GET',
+      url: `${API_BASE_URL}/workspaces/${workspace_id}/mappings/expense_attributes/?limit=1&offset=1&all_alphabets=true&mapped=ALL&mapping_source_alphabets=null&source_type=CATEGORY&destination_type=TAX_GROUP`
+    });
+      req.flush(getMappingsresponse);
+  });
+
+  it('getMappings() service check', () => {
+    service.getMappings(MappingState.UNMAPPED, true, 1, 1, ['all'], FyleField.CATEGORY, FyleField.TAX_GROUP).subscribe(value => {
+      const responseKeys = Object.keys(getMappingsresponse).sort();
+      const actualResponseKeys = Object.keys(value).sort();
+      expect(actualResponseKeys).toEqual(responseKeys);
+    });
+    const req = httpMock.expectOne({
+      method: 'GET',
+      url: `${API_BASE_URL}/workspaces/${workspace_id}/mappings/expense_attributes/?limit=1&offset=1&all_alphabets=true&mapped=false&mapping_source_alphabets=all&source_type=CATEGORY&destination_type=TAX_GROUP`
+    });
+      req.flush(getMappingsresponse);
+  });
+
+  it('should emit walkThroughTooltip', () => {
+    spyOn(service.showWalkThroughTooltip, 'emit');
+    service.emitWalkThroughTooltip();
+    expect(service.showWalkThroughTooltip.emit).toHaveBeenCalled();
+  });
+
+  it('should delete MappingSettings', () => {
+    service.deleteMappingSetting(11).subscribe((value) => {
+      expect(value).toEqual({});
+    });
+    const req = httpMock.expectOne({
+      method: 'DELETE',
+      url: `${API_BASE_URL}/workspaces/${workspace_id}/mappings/settings/11/`
+    });
+
+    req.flush({});
+  });
+
+  it('triggerAutoMapEmployees() service check', () => {
+    service.triggerAutoMapEmployees().subscribe(value => {
+      expect(value).toEqual({});
+    });
+    const req = httpMock.expectOne({
+      method: 'POST',
+      url: `${API_BASE_URL}/workspaces/${workspace_id}/mappings/auto_map_employees/trigger/`
+    });
+      req.flush({});
+  });
+
+  it('getXeroField() service check', () => {
+    service.getXeroField().subscribe(value => {
+      expect(value).toEqual([]);
+    });
+    const req = httpMock.expectOne({
+      method: 'GET',
+      url: `${API_BASE_URL}/workspaces/${workspace_id}/xero/xero_fields/`
+    });
+      req.flush([]);
   });
 
 });
