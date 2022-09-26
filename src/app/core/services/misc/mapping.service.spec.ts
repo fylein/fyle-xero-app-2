@@ -6,7 +6,7 @@ import { environment } from 'src/environments/environment';
 import { FyleField, MappingDestinationField, MappingState, TenantFieldMapping } from '../../models/enum/enum.model';
 import { ExpenseField } from '../../models/misc/expense-field.model';
 import { MappingSettingResponse } from '../../models/db/mapping-setting.model';
-import { destinationAttributes, FyleExpenseFieldsresponse, getMappingsresponse, GroupedXeroDestinationAttributesresponse, MappingPostpayload, mappingSettingPayload, MappingSettingsresponse, MappingStatsresponse, postMappingSettingResponse, response } from './mapping.service.fixture';
+import { destinationAttributes, FyleExpenseFieldsresponse, getMappingsresponse, GroupedXeroDestinationAttributesresponse, MappingPostpayload, mappingSettingPayload, MappingSettingsresponse, MappingStatsresponse, postMappingResponse, postMappingSettingResponse, response } from './mapping.service.fixture';
 import { Mapping, MappingPost, MappingStats } from '../../models/db/mapping.model';
 import { xeroField } from 'src/app/shared/components/configuration/import-settings/import-settings.fixture';
 import { DestinationAttribute } from '../../models/db/destination-attribute.model';
@@ -153,13 +153,13 @@ describe('MappingService', () => {
 
   it('postmapping() service check', () => {
     service.postMapping(MappingPostpayload).subscribe((value) => {
-      expect(value).toEqual(MappingPostpayload);
+      expect(value).toEqual(postMappingResponse);
     });
     const req = httpMock.expectOne({
       method: 'POST',
       url: `${API_BASE_URL}/workspaces/${workspace_id}/mappings/`
     });
-      req.flush(MappingPostpayload);
+      req.flush(postMappingResponse);
   });
 
   it('getMappings() service check', () => {

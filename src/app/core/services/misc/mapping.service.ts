@@ -4,7 +4,7 @@ import { Cacheable } from 'ts-cacheable';
 import { DestinationAttribute, GroupedDestinationAttribute } from '../../models/db/destination-attribute.model';
 import { ExtendedExpenseAttributeResponse } from '../../models/db/expense-attribute.model';
 import { MappingSetting, MappingSettingPost, MappingSettingResponse } from '../../models/db/mapping-setting.model';
-import { MappingPost, MappingStats } from '../../models/db/mapping.model';
+import { MappingPost, MappingStats, PostMappingResponse } from '../../models/db/mapping.model';
 import { MappingState } from '../../models/enum/enum.model';
 import { ExpenseField } from '../../models/misc/expense-field.model';
 import { ApiService } from '../core/api.service';
@@ -34,7 +34,6 @@ export class MappingService {
     if (active) {
       params.active = true;
     }
-    // Return of([]);
     return this.apiService.get(`/workspaces/${this.workspaceId}/xero/destination_attributes/`, params);
   }
 
@@ -94,7 +93,7 @@ export class MappingService {
     return this.apiService.get(`/workspaces/${this.workspaceId}/mappings/stats/`, { source_type: sourceType, destination_type: destinationType });
   }
 
-  postMapping(mapping: MappingPost) {
+  postMapping(mapping: MappingPost): Observable<PostMappingResponse> {
     return this.apiService.post(`/workspaces/${this.workspaceId}/mappings/`, mapping);
   }
 
