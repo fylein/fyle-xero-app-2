@@ -37,7 +37,7 @@ export class ExportSettingModel {
     const exportSettingPayload: ExportSettingPost = {
       expense_group_settings: {
         reimbursable_expense_state: exportSettingsForm.get('reimbursableExpenseState')?.value,
-        reimbursable_export_date_type: exportSettingsForm.get('reimbursableExportDate')?.value,
+        reimbursable_export_date_type: exportSettingsForm.get('reimbursableExportDate')?.value ? exportSettingsForm.get('reimbursableExportDate')?.value : ExportDateType.CURRENT_DATE,
         ccc_expense_state: exportSettingsForm.get('cccExpenseState')?.value
       },
       workspace_general_settings: {

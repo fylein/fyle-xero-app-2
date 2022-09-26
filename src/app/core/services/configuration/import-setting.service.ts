@@ -10,6 +10,7 @@ import { WorkspaceService } from '../workspace/workspace.service';
   providedIn: 'root'
 })
 export class ImportSettingService {
+  workspaceId = this.workspaceService.getWorkspaceId()
 
   constructor(
     private apiService: ApiService,
@@ -18,11 +19,11 @@ export class ImportSettingService {
 
   getImportSettings() {
     // Return of(getImportsettingResponse);
-    return this.apiService.get(`/v2/workspaces/${this.workspaceService.getWorkspaceId()}/import_settings/`, {});
+    return this.apiService.get(`/v2/workspaces/${this.workspaceId}/import_settings/`, {});
   }
 
   postImportSettings(exportSettingsPayload: ImportSettingPost){
     // Return of(getImportsettingResponse);
-    return this.apiService.put(`/v2/workspaces/${this.workspaceService.getWorkspaceId()}/import_settings/`, exportSettingsPayload);
+    return this.apiService.put(`/v2/workspaces/${this.workspaceId}/import_settings/`, exportSettingsPayload);
   }
 }

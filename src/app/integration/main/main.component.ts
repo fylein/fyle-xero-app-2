@@ -153,11 +153,7 @@ export class MainComponent implements OnInit {
   }
 
   private setupMappingModules(mappingSettingResponse: MappingSettingResponse): void {
-    this.modules[2].childPages = [{
-      name: 'Employee Mapping',
-      route: 'mapping/employee',
-      isActive: false
-    },
+    this.modules[2].childPages = [
     {
       name: 'Category Mapping',
       route: 'mapping/category',

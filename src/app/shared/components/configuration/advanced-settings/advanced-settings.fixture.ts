@@ -39,7 +39,7 @@ export const advancedSettingResponse:AdvancedSettingGet = {
       workspace_schedules: {
         enabled: true,
         interval_hours: 10,
-        start_datetime: new Date()
+        start_datetime: new Date("2022-01-16")
       },
   workspace_id: 1
 };
@@ -50,8 +50,8 @@ export const destinationAttribute: DestinationAttribute[] = [{
   value: "string",
   destination_id: "string",
   active: true,
-  created_at: new Date(),
-  updated_at: new Date(),
+  created_at: new Date("2022-01-16"),
+  updated_at: new Date("2022-01-16"),
   workspace: 2,
   detail: {
     email: 'String',
@@ -65,8 +65,8 @@ export const destinationAttribute: DestinationAttribute[] = [{
   value: "string",
   destination_id: "string",
   active: true,
-  created_at: new Date(),
-  updated_at: new Date(),
+  created_at: new Date("2022-01-16"),
+  updated_at: new Date("2022-01-16"),
   workspace: 2,
   detail: {
     email: 'String',
@@ -87,7 +87,7 @@ export const getadvancedSettingResponse:AdvancedSettingGet = {
   workspace_schedules: {
     enabled: true,
     interval_hours: 10,
-    start_datetime: new Date()
+    start_datetime: new Date("2022-01-16")
   },
   workspace_id: 1
 };
@@ -106,7 +106,7 @@ export const getadvancedSettingResponse2:AdvancedSettingGet = {
   workspace_schedules: {
     enabled: true,
     interval_hours: 10,
-    start_datetime: new Date()
+    start_datetime: new Date("2022-01-16")
   },
   workspace_id: 1
 };
@@ -124,7 +124,7 @@ export const emailResponse: WorkspaceSchedule = {
   id: 1,
   workspace: 1,
   enabled: false,
-  start_datetime: new Date(),
+  start_datetime: new Date("2022-01-16"),
   interval_hours: 1,
   schedule: 1
 };

@@ -31,7 +31,7 @@ describe('ExportSettingService', () => {
     const response: ExportSettingGet = {
       expense_group_settings: {
         reimbursable_expense_state: ExpenseState.PAID,
-        reimbursable_export_date_type: null,
+        reimbursable_export_date_type: ExportDateType.APPROVED_AT,
         ccc_expense_state: ExpenseState.PAID
       },
       workspace_general_settings: {
@@ -59,7 +59,7 @@ describe('ExportSettingService', () => {
     const exportSettingPayload: ExportSettingPost = {
       expense_group_settings: {
         reimbursable_expense_state: ExpenseState.PAID,
-        reimbursable_export_date_type: null,
+        reimbursable_export_date_type: ExportDateType.APPROVED_AT,
         ccc_expense_state: ExpenseState.PAID
       },
       workspace_general_settings: {

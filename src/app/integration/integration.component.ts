@@ -48,7 +48,7 @@ export class IntegrationComponent implements OnInit {
       };
       // TODO
 
-      this.router.navigateByUrl(onboardingStateComponentMap.EXPORT_SETTINGS);
+      this.router.navigateByUrl(onboardingStateComponentMap[this.workspace.onboarding_state]);
       // This.router.navigateByUrl(onboardingStateComponentMap.COMPLETE);
     }
   }
