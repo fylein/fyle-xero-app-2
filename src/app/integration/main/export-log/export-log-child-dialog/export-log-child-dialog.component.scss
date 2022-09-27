@@ -1,0 +1,34 @@
+.export-log-child-dialog {
+  &--header-section {
+    padding: 32px 0px 24px 32px;
+  }
+
+  &--close-icon {
+    padding-right: 35px;
+  }
+
+  &--horizontal-separator {
+    border-top: 1px solid #F5F5F5;
+    width: 100%;
+    align-self: center;
+  }
+
+  &--simple-search {
+    width: 374px;
+    padding: 8px 0px 24px 20px;
+  }
+
+  &--zero-state-img {
+    padding-top: 180px;
+  }
+
+  &--zero-state-text {
+    color: #2C304E;
+  }
+
+  &--zero-state-text-small {
+    color: #5A5D72;
+    width: 298px;
+    padding-top: 8px;
+  }
+}
