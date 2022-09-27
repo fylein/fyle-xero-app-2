@@ -20,7 +20,7 @@ export class ExportLogService {
 
   private org_id: string = this.userService.getUserProfile().org_id;
 
-  xeroShortCode: any;
+  xeroShortCode: string;
 
   constructor(
     private apiService: ApiService,
