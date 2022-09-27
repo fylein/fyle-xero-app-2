@@ -74,6 +74,6 @@ describe('SimpleTextSearchComponent', () => {
   it('trackSimpleSearch() function check', () => {
     component.form.controls.searchOption.patchValue('fyles');
     fixture.detectChanges();
-    const tracking = (component as any).trackSimpleSearch();
+    expect((component as any).trackSimpleSearch()).toBeUndefined();
   });
 });
