@@ -43,15 +43,16 @@ import { MappingHeaderSectionComponent } from './components/mapping/mapping-head
 import { MappingFilterComponent } from './components/mapping/mapping-filter/mapping-filter.component';
 import { MappingTableComponent } from './components/mapping/mapping-table/mapping-table.component';
 import { GenericMappingComponent } from './components/mapping/generic-mapping/generic-mapping.component';
-// Import { ExportLogTableComponent } from './components/export-log/export-log-table/export-log-table.component';
+import { ExportLogTableComponent } from './components/export-log/export-log-table/export-log-table.component';
 import { DashboardHeaderSectionComponent } from './components/dashboard/dashboard-header-section/dashboard-header-section.component';
 import { DashboardResolveMappingErrorDialogComponent } from './components/dashboard/dashboard-resolve-mapping-error-dialog/dashboard-resolve-mapping-error-dialog.component';
 import { DashboardXeroErrorDialogComponent } from './components/dashboard/dashboard-xero-error-dialog/dashboard-xero-error-dialog.component';
-// Import { ExportLogChildTableComponent } from './components/export-log/export-log-child-table/export-log-child-table.component';
+import { ExportLogChildTableComponent } from './components/export-log/export-log-child-table/export-log-child-table.component';
 import { PreviewDialogComponent } from './components/configuration/preview-dialog/preview-dialog.component';
 import { ConfirmationDialogComponent } from './components/core/confirmation-dialog/confirmation-dialog.component';
 import { MandatoryErrorMessageComponent } from './components/helpers/mandatory-error-message/mandatory-error-message.component';
 import { EmailMultiSelectFieldComponent } from './components/configuration/email-multi-select-field/email-multi-select-field.component';
+import { DashboardExportLogDialogComponent } from './components/dashboard/dashboard-export-log-dialog/dashboard-export-log-dialog.component';
 
 @NgModule({
   declarations: [
@@ -79,16 +80,17 @@ import { EmailMultiSelectFieldComponent } from './components/configuration/email
     MappingFilterComponent,
     MappingTableComponent,
     GenericMappingComponent,
-    // ExportLogTableComponent,
+    ExportLogTableComponent,
     DashboardHeaderSectionComponent,
     DashboardResolveMappingErrorDialogComponent,
     DashboardXeroErrorDialogComponent,
-    // ExportLogChildTableComponent,
+    ExportLogChildTableComponent,
     PreviewDialogComponent,
     ConfirmationDialogComponent,
     ConfirmationDialogComponent,
     MandatoryErrorMessageComponent,
-    EmailMultiSelectFieldComponent
+    EmailMultiSelectFieldComponent,
+    DashboardExportLogDialogComponent
   ],
   imports: [
     CommonModule,
@@ -130,11 +132,12 @@ import { EmailMultiSelectFieldComponent } from './components/configuration/email
     MappingFilterComponent,
     MappingTableComponent,
     GenericMappingComponent,
-    // ExportLogTableComponent,
+    ExportLogTableComponent,
     DashboardHeaderSectionComponent,
     DashboardResolveMappingErrorDialogComponent,
-    // ExportLogChildTableComponent,
-    MandatoryErrorMessageComponent
+    ExportLogChildTableComponent,
+    MandatoryErrorMessageComponent,
+    DashboardExportLogDialogComponent
   ],
   providers: []
 })
