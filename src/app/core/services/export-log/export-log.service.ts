@@ -63,7 +63,7 @@ export class ExportLogService {
     let accountId = null;
     const xeroUrl = 'https://go.xero.com';
     if ('Invoices' in expenseGroup.response_logs && expenseGroup.response_logs.Invoices) {
-      exportType = 'Creating Bill';
+      exportType = 'Bill';
       exportId = expenseGroup.response_logs.Invoices[0].InvoiceID;
       if (this.xeroShortCode) {
         exportRedirection = `${xeroUrl}/organisationlogin/default.aspx?shortcode=${this.xeroShortCode}&redirecturl=/AccountsPayable/Edit.aspx?InvoiceID=${exportId}`;
@@ -71,7 +71,7 @@ export class ExportLogService {
         exportRedirection = `${xeroUrl}/AccountsPayable/View.aspx?invoiceID=${exportId}`;
       }
     } else if ('BankTransactions' in expenseGroup.response_logs && expenseGroup.response_logs.BankTransactions) {
-      exportType = 'Creating Bank Transaction';
+      exportType = 'Bank Transaction';
       exportId = expenseGroup.response_logs.BankTransactions[0].BankTransactionID;
       accountId = expenseGroup.response_logs.BankTransactions[0].BankAccount.AccountID;
       if (this.xeroShortCode) {
