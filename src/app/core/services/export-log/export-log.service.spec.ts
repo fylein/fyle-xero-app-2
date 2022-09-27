@@ -11,6 +11,7 @@ describe('ExportLogService', () => {
   let service: ExportLogService;
   let injector: TestBed;
   let httpMock: HttpTestingController;
+  const xeroUrl = 'https://go.xero.com';
   const API_BASE_URL = environment.api_url;
   const workspace_id = environment.tests.workspaceId;
   const FYLE_APP_URL = environment.fyle_app_url;
@@ -51,32 +52,6 @@ describe('ExportLogService', () => {
       url: `${API_BASE_URL}/workspaces/${workspace_id}/fyle/expense_group_settings/`
     });
       req.flush(response);
-  });
-
-  it('generateExportTypeAndId() service Purchase ccc check', () => {
-    const expencegroup:ExpenseGroup = {
-      id: 1,
-      fund_source: 'CCC',
-      description: {
-        claim_number: FyleReferenceType.EXPENSE_REPORT,
-        report_id: FyleReferenceType.EXPENSE_REPORT,
-        employee_email: 'employee@gmail.com',
-        expense_id: FyleReferenceType.EXPENSE,
-        settlement_id: FyleReferenceType.PAYMENT
-      },
-      // Having any here is okay, different qbo exports has different structures
-      response_logs: {Purchase: {name: 'Purchase', Id: 1}},
-      export_type: 'Expence',
-      employee_name: 'Fyle',
-      exported_at: new Date(),
-      created_at: new Date(),
-      updated_at: new Date(),
-      workspace: +workspace_id,
-      expenses: []
-    };
-    const actualresponse = ['expense', 1, 'expense'];
-    const reponse = service.generateExportTypeAndId(expencegroup);
-    expect(reponse).toEqual(actualresponse);
   });
 
   it('generateFyleUrl() EXPENCE service check', () => {
@@ -302,7 +277,7 @@ describe('ExportLogService', () => {
         settlement_id: FyleReferenceType.PAYMENT
       },
       // Having any here is okay, different qbo exports has different structures
-      response_logs: {Bill: {name: 'Bill', Id: 1}},
+      response_logs: {Invoices: [{Status:	"AUTHORISED", InvoiceID: 1}]},
       export_type: 'Expence',
       employee_name: 'Fyle',
       exported_at: new Date(),
@@ -311,7 +286,8 @@ describe('ExportLogService', () => {
       workspace: +workspace_id,
       expenses: []
     };
-    const actualresponse = ['bill', 1, 'bill'];
+    const exportUrl = `${xeroUrl}/AccountsPayable/View.aspx?invoiceID=1`;
+    const actualresponse = [exportUrl, 1, 'Creating Bill'];
     const reponse = service.generateExportTypeAndId(expencegroup);
     expect(reponse).toEqual(actualresponse);
   });
@@ -328,7 +304,7 @@ describe('ExportLogService', () => {
         settlement_id: FyleReferenceType.PAYMENT
       },
       // Having any here is okay, different qbo exports has different structures
-      response_logs: {JournalEntry: {name: 'JournalEntry', Id: 1}},
+      response_logs: {BankTransactions: [{BankAccount: {AccountID:	1}, BankTransactionID: 1}]},
       export_type: 'Expence',
       employee_name: 'Fyle',
       exported_at: new Date(),
@@ -337,111 +313,8 @@ describe('ExportLogService', () => {
       workspace: +workspace_id,
       expenses: []
     };
-    const actualresponse = ['journal', 1, 'Journal Entry'];
-    const reponse = service.generateExportTypeAndId(expencegroup);
-    expect(reponse).toEqual(actualresponse);
-  });
-
-  it('generateExportTypeAndId() service Purchase check check', () => {
-    const expencegroup:ExpenseGroup = {
-      id: 1,
-      fund_source: 'dummy',
-      description: {
-        claim_number: FyleReferenceType.EXPENSE_REPORT,
-        report_id: FyleReferenceType.EXPENSE_REPORT,
-        employee_email: 'employee@gmail.com',
-        expense_id: FyleReferenceType.EXPENSE,
-        settlement_id: FyleReferenceType.PAYMENT
-      },
-      // Having any here is okay, different qbo exports has different structures
-      response_logs: {Purchase: {name: 'Purchase', Id: 1, PaymentType: 'Check'}},
-      export_type: 'Expence',
-      employee_name: 'Fyle',
-      exported_at: new Date(),
-      created_at: new Date(),
-      updated_at: new Date(),
-      workspace: +workspace_id,
-      expenses: []
-    };
-    const actualresponse = ['check', 1, 'check'];
-    const reponse = service.generateExportTypeAndId(expencegroup);
-    expect(reponse).toEqual(actualresponse);
-  });
-
-  it('generateExportTypeAndId() service Purchase CreditCard purcase check', () => {
-    const expencegroup:ExpenseGroup = {
-      id: 1,
-      fund_source: 'CCC',
-      description: {
-        claim_number: FyleReferenceType.EXPENSE_REPORT,
-        report_id: FyleReferenceType.EXPENSE_REPORT,
-        employee_email: 'employee@gmail.com',
-        expense_id: FyleReferenceType.EXPENSE,
-        settlement_id: FyleReferenceType.PAYMENT
-      },
-      // Having any here is okay, different qbo exports has different structures
-      response_logs: {Purchase: {name: 'Purchase', Id: 1, PaymentType: 'CreditCard', Credit: false}},
-      export_type: 'Expence',
-      employee_name: 'Fyle',
-      exported_at: new Date(),
-      created_at: new Date(),
-      updated_at: new Date(),
-      workspace: +workspace_id,
-      expenses: []
-    };
-    const actualresponse = ['expense', 1, 'Credit Card Purchase'];
-    const reponse = service.generateExportTypeAndId(expencegroup);
-    expect(reponse).toEqual(actualresponse);
-  });
-
-  it('generateExportTypeAndId() service Purchase CreditCard Credit check', () => {
-    const expencegroup:ExpenseGroup = {
-      id: 1,
-      fund_source: 'CCC',
-      description: {
-        claim_number: FyleReferenceType.EXPENSE_REPORT,
-        report_id: FyleReferenceType.EXPENSE_REPORT,
-        employee_email: 'employee@gmail.com',
-        expense_id: FyleReferenceType.EXPENSE,
-        settlement_id: FyleReferenceType.PAYMENT
-      },
-      // Having any here is okay, different qbo exports has different structures
-      response_logs: {Purchase: {name: 'Purchase', Id: 1, PaymentType: 'CreditCard', Credit: true}},
-      export_type: 'Expence',
-      employee_name: 'Fyle',
-      exported_at: new Date(),
-      created_at: new Date(),
-      updated_at: new Date(),
-      workspace: +workspace_id,
-      expenses: []
-    };
-    const actualresponse = ['creditcardcredit', 1, 'Credit Card Credit'];
-    const reponse = service.generateExportTypeAndId(expencegroup);
-    expect(reponse).toEqual(actualresponse);
-  });
-
-  it('generateExportTypeAndId() service Purchase cash check', () => {
-    const expencegroup:ExpenseGroup = {
-      id: 1,
-      fund_source: 'CCC',
-      description: {
-        claim_number: FyleReferenceType.EXPENSE_REPORT,
-        report_id: FyleReferenceType.EXPENSE_REPORT,
-        employee_email: 'employee@gmail.com',
-        expense_id: FyleReferenceType.EXPENSE,
-        settlement_id: FyleReferenceType.PAYMENT
-      },
-      // Having any here is okay, different qbo exports has different structures
-      response_logs: {Purchase: {name: 'Purchase', Id: 1, PaymentType: 'Cash', Credit: true}},
-      export_type: 'Expence',
-      employee_name: 'Fyle',
-      exported_at: new Date(),
-      created_at: new Date(),
-      updated_at: new Date(),
-      workspace: +workspace_id,
-      expenses: []
-    };
-    const actualresponse = ['expense', 1, 'Debit Card Expense'];
+    const exportUrl = `${xeroUrl}/Bank/ViewTransaction.aspx?bankTransactionID=1&accountID=1`;
+    const actualresponse = [exportUrl, 1, 'Creating Bank Transaction'];
     const reponse = service.generateExportTypeAndId(expencegroup);
     expect(reponse).toEqual(actualresponse);
   });

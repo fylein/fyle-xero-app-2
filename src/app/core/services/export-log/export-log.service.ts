@@ -20,6 +20,8 @@ export class ExportLogService {
 
   private org_id: string = this.userService.getUserProfile().org_id;
 
+  xeroShortCode: any;
+
   constructor(
     private apiService: ApiService,
     private userService: UserService,
@@ -58,33 +60,24 @@ export class ExportLogService {
     let exportRedirection = null;
     let exportType = null;
     let exportId = null;
-
-    if ('Bill' in expenseGroup.response_logs && expenseGroup.response_logs.Bill) {
-      exportRedirection = 'bill';
-      exportType = exportRedirection;
-      exportId = expenseGroup.response_logs.Bill.Id;
-    } else if ('JournalEntry' in expenseGroup.response_logs && expenseGroup.response_logs.JournalEntry) {
-      exportRedirection = 'journal';
-      exportType = 'Journal Entry';
-      exportId = expenseGroup.response_logs.JournalEntry.Id;
-    } else if ('Purchase' in expenseGroup.response_logs && expenseGroup.response_logs.Purchase) {
-      exportId = expenseGroup.response_logs.Purchase.Id;
-      if (expenseGroup.response_logs.Purchase.PaymentType === 'Check') {
-        exportRedirection = 'check';
-        exportType = exportRedirection;
+    let accountId = null;
+    const xeroUrl = 'https://go.xero.com';
+    if ('Invoices' in expenseGroup.response_logs && expenseGroup.response_logs.Invoices) {
+      exportType = 'Creating Bill';
+      exportId = expenseGroup.response_logs.Invoices[0].InvoiceID;
+      if (this.xeroShortCode) {
+        exportRedirection = `${xeroUrl}/organisationlogin/default.aspx?shortcode=${this.xeroShortCode}&redirecturl=/AccountsPayable/Edit.aspx?InvoiceID=${exportId}`;
       } else {
-        exportRedirection = 'expense';
-        if (expenseGroup.fund_source === 'CCC' && expenseGroup.response_logs.Purchase.PaymentType === 'CreditCard' && !expenseGroup.response_logs.Purchase.Credit) {
-          exportType = 'Credit Card Purchase';
-        } else if (expenseGroup.fund_source === 'CCC' && expenseGroup.response_logs.Purchase.PaymentType === 'CreditCard' && expenseGroup.response_logs.Purchase.Credit) {
-          exportType = 'Credit Card Credit';
-          exportRedirection = 'creditcardcredit';
-        } else if (expenseGroup.fund_source === 'CCC' && expenseGroup.response_logs.Purchase.PaymentType === 'Cash') {
-          exportType = 'Debit Card Expense';
-          exportRedirection = 'expense';
-        } else {
-          exportType = 'expense';
-        }
+        exportRedirection = `${xeroUrl}/AccountsPayable/View.aspx?invoiceID=${exportId}`;
+      }
+    } else if ('BankTransactions' in expenseGroup.response_logs && expenseGroup.response_logs.BankTransactions) {
+      exportType = 'Creating Bank Transaction';
+      exportId = expenseGroup.response_logs.BankTransactions[0].BankTransactionID;
+      accountId = expenseGroup.response_logs.BankTransactions[0].BankAccount.AccountID;
+      if (this.xeroShortCode) {
+        exportRedirection = `${xeroUrl}/organisationlogin/default.aspx?shortcode=${this.xeroShortCode}&redirecturl=/Bank/ViewTransaction.aspx?bankTransactionID=${exportId}`;
+      } else {
+        exportRedirection = `${xeroUrl}/Bank/ViewTransaction.aspx?bankTransactionID=${exportId}&accountID=${accountId}`;
       }
     }
 

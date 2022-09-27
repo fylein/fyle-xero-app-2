@@ -7,10 +7,10 @@ const routes: Routes = [
     path: '',
     component: MainComponent,
     children: [
-    //   {
-    //     Path: 'configuration',
-    //     LoadChildren: () => import('./configuration/configuration.module').then(m => m.ConfigurationModule)
-    //   },
+      {
+        path: 'configuration',
+        loadChildren: () => import('./configuration/configuration.module').then(m => m.ConfigurationModule)
+      },
       {
         path: 'mapping',
         loadChildren: () => import('./mapping/mapping.module').then(m => m.MappingModule)
