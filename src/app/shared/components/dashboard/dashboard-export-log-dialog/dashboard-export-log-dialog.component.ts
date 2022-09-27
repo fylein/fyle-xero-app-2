@@ -34,7 +34,7 @@ export class DashboardExportLogDialogComponent implements OnInit {
   private setupPage(): void {
     if (this.data.exportState === ExportState.SUCCESS) {
       this.displayedColumns = ['referenceID', 'name', 'exportType', 'link'];
-      this.externalUrlType = 'QBO';
+      this.externalUrlType = 'Xero';
     } else {
       this.displayedColumns = ['referenceID', 'name', 'link'];
       this.externalUrlType = 'Fyle';
@@ -69,7 +69,7 @@ export class DashboardExportLogDialogComponent implements OnInit {
           referenceNumber: referenceNumber,
           exportedAs: exportType,
           fyleUrl: fyleUrl,
-          qboUrl: this.data.exportState === ExportState.SUCCESS ? `${environment.qbo_app_url}/app/${type}?txnId=${id}` : fyleUrl,
+          xeroUrl: this.data.exportState === ExportState.SUCCESS ? type : fyleUrl,
           expenses: expenseGroup.expenses
         });
       });

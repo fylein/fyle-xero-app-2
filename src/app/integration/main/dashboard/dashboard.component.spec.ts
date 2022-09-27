@@ -95,8 +95,8 @@ describe('DashboardComponent', () => {
     expect(component.export()).toBeUndefined();
   });
 
-  it('showDashboardQboErro function check', () => {
-    expect(component.showDashboardQboError(getExportErrorsData[0])).toBeUndefined();
+  it('showDashboardXeroErro function check', () => {
+    expect(component.showDashboardXeroError(getExportErrorsData[0])).toBeUndefined();
     fixture.detectChanges();
     expect(dialogSpy).toHaveBeenCalled();
   });

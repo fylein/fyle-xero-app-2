@@ -4,12 +4,12 @@ import { catchError, map, switchMap, takeWhile } from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
 import { Error, GroupedErrors, GroupedErrorStat } from 'src/app/core/models/db/error.model';
 import { LastExport } from 'src/app/core/models/db/last-export.model';
-import { ClickEvent, EmployeeFieldMapping, ErrorType, ExpenseState, ExportState, FyleField, FyleReferenceType, QBOField, RefinerSurveyType, TaskLogState, TaskLogType, ZeroStatePage } from 'src/app/core/models/enum/enum.model';
+import { ClickEvent, ErrorType, ExpenseState, ExportState, FyleField, FyleReferenceType, MappingDestinationField, RefinerSurveyType, TaskLogState, TaskLogType, ZeroStatePage } from 'src/app/core/models/enum/enum.model';
 import { DashboardService } from 'src/app/core/services/dashboard/dashboard.service';
 import { DashboardResolveMappingErrorDialogComponent } from 'src/app/shared/components/dashboard/dashboard-resolve-mapping-error-dialog/dashboard-resolve-mapping-error-dialog.component';
 import { WorkspaceService } from 'src/app/core/services/workspace/workspace.service';
-import { DashboardExportLogDialogComponent } from 'src/app/shared/components/dashboard/dashboard-export-log-dialog/dashboard-export-log-dialog.component';
-import { DashboardQboErrorDialogComponent } from 'src/app/shared/components/dashboard/dashboard-qbo-error-dialog/dashboard-qbo-error-dialog.component';
+// import { DashboardExportLogDialogComponent } from 'src/app/shared/components/dashboard/dashboard-export-log-dialog/dashboard-export-log-dialog.component';
+import { DashboardXeroErrorDialogComponent } from 'src/app/shared/components/dashboard/dashboard-xero-error-dialog/dashboard-xero-error-dialog.component';
 import { Task } from 'src/app/core/models/db/task-log.model';
 import { UserService } from 'src/app/core/services/misc/user.service';
 import { ExportableExpenseGroup } from 'src/app/core/models/db/expense-group.model';
@@ -18,6 +18,7 @@ import { ExpenseGroupSetting } from 'src/app/core/models/db/expense-group-settin
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { ResolveMappingErrorProperty } from 'src/app/core/models/misc/tracking.model';
 import { RefinerService } from 'src/app/core/services/integration/refiner.service';
+import { DashboardExportLogDialogComponent } from 'src/app/shared/components/dashboard/dashboard-export-log-dialog/dashboard-export-log-dialog.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -44,8 +45,6 @@ export class DashboardComponent implements OnInit {
 
   errors: GroupedErrors;
 
-  employeeFieldMapping: EmployeeFieldMapping;
-
   expenseGroupSetting: string;
 
   groupedErrorStat: GroupedErrorStat = {
@@ -66,9 +65,11 @@ export class DashboardComponent implements OnInit {
 
   getLastExport$: Observable<LastExport> = this.dashboardService.getLastExport();
 
-  private taskType: TaskLogType[] = [TaskLogType.FETCHING_EXPENSE, TaskLogType.CREATING_BILL, TaskLogType.CREATING_EXPENSE, TaskLogType.CREATING_CHECK, TaskLogType.CREATING_CREDIT_CARD_PURCHASE, TaskLogType.CREATING_JOURNAL_ENTRY, TaskLogType.CREATING_CREDIT_CARD_CREDIT, TaskLogType.CREATING_DEBIT_CARD_EXPENSE];
+  private taskType: TaskLogType[] = [TaskLogType.FETCHING_EXPENSE, TaskLogType.CREATING_BILL, TaskLogType.CREATING_BANK_TRANSACTION, TaskLogType.CREATING_PAYMENT];
 
   ZeroStatePage = ZeroStatePage;
+
+  employeeFieldMapping: string;
 
   constructor(
     private dashboardService: DashboardService,
@@ -86,7 +87,7 @@ export class DashboardComponent implements OnInit {
       switchMap(() => from(this.dashboardService.getAllTasks([], exportableExpenseGroupIds, this.taskType))),
       takeWhile((response) => response.results.filter(task => (task.status === 'IN_PROGRESS' || task.status === 'ENQUEUED') && exportableExpenseGroupIds.includes(task.expense_group)).length > 0, true)
     ).subscribe((res) => {
-      this.processedCount = res.results.filter(task => (task.status !== 'IN_PROGRESS' && task.status !== 'ENQUEUED') && (task.type !== TaskLogType.FETCHING_EXPENSE && task.type !== TaskLogType.CREATING_BILL_PAYMENT) && exportableExpenseGroupIds.includes(task.expense_group)).length;
+      this.processedCount = res.results.filter(task => (task.status !== 'IN_PROGRESS' && task.status !== 'ENQUEUED') && (task.type !== TaskLogType.FETCHING_EXPENSE && task.type !== TaskLogType.CREATING_PAYMENT) && exportableExpenseGroupIds.includes(task.expense_group)).length;
       this.exportProgressPercentage = Math.round((this.processedCount / exportableExpenseGroupIds.length) * 100);
 
       if (res.results.filter(task => (task.status === 'IN_PROGRESS' || task.status === 'ENQUEUED') && exportableExpenseGroupIds.includes(task.expense_group)).length === 0) {
@@ -130,7 +131,7 @@ export class DashboardComponent implements OnInit {
       [ErrorType.EMPLOYEE_MAPPING]: [],
       [ErrorType.CATEGORY_MAPPING]: [],
       [ErrorType.TAX_MAPPING]: [],
-      [ErrorType.QBO_ERROR]: []
+      [ErrorType.XERO_ERROR]: []
     });
   }
 
@@ -157,9 +158,9 @@ export class DashboardComponent implements OnInit {
     ]).subscribe((responses) => {
       this.lastExport = responses[0];
       this.errors = this.formatErrors(responses[1]);
-      this.employeeFieldMapping = responses[2].employee_field_mapping;
+      this.employeeFieldMapping = responses[2].auto_map_employees;
       this.expenseGroupSetting = this.getExpenseGroupingSetting(responses[4]);
-      this.importState = responses[4].expense_state;
+      this.importState = responses[4].ccc_expense_state;
 
       const queuedTasks: Task[] = responses[3].results.filter((task: Task) => task.status === TaskLogState.ENQUEUED || task.status === TaskLogState.IN_PROGRESS);
       this.failedExpenseGroupCount = responses[3].results.filter((task: Task) => task.status === TaskLogState.FAILED).length;
@@ -242,17 +243,17 @@ export class DashboardComponent implements OnInit {
     const eventStartTime = new Date();
     const errorType = groupedError[0].type;
     let sourceType: FyleField | null = null;
-    let destinationType: QBOField | EmployeeFieldMapping | null = null;
+    let destinationType: any | null = null;
 
     if (errorType === ErrorType.EMPLOYEE_MAPPING) {
       sourceType = FyleField.EMPLOYEE;
       destinationType = this.employeeFieldMapping;
     } else if (errorType === ErrorType.CATEGORY_MAPPING) {
       sourceType = FyleField.CATEGORY;
-      destinationType = QBOField.ACCOUNT;
+      destinationType = MappingDestinationField.ACCOUNT;
     } else if (errorType === ErrorType.TAX_MAPPING) {
       sourceType = FyleField.TAX_GROUP;
-      destinationType = QBOField.TAX_CODE;
+      destinationType = MappingDestinationField.TAX_CODE;
     }
 
     const dialogRef = this.dialog.open(DashboardResolveMappingErrorDialogComponent, {
@@ -293,8 +294,8 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  showDashboardQboError(error: Error): void {
-    this.dialog.open(DashboardQboErrorDialogComponent, {
+  showDashboardXeroError(error: Error): void {
+    this.dialog.open(DashboardXeroErrorDialogComponent, {
       width: '784px',
       height: '974px',
       data: error,

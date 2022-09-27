@@ -1,5 +1,5 @@
 import { WorkspaceGeneralSetting } from "../../../core/models/db/workspace-general-setting.model";
-import { EmployeeFieldMapping, ErrorType, ExpenseState, ExportDateType, ExportMode, TaskLogState, TaskLogType } from "../../../core/models/enum/enum.model";
+import { ErrorType, ExpenseState, ExportDateType, ExportMode, TaskLogState, TaskLogType } from "../../../core/models/enum/enum.model";
 import { ExpenseGroupSetting } from '../../../core/models/db/expense-group-setting.model';
 import { MinimalUser } from "src/app/core/models/db/user.model";
 import { LastExport } from "src/app/core/models/db/last-export.model";
@@ -11,40 +11,36 @@ const workspace_id = environment.tests.workspaceId;
 
 export const workspaceGeneralSettingResponse:WorkspaceGeneralSetting = {
   auto_create_destination_entity: true,
-  auto_map_employees: null,
-  category_sync_version: "v1",
+  auto_map_employees: 'null',
   change_accounting_period: true,
   charts_of_accounts: ['Expense'],
-  corporate_credit_card_expenses_object: null,
+  corporate_credit_card_expenses_object: 'null',
   created_at: new Date("2022-04-27T11:07:17.694377Z"),
-  employee_field_mapping: EmployeeFieldMapping.EMPLOYEE,
   id: 1,
   import_categories: false,
   import_projects: false,
   import_tax_codes: false,
-  import_vendors_as_merchants: false,
-  je_single_credit_line: true,
-  map_fyle_cards_qbo_account: true,
-  map_merchant_to_vendor: false,
-  memo_structure: ['Fyle'],
-  reimbursable_expenses_object: null,
+  reimbursable_expenses_object: 'null',
   skip_cards_mapping: false,
-  sync_fyle_to_qbo_payments: false,
-  sync_qbo_to_fyle_payments: false,
+  sync_fyle_to_xero_payments: false,
+  sync_xero_to_fyle_payments: false,
   updated_at: new Date("2022-04-28T12:48:39.150177Z"),
-  workspace: 1
+  workspace: 1,
+  map_merchant_to_contact: false,
+  import_customers: false
 };
 export const expenseGroupSettingResponse:ExpenseGroupSetting = {
   ccc_export_date_type: ExportDateType.CURRENT_DATE,
   corporate_credit_card_expense_group_fields: ["employee_email", "report_id", "expense_id", "fund_source"],
   created_at: new Date("2022-04-13T10:29:18.802702Z"),
-  expense_state: ExpenseState.PAYMENT_PROCESSING,
   id: 1,
   import_card_credits: false,
   reimbursable_expense_group_fields: ["employee_email", "report_id", "claim_number", "fund_source"],
   reimbursable_export_date_type: ExportDateType.CURRENT_DATE,
   updated_at: new Date("2022-04-13T10:29:18.802749Z"),
-  workspace: 1
+  workspace: 1,
+  reimbursable_expense_state: ExpenseState.PAYMENT_PROCESSING,
+  ccc_expense_state: ExpenseState.PAYMENT_PROCESSING
 };
 export const expenseGroupSettingResponse1 = {
   ccc_export_date_type: ExportDateType.CURRENT_DATE,
@@ -114,7 +110,7 @@ export const getExportErrorsData = [{
         vendor: 'string',
         billable: true,
         verified_at: new Date(),
-        paid_on_qbo: true,
+        paid_on_xero: true,
         custom_properties: []
       }
     ]
@@ -163,7 +159,7 @@ const task = [{
   created_at: new Date(),
   credit_card_purchase: 1,
   detail: "any",
-  quickbooks_errors: [],
+  xero_errors: [],
   expense_group: 1,
   id: 1,
   journal_entry: 1,
@@ -187,6 +183,6 @@ export const errorResponse = {
   error: {
     id: 1,
     is_expired: true,
-    company_name: 'QBO'
+    company_name: 'Xero'
   }
 };

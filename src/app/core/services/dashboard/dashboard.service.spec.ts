@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { ExportableExpenseGroup } from '../../models/db/expense-group.model';
 import { LastExport } from '../../models/db/last-export.model';
-import { TaskResponse } from '../../models/db/task-log.model';
+import { TaskResponse, Task } from '../../models/db/task-log.model';
 import { ExportMode, TaskLogState, TaskLogType } from '../../models/enum/enum.model';
 import { DashboardService } from './dashboard.service';
 
@@ -107,7 +107,7 @@ describe('DashboardService', () => {
       previous: null,
       results: []
     };
-    const taskType: TaskLogType[] = [TaskLogType.FETCHING_EXPENSE, TaskLogType.CREATING_BILL, TaskLogType.CREATING_EXPENSE, TaskLogType.CREATING_CHECK, TaskLogType.CREATING_CREDIT_CARD_PURCHASE, TaskLogType.CREATING_JOURNAL_ENTRY, TaskLogType.CREATING_CREDIT_CARD_CREDIT, TaskLogType.CREATING_DEBIT_CARD_EXPENSE];
+    const taskType: TaskLogType[] = [TaskLogType.FETCHING_EXPENSE, TaskLogType.CREATING_BILL, TaskLogType.CREATING_BANK_TRANSACTION, TaskLogType.CREATING_PAYMENT];
     service.getTasks(500, [TaskLogState.ENQUEUED, TaskLogState.IN_PROGRESS], [], taskType, null).subscribe((value) => {
       const responseKeys = Object.keys(response).sort();
       const actualKeys = Object.keys(value).sort();
@@ -115,7 +115,7 @@ describe('DashboardService', () => {
     });
     const req = httpMock.expectOne({
       method: 'GET',
-      url: `${API_BASE_URL}/workspaces/${workspace_id}/tasks/all/?limit=500&offset=0&status=ENQUEUED,IN_PROGRESS&task_type=FETCHING_EXPENSE,CREATING_BILL,CREATING_EXPENSE,CREATING_CHECK,CREATING_CREDIT_CARD_PURCHASE,CREATING_JOURNAL_ENTRY,CREATING_CREDIT_CARD_CREDIT,CREATING_DEBIT_CARD_EXPENSE`
+      url: `${API_BASE_URL}/workspaces/${workspace_id}/tasks/all/?limit=500&offset=0&status=ENQUEUED,IN_PROGRESS&task_type=FETCHING_EXPENSE,CREATING_BILL,CREATING_BANK_TRANSACTION,CREATING_PAYMENT`
     });
     req.flush(response);
   });
@@ -127,7 +127,7 @@ describe('DashboardService', () => {
       previous: null,
       results: []
     };
-    const taskType: TaskLogType[] = [TaskLogType.FETCHING_EXPENSE, TaskLogType.CREATING_BILL, TaskLogType.CREATING_EXPENSE, TaskLogType.CREATING_CHECK, TaskLogType.CREATING_CREDIT_CARD_PURCHASE, TaskLogType.CREATING_JOURNAL_ENTRY, TaskLogType.CREATING_CREDIT_CARD_CREDIT, TaskLogType.CREATING_DEBIT_CARD_EXPENSE];
+    const taskType: TaskLogType[] = [TaskLogType.FETCHING_EXPENSE, TaskLogType.CREATING_BILL, TaskLogType.CREATING_BANK_TRANSACTION, TaskLogType.CREATING_PAYMENT];
     service.getTasks(500, [TaskLogState.ENQUEUED, TaskLogState.IN_PROGRESS], [3], taskType, null).subscribe((value) => {
       const responseKeys = Object.keys(response).sort();
       const actualKeys = Object.keys(value).sort();
@@ -135,12 +135,12 @@ describe('DashboardService', () => {
     });
     const req = httpMock.expectOne({
       method: 'GET',
-      url: `${API_BASE_URL}/workspaces/${workspace_id}/tasks/all/?limit=500&offset=0&status=ENQUEUED,IN_PROGRESS&expense_group_ids=3&task_type=FETCHING_EXPENSE,CREATING_BILL,CREATING_EXPENSE,CREATING_CHECK,CREATING_CREDIT_CARD_PURCHASE,CREATING_JOURNAL_ENTRY,CREATING_CREDIT_CARD_CREDIT,CREATING_DEBIT_CARD_EXPENSE`
+      url: `${API_BASE_URL}/workspaces/${workspace_id}/tasks/all/?limit=500&offset=0&status=ENQUEUED,IN_PROGRESS&expense_group_ids=3&task_type=FETCHING_EXPENSE,CREATING_BILL,CREATING_BANK_TRANSACTION,CREATING_PAYMENT`
     });
     req.flush(response);
   });
 
-  xit('getTasks() service number check', () => {
+  it('getTasks() service number check', () => {
     const response:TaskResponse = {
       count: 0,
       next: null,
@@ -148,7 +148,7 @@ describe('DashboardService', () => {
       results: []
     };
     let responseKeys, actualKeys;
-    const taskType: TaskLogType[] = [TaskLogType.FETCHING_EXPENSE, TaskLogType.CREATING_BILL, TaskLogType.CREATING_EXPENSE, TaskLogType.CREATING_CHECK, TaskLogType.CREATING_CREDIT_CARD_PURCHASE, TaskLogType.CREATING_JOURNAL_ENTRY, TaskLogType.CREATING_CREDIT_CARD_CREDIT, TaskLogType.CREATING_DEBIT_CARD_EXPENSE];
+    const taskType: TaskLogType[] = [TaskLogType.FETCHING_EXPENSE, TaskLogType.CREATING_BILL, TaskLogType.CREATING_BANK_TRANSACTION, TaskLogType.CREATING_PAYMENT];
     service.getTasks(500, [TaskLogState.ENQUEUED, TaskLogState.IN_PROGRESS], [3], taskType, `${API_BASE_URL}/workspaces/${workspace_id}/tasks/all/?limit=500`).subscribe((value) => {
       responseKeys = Object.keys(response).sort();
       actualKeys = Object.keys(value).sort();
@@ -162,7 +162,7 @@ describe('DashboardService', () => {
   });
 
   it('getAllTask() service check', () => {
-    const taskType: TaskLogType[] = [TaskLogType.FETCHING_EXPENSE, TaskLogType.CREATING_BILL, TaskLogType.CREATING_EXPENSE, TaskLogType.CREATING_CHECK, TaskLogType.CREATING_CREDIT_CARD_PURCHASE, TaskLogType.CREATING_JOURNAL_ENTRY, TaskLogType.CREATING_CREDIT_CARD_CREDIT, TaskLogType.CREATING_DEBIT_CARD_EXPENSE];
+    const taskType: TaskLogType[] = [TaskLogType.FETCHING_EXPENSE, TaskLogType.CREATING_BILL, TaskLogType.CREATING_BANK_TRANSACTION, TaskLogType.CREATING_PAYMENT];
     const response:TaskResponse = {
       count: 0,
       next: null,
@@ -179,29 +179,29 @@ describe('DashboardService', () => {
     expect(response).toBeTruthy();
     const req = httpMock.expectOne({
       method: 'GET',
-      url: `${API_BASE_URL}/workspaces/${workspace_id}/tasks/all/?limit=500&offset=0&status=ENQUEUED,IN_PROGRESS,FAILED&expense_group_ids=3&task_type=FETCHING_EXPENSE,CREATING_BILL,CREATING_EXPENSE,CREATING_CHECK,CREATING_CREDIT_CARD_PURCHASE,CREATING_JOURNAL_ENTRY,CREATING_CREDIT_CARD_CREDIT,CREATING_DEBIT_CARD_EXPENSE`
+      url: `${API_BASE_URL}/workspaces/${workspace_id}/tasks/all/?limit=500&offset=0&status=ENQUEUED,IN_PROGRESS,FAILED&expense_group_ids=3&task_type=FETCHING_EXPENSE,CREATING_BILL,CREATING_BANK_TRANSACTION,CREATING_PAYMENT`
     });
     req.flush(response);
   });
 
 
   it('getAllTasksInternal function check', () => {
-    const taskType: TaskLogType[] = [TaskLogType.FETCHING_EXPENSE, TaskLogType.CREATING_BILL, TaskLogType.CREATING_EXPENSE, TaskLogType.CREATING_CHECK, TaskLogType.CREATING_CREDIT_CARD_PURCHASE, TaskLogType.CREATING_JOURNAL_ENTRY, TaskLogType.CREATING_CREDIT_CARD_CREDIT, TaskLogType.CREATING_DEBIT_CARD_EXPENSE];
-    const task = [{
+    const taskType: TaskLogType[] = [TaskLogType.FETCHING_EXPENSE, TaskLogType.CREATING_BILL, TaskLogType.CREATING_BANK_TRANSACTION, TaskLogType.CREATING_PAYMENT];
+    const task: Task[]  = [{
       bill: 1,
       cheque: 1,
       created_at: new Date(),
       credit_card_purchase: 1,
-      // Having any here is okay, didn't differentiate qbo errors and fyle errors
+      // Having any here is okay, didn't differentiate xero errors and fyle errors
       detail: "any",
-      quickbooks_errors: [],
+      xero_errors: [],
       expense_group: 1,
       id: 1,
       journal_entry: 1,
       bill_payment: 1,
       status: TaskLogState.COMPLETED,
       task_id: "string",
-      type: TaskLogType.CREATING_BILL,
+      type: TaskLogType.CREATING_BANK_TRANSACTION,
       updated_at: new Date(),
       workspace: 1
     }];
@@ -221,7 +221,7 @@ describe('DashboardService', () => {
     expect(response).toBeTruthy();
     const req = httpMock.expectOne({
       method: 'GET',
-      url: `${API_BASE_URL}/workspaces/${workspace_id}/tasks/all/?limit=500&offset=0&status=ENQUEUED,IN_PROGRESS,FAILED&expense_group_ids=3&task_type=FETCHING_EXPENSE,CREATING_BILL,CREATING_EXPENSE,CREATING_CHECK,CREATING_CREDIT_CARD_PURCHASE,CREATING_JOURNAL_ENTRY,CREATING_CREDIT_CARD_CREDIT,CREATING_DEBIT_CARD_EXPENSE`
+      url: `${API_BASE_URL}/workspaces/${workspace_id}/tasks/all/?limit=500&offset=0&status=ENQUEUED,IN_PROGRESS,FAILED&expense_group_ids=3&task_type=FETCHING_EXPENSE,CREATING_BILL,CREATING_BANK_TRANSACTION,CREATING_PAYMENT`
     });
     req.flush(response1);
   });
