@@ -163,7 +163,6 @@ export class ExportLogComponent implements OnInit {
         }
 
         const fyleUrl = this.exportLogService.generateFyleUrl(expenseGroup, referenceType);
-
         expenseGroups.push({
           exportedAt: expenseGroup.exported_at,
           employee: [expenseGroup.employee_name, expenseGroup.description.employee_email],
@@ -172,7 +171,7 @@ export class ExportLogComponent implements OnInit {
           referenceNumber: referenceNumber,
           exportedAs: exportType,
           fyleUrl: fyleUrl,
-          qboUrl: `${environment.qbo_app_url}/app/${type}?txnId=${id}`,
+          xeroUrl: type,
           expenses: expenseGroup.expenses
         });
       });

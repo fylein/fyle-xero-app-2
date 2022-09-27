@@ -10,7 +10,7 @@ export const EXPENSE_GROUP_LISTS: ExpenseGroupList[] = [
     expenseType: 'Credit Card',
     referenceNumber: 'E/2021/11/R/2',
     exportedAs: 'Journal Entry',
-    qboUrl: 'https://fylehq.com',
+    xeroUrl: 'https://fylehq.com',
     fyleUrl: 'https://fylehq.com',
     fyleReferenceType: FyleReferenceType.EXPENSE,
     expenses: []
@@ -75,7 +75,7 @@ export const expenseGroupresponse: ExpenseGroupResponse= {
           vendor: 'string',
           billable: true,
           verified_at: new Date(),
-          paid_on_qbo: true,
+          paid_on_xero: true,
           custom_properties: []
         }
       ]
@@ -137,7 +137,7 @@ export const expenseGroupresponse1: ExpenseGroupResponse= {
           vendor: 'string',
           billable: true,
           verified_at: new Date(),
-          paid_on_qbo: true,
+          paid_on_xero: true,
           custom_properties: []
         }
       ]
