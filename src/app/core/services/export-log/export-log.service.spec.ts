@@ -287,7 +287,7 @@ describe('ExportLogService', () => {
       expenses: []
     };
     const exportUrl = `${xeroUrl}/AccountsPayable/View.aspx?invoiceID=1`;
-    const actualresponse = [exportUrl, 1, 'Creating Bill'];
+    const actualresponse = [exportUrl, 1, 'Bill'];
     const reponse = service.generateExportTypeAndId(expencegroup);
     expect(reponse).toEqual(actualresponse);
   });
@@ -314,7 +314,7 @@ describe('ExportLogService', () => {
       expenses: []
     };
     const exportUrl = `${xeroUrl}/Bank/ViewTransaction.aspx?bankTransactionID=1&accountID=1`;
-    const actualresponse = [exportUrl, 1, 'Creating Bank Transaction'];
+    const actualresponse = [exportUrl, 1, 'Bank Transaction'];
     const reponse = service.generateExportTypeAndId(expencegroup);
     expect(reponse).toEqual(actualresponse);
   });
