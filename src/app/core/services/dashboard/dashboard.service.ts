@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { from, Observable } from 'rxjs';
+import { from, Observable, of } from 'rxjs';
 import { Cacheable } from 'ts-cacheable';
 import { Error } from '../../models/db/error.model';
 import { ExportableExpenseGroup } from '../../models/db/expense-group.model';
 import { LastExport } from '../../models/db/last-export.model';
 import { TaskGetParams, TaskResponse } from '../../models/db/task-log.model';
-import { TaskLogState, TaskLogType } from '../../models/enum/enum.model';
+import { ExportMode, TaskLogState, TaskLogType } from '../../models/enum/enum.model';
 import { ApiService } from '../core/api.service';
 import { WorkspaceService } from '../workspace/workspace.service';
 
@@ -24,15 +24,19 @@ export class DashboardService {
   // TODO: cleanup all methods once dashboard impl is done
 
   getExportableGroupsIds(): Observable<ExportableExpenseGroup> {
+    const response:ExportableExpenseGroup = {exportable_expense_group_ids: []};
+    // Return of(response)
     return this.apiService.get(`/workspaces/${this.workspaceId}/fyle/exportable_expense_groups/`, {});
   }
 
   getExportErrors(): Observable<Error[]> {
+    // Return of([]);
     return this.apiService.get(`/v2/workspaces/${this.workspaceId}/errors/`, {is_resolved: false});
   }
 
   @Cacheable()
   importExpenseGroups(): Observable<{}> {
+    // Return of([]);
     return this.apiService.post(`/workspaces/${this.workspaceId}/fyle/expense_groups/sync/`, {});
   }
 
@@ -41,6 +45,18 @@ export class DashboardService {
   }
 
   getLastExport(): Observable<LastExport> {
+    const response:LastExport={
+      created_at: new Date("2022-04-27T06:37:30.296865Z"),
+      export_mode: ExportMode.MANUAL,
+      failed_expense_groups_count: 5,
+      id: 154,
+      last_exported_at: new Date("2022-05-10T08:00:38.440819Z"),
+      successful_expense_groups_count: 0,
+      total_expense_groups_count: 5,
+      updated_at: new Date("2022-05-10T08:00:43.857641Z"),
+      workspace: 216
+    };
+    // Return of(response)
     return this.apiService.get(`/workspaces/${this.workspaceId}/export_detail/`, {});
   }
 

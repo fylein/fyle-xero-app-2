@@ -64,11 +64,9 @@ export class DashboardComponent implements OnInit {
 
   getLastExport$: Observable<LastExport> = this.dashboardService.getLastExport();
 
-  private taskType: TaskLogType[] = [TaskLogType.FETCHING_EXPENSE, TaskLogType.CREATING_BILL, TaskLogType.CREATING_BANK_TRANSACTION, TaskLogType.CREATING_PAYMENT];
+  private taskType: TaskLogType[] = [TaskLogType.FETCHING_EXPENSE, TaskLogType.CREATING_BILL, TaskLogType.CREATING_BANK_TRANSACTION];
 
   ZeroStatePage = ZeroStatePage;
-
-  employeeFieldMapping: string;
 
   constructor(
     private dashboardService: DashboardService,
@@ -86,7 +84,7 @@ export class DashboardComponent implements OnInit {
       switchMap(() => from(this.dashboardService.getAllTasks([], exportableExpenseGroupIds, this.taskType))),
       takeWhile((response) => response.results.filter(task => (task.status === 'IN_PROGRESS' || task.status === 'ENQUEUED') && exportableExpenseGroupIds.includes(task.expense_group)).length > 0, true)
     ).subscribe((res) => {
-      this.processedCount = res.results.filter(task => (task.status !== 'IN_PROGRESS' && task.status !== 'ENQUEUED') && (task.type !== TaskLogType.FETCHING_EXPENSE && task.type !== TaskLogType.CREATING_PAYMENT) && exportableExpenseGroupIds.includes(task.expense_group)).length;
+      this.processedCount = res.results.filter(task => (task.status !== 'IN_PROGRESS' && task.status !== 'ENQUEUED') && (task.type !== TaskLogType.FETCHING_EXPENSE) && exportableExpenseGroupIds.includes(task.expense_group)).length;
       this.exportProgressPercentage = Math.round((this.processedCount / exportableExpenseGroupIds.length) * 100);
 
       if (res.results.filter(task => (task.status === 'IN_PROGRESS' || task.status === 'ENQUEUED') && exportableExpenseGroupIds.includes(task.expense_group)).length === 0) {
@@ -151,23 +149,21 @@ export class DashboardComponent implements OnInit {
     forkJoin([
       this.getLastExport$.pipe(map((res) => res), catchError(() => of(null))),
       this.getExportErrors$,
-      this.workspaceService.getWorkspaceGeneralSettings(),
       this.dashboardService.getAllTasks([TaskLogState.ENQUEUED, TaskLogState.IN_PROGRESS, TaskLogState.FAILED], undefined, this.taskType),
       this.exportLogService.getExpenseGroupSettings()
     ]).subscribe((responses) => {
       this.lastExport = responses[0];
       this.errors = this.formatErrors(responses[1]);
-      this.employeeFieldMapping = responses[2].auto_map_employees;
-      this.expenseGroupSetting = this.getExpenseGroupingSetting(responses[4]);
-      this.importState = responses[4].ccc_expense_state;
+      this.expenseGroupSetting = this.getExpenseGroupingSetting(responses[3]);
+      this.importState = responses[3].reimbursable_expense_state;
 
-      const queuedTasks: Task[] = responses[3].results.filter((task: Task) => task.status === TaskLogState.ENQUEUED || task.status === TaskLogState.IN_PROGRESS);
-      this.failedExpenseGroupCount = responses[3].results.filter((task: Task) => task.status === TaskLogState.FAILED).length;
+      const queuedTasks: Task[] = responses[2].results.filter((task: Task) => task.status === TaskLogState.ENQUEUED || task.status === TaskLogState.IN_PROGRESS);
+      this.failedExpenseGroupCount = responses[2].results.filter((task: Task) => task.status === TaskLogState.FAILED).length;
 
       if (queuedTasks.length) {
         this.importInProgress = false;
         this.exportInProgress = true;
-        this.exportableExpenseGroupIds = responses[3].results.filter((task: Task) => task.status === TaskLogState.ENQUEUED || task.status === TaskLogState.IN_PROGRESS).map((task: Task) => task.expense_group);
+        this.exportableExpenseGroupIds = responses[2].results.filter((task: Task) => task.status === TaskLogState.ENQUEUED || task.status === TaskLogState.IN_PROGRESS).map((task: Task) => task.expense_group);
         this.pollExportStatus(this.exportableExpenseGroupIds);
       } else {
         this.dashboardService.importExpenseGroups().subscribe(() => {
@@ -246,7 +242,7 @@ export class DashboardComponent implements OnInit {
 
     if (errorType === ErrorType.EMPLOYEE_MAPPING) {
       sourceType = FyleField.EMPLOYEE;
-      destinationType = this.employeeFieldMapping;
+      destinationType = MappingDestinationField.CONTACT;
     } else if (errorType === ErrorType.CATEGORY_MAPPING) {
       sourceType = FyleField.CATEGORY;
       destinationType = MappingDestinationField.ACCOUNT;

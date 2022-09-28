@@ -9,26 +9,6 @@ import { ExportableExpenseGroup } from "src/app/core/models/db/expense-group.mod
 const API_BASE_URL = environment.api_url;
 const workspace_id = environment.tests.workspaceId;
 
-export const workspaceGeneralSettingResponse:WorkspaceGeneralSetting = {
-  auto_create_destination_entity: true,
-  auto_map_employees: 'null',
-  change_accounting_period: true,
-  charts_of_accounts: ['Expense'],
-  corporate_credit_card_expenses_object: 'null',
-  created_at: new Date("2022-04-27T11:07:17.694377Z"),
-  id: 1,
-  import_categories: false,
-  import_projects: false,
-  import_tax_codes: false,
-  reimbursable_expenses_object: 'null',
-  skip_cards_mapping: false,
-  sync_fyle_to_xero_payments: false,
-  sync_xero_to_fyle_payments: false,
-  updated_at: new Date("2022-04-28T12:48:39.150177Z"),
-  workspace: 1,
-  map_merchant_to_contact: false,
-  import_customers: false
-};
 export const expenseGroupSettingResponse:ExpenseGroupSetting = {
   ccc_export_date_type: ExportDateType.CURRENT_DATE,
   corporate_credit_card_expense_group_fields: ["employee_email", "report_id", "expense_id", "fund_source"],

@@ -10,7 +10,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { DashboardService } from 'src/app/core/services/dashboard/dashboard.service';
-import { workspaceGeneralSettingResponse, errorResponse, expenseGroupSettingResponse, user, getExportErrorsData, getLastExportResponse, allTasksResponse, getExportableGroupsIdsResponse, expenseGroupSettingResponse1 } from 'src/app/integration/main/dashboard/dashboard.fixture';
+import { errorResponse, expenseGroupSettingResponse, user, getExportErrorsData, getLastExportResponse, allTasksResponse, getExportableGroupsIdsResponse, expenseGroupSettingResponse1 } from 'src/app/integration/main/dashboard/dashboard.fixture';
 import { DashboardModule } from './dashboard.module';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ErrorType, ExportState, TaskLogState } from 'src/app/core/models/enum/enum.model';
@@ -35,7 +35,6 @@ describe('DashboardComponent', () => {
       getUserProfile: () => of(user)
     };
     const service3 = {
-      getWorkspaceGeneralSettings: () => of(workspaceGeneralSettingResponse),
       getWorkspaceId: () => workspaceId
     };
     const service4 = {
