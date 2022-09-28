@@ -238,7 +238,7 @@ export class DashboardComponent implements OnInit {
     const eventStartTime = new Date();
     const errorType = groupedError[0].type;
     let sourceType: FyleField | null = null;
-    let destinationType: any | null = null;
+    let destinationType: string | null = null;
 
     if (errorType === ErrorType.EMPLOYEE_MAPPING) {
       sourceType = FyleField.EMPLOYEE;
