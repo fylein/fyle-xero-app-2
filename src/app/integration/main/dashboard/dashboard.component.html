@@ -12,14 +12,14 @@
             <div class="export--info-section">
               <span fxLayout="row">
                 <h3 *ngIf="!exportInProgress && !exportableExpenseGroupIds.length">Sit back and relax!</h3>
-                <h3 *ngIf="exportInProgress">Exporting {{ processedCount }} of {{ exportableExpenseGroupIds.length }} Transaction{{exportableExpenseGroupIds.length > 1 ? 's' : ''}} to your QBO account</h3>
+                <h3 *ngIf="exportInProgress">Exporting {{ processedCount }} of {{ exportableExpenseGroupIds.length }} Transaction{{exportableExpenseGroupIds.length > 1 ? 's' : ''}} to your Xero account</h3>
                 <h3 *ngIf="!exportInProgress && exportableExpenseGroupIds.length">{{ exportableExpenseGroupIds.length }} Transaction{{exportableExpenseGroupIds.length > 1 ? 's' : ''}} ready to export</h3>
                 <img src="assets/images/svgs/general/info.svg" class="export--info-icon" width="16px" height="16px" matTooltip="All expenses from {{ importState === ExpenseState.PAYMENT_PROCESSING ? 'your' : 'the' }} {{ importState | titlecase | snakeCaseToSpaceCase }} state in Fyle will be automatically imported" matTooltipPosition="right" matTooltipClass="right" />
               </span>
               <div class="export--info-text paragraph">
                 <h5 *ngIf="!exportInProgress && !exportableExpenseGroupIds.length">No new Transaction to export from the {{ importState | titlecase | snakeCaseToSpaceCase }} state in Fyle.</h5>
                 <h5 *ngIf="!exportInProgress && !exportableExpenseGroupIds.length">Once you start processing payment for the expenses, they will be automatically available here to export.</h5>
-                <h5 *ngIf="!exportInProgress && exportableExpenseGroupIds.length">Click on <b>Export</b> to start exporting expenses from Fyle as QBO transactions.</h5>
+                <h5 *ngIf="!exportInProgress && exportableExpenseGroupIds.length">Click on <b>Export</b> to start exporting expenses from Fyle as Xero transactions.</h5>
                 <h5 *ngIf="exportInProgress">This may take a few minutes. Please wait...</h5>
                 <div *ngIf="!exportInProgress && failedExpenseGroupCount !== null && failedExpenseGroupCount > 0" fxLayout="row">
                   <h5>{{ exportableExpenseGroupIds.length - failedExpenseGroupCount > 0 ? exportableExpenseGroupIds.length - failedExpenseGroupCount : 0 }} new Transaction{{(exportableExpenseGroupIds.length - failedExpenseGroupCount) > 1 ? 's' : ''}}, {{ failedExpenseGroupCount }} previously failed Transaction{{failedExpenseGroupCount > 1 ? 's' : ''}}</h5>
@@ -127,7 +127,7 @@
     <!-- past export shimmer -->
 
     <div *ngIf="!isLoading && lastExport && errors" class="errors paragraph">
-      <div class="errors--section" [ngClass]="{'errors--zero-state-section': !errors || !errors?.EMPLOYEE_MAPPING?.length && !errors?.CATEGORY_MAPPING?.length && !errors?.TAX_MAPPING?.length && !errors?.QBO_ERROR?.length}">
+      <div class="errors--section" [ngClass]="{'errors--zero-state-section': !errors || !errors?.EMPLOYEE_MAPPING?.length && !errors?.CATEGORY_MAPPING?.length && !errors?.TAX_MAPPING?.length && !errors?.XERO_ERROR?.length}">
         <p class="errors--header" fxLayout="row">
           Errors
           <img src="assets/images/svgs/general/info.svg" class="errors--info-icon" width="16px" height="16px" matTooltip="Expenses failed to export due to the following errors. Resolve them before trying to re-export again." matTooltipPosition="right" matTooltipClass="right" />
@@ -203,26 +203,26 @@
           <p class="errors--divider"></p>
         </div>
 
-        <div *ngIf="errors?.QBO_ERROR?.length" class="errors--integration-error-section">
+        <div *ngIf="errors?.XERO_ERROR?.length" class="errors--integration-error-section">
           <div class="errors--integration-error-contents">
-            <p>Quickbooks Errors</p>
-            <h5 class="errors--integration-error-sub-header sub-text-color">Resolve these errors on your Quickbooks Account before trying to re-export them again.</h5>
+            <p>Xero Errors</p>
+            <h5 class="errors--integration-error-sub-header sub-text-color">Resolve these errors on your Xero Account before trying to re-export them again.</h5>
           </div>
         </div>
 
-        <div *ngFor="let error of errors?.QBO_ERROR">
-          <div fxLayout="row" fxLayoutAlign="space-between center" class="errors--qbo-error">
+        <div *ngFor="let error of errors?.XERO_ERROR">
+          <div fxLayout="row" fxLayoutAlign="space-between center" class="errors--xero-error">
             <div>
               <p>{{ error.error_title }}</p>
-              <h5 class="errors--qbo-error-short-description sub-text-color">{{ error.error_detail }}</h5>
+              <h5 class="errors--xero-error-short-description sub-text-color">{{ error.error_detail }}</h5>
             </div>
             <div fxLayout="row" fxLayoutAlign="center center" class="errors--view-expenses pointer">
-              <h5 class="errors--view-expenses-text single-line-text" (click)="showDashboardQboError(error)">View Expenses</h5>
+              <h5 class="errors--view-expenses-text single-line-text" (click)="showDashboardXeroError(error)">View Expenses</h5>
             </div>
           </div>
         </div>
 
-        <app-zero-state-with-illustration *ngIf="lastExport && !errors.EMPLOYEE_MAPPING.length && !errors.CATEGORY_MAPPING.length && !errors.TAX_MAPPING.length && !errors.QBO_ERROR.length && !groupedErrorStat.CATEGORY_MAPPING && !groupedErrorStat.EMPLOYEE_MAPPING" [page]="ZeroStatePage.dashboard_error"></app-zero-state-with-illustration>
+        <app-zero-state-with-illustration *ngIf="lastExport && !errors.EMPLOYEE_MAPPING.length && !errors.CATEGORY_MAPPING.length && !errors.TAX_MAPPING.length && !errors.XERO_ERROR.length && !groupedErrorStat.CATEGORY_MAPPING && !groupedErrorStat.EMPLOYEE_MAPPING" [page]="ZeroStatePage.dashboard_error"></app-zero-state-with-illustration>
       </div>
     </div>
 

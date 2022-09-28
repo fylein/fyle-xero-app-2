@@ -96,7 +96,7 @@ export class WorkspaceService {
       sync_fyle_to_xero_payments: false,
       sync_xero_to_fyle_payments: false,
       updated_at: new Date("2022-04-28T12:48:39.150177Z"),
-      workspace: 1,
+      workspace: 5,
       reimbursable_expenses_object: '',
       corporate_credit_card_expenses_object: '',
       map_merchant_to_contact: false,
