@@ -1,8 +1,5 @@
 import { Injectable } from '@angular/core';
-import { of } from 'rxjs';
-import { getImportsettingResponse } from 'src/app/shared/components/configuration/import-settings/import-settings.fixture';
-import { ImportSettingGet, ImportSettingModel, ImportSettingPost } from '../../models/configuration/import-setting.model';
-import { MappingDestinationField, MappingSourceField } from '../../models/enum/enum.model';
+import { ImportSettingPost } from '../../models/configuration/import-setting.model';
 import { ApiService } from '../core/api.service';
 import { WorkspaceService } from '../workspace/workspace.service';
 

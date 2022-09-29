@@ -153,6 +153,14 @@ describe('XeroConnectorComponent', () => {
     expect(xeroService.revokeXeroConnection).toHaveBeenCalled();
   });
 
+  it('disconnectXero function check', () => {
+    spyOn(xeroService, 'getXeroCredentials').and.returnValue(throwError(errorResponse2));
+    component.xeroCompanyName = 'Xero-Fyle';
+    fixture.detectChanges();
+    expect(component.disconnectXero()).toBeUndefined();
+    expect(xeroService.getXeroCredentials).toHaveBeenCalled();
+  });
+
   it('postXeroCredential function connectXero success check', () => {
     component.xeroConnectionInProgress = true;
     spyOn(xeroService, 'connectXero').and.callThrough();
