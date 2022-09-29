@@ -44,7 +44,7 @@ export class ImportSettingsComponent implements OnInit, OnDestroy {
 
   fyleExpenseFields: string[];
 
-  xeroExpenseFields: ExpenseFieldsFormOption[] | any[];
+  xeroExpenseFields: ExpenseFieldsFormOption[];
 
   chartOfAccountTypesList: string[] = ['Expense', 'Asset', 'Equity', 'Liability', 'Revenue'];
 
