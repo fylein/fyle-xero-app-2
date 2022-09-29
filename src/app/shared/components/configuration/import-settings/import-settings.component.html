@@ -34,26 +34,11 @@
           </div>
         </div>
 
-        <div formArrayName="expenseFields" class="paragraph">
-          <div class="import-settings--field-toggle-section">
-            <div fxLayout="row" fxLayoutAlign="space-between center">
-              <div class="import-settings--field-label-section import-settings--import-area">
-                Import Xero customers as Projects in Fyle
-                <h5 class="configuration--field-label sub-text-color">
-                  The imported Departments from Xero will be a selectable field while creating an expense.
-                </h5>
-                <h5 class="configuration--field-label sub-text-color">
-                  NOTE: To export billable expenses from Fyle, map Customers in Xero to Projects in Fyle.
-                </h5>
-              </div>
-              <div class="configuration--input-toggle-section">
-                <mat-slide-toggle class="configuration--toggle-form-field" color="accent"
-                  [disabled]="expenseFields.value.disable_import_to_fyle">
-                </mat-slide-toggle>
-              </div>
-            </div>
-          </div>
-        </div>
+        <app-configuration-toggle-field [form]="importSettingsForm"
+          [label]="'Import Xero customers as Projects in Fyle'"
+          [subLabel]="'The imported Departments from Xero will be a selectable field while creating an expense.'"
+          [formControllerName]="'importCustomers'">
+        </app-configuration-toggle-field>
 
         <div formArrayName="expenseFields" class="paragraph">
           <div *ngFor="let expenseField of expenseFields.controls; let i = index" [formGroupName]="i">
@@ -62,7 +47,8 @@
                 <div class="import-settings--field-label-section import-settings--import-area">
                   Import {{ expenseField.value.destination_field | titlecase }} from Xero
                   <h5 class="configuration--field-label sub-text-color">
-                    The imported {{ expenseField.value.destination_field | titlecase }} from Xero will be a selectable field while creating an expense.
+                    The imported {{ expenseField.value.destination_field | titlecase }} from Xero will be a selectable
+                    field while creating an expense.
                   </h5>
                 </div>
                 <div class="configuration--input-toggle-section">

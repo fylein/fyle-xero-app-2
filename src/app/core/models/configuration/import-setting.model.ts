@@ -8,7 +8,8 @@ import { WorkspaceGeneralSetting } from "../db/workspace-general-setting.model";
 export type ImportSettingWorkspaceGeneralSetting = {
   import_categories: boolean,
   charts_of_accounts: string[],
-  import_tax_codes: boolean
+  import_tax_codes: boolean,
+  import_customers: boolean
 }
 
 export type ImportSettingGeneralMapping = {
@@ -56,7 +57,8 @@ export class ImportSettingModel {
       workspace_general_settings: {
         import_categories: importSettingsForm.get('chartOfAccount')?.value,
         charts_of_accounts: ImportSettingModel.formatChartOfAccounts(importSettingsForm.get('chartOfAccountTypes')?.value),
-        import_tax_codes: importSettingsForm.get('taxCode')?.value
+        import_tax_codes: importSettingsForm.get('taxCode')?.value,
+        import_customers: importSettingsForm.get('importCustomers')?.value
       },
       general_mappings: {
         default_tax_code: importSettingsForm.get('defaultTaxCode')?.value ? importSettingsForm.get('defaultTaxCode')?.value : emptyDestinationAttribute

@@ -44,7 +44,7 @@ export class ImportSettingsComponent implements OnInit, OnDestroy {
 
   fyleExpenseFields: string[];
 
-  xeroExpenseFields: ExpenseFieldsFormOption[];
+  xeroExpenseFields: ExpenseFieldsFormOption[] | any[];
 
   chartOfAccountTypesList: string[] = ['Expense', 'Asset', 'Equity', 'Liability', 'Revenue'];
 
@@ -151,7 +151,8 @@ export class ImportSettingsComponent implements OnInit, OnDestroy {
       expenseFields: this.formBuilder.array(expenseFieldsFormArray),
       taxCode: [this.importSettings.workspace_general_settings.import_tax_codes],
       defaultTaxCode: [this.importSettings.general_mappings?.default_tax_code?.id ? this.importSettings.general_mappings.default_tax_code : null],
-      searchOption: []
+      searchOption: [],
+      importCustomers: [this.importSettings.workspace_general_settings.import_customers]
     });
 
     this.setCustomValidatorsAndWatchers();
@@ -163,6 +164,7 @@ export class ImportSettingsComponent implements OnInit, OnDestroy {
     forkJoin([
       this.importSettingService.getImportSettings(),
       this.mappingService.getFyleExpenseFields(),
+      this.mappingService.getXeroField(),
       this.mappingService.getXeroDestinationAttributes('TAX_CODE')
     ]).subscribe(response => {
       this.importSettings = response[0];
@@ -176,22 +178,21 @@ export class ImportSettingsComponent implements OnInit, OnDestroy {
       }
 
       // Remove custom mapped Xero fields
-      const xeroAttributes = [MappingDestinationField.ACCOUNT, MappingDestinationField.BANK_ACCOUNT, MappingDestinationField.CONTACT, MappingDestinationField.TAX_CODE].filter(
-        field => !customMappedXeroFields.includes(field)
+      const xeroAttributes = response[2].filter(
+        field => !customMappedXeroFields.includes(field.attribute_type)
       );
 
       this.xeroExpenseFields = xeroAttributes.map(attribute => {
-        const mappingSetting = this.importSettings.mapping_settings.filter((mappingSetting: MappingSetting) => mappingSetting.destination_field === attribute);
+        const mappingSetting = this.importSettings.mapping_settings.filter((mappingSetting: MappingSetting) => mappingSetting.destination_field === attribute.attribute_type);
         return {
           source_field: mappingSetting.length > 0 ? mappingSetting[0].source_field : '',
-          destination_field: attribute,
+          destination_field: attribute.display_name,
           import_to_fyle: mappingSetting.length > 0 ? mappingSetting[0].import_to_fyle : false,
           disable_import_to_fyle: false,
           source_placeholder: ''
         };
       });
-
-      this.taxCodes = response[2];
+      this.taxCodes = response[3];
 
       this.setupForm();
     });

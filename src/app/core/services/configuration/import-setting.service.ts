@@ -18,12 +18,10 @@ export class ImportSettingService {
   ) { }
 
   getImportSettings() {
-    // Return of(getImportsettingResponse);
     return this.apiService.get(`/v2/workspaces/${this.workspaceId}/import_settings/`, {});
   }
 
   postImportSettings(exportSettingsPayload: ImportSettingPost){
-    // Return of(getImportsettingResponse);
     return this.apiService.put(`/v2/workspaces/${this.workspaceId}/import_settings/`, exportSettingsPayload);
   }
 }

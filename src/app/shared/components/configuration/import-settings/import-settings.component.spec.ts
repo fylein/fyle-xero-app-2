@@ -48,7 +48,8 @@ describe('ImportSettingsComponent', () => {
     service2 = {
       getFyleExpenseFields: () => of(expenseFieldresponse),
       getXeroDestinationAttributes: () => of(destinationAttribute),
-      refreshMappingPages: () => undefined
+      refreshMappingPages: () => undefined,
+      getXeroField: () => of(expenseFieldresponse)
     };
     service3 = {
       getOnboardingState: () => 'IMPORT_SETTINGS',
@@ -103,7 +104,8 @@ describe('ImportSettingsComponent', () => {
       expenseFields: formbuilder.array(expenseFieldsFormArray),
       taxCode: [component.importSettings.workspace_general_settings.import_tax_codes],
       defaultTaxCode: [component.importSettings.general_mappings?.default_tax_code?.id ? component.importSettings.general_mappings.default_tax_code : null],
-      searchOption: []
+      searchOption: [],
+      xeroCutomers: [component.importSettings.workspace_general_settings.import_customers]
     });
     component.fyleExpenseFields = expenseFieldresponse.map(field => field.attribute_type);
     fixture.detectChanges();
@@ -146,9 +148,10 @@ describe('ImportSettingsComponent', () => {
       expenseFields: formbuilder.array(expenseFieldsFormArray),
       taxCode: [component.importSettings.workspace_general_settings.import_tax_codes],
       defaultTaxCode: [component.importSettings.general_mappings?.default_tax_code?.id ? component.importSettings.general_mappings.default_tax_code : null],
-      searchOption: []
+      searchOption: [],
+      xeroCutomers: [component.importSettings.workspace_general_settings.import_customers]
     });
-    expect(component.createExpenseField(MappingDestinationField.ACCOUNT)).toBeUndefined();
+    expect(component.createExpenseField('Project')).toBeUndefined();
     expect(dialogSpy).toHaveBeenCalled();
   });
 
@@ -207,7 +210,8 @@ describe('ImportSettingsComponent', () => {
       expenseFields: formbuilder.array(expenseFieldsFormArray),
       taxCode: [component.importSettings.workspace_general_settings.import_tax_codes],
       defaultTaxCode: [component.importSettings.general_mappings?.default_tax_code?.id ? component.importSettings.general_mappings.default_tax_code : null],
-      searchOption: []
+      searchOption: [],
+      xeroCutomers: [component.importSettings.workspace_general_settings.import_customers]
     });
     expect(component.showFyleExpenseFormPreview()).toBeUndefined();
     fixture.detectChanges();
