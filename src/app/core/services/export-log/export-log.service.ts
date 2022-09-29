@@ -4,7 +4,7 @@ import { environment } from 'src/environments/environment';
 import { Cacheable } from 'ts-cacheable';
 import { ExpenseGroupSetting } from '../../models/db/expense-group-setting.model';
 import { ExpenseGroup, ExpenseGroupDescription, ExpenseGroupResponse } from '../../models/db/expense-group.model';
-import { FyleReferenceType } from '../../models/enum/enum.model';
+import { ExpenseState, ExportDateType, FyleReferenceType } from '../../models/enum/enum.model';
 import { SelectedDateFilter } from '../../models/misc/date-filter.model';
 import { ApiService } from '../core/api.service';
 import { UserService } from '../misc/user.service';
@@ -30,6 +30,20 @@ export class ExportLogService {
 
   @Cacheable()
   getExpenseGroupSettings(): Observable<ExpenseGroupSetting> {
+    const response:ExpenseGroupSetting = {
+      corporate_credit_card_expense_group_fields: ["employee_email", "report_id", "claim_number", "fund_source"],
+      created_at: new Date("2022-04-13T10:29:18.802702Z"),
+      reimbursable_expense_state: ExpenseState.PAYMENT_PROCESSING,
+      id: 1,
+      import_card_credits: false,
+      reimbursable_expense_group_fields: ["employee_email", "report_id", "claim_number", "fund_source"],
+      reimbursable_export_date_type: ExportDateType.CURRENT_DATE,
+      updated_at: new Date("2022-04-13T10:29:18.802749Z"),
+      workspace: 1,
+      ccc_expense_state: ExpenseState.PAYMENT_PROCESSING,
+      ccc_export_date_type: ExportDateType.APPROVED_AT
+    };
+    // Return of(response)
     return this.apiService.get(`/workspaces/${this.workspaceId}/fyle/expense_group_settings/`, {});
   }
 
