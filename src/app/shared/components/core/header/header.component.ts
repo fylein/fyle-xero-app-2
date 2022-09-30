@@ -15,6 +15,8 @@ import { UserService } from 'src/app/core/services/misc/user.service';
 import { WorkspaceService } from 'src/app/core/services/workspace/workspace.service';
 import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
 import { currency } from 'src/app/core/models/db/workspace.model';
+import { environment } from 'src/environments/environment';
+import { StorageService } from 'src/app/core/services/core/storage.service';
 
 @Component({
   selector: 'app-header',
@@ -39,6 +41,8 @@ export class HeaderComponent implements OnInit {
 
   activePage: string;
 
+  showSwitchApp: boolean = false;
+
   @ViewChild('menuButton') menuButton: ElementRef;
 
   @ViewChild('helpButton') helpButton: ElementRef;
@@ -62,6 +66,7 @@ export class HeaderComponent implements OnInit {
     private router: Router,
     private renderer: Renderer2,
     private trackingService: TrackingService,
+    private storageService: StorageService,
     private userService: UserService,
     private windowService: WindowService,
     private workspaceService: WorkspaceService
@@ -123,10 +128,40 @@ export class HeaderComponent implements OnInit {
         this.activePage = this.getActivePageName(val.url);
       }
     });
+    const workspaceCreatedAt: Date = this.workspaceService.getWorkspaceCreatedAt();
+    // Cut off date to be 6th June 2022 3.30pm IST
+    const oldAppCutOffDate = new Date('2022-06-06T09:30:00.000Z');
+
+    if (workspaceCreatedAt.getTime() < oldAppCutOffDate.getTime()) {
+      this.showSwitchApp = true;
+    }
   }
 
   navigateBack() {
     this.location.back();
+  }
+
+  switchToOldApp(): void {
+    this.workspaceService.patchWorkspace().subscribe(() => {
+      const user = this.userService.getUserProfile();
+
+      const localStorageDump = {
+        email: user.email,
+        access_token: user.access_token,
+        refresh_token: user.refresh_token,
+        user: {
+          employee_email: user.email,
+          full_name: user.full_name,
+          user_id: user.user_id,
+          org_id: user.org_id,
+          org_name: user.org_name
+        },
+        orgsCount: this.storageService.get('refresh_token')
+      };
+
+      this.trackingService.onSwitchToOldApp();
+      this.windowReference.location.href = `${environment.old_xero_app_url}?local_storage_dump=${encodeURIComponent(JSON.stringify(localStorageDump))}`;
+    });
   }
 
   switchFyleOrg(): void {

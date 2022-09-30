@@ -163,4 +163,18 @@ describe('WorkspaceService', () => {
     const currency = service.getCurrency();
     expect(currency).toEqual(response);
   });
+
+  it('patchworkspace service check', () => {
+    const response={
+      app: 'done'
+    };
+    service.patchWorkspace().subscribe((value) => {
+      expect(value).toBeDefined();
+    });
+    const req = httpMock.expectOne({
+      method: 'PATCH',
+      url: `${API_BASE_URL}/workspaces/${workspace_id}/`
+    });
+  req.flush(response);
+  });
 });

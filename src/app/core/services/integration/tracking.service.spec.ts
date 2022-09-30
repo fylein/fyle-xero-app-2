@@ -83,4 +83,9 @@ describe('TrackingService', () => {
     };
     expect(service.onDeleteEvent(DeleteEvent.CUSTOM_MAPPING, properties)).toBeUndefined();
   });
+
+  it('onSwitchToOldApp function check', () => {
+    expect(service.onSwitchToOldApp()).toBeUndefined();
+  });
+
 });
