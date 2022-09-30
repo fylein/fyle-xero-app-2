@@ -95,7 +95,7 @@ export const expenseFieldresponse:ExpenseField[]=[
 ];
 export const xeroField:ExpenseFieldsFormOption[] = [{
   source_field: MappingSourceField.TAX_GROUP,
-  destination_field: MappingDestinationField.TAX_CODE,
+  destination_field: MappingDestinationField.ACCOUNT,
   import_to_fyle: true,
   disable_import_to_fyle: true,
   source_placeholder: null

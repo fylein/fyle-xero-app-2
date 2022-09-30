@@ -29,13 +29,15 @@ describe('ImportSettingModel', () => {
       taxCode: new FormControl(true),
       defaultTaxCode: new FormControl({id: '1', name: 'Fyle'}),
       searchOption: new FormControl([]),
-      importVendorsAsMerchants: new FormControl(true)
+      importVendorsAsMerchants: new FormControl(true),
+      importCustomers: new FormControl(false)
     });
     const employeeSettingPayload: ImportSettingPost = {
       workspace_general_settings: {
         import_categories: true,
         charts_of_accounts: ImportSettingModel.formatChartOfAccounts([{enabled: true, name: 'expence'}]),
-        import_tax_codes: true
+        import_tax_codes: true,
+        import_customers: false
       },
       general_mappings: {
         default_tax_code: {id: '1', name: 'Fyle'}

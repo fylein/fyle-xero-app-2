@@ -44,7 +44,8 @@ describe('ImportSettingService', () => {
       workspace_general_settings: {
         import_categories: true,
         charts_of_accounts: ImportSettingModel.formatChartOfAccounts([{enabled: true, name: 'expence'}]),
-        import_tax_codes: true
+        import_tax_codes: true,
+        import_customers: false
       },
       general_mappings: {
         default_tax_code: {id: '1', name: 'Fyle'}
