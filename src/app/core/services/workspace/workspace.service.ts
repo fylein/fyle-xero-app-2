@@ -154,4 +154,12 @@ export class WorkspaceService {
     return this.storageService.get('currency');
   }
 
+  patchWorkspace(): Observable<Workspace> {
+    return this.apiService.patch(`/workspaces/${this.getWorkspaceId()}/`, {app_version: 'v1'});
+  }
+
+  getWorkspaceCreatedAt(): Date {
+    return new Date(this.storageService.get('workspaceCreatedAt'));
+  }
+
 }

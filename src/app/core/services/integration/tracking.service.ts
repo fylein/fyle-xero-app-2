@@ -131,4 +131,8 @@ export class TrackingService {
   onMappingsAlphabeticalFilter(properties: MappingAlphabeticalFilterAdditionalProperty): void {
     this.eventTrack('Mappings Alphabetical Filter', properties);
   }
+
+  onSwitchToOldApp(): void {
+    this.eventTrack('Switching to old app');
+  }
 }
