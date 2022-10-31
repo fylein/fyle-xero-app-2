@@ -26,17 +26,7 @@ export class XeroConnectorService {
   })
   connectXero(workspaceId: string, code:string): Observable<XeroCredentials> {
     globalCacheBusterNotifier.next();
-    const response: XeroCredentials = {
-      country: "GB",
-      created_at: new Date("2021-10-05T11:56:13.883015Z"),
-      id: +workspaceId,
-      refresh_token: "AB",
-      company_name: 'Xero',
-      updated_at: new Date("2022-05-06T13:13:25.893837Z"),
-      workspace: 1
-    };
-    // Return of(response);
-    return this.apiService.post(`/workspaces/${workspaceId}/connect_xero/authorization_code/`, code);
+    return this.apiService.post(`/workspaces/${workspaceId}/connect_xero/authorization_code/`, {code: code});
   }
 
   @Cacheable({
