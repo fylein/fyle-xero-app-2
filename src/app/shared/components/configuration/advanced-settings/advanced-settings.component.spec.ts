@@ -77,7 +77,7 @@ describe('AdvancedSettingsComponent', () => {
     component.advancedSettings = getadvancedSettingResponse;
     const form = formbuilder.group({
       paymentSync: [PaymentSyncDirection.FYLE_TO_XERO],
-      billPaymentAccount: [component.advancedSettings.general_mappings.bill_payment_account?.id],
+      billPaymentAccount: [component.advancedSettings.general_mappings.payment_account?.id],
       changeAccountingPeriod: [component.advancedSettings.workspace_general_settings.change_accounting_period],
       autoCreateVendors: [component.advancedSettings.workspace_general_settings.auto_create_destination_entity],
       exportSchedule: [component.advancedSettings.workspace_schedules?.enabled ? component.advancedSettings.workspace_schedules.interval_hours : false],
@@ -119,7 +119,7 @@ describe('AdvancedSettingsComponent', () => {
   it('Save Function check', () => {
     const form = formbuilder.group({
       paymentSync: [PaymentSyncDirection.FYLE_TO_XERO],
-      billPaymentAccount: [component.advancedSettings.general_mappings.bill_payment_account?.id],
+      billPaymentAccount: [component.advancedSettings.general_mappings.payment_account?.id],
       changeAccountingPeriod: [component.advancedSettings.workspace_general_settings.change_accounting_period],
       autoCreateVendors: [component.advancedSettings.workspace_general_settings.auto_create_destination_entity],
       exportSchedule: [component.advancedSettings.workspace_schedules?.enabled ? component.advancedSettings.workspace_schedules.interval_hours : false],
@@ -144,7 +144,7 @@ describe('AdvancedSettingsComponent', () => {
   it('Save Function check', () => {
     const form = formbuilder.group({
       paymentSync: [PaymentSyncDirection.FYLE_TO_XERO],
-      billPaymentAccount: [component.advancedSettings.general_mappings.bill_payment_account?.id],
+      billPaymentAccount: [component.advancedSettings.general_mappings.payment_account?.id],
       changeAccountingPeriod: [component.advancedSettings.workspace_general_settings.change_accounting_period],
       autoCreateVendors: [component.advancedSettings.workspace_general_settings.auto_create_destination_entity],
       exportSchedule: [component.advancedSettings.workspace_schedules?.enabled ? component.advancedSettings.workspace_schedules.interval_hours : false],
@@ -167,7 +167,7 @@ describe('AdvancedSettingsComponent', () => {
   it('Save FAILURE Function check', () => {
     const form = formbuilder.group({
       paymentSync: [PaymentSyncDirection.FYLE_TO_XERO],
-      billPaymentAccount: [component.advancedSettings.general_mappings.bill_payment_account?.id],
+      billPaymentAccount: [component.advancedSettings.general_mappings.payment_account?.id],
       changeAccountingPeriod: [component.advancedSettings.workspace_general_settings.change_accounting_period],
       autoCreateVendors: [component.advancedSettings.workspace_general_settings.auto_create_destination_entity],
       exportSchedule: [component.advancedSettings.workspace_schedules?.enabled ? component.advancedSettings.workspace_schedules.interval_hours : false],

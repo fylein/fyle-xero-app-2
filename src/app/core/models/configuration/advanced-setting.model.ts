@@ -12,7 +12,7 @@ export type AdvancedSettingWorkspaceGeneralSetting = {
 }
 
 export type AdvancedSettingGeneralMapping = {
-  bill_payment_account: DefaultDestinationAttribute
+  payment_account: DefaultDestinationAttribute
 }
 
 export type AdvancedSettingWorkspaceSchedule = {
@@ -63,7 +63,7 @@ export class AdvancedSettingModel {
         change_accounting_period: advancedSettingsForm.get('changeAccountingPeriod')?.value
       },
       general_mappings: {
-        bill_payment_account: advancedSettingsForm.get('billPaymentAccount')?.value ? advancedSettingsForm.get('billPaymentAccount')?.value : emptyDestinationAttribute
+        payment_account: advancedSettingsForm.get('billPaymentAccount')?.value ? advancedSettingsForm.get('billPaymentAccount')?.value : emptyDestinationAttribute
       },
       workspace_schedules: {
         enabled: advancedSettingsForm.get('exportSchedule')?.value ? true : false,

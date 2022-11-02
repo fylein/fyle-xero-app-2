@@ -49,7 +49,9 @@ describe('XeroConnectorComponent', () => {
       connectXero: () => of(response),
       revokeXeroConnection: () => of(response),
       getXeroTenants: () => of(tenant),
-      postTenantMappings: () => of(Tenantresponse)
+      postXeroTenants: () => of(tenant),
+      postTenantMappings: () => of(Tenantresponse),
+      getTenantMappings: () => of(Tenantresponse)
     };
     service2 = {
       getExportSettings: () => of(exportResponse)
@@ -225,5 +227,15 @@ describe('XeroConnectorComponent', () => {
     expect(component.ngOnInit()).toBeUndefined();
     fixture.detectChanges();
     expect(component.isLoading).toBeFalse();
+  });
+
+  it('getTenant function check', () => {
+    expect(component.getTenant()).toBeUndefined();
+    expect(component.tenantList).toBe(tenant);
+  });
+
+  it('postTenant function check', () => {
+    expect(component.postTenant()).toBeUndefined();
+    expect(component.tenantList).toBe(tenant);
   });
 });

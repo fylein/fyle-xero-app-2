@@ -177,4 +177,8 @@ describe('WorkspaceService', () => {
     });
   req.flush(response);
   });
+
+  it('getWorkspaceCreatedAt function check', () => {
+    expect(service.getWorkspaceCreatedAt()).toBeDefined(Date);
+  });
 });

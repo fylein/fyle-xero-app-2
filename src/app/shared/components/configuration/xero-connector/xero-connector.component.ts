@@ -1,7 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
-import { environment } from 'src/environments/environment';
 import { ExportSettingGet } from 'src/app/core/models/configuration/export-setting.model';
 import { XeroCredentials } from 'src/app/core/models/configuration/xero-connector.model';
 import { ExportSettingService } from 'src/app/core/services/configuration/export-setting.service';
@@ -15,9 +14,8 @@ import { ConfirmationDialog } from 'src/app/core/models/misc/confirmation-dialog
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationDialogComponent } from '../../core/confirmation-dialog/confirmation-dialog.component';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
-import { tenant } from './xero-connector.fixture';
 import { TenantMapping, TenantMappingPost } from 'src/app/core/models/db/tenant-mapping.model';
 
 @Component({
@@ -102,10 +100,12 @@ export class XeroConnectorComponent implements OnInit, OnDestroy {
     if (this.xeroConnectorForm.valid) {
       this.xeroConnectionInProgress = true;
       const tenantMappingPayload: TenantMappingPost = {
-        tenantId: this.xeroConnectorForm.value.xeroTenant.id,
-        tenantName: this.xeroConnectorForm.value.xeroTenant.name
+        tenant_id: this.xeroConnectorForm.value.xeroTenant.id,
+        tenant_name: this.xeroConnectorForm.value.xeroTenant.name
       };
       this.xeroConnectorService.postTenantMappings(tenantMappingPayload).subscribe((response:TenantMapping) => {
+        this.trackingService.onOnboardingStepCompletion(OnboardingStep.CONNECT_XERO, 1);
+        this.workspaceService.setOnboardingState(OnboardingState.EXPORT_SETTINGS);
         this.xeroConnectionInProgress = false;
         this.xeroTokenExpired = false;
         this.showOrHideDisconnectXero();
@@ -181,9 +181,8 @@ export class XeroConnectorComponent implements OnInit, OnDestroy {
   private postXeroCredentials(code: string): void {
     this.xeroConnectorService.connectXero(this.workspaceService.getWorkspaceId(), code).subscribe((xeroCredentials: XeroCredentials) => {
       this.workspaceService.refreshXeroDimensions().subscribe(() => {
-        this.trackingService.onOnboardingStepCompletion(OnboardingStep.CONNECT_XERO, 1);
-        this.workspaceService.setOnboardingState(OnboardingState.EXPORT_SETTINGS);
         this.xeroConnectionInProgress = false;
+        this.postTenant();
         this.showOrHideDisconnectXero();
       });
     }, (error) => {
@@ -199,7 +198,11 @@ export class XeroConnectorComponent implements OnInit, OnDestroy {
 
   private getSettings(): void {
     this.xeroConnectorService.getXeroCredentials(this.workspaceService.getWorkspaceId()).subscribe((xeroCredentials: XeroCredentials) => {
-      this.xeroCompanyName = xeroCredentials.company_name;
+      // This.xeroCompanyName = xeroCredentials.company_name;
+      this.getTenant();
+      this.xeroConnectorService.getTenantMappings().subscribe((tenant: TenantMapping) => {
+        this.xeroCompanyName = tenant.tenant_name;
+      });
       this.showOrHideDisconnectXero();
     }, (error) => {
       // Token expired
@@ -214,6 +217,7 @@ export class XeroConnectorComponent implements OnInit, OnDestroy {
       this.isXeroConnected = false;
       this.isContinueDisabled = true;
       this.isLoading = false;
+      this.xeroConnectionInProgress = false;
     });
   }
 
@@ -223,14 +227,23 @@ export class XeroConnectorComponent implements OnInit, OnDestroy {
     if (code) {
       this.isXeroConnected = false;
       this.isLoading = false;
-      this.xeroConnectorService.getXeroTenants().subscribe((tenantList: DestinationAttribute[]) => {
-        this.tenantList = tenantList;
-        this.xeroConnectionInProgress = true;
-      });
+      this.xeroConnectionInProgress = true;
       this.postXeroCredentials(code);
     } else {
       this.getSettings();
     }
+  }
+
+  postTenant() {
+    this.xeroConnectorService.postXeroTenants().subscribe(() => {
+      this.getTenant();
+    });
+  }
+
+  getTenant() {
+    this.xeroConnectorService.getXeroTenants().subscribe((tenantList: DestinationAttribute[]) => {
+      this.tenantList = tenantList;
+    });
   }
 
   ngOnDestroy(): void {

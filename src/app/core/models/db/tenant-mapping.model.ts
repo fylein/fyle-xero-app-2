@@ -10,6 +10,6 @@ export type TenantMapping = {
 };
 
 export type TenantMappingPost = {
-    tenantId: string;
-    tenantName: string;
+    tenant_id: string;
+    tenant_name: string;
 }

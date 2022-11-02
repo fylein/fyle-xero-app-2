@@ -119,7 +119,7 @@ describe('ApiService', () => {
         change_accounting_period: true
       },
       general_mappings: {
-        bill_payment_account: { id: '1', name: 'Fyle' }
+        payment_account: { id: '1', name: 'Fyle' }
       },
       workspace_schedules: {
         enabled: true,
@@ -136,7 +136,7 @@ describe('ApiService', () => {
         change_accounting_period: true
       },
       general_mappings: {
-        bill_payment_account: { id: '1', name: 'Fyle' }
+        payment_account: { id: '1', name: 'Fyle' }
       },
       workspace_schedules: {
         enabled: true,
@@ -164,7 +164,7 @@ describe('ApiService', () => {
         change_accounting_period: true
       },
       general_mappings: {
-        bill_payment_account: { id: '1', name: 'Fyle' }
+        payment_account: { id: '1', name: 'Fyle' }
       },
       workspace_schedules: {
         enabled: true,
@@ -181,7 +181,7 @@ describe('ApiService', () => {
         change_accounting_period: true
       },
       general_mappings: {
-        bill_payment_account: { id: '1', name: 'Fyle' }
+        payment_account: { id: '1', name: 'Fyle' }
       },
       workspace_schedules: {
         enabled: true,

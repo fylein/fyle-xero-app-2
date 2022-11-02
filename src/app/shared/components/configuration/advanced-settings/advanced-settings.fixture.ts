@@ -34,7 +34,7 @@ export const advancedSettingResponse:AdvancedSettingGet = {
 
       },
       general_mappings: {
-        bill_payment_account: {id: '1', name: 'Fyle'}
+        payment_account: {id: '1', name: 'Fyle'}
       },
       workspace_schedules: {
         enabled: true,
@@ -82,7 +82,7 @@ export const getadvancedSettingResponse:AdvancedSettingGet = {
 
   },
   general_mappings: {
-    bill_payment_account: {id: '1', name: 'Fyle'}
+    payment_account: {id: '1', name: 'Fyle'}
   },
   workspace_schedules: {
     enabled: true,
@@ -101,7 +101,7 @@ export const getadvancedSettingResponse2:AdvancedSettingGet = {
 
   },
   general_mappings: {
-    bill_payment_account: {id: '1', name: 'Fyle'}
+    payment_account: {id: '1', name: 'Fyle'}
   },
   workspace_schedules: {
     enabled: true,

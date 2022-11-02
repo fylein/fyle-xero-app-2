@@ -342,15 +342,10 @@ export class ExportSettingsComponent implements OnInit, OnDestroy {
     const destinationAttributes = ['BANK_ACCOUNT', 'TAX_CODE'];
     forkJoin([
       this.exportSettingService.getExportSettings(),
-      this.mappingService.getGroupedXeroDestinationAttributes(destinationAttributes),
-      this.workspaceService.getWorkspaceGeneralSettings()
+      this.mappingService.getGroupedXeroDestinationAttributes(destinationAttributes)
     ]).subscribe(response => {
       this.exportSettings = response[0];
-      // This.employeeFieldMapping = response[2].employee_field_mapping;
-      // This.reimbursableExportTypes = this.getReimbursableExportTypes(this.employeeFieldMapping);
-
-      this.bankAccounts = destinationAttribute.BANK_ACCOUNT;
-      // Response[1].BANK_ACCOUNT;
+      this.bankAccounts = response[1].BANK_ACCOUNT;
 
       this.setupForm();
     });
@@ -379,7 +374,7 @@ export class ExportSettingsComponent implements OnInit, OnDestroy {
   }
 
   private updateExportSettings(): boolean {
-    return this.exportSettings.workspace_general_settings.reimbursable_expenses_object !== null || this.exportSettings.workspace_general_settings.corporate_credit_card_expenses_object !== null;
+    return this.exportSettings?.workspace_general_settings?.reimbursable_expenses_object !== null || this.exportSettings?.workspace_general_settings?.corporate_credit_card_expenses_object !== null;
   }
 
   private paymentsSyncAffected(): boolean {

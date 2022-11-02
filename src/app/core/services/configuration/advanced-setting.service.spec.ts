@@ -3,7 +3,6 @@ import { AdvancedSettingService } from './advanced-setting.service';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { AdvancedSettingGet, AdvancedSettingPost } from '../../models/configuration/advanced-setting.model';
 import { environment } from 'src/environments/environment';
-import { WorkspaceScheduleEmailOptions } from '../../models/db/workspace-schedule.model';
 
 describe('AdvancedSettingService', () => {
   let service: AdvancedSettingService;
@@ -36,7 +35,7 @@ describe('AdvancedSettingService', () => {
         change_accounting_period: true
       },
       general_mappings: {
-        bill_payment_account: { id: '1', name: 'Fyle' }
+        payment_account: { id: '1', name: 'Fyle' }
       },
       workspace_schedules: {
         enabled: true,
@@ -50,7 +49,7 @@ describe('AdvancedSettingService', () => {
     });
     const req = httpMock.expectOne({
 	      method: 'GET',
-	      url: `${API_BASE_URL}/v2/workspaces/${workspace_id}/advanced_configurations/`
+	      url: `${API_BASE_URL}/v2/workspaces/${workspace_id}/advanced_settings/`
 	    });
     req.flush(advancedSettingResponse);
   });
@@ -64,7 +63,7 @@ describe('AdvancedSettingService', () => {
         change_accounting_period: true
       },
       general_mappings: {
-        bill_payment_account: { id: '1', name: 'Fyle' }
+        payment_account: { id: '1', name: 'Fyle' }
       },
       workspace_schedules: {
         enabled: true,
@@ -81,7 +80,7 @@ describe('AdvancedSettingService', () => {
         change_accounting_period: true
       },
       general_mappings: {
-        bill_payment_account: { id: '1', name: 'Fyle' }
+        payment_account: { id: '1', name: 'Fyle' }
       },
       workspace_schedules: {
         enabled: true,
@@ -95,7 +94,7 @@ describe('AdvancedSettingService', () => {
     });
     const req = httpMock.expectOne({
       method: 'PUT',
-      url: `${API_BASE_URL}/v2/workspaces/${workspace_id}/advanced_configurations/`
+      url: `${API_BASE_URL}/v2/workspaces/${workspace_id}/advanced_settings/`
     });
   req.flush(advancedSettingResponse);
   });
