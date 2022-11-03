@@ -6,7 +6,7 @@ import { ExportSettingsComponent } from './export-settings.component';
 import { HttpClientModule } from '@angular/common/http';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { CorporateCreditCardExpensesObject, ExpenseGroupingFieldOption, ExpenseState, OnboardingState, ReimbursableExpensesObject, TenantFieldMapping } from 'src/app/core/models/enum/enum.model';
-import { destinationAttribute, errorResponse, exportResponse, replacecontent1, replacecontent2, replacecontent3, workspaceResponse } from './export-settings.fixture';
+import { destinationAttribute, errorResponse, exportResponse, replacecontent1, replacecontent2 } from './export-settings.fixture';
 import { MappingService } from 'src/app/core/services/misc/mapping.service';
 import { WorkspaceService } from 'src/app/core/services/workspace/workspace.service';
 import { ExportSettingService } from 'src/app/core/services/configuration/export-setting.service';
@@ -15,6 +15,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { environment } from 'src/environments/environment';
 
 describe('ExportSettingsComponent', () => {
   let component: ExportSettingsComponent;
@@ -32,6 +33,7 @@ describe('ExportSettingsComponent', () => {
   const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of({}), close: null });
   dialogRefSpyObj.componentInstance = { body: '' };
   beforeEach(async () => {
+    localStorage.setItem('workspaceId', environment.tests.workspaceId);
     service1 = {
       getExportSettings: () => of(exportResponse),
       postExportSettings: () => of(exportResponse)
@@ -92,10 +94,6 @@ describe('ExportSettingsComponent', () => {
     const output = response.toLowerCase().charAt(0).toUpperCase() + response.toLowerCase().slice(1);
     expect(component.getExportType(ReimbursableExpensesObject.PURCHASE_BILL)).toEqual(output);
   });
-
-  // It('getReimbursableExportTypes function check', () => {
-  //   Expect(component.getReimbursableExportTypes(TenantFieldMapping.TENANT)).toEqual(export_settings);
-  // });
 
   it('navigateToPreviousStep function check', () => {
     expect(component.navigateToPreviousStep()).toBeUndefined();

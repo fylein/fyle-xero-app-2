@@ -13,7 +13,6 @@ import { WorkspaceService } from 'src/app/core/services/workspace/workspace.serv
 import { of, throwError } from 'rxjs';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { OnboardingState, PaymentSyncDirection } from '../../../../core/models/enum/enum.model';
-import { By } from '@angular/platform-browser';
 import { environment } from 'src/environments/environment';
 import { MatDialog } from '@angular/material/dialog';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
@@ -39,6 +38,7 @@ describe('AdvancedSettingsComponent', () => {
   dialogRefSpyObj.componentInstance = { body: '' };
 
   beforeEach(async () => {
+    localStorage.setItem('workspaceId', environment.tests.workspaceId);
     service1 = {
       postAdvancedSettings: () => of(advancedSettingResponse),
       getAdvancedSettings: () => of(getadvancedSettingResponse),
