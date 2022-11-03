@@ -41,6 +41,7 @@ describe('ImportSettingsComponent', () => {
     source_placeholder: 'close'}), close: null });
   dialogRefSpyObj.componentInstance = { body: '' };
   beforeEach(async () => {
+    localStorage.setItem('workspaceId', '2');
     service1 = {
       getImportSettings: () => of(getImportsettingResponse),
       postImportSettings: () => of(postImportsettingresponse)

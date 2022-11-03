@@ -32,6 +32,7 @@ describe('ExportSettingsComponent', () => {
   const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of({}), close: null });
   dialogRefSpyObj.componentInstance = { body: '' };
   beforeEach(async () => {
+    localStorage.setItem('workspaceId', '2');
     service1 = {
       getExportSettings: () => of(exportResponse),
       postExportSettings: () => of(exportResponse)
@@ -92,10 +93,6 @@ describe('ExportSettingsComponent', () => {
     const output = response.toLowerCase().charAt(0).toUpperCase() + response.toLowerCase().slice(1);
     expect(component.getExportType(ReimbursableExpensesObject.PURCHASE_BILL)).toEqual(output);
   });
-
-  // It('getReimbursableExportTypes function check', () => {
-  //   Expect(component.getReimbursableExportTypes(TenantFieldMapping.TENANT)).toEqual(export_settings);
-  // });
 
   it('navigateToPreviousStep function check', () => {
     expect(component.navigateToPreviousStep()).toBeUndefined();
