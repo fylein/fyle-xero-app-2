@@ -15,6 +15,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { environment } from 'src/environments/environment';
 
 describe('ExportSettingsComponent', () => {
   let component: ExportSettingsComponent;
@@ -32,7 +33,7 @@ describe('ExportSettingsComponent', () => {
   const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of({}), close: null });
   dialogRefSpyObj.componentInstance = { body: '' };
   beforeEach(async () => {
-    localStorage.setItem('workspaceId', '2');
+    localStorage.setItem('workspaceId', environment.tests.workspaceId);
     service1 = {
       getExportSettings: () => of(exportResponse),
       postExportSettings: () => of(exportResponse)
