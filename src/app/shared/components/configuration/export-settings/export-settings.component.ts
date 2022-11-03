@@ -174,7 +174,6 @@ export class ExportSettingsComponent implements OnInit, OnDestroy {
   private createReimbursableExpenseWatcher(): void {
     this.exportSettingsForm.controls.reimbursableExpense.valueChanges.subscribe((isReimbursableExpenseSelected) => {
       if (isReimbursableExpenseSelected) {
-        this.exportSettingsForm.controls.autoMapEmployees.setValidators(Validators.required);
         this.exportSettingsForm.controls.reimbursableExportType.setValidators(Validators.required);
         this.exportSettingsForm.controls.reimbursableExportType.patchValue(ReimbursableExpensesObject.PURCHASE_BILL);
         this.exportSettingsForm.controls.reimbursableExportDate.setValidators(Validators.required);
@@ -182,7 +181,6 @@ export class ExportSettingsComponent implements OnInit, OnDestroy {
       } else {
         this.exportSettingsForm.controls.reimbursableExportType.clearValidators();
         this.exportSettingsForm.controls.reimbursableExportDate.clearValidators();
-        this.exportSettingsForm.controls.autoMapEmployees.clearValidators();
         this.exportSettingsForm.controls.reimbursableExportType.setValue(null);
         this.exportSettingsForm.controls.reimbursableExportDate.setValue(null);
       }
