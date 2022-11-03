@@ -4,7 +4,6 @@ import { Observable, of } from 'rxjs';
 import { StorageService } from '../core/storage.service';
 import { Workspace } from '../../models/db/workspace.model';
 import { OnboardingState } from '../../models/enum/enum.model';
-import { map, publishReplay, refCount } from 'rxjs/operators';
 import { WorkspaceGeneralSetting } from '../../models/db/workspace-general-setting.model';
 
 @Injectable({
