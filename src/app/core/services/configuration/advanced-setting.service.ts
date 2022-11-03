@@ -1,9 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Observable, of, Subject } from 'rxjs';
-import { advancedSettingResponse } from 'src/app/shared/components/configuration/advanced-settings/advanced-settings.fixture';
+import { Observable, Subject } from 'rxjs';
 import { Cacheable, CacheBuster } from 'ts-cacheable';
-import { AdvancedSettingGet, AdvancedSettingPost, AdvancedSettingWorkspaceSchedulePost } from '../../models/configuration/advanced-setting.model';
-import { WorkspaceSchedule, WorkspaceScheduleEmailOptions } from '../../models/db/workspace-schedule.model';
+import { AdvancedSettingGet, AdvancedSettingPost } from '../../models/configuration/advanced-setting.model';
 import { ApiService } from '../core/api.service';
 import { WorkspaceService } from '../workspace/workspace.service';
 
@@ -23,33 +21,14 @@ export class AdvancedSettingService {
     cacheBusterObserver: advancedSettingsCache$
   })
   getAdvancedSettings(): Observable<AdvancedSettingGet> {
-    const advancedSettingResponse:AdvancedSettingGet = {
-      workspace_general_settings: {
-        sync_fyle_to_xero_payments: false,
-        sync_xero_to_fyle_payments: false,
-        auto_create_destination_entity: true,
-        change_accounting_period: true
-      },
-      general_mappings: {
-        bill_payment_account: { id: '1', name: 'Fyle' }
-      },
-      workspace_schedules: {
-        enabled: true,
-        interval_hours: 10,
-        start_datetime: new Date()
-      },
-      workspace_id: 1
-    };
-    // Return of(advancedSettingResponse);
-    return this.apiService.get(`/v2/workspaces/${this.workspaceId}/advanced_configurations/`, {});
+    return this.apiService.get(`/v2/workspaces/${this.workspaceId}/advanced_settings/`, {});
   }
 
   @CacheBuster({
     cacheBusterNotifier: advancedSettingsCache$
   })
-  postAdvancedSettings(exportSettingsPayload: AdvancedSettingPost): Observable<AdvancedSettingGet> {
-    // Return of(advancedSettingResponse)
-    return this.apiService.put(`/v2/workspaces/${this.workspaceId}/advanced_configurations/`, exportSettingsPayload);
+  postAdvancedSettings(advancedSettingPayload: AdvancedSettingPost): Observable<AdvancedSettingGet> {
+    return this.apiService.put(`/v2/workspaces/${this.workspaceId}/advanced_settings/`, advancedSettingPayload);
   }
 
 }

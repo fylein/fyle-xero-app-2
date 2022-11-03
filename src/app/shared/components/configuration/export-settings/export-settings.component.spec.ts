@@ -41,7 +41,6 @@ describe('ExportSettingsComponent', () => {
       refreshMappingPages: () => undefined
     };
     service3 = {
-      getWorkspaceGeneralSettings: () => of(workspaceResponse),
       getOnboardingState: () => OnboardingState.EXPORT_SETTINGS,
       setOnboardingState: () => undefined
     };

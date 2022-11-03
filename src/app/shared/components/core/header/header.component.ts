@@ -108,7 +108,9 @@ export class HeaderComponent implements OnInit {
     this.user = this.userService.getUserProfile();
 
     this.xeroConnectorService.getXeroCredentials(this.workspaceService.getWorkspaceId()).subscribe((credentials: XeroCredentials) => {
-      this.xeroCompanyName = credentials.company_name;
+      this.xeroConnectorService.getTenantMappings().subscribe((tenant) => {
+        this.xeroCompanyName = tenant.tenant_name;
+      });
     }, (error) => {
       this.isXeroConnected = false;
       if ('id' in error.error) {

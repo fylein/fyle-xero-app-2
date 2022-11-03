@@ -9,7 +9,7 @@ import { AuthService } from 'src/app/core/services/core/auth.service';
 import { WorkspaceService } from 'src/app/core/services/workspace/workspace.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { of, ReplaySubject, throwError } from 'rxjs';
-import { response } from '../../configuration/xero-connector/xero-connector.fixture';
+import { response, Tenantresponse } from '../../configuration/xero-connector/xero-connector.fixture';
 import { NavigationStart, Router, RouterEvent } from '@angular/router';
 import { Renderer2, Type } from '@angular/core';
 import { environment } from 'src/environments/environment';
@@ -47,7 +47,8 @@ describe('HeaderComponent', () => {
 
     service2 = {
       revokeXeroConnection: () => of(response),
-      getXeroCredentials: () => of(response)
+      getXeroCredentials: () => of(response),
+      getTenantMappings: () => of(Tenantresponse)
     };
     const eve = new Event('click', {});
     service3 = {

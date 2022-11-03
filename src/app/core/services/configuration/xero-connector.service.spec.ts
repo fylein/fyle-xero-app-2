@@ -128,7 +128,37 @@ describe('XeroConnectorService', () => {
     req.flush(response);
   });
 
-  it('postTenantMappings service check', () => {
+  it('postXeroTenantList service check', () => {
+    const response: DestinationAttribute[] = [
+      {
+        active: false,
+        attribute_type: "TENANT",
+        created_at: new Date("2022-08-29T08:02:06.216066Z"),
+        destination_id: "25d7b4cd-ed1c-4c5c-80e5-c058b87db8a1",
+        detail: {
+          email: "string",
+          fully_qualified_name: "string"
+        },
+        display_name: "Tenant",
+        id: 13671,
+        updated_at: new Date("2022-08-29T08:02:06.216097Z"),
+        value: "Demo Company (Global)",
+        workspace: 162
+      }
+    ];
+    service.postXeroTenants().subscribe(value => {
+      const keys = Object.keys(value).sort();
+      const responseKeys = Object.keys(response).sort();
+      expect(keys).toEqual(responseKeys);
+    });
+    const req = httpMock.expectOne({
+      method: 'POST',
+      url: `${API_BASE_URL}/workspaces/${workspace_id}/xero/tenants/`
+    });
+    req.flush(response);
+  });
+
+  it('postTenantMapping service check', () => {
     const response: TenantMapping = {
       id: 123,
       tenant_name: 'Xero',
@@ -139,14 +169,34 @@ describe('XeroConnectorService', () => {
       workspace: +workspace_id
     };
     const tenantMappingPayload: TenantMappingPost = {
-      tenantId: 'xcy',
-      tenantName: 'Xero'
+      tenant_id: 'xcy',
+      tenant_name: 'Xero'
     };
-    service.postTenantMappings(tenantMappingPayload).subscribe(value => {
+    service.postTenantMapping(tenantMappingPayload).subscribe(value => {
       expect(value).toBe(response);
     });
     const req = httpMock.expectOne({
       method: 'POST',
+      url: `${API_BASE_URL}/workspaces/${workspace_id}/mappings/tenant/`
+    });
+    req.flush(response);
+  });
+
+  it('getTenantMappings service check', () => {
+    const response: TenantMapping = {
+      id: 123,
+      tenant_name: 'Xero',
+      tenant_id: 'xcy',
+      connection_id: "string",
+      created_at: new Date("2022-08-29T08:02:06.216097Z"),
+      updated_at: new Date("2022-08-29T08:02:06.216097Z"),
+      workspace: +workspace_id
+    };
+    service.getTenantMappings().subscribe(value => {
+      expect(value).toBe(response);
+    });
+    const req = httpMock.expectOne({
+      method: 'GET',
       url: `${API_BASE_URL}/workspaces/${workspace_id}/mappings/tenant/`
     });
     req.flush(response);

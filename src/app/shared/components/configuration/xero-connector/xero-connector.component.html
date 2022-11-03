@@ -65,7 +65,7 @@
             <h4 *ngIf="!isXeroConnected && !xeroConnectionInProgress && !xeroTokenExpired" (click)="connectXero()" class="xero-connector--switch-org-text actionable-text align-center">
               Connect to Xero
             </h4>
-            <h4 *ngIf="!xeroConnectionInProgress && !xeroTokenExpired && showDisconnectXero" class="xero-connector--switch-org-info-text align-center sub-text-color single-line-text">
+            <h4 *ngIf="!xeroConnectionInProgress && !xeroTokenExpired && showDisconnectXero && isXeroConnected" class="xero-connector--switch-org-info-text align-center sub-text-color single-line-text">
               Not the Tenant that you wish to connect with?
             </h4>
             <h4 *ngIf="xeroConnectionInProgress" class="xero-connector--connection-in-progress-text align-center sub-text-color">
@@ -77,7 +77,7 @@
             <h4 *ngIf="!xeroConnectionInProgress && xeroTokenExpired" (click)="connectXero()" class="xero-connector--switch-org-text actionable-text align-center">
               Re-Connect to Xero
             </h4>
-            <h4 *ngIf="!xeroConnectionInProgress && showDisconnectXero" (click)="disconnectXero()" class="xero-connector--switch-org-text actionable-text align-center">
+            <h4 *ngIf="!xeroConnectionInProgress && showDisconnectXero && isXeroConnected" (click)="disconnectXero()" class="xero-connector--switch-org-text actionable-text align-center">
               Disconnect
             </h4>
           </div>

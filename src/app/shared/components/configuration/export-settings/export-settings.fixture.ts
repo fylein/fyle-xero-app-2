@@ -55,7 +55,7 @@ export const exportResponse: ExportSettingGet = {
     ccc_expense_state: ExpenseState.PAID
   },
   workspace_general_settings: {
-    reimbursable_expenses_object: ReimbursableExpensesObject.PURCHASE_BILL,
+    reimbursable_expenses_object: null,
     corporate_credit_card_expenses_object: CorporateCreditCardExpensesObject.BANK_TRANSACTION,
     auto_map_employees: AutoMapEmployee.EMAIL
   },
