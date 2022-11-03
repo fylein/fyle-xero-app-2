@@ -50,7 +50,7 @@ describe('XeroConnectorComponent', () => {
       revokeXeroConnection: () => of(response),
       getXeroTenants: () => of(tenant),
       postXeroTenants: () => of(tenant),
-      postTenantMappings: () => of(Tenantresponse),
+      postTenantMapping: () => of(Tenantresponse),
       getTenantMappings: () => of(Tenantresponse)
     };
     service2 = {

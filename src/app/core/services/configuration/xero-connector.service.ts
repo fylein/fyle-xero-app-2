@@ -65,7 +65,7 @@ export class XeroConnectorService {
     );
   }
 
-  postTenantMappings(tenantMappingPayload: TenantMappingPost): Observable<TenantMapping> {
+  postTenantMapping(tenantMappingPayload: TenantMappingPost): Observable<TenantMapping> {
     return this.apiService.post(`/workspaces/${this.workspaceId}/mappings/tenant/`, tenantMappingPayload);
   }
 

@@ -41,8 +41,8 @@ export class ExportSettingModel {
         ccc_expense_state: exportSettingsForm.get('cccExpenseState')?.value
       },
       workspace_general_settings: {
-        reimbursable_expenses_object: exportSettingsForm.get('reimbursableExportType')?.value,
-        corporate_credit_card_expenses_object: exportSettingsForm.get('creditCardExportType')?.value,
+        reimbursable_expenses_object: exportSettingsForm.get('reimbursableExpense')?.value ? exportSettingsForm.get('reimbursableExportType')?.value : null,
+        corporate_credit_card_expenses_object: exportSettingsForm.get('creditCardExpense')?.value ? exportSettingsForm.get('creditCardExportType')?.value : null,
         auto_map_employees: exportSettingsForm.get('autoMapEmployees')?.value
       },
       general_mappings: {

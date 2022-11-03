@@ -27,8 +27,8 @@ export class AdvancedSettingService {
   @CacheBuster({
     cacheBusterNotifier: advancedSettingsCache$
   })
-  postAdvancedSettings(exportSettingsPayload: AdvancedSettingPost): Observable<AdvancedSettingGet> {
-    return this.apiService.put(`/v2/workspaces/${this.workspaceId}/advanced_settings/`, exportSettingsPayload);
+  postAdvancedSettings(advancedSettingPayload: AdvancedSettingPost): Observable<AdvancedSettingGet> {
+    return this.apiService.put(`/v2/workspaces/${this.workspaceId}/advanced_settings/`, advancedSettingPayload);
   }
 
 }

@@ -103,7 +103,7 @@ export class XeroConnectorComponent implements OnInit, OnDestroy {
         tenant_id: this.xeroConnectorForm.value.xeroTenant.id,
         tenant_name: this.xeroConnectorForm.value.xeroTenant.name
       };
-      this.xeroConnectorService.postTenantMappings(tenantMappingPayload).subscribe((response:TenantMapping) => {
+      this.xeroConnectorService.postTenantMapping(tenantMappingPayload).subscribe((response:TenantMapping) => {
         this.trackingService.onOnboardingStepCompletion(OnboardingStep.CONNECT_XERO, 1);
         this.workspaceService.setOnboardingState(OnboardingState.EXPORT_SETTINGS);
         this.xeroConnectionInProgress = false;
@@ -181,9 +181,9 @@ export class XeroConnectorComponent implements OnInit, OnDestroy {
   private postXeroCredentials(code: string): void {
     this.xeroConnectorService.connectXero(this.workspaceService.getWorkspaceId(), code).subscribe((xeroCredentials: XeroCredentials) => {
       this.workspaceService.refreshXeroDimensions().subscribe(() => {
-        this.xeroConnectionInProgress = false;
         this.postTenant();
         this.showOrHideDisconnectXero();
+        this.xeroConnectionInProgress = false;
       });
     }, (error) => {
       const errorMessage = 'message' in error.error ? error.error.message : 'Failed to connect to Xero Tenant. Please try again';
@@ -198,12 +198,15 @@ export class XeroConnectorComponent implements OnInit, OnDestroy {
 
   private getSettings(): void {
     this.xeroConnectorService.getXeroCredentials(this.workspaceService.getWorkspaceId()).subscribe((xeroCredentials: XeroCredentials) => {
-      // This.xeroCompanyName = xeroCredentials.company_name;
       this.getTenant();
       this.xeroConnectorService.getTenantMappings().subscribe((tenant: TenantMapping) => {
         this.xeroCompanyName = tenant.tenant_name;
+        this.isXeroConnected = false;
       });
       this.showOrHideDisconnectXero();
+      this.isContinueDisabled = false;
+      this.isLoading = false;
+      this.xeroConnectionInProgress = false;
     }, (error) => {
       // Token expired
       if ('id' in error.error) {

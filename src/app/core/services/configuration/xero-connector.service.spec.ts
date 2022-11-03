@@ -158,7 +158,7 @@ describe('XeroConnectorService', () => {
     req.flush(response);
   });
 
-  it('postTenantMappings service check', () => {
+  it('postTenantMapping service check', () => {
     const response: TenantMapping = {
       id: 123,
       tenant_name: 'Xero',
@@ -172,7 +172,7 @@ describe('XeroConnectorService', () => {
       tenant_id: 'xcy',
       tenant_name: 'Xero'
     };
-    service.postTenantMappings(tenantMappingPayload).subscribe(value => {
+    service.postTenantMapping(tenantMappingPayload).subscribe(value => {
       expect(value).toBe(response);
     });
     const req = httpMock.expectOne({
