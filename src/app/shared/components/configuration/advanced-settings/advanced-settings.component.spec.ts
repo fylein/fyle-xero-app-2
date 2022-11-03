@@ -38,6 +38,7 @@ describe('AdvancedSettingsComponent', () => {
   dialogRefSpyObj.componentInstance = { body: '' };
 
   beforeEach(async () => {
+    localStorage.setItem('workspaceId', '2');
     service1 = {
       postAdvancedSettings: () => of(advancedSettingResponse),
       getAdvancedSettings: () => of(getadvancedSettingResponse),
