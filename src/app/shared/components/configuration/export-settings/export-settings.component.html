@@ -19,7 +19,7 @@
           [isFieldMandatory]="true"
           [mandatoryErrorListName]="'Auto Map Employee'"
           [iconPath]="'assets/images/svgs/general/user.svg'"
-          [label]="'How should Employees in Fyle be auto-mapped to Contact in Xero?'"
+          [label]="'How should Employees in Fyle be matched to Contact in Xero?'"
           [subLabel]="'Automatically map the employees in Fyle to their corresponding records in Xero Contacts based on a unique parameter.'"
           [placeholder]="'Select auto map employee type'"
           [formControllerName]="'autoMapEmployees'"
@@ -30,7 +30,7 @@
         <app-configuration-select-field
           [form]="exportSettingsForm"
           [iconPath]="'assets/images/svgs/general/expense.svg'"
-          [label]="'Reimbursable expense in Fyle will exported to Xero as'"
+          [label]="'Reimbursable expense in Fyle will be exported to Xero as'"
           [exportType] = "ReimbursableExpensesObject.PURCHASE_BILL"
           [formControllerName]="'reimbursableExportType'"
           [phase]="isOnboarding ? ProgressPhase.ONBOARDING : ProgressPhase.POST_ONBOARDING"

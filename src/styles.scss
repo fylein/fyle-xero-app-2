@@ -530,7 +530,7 @@ th.mat-header-cell:last-of-type {
   }
 
   &--field-toggle-section {
-    padding: 24px 8px 24px 32px;
+    padding: 0px 8px 24px 32px;
     min-height: 114px;
     background: #FAFCFF;
     border: 1px solid #F5F5F5;
@@ -632,12 +632,13 @@ th.mat-header-cell:last-of-type {
     border-radius: 48px;
     width: 37px;
     height: 37px;
+    align-items: center;
+    display: flex;
+    justify-content: center;
   }
 
   &--avatar-text {
     color: #FFFFFF;
-    margin: 0;
-    padding: 9px 13px;
   }
 
   &--profile-section {
@@ -672,6 +673,9 @@ th.mat-header-cell:last-of-type {
     padding: 10px 5px 2px 6px;
     height: 72px;
     width: 244px;
+    display: flex;
+    align-items: center;
+    align-content: center;
   }
 
   &--xero-logo {

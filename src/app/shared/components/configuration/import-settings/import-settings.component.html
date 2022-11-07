@@ -16,7 +16,7 @@
         <div *ngIf="importSettingsForm.value.chartOfAccount">
           <div class="import-settings--field-checkbox-contents">
             <div class="import-settings--chart-of-account-header">
-              <h5 class="bold">
+              <h5>
                 Select the accounts from Xero to import as categories in Fyle
               </h5>
             </div>
@@ -101,8 +101,8 @@
 
         <div class="import-settings--tax-section" *ngIf="isTaxGroupSyncAllowed">
           <app-configuration-toggle-field [form]="importSettingsForm"
-            [label]="'Import tax codes from Xero as Tax group in Fyle'"
-            [subLabel]="'The imported Classes from Xero will be a selectable field while creating an expense.'"
+            [label]="'Import Tax Codes from Xero as Tax groups in Fyle'"
+            [subLabel]="'The imported Taxes from Xero will be a selectable field while creating an expense.'"
             [formControllerName]="'taxCode'">
           </app-configuration-toggle-field>
 
@@ -144,7 +144,7 @@
               </div>
               <div class="import-settings--default-tax-note">
                 <h5>
-                  NOTE: If an expense from Fyle does not contain any tax group information during export, the default
+                  NOTE: If an expense from Fyle does not contain any tax group, during the export to Xero, the default
                   tax code will be used.
                 </h5>
               </div>
