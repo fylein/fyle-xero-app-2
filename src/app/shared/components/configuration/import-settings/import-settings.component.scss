@@ -141,6 +141,9 @@
       }
     }
   }
+  ::ng-deep.configuration--field-toggle-section{
+    border: none;
+  }
 }
 
 p {

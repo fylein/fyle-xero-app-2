@@ -7,16 +7,10 @@
     </app-configuration-step-header-section>
     <form [formGroup]="advancedSettingsForm">
 
-      <app-configuration-toggle-field [form]="advancedSettingsForm"
-        [iconPath]="'assets/images/svgs/general/expense.svg'" [label]="'Auto create Contacts'"
-        [subLabel]="'While exporting reimbursable expenses from Fyle, the integration will automatically create a Contact if a match does not exist in Xero already.'"
-        [formControllerName]="'autoCreateVendors'">
-      </app-configuration-toggle-field>
-
       <app-configuration-select-field [form]="advancedSettingsForm"
         [options]="paymentSyncOptions" [iconPath]="'assets/images/svgs/actions/sync.svg'"
         [label]="'Auto - Sync payment between Fyle and Xero'"
-        [subLabel]="'When expense is marked paid in Fyle the transaction in Xero will be automatically be updated to Paid and vice versa.'"
+        [subLabel]="'When an expense is marked as \'Paid\' in Fyle the corresponding transaction will automatically be updated to \'Paid\' in Xero and vice versa.'"
         [placeholder]="'Select Auto - sync type'"
         [formControllerName]="'paymentSync'">
       </app-configuration-select-field>
@@ -32,7 +26,7 @@
 
       <app-configuration-toggle-field [form]="advancedSettingsForm"
         [iconPath]="'assets/images/svgs/general/calendar.svg'" [label]="'Schedule automatic export'"
-        [subLabel]="'Set up a schedule to frequently automate the export of expenses from Fyle to Xero'"
+        [subLabel]="'Set up a schedule to automate the export of expenses from Fyle to Xero'"
         [formControllerName]="'exportSchedule'">
       </app-configuration-toggle-field>
       <div *ngIf="advancedSettingsForm.value.exportSchedule" class="advanced-settings--schedule-dropdown">
@@ -62,8 +56,14 @@
       <app-configuration-toggle-field [form]="advancedSettingsForm"
         [iconPath]="'assets/images/svgs/general/calendar.svg'"
         [label]="'Post entries in the next open accounting period'"
-        [subLabel]="'If the accounting period in Xero is closed, the expenses from Fyle will be exported with a date stamp of the first day next open accounting period.'"
+        [subLabel]="'If the accounting period in Xero is closed for the expenses in Fyle that haven\'t been exported, the expense will be exported with a date stamp of the first day in the next open accounting period.'"
         [formControllerName]="'changeAccountingPeriod'">
+      </app-configuration-toggle-field>
+
+      <app-configuration-toggle-field [form]="advancedSettingsForm"
+        [iconPath]="'assets/images/svgs/general/expense.svg'" [label]="'Auto create Contacts'"
+        [subLabel]="'While exporting reimbursable expenses from Fyle, the integration will automatically create a Contact if a match for an employee in Fyle does not exist in Xero already.'"
+        [formControllerName]="'autoCreateVendors'">
       </app-configuration-toggle-field>
 
       <app-configuration-step-footer-section

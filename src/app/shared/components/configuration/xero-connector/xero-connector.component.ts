@@ -201,11 +201,11 @@ export class XeroConnectorComponent implements OnInit, OnDestroy {
       this.getTenant();
       this.xeroConnectorService.getTenantMappings().subscribe((tenant: TenantMapping) => {
         this.xeroCompanyName = tenant.tenant_name;
-        this.isXeroConnected = false;
+        this.isXeroConnected = true;
+
       });
       this.showOrHideDisconnectXero();
       this.isContinueDisabled = false;
-      this.isLoading = false;
       this.xeroConnectionInProgress = false;
     }, (error) => {
       // Token expired
@@ -228,11 +228,12 @@ export class XeroConnectorComponent implements OnInit, OnDestroy {
     const code = this.route.snapshot.queryParams.code;
     this.isOnboarding = this.windowReference.location.pathname.includes('onboarding');
     if (code) {
+      this.xeroConnectionInProgress = true;
       this.isXeroConnected = false;
       this.isLoading = false;
-      this.xeroConnectionInProgress = true;
       this.postXeroCredentials(code);
     } else {
+      this.xeroConnectionInProgress = true;
       this.getSettings();
     }
   }
