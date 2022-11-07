@@ -110,6 +110,16 @@
   &--align-items {
     align-items: center;
   }
+
+  &--icon{
+    width: 22px;
+    height: 22px;
+  }
+
+  &--export-icon{
+    width: 26px;
+    height: 26px;
+  }
 }
 
 .walk-through-tooltip {
