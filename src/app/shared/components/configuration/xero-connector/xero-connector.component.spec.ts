@@ -94,6 +94,11 @@ describe('XeroConnectorComponent', () => {
     activatedRoute = TestBed.inject(ActivatedRoute);
     dialogSpy = spyOn(TestBed.get(MatDialog), 'open').and.returnValue(dialogRefSpyObj);
     dialogSpy1 = spyOn(TestBed.get(MatSnackBar), 'open').and.returnValue(dialogRefSpyObj);
+    const form = formbuilder.group({
+      xeroTenant: '25d7b4cd-ed1c-4c5c-80e5-c058b87db8a1'
+      });
+    component.xeroConnectorForm = form;
+    component.tenantList = tenant;
     fixture.detectChanges();
   });
 
@@ -129,7 +134,6 @@ describe('XeroConnectorComponent', () => {
     fixture.detectChanges();
     expect(component.isLoading).toBeFalse();
     expect(component.isXeroConnected).toBeFalsy();
-    expect(component.isContinueDisabled).toBeTrue();
     expect(xeroService.getXeroCredentials).toHaveBeenCalled();
   });
 
@@ -166,11 +170,11 @@ describe('XeroConnectorComponent', () => {
   it('postXeroCredential function connectXero success check', () => {
     component.xeroConnectionInProgress = true;
     spyOn(xeroService, 'connectXero').and.callThrough();
-    spyOn(workspaceService, 'refreshXeroDimensions').and.callThrough();
+    spyOn(xeroService, 'postXeroTenants').and.callThrough();
     expect((component as any).postXeroCredentials('ssdsdsdsdsd', 'dsdsdsdsdsds')).toBeUndefined();
     fixture.detectChanges();
     expect(xeroService.connectXero).toHaveBeenCalled();
-    expect(workspaceService.refreshXeroDimensions).toHaveBeenCalled();
+    expect(xeroService.postXeroTenants).toHaveBeenCalled();
   });
 
   it('postXeroCredential function connectXero failure check', () => {
@@ -213,12 +217,6 @@ describe('XeroConnectorComponent', () => {
   });
 
   it('connectXero() function check', () => {
-    const form = formbuilder.group({
-      xeroTenant: '25d7b4cd-ed1c-4c5c-80e5-c058b87db8a1'
-      });
-    component.xeroConnectorForm = form;
-    component.tenantList = tenant;
-    fixture.detectChanges();
     expect(component.connectXero()).toBeUndefined();
   });
 
