@@ -45,10 +45,10 @@
             <app-loader [size]="'small'"></app-loader>
           </p>
         </div>
-        <div *ngIf="!isXeroConnected && !xeroConnectionInProgress && !xeroTokenExpired && !isDisconnectxeroClicked" class="align-center default-cursor">
+        <div *ngIf="!isXeroConnected && !xeroConnectionInProgress && !xeroTokenExpired && !isDisconnectXeroClicked" class="align-center default-cursor">
           <mat-form-field floatLabel="always" appearance="outline">
             <mat-select placeholder="Select a Xero tenant" formControlName="xeroTenant">
-              <mat-option *ngFor="let option of tenantList" [value]="{id: option.destination_id, name: option.value}" (click)="isContinueDisabled = false">
+              <mat-option *ngFor="let option of tenantList" [value]="{id: option.destination_id, name: option.value}" (click)="tenantSelected()">
                 {{ option.value }}
                 <img *ngIf="(xeroConnectorForm.value.xeroTenant | json) === ({id: option.destination_id, name: option.value} | json)" src="assets/images/svgs/general/tick-pink.svg" class="selected-value-check-mark">
               </mat-option>
@@ -62,7 +62,7 @@
             <h4 *ngIf="!isXeroConnected && !xeroConnectionInProgress && !xeroTokenExpired" class="xero-connector--connection-in-progress-text align-center sub-text-color"> 
               You will need to select a tenant to proceed with the onboarding.
             </h4>
-            <h4 *ngIf="!isXeroConnected && !xeroConnectionInProgress && !xeroTokenExpired && isDisconnectxeroClicked" (click)="connectXero()" class="xero-connector--switch-org-text actionable-text align-center">
+            <h4 *ngIf="!isXeroConnected && !xeroConnectionInProgress && !xeroTokenExpired && isDisconnectXeroClicked" (click)="connectXero()" class="xero-connector--switch-org-text actionable-text align-center">
               Connect to Xero
             </h4>
             <h4 *ngIf="!xeroConnectionInProgress && !xeroTokenExpired && showDisconnectXero && isXeroConnected" class="xero-connector--switch-org-info-text align-center sub-text-color single-line-text">

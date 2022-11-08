@@ -55,7 +55,7 @@ export class XeroConnectorComponent implements OnInit, OnDestroy {
 
   private timeSpentEventRecorded: boolean = false;
 
-  isDisconnectxeroClicked: boolean = false;
+  isDisconnectXeroClicked: boolean = false;
 
   constructor(
     private authService: AuthService,
@@ -101,15 +101,17 @@ export class XeroConnectorComponent implements OnInit, OnDestroy {
           this.xeroConnectionInProgress = false;
           this.xeroTokenExpired = false;
           this.showOrHideDisconnectXero();
+          this.isContinueDisabled = true;
           this.isXeroConnected = true;
           this.xeroCompanyName = response.tenant_name;
           this.trackSessionTime('success');
           this.router.navigate([`/workspaces/onboarding/export_settings`]);
         });
       });
+    } else if (!this.isContinueDisabled && this.xeroCompanyName){
+      this.trackSessionTime('success');
+      this.router.navigate([`/workspaces/onboarding/export_settings`]);
     }
-    this.trackSessionTime('success');
-    this.router.navigate([`/workspaces/onboarding/export_settings`]);
   }
 
   switchFyleOrg(): void {
@@ -130,7 +132,7 @@ export class XeroConnectorComponent implements OnInit, OnDestroy {
       this.xeroConnectionInProgress = false;
       this.isXeroConnected = false;
       this.isContinueDisabled = true;
-      this.isDisconnectxeroClicked = true;
+      this.isDisconnectXeroClicked = true;
       this.xeroConnectorService.getXeroCredentials(this.workspaceService.getWorkspaceId()).subscribe((xeroCredentials: XeroCredentials) => {
         this.showOrHideDisconnectXero();
       }, (error) => {
@@ -182,6 +184,10 @@ export class XeroConnectorComponent implements OnInit, OnDestroy {
         this.router.navigate([`/workspaces/onboarding/landing`]);
       }
     });
+  }
+
+  tenantSelected(): void {
+    this.isContinueDisabled = false;
   }
 
   private postXeroCredentials(code: string): void {
