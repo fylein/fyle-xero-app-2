@@ -2,7 +2,7 @@
   <div fxLayout="row" fxLayoutAlign="space-between start" class="configuration--field-label-section">
     <img *ngIf="iconPath" src="{{ iconPath }}" class="configuration--icon">
     <div class="configuration--field-label-text-section" [ngClass]="{'configuration-select-field--field-label-text-section-without-img': !iconPath}">
-      <div class="configuration--field-header">
+      <div class="configuration--field-header" [ngClass]="{'configuration-select-field--auto-sync': formControllerName === 'paymentSync'}">
         {{ label }}
         <app-mandatory-field *ngIf="isFieldMandatory"></app-mandatory-field>
       </div>
@@ -13,7 +13,7 @@
   </div>
   <div class="configuration--input-section">
     <div *ngIf="exportType" class="configuration--form-field">
-      <b class="configuration-select-field--export-type">{{exportType}}</b>
+      <b class="configuration-select-field--export-type">{{exportType | titlecase}}</b>
     </div>
     <mat-form-field *ngIf="!exportType" floatLabel="always" appearance="outline" class="configuration--form-field">
       <mat-select [placeholder]="placeholder" [formControlName]="formControllerName" [compareWith]="helperService.compareObjects">

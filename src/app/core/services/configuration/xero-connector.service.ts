@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject} from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { Cacheable, CacheBuster, globalCacheBusterNotifier } from 'ts-cacheable';
 import { XeroCredentials } from '../../models/configuration/xero-connector.model';
 import { DestinationAttribute } from '../../models/db/destination-attribute.model';
@@ -26,7 +27,7 @@ export class XeroConnectorService {
   })
   connectXero(workspaceId: string, code:string): Observable<XeroCredentials> {
     globalCacheBusterNotifier.next();
-    return this.apiService.post(`/workspaces/${workspaceId}/connect_xero/authorization_code/`, {code: code});
+    return this.apiService.post(`/workspaces/${workspaceId}/connect_xero/authorization_code/`, {code: code, redirect_uri: environment.xero_callback_uri});
   }
 
   @Cacheable({

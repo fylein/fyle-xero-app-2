@@ -22,6 +22,7 @@ describe('DashboardHeaderSectionComponent', () => {
   const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of({}), close: null });
   dialogRefSpyObj.componentInstance = { body: '' }; // Attach componentInstance to the spy object...
   beforeEach(async () => {
+    localStorage.setItem('workspaceId', environment.tests.workspaceId);
     await TestBed.configureTestingModule({
       imports: [RouterTestingModule, HttpClientModule, MatSnackBarModule, BrowserAnimationsModule, HttpClientTestingModule],
       declarations: [ DashboardHeaderSectionComponent ]
