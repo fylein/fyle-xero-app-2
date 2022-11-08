@@ -90,6 +90,7 @@ export class XeroConnectorComponent implements OnInit, OnDestroy {
     }
     if (this.xeroConnectorForm.valid && !this.isContinueDisabled) {
       this.xeroConnectionInProgress = true;
+      this.isContinueDisabled = true;
       const tenantMappingPayload: TenantMappingPost = {
         tenant_id: this.xeroConnectorForm.value.xeroTenant.id,
         tenant_name: this.xeroConnectorForm.value.xeroTenant.name
@@ -101,7 +102,6 @@ export class XeroConnectorComponent implements OnInit, OnDestroy {
           this.xeroConnectionInProgress = false;
           this.xeroTokenExpired = false;
           this.showOrHideDisconnectXero();
-          this.isContinueDisabled = true;
           this.isXeroConnected = true;
           this.xeroCompanyName = response.tenant_name;
           this.trackSessionTime('success');
