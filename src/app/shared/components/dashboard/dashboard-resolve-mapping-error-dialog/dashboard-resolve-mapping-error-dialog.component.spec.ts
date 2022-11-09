@@ -10,6 +10,7 @@ import { destinationAttributes, expenseAttribute, mappinglist, model, model2, re
 import { of } from 'rxjs';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { MappingPostpayload } from '../../mapping/generic-mapping/generic-mapping.fixture';
 // Import { MappingList } from 'src/app/core/models/db/mapping.model';
 
 describe('DashboardResolveMappingErrorDialogComponent', () => {
@@ -26,7 +27,8 @@ describe('DashboardResolveMappingErrorDialogComponent', () => {
   dialogRefSpyObj.componentInstance = { body: '' }; // Attach componentInstance to the spy object...
   beforeEach(async () => {
     const service1 = {
-      getXeroDestinationAttributes: () => of([])
+      getXeroDestinationAttributes: () => of([]),
+      postMapping: () => of(MappingPostpayload)
     };
     await TestBed.configureTestingModule({
       imports: [MatDialogModule, SharedModule, HttpClientTestingModule, MatSnackBarModule, NoopAnimationsModule],
@@ -68,7 +70,7 @@ describe('DashboardResolveMappingErrorDialogComponent', () => {
       source: 'ss'
       });
     expect((component as any).showSuccessMessage()).toBeUndefined();
-    expect(component.saveMapping([], destinationAttributes, form));
+    expect(component.saveMapping(mappinglist[0], destinationAttributes, form));
   });
 });
 

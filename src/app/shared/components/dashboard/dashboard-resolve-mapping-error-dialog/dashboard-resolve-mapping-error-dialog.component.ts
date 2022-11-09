@@ -5,6 +5,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { Error } from 'src/app/core/models/db/error.model';
+import { MinimalMappingSetting } from 'src/app/core/models/db/mapping-setting.model';
+import { MappingList, MappingModel } from 'src/app/core/models/db/mapping.model';
 // Import { MappingList, MappingModel, ResolveMappingError } from 'src/app/core/models/db/mapping.model';
 import { MappingState, SimpleSearchPage, SimpleSearchType } from 'src/app/core/models/enum/enum.model';
 import { HelperService } from 'src/app/core/services/core/helper.service';
@@ -52,19 +54,14 @@ export class DashboardResolveMappingErrorDialogComponent implements OnInit {
     });
   }
 
-  // Private postMapping(selectedRow: MappingList): void {
-  //   If (this.data.destinationType === EmployeeFieldMapping.EMPLOYEE || this.data.destinationType === EmployeeFieldMapping.VENDOR) {
-  //     Const employeeMappingPayload = EmployeeMappingModel.constructPayload(this.data.destinationType, selectedRow, this.data.workspaceId);
-  //     This.mappingService.postEmployeeMapping(employeeMappingPayload).subscribe(() => this.showSuccessMessage());
-  //   } else {
-  //     Const mappingSetting: MinimalMappingSetting = {
-  //       Source_field: this.data.sourceType,
-  //       Destination_field: this.data.destinationType
-  //     };
-  //     Const mappingPayload = MappingModel.constructPayload(mappingSetting, selectedRow);
-  //     This.mappingService.postMapping(mappingPayload).subscribe(() => this.showSuccessMessage());
-  //   }
-  // }
+  private postMapping(selectedRow: MappingList): void {
+    const mappingSetting: MinimalMappingSetting = {
+      source_field: this.data.sourceType,
+      destination_field: this.data.destinationType
+    };
+    const mappingPayload = MappingModel.constructPayload(mappingSetting, selectedRow);
+    this.mappingService.postMapping(mappingPayload).subscribe(() => this.showSuccessMessage());
+  }
 
   saveMapping(selectedRow: any, selectedOption: DestinationAttribute, searchForm: FormGroup): void {
     searchForm.patchValue({
@@ -72,16 +69,9 @@ export class DashboardResolveMappingErrorDialogComponent implements OnInit {
       searchOption: '',
       source: searchForm.value.source
     });
-
-    // If (this.data.sourceType.toUpperCase() === EmployeeFieldMapping.EMPLOYEE) {
-    //   SelectedRow.xero.id = selectedOption.id;
-    // } else {
-    //   SelectedRow.xero.id = selectedOption.destination_id;
-    // }
-    // SelectedRow.xero.value = selectedOption.value;
-
-
-    // This.postMapping(selectedRow);
+    selectedRow.xero.id = selectedOption.destination_id;
+    selectedRow.xero.value = selectedOption.value;
+    this.postMapping(selectedRow);
   }
 
   private setupFyleXeroMappingFormArray(mappings: any[]): void {

@@ -94,10 +94,6 @@ describe('XeroConnectorComponent', () => {
     activatedRoute = TestBed.inject(ActivatedRoute);
     dialogSpy = spyOn(TestBed.get(MatDialog), 'open').and.returnValue(dialogRefSpyObj);
     dialogSpy1 = spyOn(TestBed.get(MatSnackBar), 'open').and.returnValue(dialogRefSpyObj);
-    const form = formbuilder.group({
-      xeroTenant: '25d7b4cd-ed1c-4c5c-80e5-c058b87db8a1'
-      });
-    component.xeroConnectorForm = form;
     component.tenantList = tenant;
     fixture.detectChanges();
   });
@@ -139,7 +135,20 @@ describe('XeroConnectorComponent', () => {
 
   it('continueToNextStep=> isContinueDisabled = false function check', () => {
     spyOn(router, 'navigate');
+    const form = formbuilder.group({
+      xeroTenant: '25d7b4cd-ed1c-4c5c-80e5-c058b87db8a1'
+      });
+    component.xeroConnectorForm = form;
     component.isContinueDisabled = false;
+    fixture.detectChanges();
+    expect(component.continueToNextStep()).toBeUndefined();
+    expect(router.navigate).toHaveBeenCalledWith([`/workspaces/onboarding/export_settings`]);
+  });
+
+  it('continueToNextStep=> isContinueDisabled = false and xerocompanyname is fyle function check', () => {
+    spyOn(router, 'navigate');
+    component.isContinueDisabled = false;
+    component.xeroCompanyName = 'fyle';
     fixture.detectChanges();
     expect(component.continueToNextStep()).toBeUndefined();
     expect(router.navigate).toHaveBeenCalledWith([`/workspaces/onboarding/export_settings`]);
