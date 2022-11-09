@@ -12,6 +12,7 @@ describe('AdvancedSettingService', () => {
   const workspace_id = environment.tests.workspaceId;
 
   beforeEach(() => {
+    localStorage.setItem('workspaceId', environment.tests.workspaceId);
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
       providers: [AdvancedSettingService]
