@@ -192,8 +192,6 @@ export class ExportSettingsComponent implements OnInit, OnDestroy {
     this.exportSettingsForm.controls.creditCardExpense.valueChanges.subscribe((isCreditCardExpenseSelected) => {
       if (isCreditCardExpenseSelected) {
         this.exportSettingsForm.controls.bankAccount.setValidators(Validators.required);
-        this.exportSettingsForm.controls.creditCardExportType.setValidators(Validators.required);
-        this.exportSettingsForm.controls.reimbursableExportType.patchValue(CorporateCreditCardExpensesObject.BANK_TRANSACTION);
         this.exportSettingsForm.controls.cccExpenseState.setValidators(Validators.required);
         this.exportSettingsForm.controls.cccExpenseState.patchValue(this.exportSettings.expense_group_settings?.ccc_expense_state ? this.exportSettings.expense_group_settings?.ccc_expense_state : null);
       } else {
@@ -235,13 +233,11 @@ export class ExportSettingsComponent implements OnInit, OnDestroy {
           }
         } else if ((control.value === ExpenseState.PAID || control.value === ExpenseState.PAYMENT_PROCESSING) && (control.parent?.get('reimbursableExpense')?.value || control.parent?.get('creditCardExpense')?.value)) {
           forbidden = false;
-        } else if (control.parent?.get('creditCardExpense')?.value && control.parent?.get('bankAccount')?.value === null) {
-          forbidden = false;
         }
+
         if (!forbidden) {
           control.parent?.get('reimbursableExpense')?.setErrors(null);
           control.parent?.get('creditCardExpense')?.setErrors(null);
-          control.parent?.get('bankAccount')?.setErrors({invalid: true});
           return null;
         }
       }
@@ -317,7 +313,7 @@ export class ExportSettingsComponent implements OnInit, OnDestroy {
       cccExpenseState: [this.exportSettings.expense_group_settings?.ccc_expense_state, Validators.required],
       creditCardExpense: [this.exportSettings.workspace_general_settings?.corporate_credit_card_expenses_object ? true : false, this.exportSelectionValidator()],
       creditCardExportType: [this.exportSettings.workspace_general_settings?.corporate_credit_card_expenses_object ? this.exportSettings.workspace_general_settings?.corporate_credit_card_expenses_object : CorporateCreditCardExpensesObject.BANK_TRANSACTION],
-      bankAccount: [this.exportSettings.general_mappings?.bank_account?.id ? this.exportSettings.general_mappings.bank_account : null, this.exportSelectionValidator()],
+      bankAccount: [this.exportSettings.general_mappings?.bank_account?.id ? this.exportSettings.general_mappings.bank_account : {name: this.bankAccounts[0].value, id: this.bankAccounts[0].destination_id}],
       autoMapEmployees: [this.exportSettings.workspace_general_settings?.auto_map_employees ? this.exportSettings.workspace_general_settings?.auto_map_employees : AutoMapEmployee.NAME],
       searchOption: []
     });
@@ -417,37 +413,36 @@ export class ExportSettingsComponent implements OnInit, OnDestroy {
   private constructPayloadAndSave(): void {
     this.saveInProgress = true;
     const exportSettingPayload = ExportSettingModel.constructPayload(this.exportSettingsForm);
+    this.exportSettingService.postExportSettings(exportSettingPayload).subscribe((response: ExportSettingGet) => {
+      if (this.workspaceService.getOnboardingState() === OnboardingState.EXPORT_SETTINGS) {
+        this.trackingService.onOnboardingStepCompletion(OnboardingStep.EXPORT_SETTINGS, 2, exportSettingPayload);
+      } else {
+        this.trackingService.onUpdateEvent(
+          UpdateEvent.EXPORT_SETTINGS,
+          {
+            phase: this.getPhase(),
+            oldState: this.exportSettings,
+            newState: response
+          }
+        );
+      }
 
-    // This.exportSettingService.postExportSettings(exportSettingPayload).subscribe((response: ExportSettingGet) => {
-    //   If (this.workspaceService.getOnboardingState() === OnboardingState.EXPORT_SETTINGS) {
-    //     This.trackingService.onOnboardingStepCompletion(OnboardingStep.EXPORT_SETTINGS, 2, exportSettingPayload);
-    //   } else {
-    //     This.trackingService.onUpdateEvent(
-    //       UpdateEvent.EXPORT_SETTINGS,
-    //       {
-    //         Phase: this.getPhase(),
-    //         OldState: this.exportSettings,
-    //         NewState: response
-    //       }
-    //     );
-    //   }
-
-    //   This.saveInProgress = false;
-    //   This.snackBar.open('Export settings saved successfully');
-    //   This.trackSessionTime('success');
-    //   If (this.isOnboarding) {
-    //     This.workspaceService.setOnboardingState(OnboardingState.IMPORT_SETTINGS);
-    //     This.router.navigate([`/workspaces/onboarding/import_settings`]);
-    //   } else if (this.advancedSettingAffected()) {
-    //     This.router.navigate(['/workspaces/main/configuration/advanced_settings']);
-    //   } else {
-    //     This.mappingService.refreshMappingPages();
-    //     This.router.navigate(['/workspaces/main/dashboard']);
-    //   }
-    // }, () => {
-    //   This.saveInProgress = false;
-    //   This.snackBar.open('Error saving export settings, please try again later');
-    // });
+      this.saveInProgress = false;
+      this.snackBar.open('Export settings saved successfully');
+      this.trackSessionTime('success');
+      if (this.isOnboarding) {
+        this.workspaceService.setOnboardingState(OnboardingState.IMPORT_SETTINGS);
+        this.router.navigate([`/workspaces/onboarding/import_settings`]);
+      } else if (this.advancedSettingAffected()) {
+        this.router.navigate(['/workspaces/main/configuration/advanced_settings']);
+      } else {
+        this.mappingService.refreshMappingPages();
+        this.router.navigate(['/workspaces/main/dashboard']);
+      }
+    }, () => {
+      this.saveInProgress = false;
+      this.snackBar.open('Error saving export settings, please try again later');
+    });
   }
 
   save(): void {

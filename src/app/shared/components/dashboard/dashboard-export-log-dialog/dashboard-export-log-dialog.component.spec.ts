@@ -98,10 +98,10 @@ describe('DashboardExportLogDialogComponent', () => {
       }
       ]
     };
-    const req = httpMock.match(
+    const req = httpMock.expectOne(
       req => req.method === 'GET' && req.url.includes(`${API_BASE_URL}/workspaces/${workspace_id}/fyle/expense_groups/`)
     );
-      req[0].flush(response);
+      req.flush(response);
 
       expect((component as any).setupPage()).toBeUndefined();
       expect(component.displayedColumns).toEqual(['referenceID', 'name', 'link']);

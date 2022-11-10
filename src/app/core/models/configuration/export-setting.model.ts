@@ -43,10 +43,10 @@ export class ExportSettingModel {
       workspace_general_settings: {
         reimbursable_expenses_object: exportSettingsForm.get('reimbursableExpense')?.value ? exportSettingsForm.get('reimbursableExportType')?.value : null,
         corporate_credit_card_expenses_object: exportSettingsForm.get('creditCardExpense')?.value ? exportSettingsForm.get('creditCardExportType')?.value : null,
-        auto_map_employees: exportSettingsForm.get('autoMapEmployees')?.value
+        auto_map_employees: exportSettingsForm.get('reimbursableExpense')?.value ? exportSettingsForm.get('autoMapEmployees')?.value : null
       },
       general_mappings: {
-        bank_account: exportSettingsForm.get('bankAccount')?.value ? exportSettingsForm.get('bankAccount')?.value : emptyDestinationAttribute
+        bank_account: exportSettingsForm.get('creditCardExpense')?.value ? exportSettingsForm.get('bankAccount')?.value : emptyDestinationAttribute
       }
     };
     return exportSettingPayload;
