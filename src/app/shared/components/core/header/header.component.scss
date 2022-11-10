@@ -95,8 +95,11 @@
 
   &--help-center-content {
     height: 50px;
-    background: #F5F5F5;
     padding-left: 16px;
+  }
+
+  &--help-center-content:hover {
+    background: #F5F5F5;
   }
 
   &--open-in-new-tab-icon {

@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { TenantGuard } from 'src/app/core/guard/tenant.guard';
 import { WorkspacesGuard } from 'src/app/core/guard/workspaces.guard';
 import { OnboardingAdvancedSettingsComponent } from './onboarding-advanced-settings/onboarding-advanced-settings.component';
 import { OnboardingDoneComponent } from './onboarding-done/onboarding-done.component';
@@ -22,7 +23,7 @@ const routes: Routes = [
       {
         path: 'export_settings',
         component: OnboardingExportSettingsComponent,
-        canActivate: [WorkspacesGuard]
+        canActivate: [WorkspacesGuard, TenantGuard]
       },
       {
         path: 'xero_connector',
