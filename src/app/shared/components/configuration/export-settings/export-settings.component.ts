@@ -304,7 +304,7 @@ export class ExportSettingsComponent implements OnInit, OnDestroy {
 
   private updateExportSettings(): boolean {
     if (this.exportSettings?.workspace_general_settings) {
-      return this.exportSettings?.workspace_general_settings?.reimbursable_expenses_object !== null || this.exportSettings?.workspace_general_settings?.corporate_credit_card_expenses_object !== null;
+      return (this.exportSettings?.workspace_general_settings?.reimbursable_expenses_object !== null && this.exportSettingsForm.controls.creditCardExpense.value && this.exportSettingsForm.controls.reimbursableExpense.value) || (this.exportSettings?.workspace_general_settings?.corporate_credit_card_expenses_object !== null && this.exportSettingsForm.controls.reimbursableExpense.value && this.exportSettingsForm.controls.creditCardExpense.value) || (this.exportSettingsForm.controls.reimbursableExpense.value && !this.exportSettingsForm.controls.creditCardExpense.value && this.exportSettings?.workspace_general_settings?.corporate_credit_card_expenses_object !== null) || (this.exportSettings?.workspace_general_settings?.reimbursable_expenses_object !== null && !this.exportSettingsForm.controls.reimbursableExpense.value && this.exportSettingsForm.controls.creditCardExpense.value);
     }
     return false;
   }
