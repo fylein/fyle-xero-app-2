@@ -183,7 +183,7 @@ export class ImportSettingsComponent implements OnInit, OnDestroy {
       );
 
       this.xeroExpenseFields = xeroAttributes.map(attribute => {
-        const mappingSetting = this.importSettings.mapping_settings.filter((mappingSetting: MappingSetting) => mappingSetting.destination_field === attribute.attribute_type);
+        const mappingSetting = this.importSettings.mapping_settings.filter((mappingSetting: MappingSetting) => mappingSetting.destination_field.toUpperCase() === attribute.attribute_type);
         return {
           source_field: mappingSetting.length > 0 ? mappingSetting[0].source_field : '',
           destination_field: attribute.display_name,

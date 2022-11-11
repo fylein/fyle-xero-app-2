@@ -378,10 +378,15 @@ export class ExportSettingsComponent implements OnInit, OnDestroy {
 
   private showConfirmationDialog(): void {
     const content = this.constructWarningMessage();
+    let dialogcontent = 'Do you wish to continue?';
+
+    if (content.length > 0){
+      dialogcontent = `${content}<br><br>Do you wish to continue?`;
+    }
 
     const data: ConfirmationDialog = {
       title: 'Change in Configuration',
-      contents: `${content}<br><br>Would you like to continue?`,
+      contents: dialogcontent,
       primaryCtaText: 'Continue'
     };
 

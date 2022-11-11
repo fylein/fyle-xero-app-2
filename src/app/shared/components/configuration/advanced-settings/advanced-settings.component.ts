@@ -118,7 +118,7 @@ export class AdvancedSettingsComponent implements OnInit, OnDestroy {
 
   private setCustomValidators(): void {
     this.createPaymentSyncWatcher();
-    this.createScheduledWatcher();
+    // This.createScheduledWatcher();
   }
 
   showPaymentSyncField(): boolean {
