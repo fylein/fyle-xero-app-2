@@ -21,7 +21,7 @@ describe('AdvancedSettingModel', () => {
       autoCreateVendors: new FormControl(true),
       exportSchedule: new FormControl(true),
       exportScheduleFrequency: new FormControl(10),
-      importCustomers: new FormControl(true),
+      autoCreateMerchantDestinationEntity: new FormControl(true),
       searchOption: new FormControl([])
     });
 
@@ -30,7 +30,8 @@ describe('AdvancedSettingModel', () => {
         sync_fyle_to_xero_payments: false,
         sync_xero_to_fyle_payments: false,
         auto_create_destination_entity: true,
-        change_accounting_period: true
+        change_accounting_period: true,
+        auto_create_merchant_destination_entity: true
       },
       general_mappings: {
         payment_account: {id: '1', name: 'Fyle'}

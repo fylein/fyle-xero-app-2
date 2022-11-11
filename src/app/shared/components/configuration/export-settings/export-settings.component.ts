@@ -313,7 +313,7 @@ export class ExportSettingsComponent implements OnInit, OnDestroy {
       cccExpenseState: [this.exportSettings.expense_group_settings?.ccc_expense_state, Validators.required],
       creditCardExpense: [this.exportSettings.workspace_general_settings?.corporate_credit_card_expenses_object ? true : false, this.exportSelectionValidator()],
       creditCardExportType: [this.exportSettings.workspace_general_settings?.corporate_credit_card_expenses_object ? this.exportSettings.workspace_general_settings?.corporate_credit_card_expenses_object : CorporateCreditCardExpensesObject.BANK_TRANSACTION],
-      bankAccount: [this.exportSettings.general_mappings?.bank_account?.id ? this.exportSettings.general_mappings.bank_account : {name: this.bankAccounts[0].value, id: this.bankAccounts[0].destination_id}],
+      bankAccount: [this.exportSettings.general_mappings?.bank_account?.id ? this.exportSettings.general_mappings.bank_account : {name: this.bankAccounts[0]?.value, id: this.bankAccounts[0]?.destination_id}],
       autoMapEmployees: [this.exportSettings.workspace_general_settings?.auto_map_employees ? this.exportSettings.workspace_general_settings?.auto_map_employees : AutoMapEmployee.NAME],
       searchOption: []
     });
@@ -362,9 +362,8 @@ export class ExportSettingsComponent implements OnInit, OnDestroy {
     let content: string = '';
     const existingReimbursableExportType = this.exportSettings.workspace_general_settings?.reimbursable_expenses_object ? this.exportSettings.workspace_general_settings.reimbursable_expenses_object : 'None';
     const existingCorporateCardExportType = this.exportSettings.workspace_general_settings?.corporate_credit_card_expenses_object ? this.exportSettings.workspace_general_settings.corporate_credit_card_expenses_object : 'None';
-    const updatedReimbursableExportType = this.exportSettingsForm.value.reimbursableExportType ? this.exportSettingsForm.value.reimbursableExportType : 'None';
-    const updatedCorporateCardExportType = this.exportSettingsForm.value.creditCardExportType ? this.exportSettingsForm.value.creditCardExportType : 'None';
-
+    const updatedReimbursableExportType = this.exportSettingsForm.value.reimbursableExpense ? this.exportSettingsForm.value.reimbursableExportType : 'None';
+    const updatedCorporateCardExportType = this.exportSettingsForm.value.creditCardExpense ? this.exportSettingsForm.value.creditCardExportType : 'None';
     if (updatedReimbursableExportType !== existingReimbursableExportType) {
       content = this.replaceContentBasedOnConfiguration(updatedReimbursableExportType, existingReimbursableExportType, 'reimbursable');
     } else if (existingCorporateCardExportType !== updatedCorporateCardExportType) {
@@ -374,7 +373,6 @@ export class ExportSettingsComponent implements OnInit, OnDestroy {
     if (this.paymentsSyncAffected()) {
       content = this.replaceContentBasedOnConfiguration(updatedReimbursableExportType, existingReimbursableExportType, 'reimbursable');
     }
-
     return content;
   }
 

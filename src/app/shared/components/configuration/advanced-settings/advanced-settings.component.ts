@@ -45,6 +45,10 @@ export class AdvancedSettingsComponent implements OnInit, OnDestroy {
 
   paymentSyncOptions: AdvancedSettingFormOption[] = [
     {
+      label: 'None',
+      value: 'None'
+    },
+    {
       label: 'Export Fyle ACH Payments to Xero',
       value: PaymentSyncDirection.FYLE_TO_XERO
     },
@@ -122,23 +126,23 @@ export class AdvancedSettingsComponent implements OnInit, OnDestroy {
   }
 
   private setupForm(): void {
-    let paymentSync = '';
+    let paymentSync;
     if (this.advancedSettings.workspace_general_settings.sync_fyle_to_xero_payments) {
-      paymentSync = PaymentSyncDirection.FYLE_TO_XERO;
+      paymentSync = this.paymentSyncOptions[1];
     } else if (this.advancedSettings.workspace_general_settings.sync_xero_to_fyle_payments) {
-      paymentSync = PaymentSyncDirection.XERO_TO_FYLE;
+      paymentSync = this.paymentSyncOptions[2];
     }
 
     this.advancedSettingsForm = this.formBuilder.group({
-      paymentSync: [paymentSync],
+      paymentSync: [paymentSync?.value ? paymentSync.value : this.paymentSyncOptions[0].value],
       billPaymentAccount: [this.advancedSettings.general_mappings.payment_account?.id],
       changeAccountingPeriod: [this.advancedSettings.workspace_general_settings.change_accounting_period],
       autoCreateVendors: [this.advancedSettings.workspace_general_settings.auto_create_destination_entity],
       exportSchedule: [this.advancedSettings.workspace_schedules?.enabled ? this.advancedSettings.workspace_schedules.interval_hours : false],
       exportScheduleFrequency: [this.advancedSettings.workspace_schedules?.enabled ? this.advancedSettings.workspace_schedules.interval_hours : null],
+      autoCreateMerchantDestinationEntity: [this.advancedSettings.workspace_general_settings.auto_create_merchant_destination_entity ? this.advancedSettings.workspace_general_settings.auto_create_merchant_destination_entity : false],
       searchOption: []
     });
-
     this.setCustomValidators();
     this.isLoading = false;
   }

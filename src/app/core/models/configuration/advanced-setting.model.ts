@@ -8,7 +8,8 @@ export type AdvancedSettingWorkspaceGeneralSetting = {
   sync_fyle_to_xero_payments: boolean,
   sync_xero_to_fyle_payments: boolean,
   auto_create_destination_entity: boolean,
-  change_accounting_period: boolean
+  change_accounting_period: boolean,
+  auto_create_merchant_destination_entity: boolean
 }
 
 export type AdvancedSettingGeneralMapping = {
@@ -49,7 +50,7 @@ export type AdvancedSettingAddEmailModel = {
 }
 
 export interface AdvancedSettingFormOption extends SelectFormOption {
-  value: PaymentSyncDirection | number;
+  value: PaymentSyncDirection | number | 'None';
 }
 
 export class AdvancedSettingModel {
@@ -60,7 +61,8 @@ export class AdvancedSettingModel {
         sync_fyle_to_xero_payments: advancedSettingsForm.get('paymentSync')?.value && advancedSettingsForm.get('paymentSync')?.value === PaymentSyncDirection.FYLE_TO_XERO ? true : false,
         sync_xero_to_fyle_payments: advancedSettingsForm.get('paymentSync')?.value && advancedSettingsForm.get('paymentSync')?.value === PaymentSyncDirection.XERO_TO_FYLE ? true : false,
         auto_create_destination_entity: advancedSettingsForm.get('autoCreateVendors')?.value,
-        change_accounting_period: advancedSettingsForm.get('changeAccountingPeriod')?.value
+        change_accounting_period: advancedSettingsForm.get('changeAccountingPeriod')?.value,
+        auto_create_merchant_destination_entity: advancedSettingsForm.get('autoCreateMerchantDestinationEntity')?.value
       },
       general_mappings: {
         payment_account: advancedSettingsForm.get('billPaymentAccount')?.value ? advancedSettingsForm.get('billPaymentAccount')?.value : emptyDestinationAttribute
