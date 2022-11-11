@@ -126,16 +126,16 @@ export class AdvancedSettingsComponent implements OnInit, OnDestroy {
   }
 
   private setupForm(): void {
-    let paymentSync;
+    let paymentSync = 'None';
     if (this.advancedSettings.workspace_general_settings.sync_fyle_to_xero_payments) {
-      paymentSync = this.paymentSyncOptions[1];
+      paymentSync = PaymentSyncDirection.FYLE_TO_XERO;
     } else if (this.advancedSettings.workspace_general_settings.sync_xero_to_fyle_payments) {
-      paymentSync = this.paymentSyncOptions[2];
+      paymentSync = PaymentSyncDirection.XERO_TO_FYLE;
     }
 
     this.advancedSettingsForm = this.formBuilder.group({
-      paymentSync: [paymentSync?.value ? paymentSync.value : this.paymentSyncOptions[0].value],
-      billPaymentAccount: [this.advancedSettings.general_mappings.payment_account?.id],
+      paymentSync: [paymentSync],
+      billPaymentAccount: [this.advancedSettings.general_mappings.payment_account],
       changeAccountingPeriod: [this.advancedSettings.workspace_general_settings.change_accounting_period],
       autoCreateVendors: [this.advancedSettings.workspace_general_settings.auto_create_destination_entity],
       exportSchedule: [this.advancedSettings.workspace_schedules?.enabled ? this.advancedSettings.workspace_schedules.interval_hours : false],
