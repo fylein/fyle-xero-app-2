@@ -183,40 +183,32 @@ export class ExportSettingsComponent implements OnInit, OnDestroy {
         this.exportSettingsForm.controls.reimbursableExportType.setValue(null);
         this.exportSettingsForm.controls.reimbursableExportDate.setValue(null);
       }
-
-      this.setGeneralMappingsValidator();
     });
   }
 
   private createCreditCardExpenseWatcher(): void {
     this.exportSettingsForm.controls.creditCardExpense.valueChanges.subscribe((isCreditCardExpenseSelected) => {
       if (isCreditCardExpenseSelected) {
-        this.exportSettingsForm.controls.bankAccount.setValidators(Validators.required);
         this.exportSettingsForm.controls.cccExpenseState.setValidators(Validators.required);
         this.exportSettingsForm.controls.cccExpenseState.patchValue(this.exportSettings.expense_group_settings?.ccc_expense_state ? this.exportSettings.expense_group_settings?.ccc_expense_state : null);
       } else {
         this.exportSettingsForm.controls.creditCardExportType.clearValidators();
         this.exportSettingsForm.controls.cccExpenseState.clearValidators();
-        this.exportSettingsForm.controls.bankAccount.clearValidators();
         this.exportSettingsForm.controls.cccExpenseState.setValue(null);
         this.exportSettingsForm.controls.creditCardExportType.setValue(null);
       }
-
-      this.setGeneralMappingsValidator();
     });
   }
 
-
-  private createReimbursableExportTypeWatcher(): void {
-    this.exportSettingsForm.controls.reimbursableExportType.valueChanges.subscribe(() => {
-      this.setGeneralMappingsValidator();
-    });
-  }
-
-  private createCreditCardExportTypeWatcher(): void {
-    this.exportSettingsForm.controls.creditCardExportType.valueChanges.subscribe((creditCardExportType: string) => {
-      this.setGeneralMappingsValidator();
-    });
+  private setGeneralMappingsValidator(): void {
+    this.exportSettingsForm.controls.creditCardExpense.valueChanges.subscribe((isCreditCardExpenseSelected) => {
+    if (isCreditCardExpenseSelected) {
+      this.exportSettingsForm.controls.bankAccount.setValidators(Validators.required);
+    } else {
+      this.exportSettingsForm.controls.bankAccount.clearValidators();
+      this.exportSettingsForm.controls.bankAccount.updateValueAndValidity();
+    }
+  });
   }
 
   private exportSelectionValidator(): ValidatorFn {
@@ -250,31 +242,15 @@ export class ExportSettingsComponent implements OnInit, OnDestroy {
     };
   }
 
-  showBankAccountField(): boolean {
-    return this.tenantFieldMapping === TenantFieldMapping.TENANT && this.exportSettingsForm.controls.reimbursableExportType.value && this.exportSettingsForm.controls.reimbursableExportType.value === ReimbursableExpensesObject.PURCHASE_BILL;
-  }
 
   showReimbursableAccountsPayableField(): boolean {
     return (this.exportSettingsForm.controls.reimbursableExportType.value === ReimbursableExpensesObject.PURCHASE_BILL);
-  }
-
-  private setGeneralMappingsValidator(): void {
-    if (this.showBankAccountField()) {
-      this.exportSettingsForm.controls.bankAccount.setValidators(Validators.required);
-    } else {
-      this.exportSettingsForm.controls.bankAccount.clearValidators();
-      this.exportSettingsForm.controls.bankAccount.updateValueAndValidity();
-    }
   }
 
   private setCustomValidatorsAndWatchers(): void {
     // Toggles
     this.createReimbursableExpenseWatcher();
     this.createCreditCardExpenseWatcher();
-
-    // Export select fields
-    this.createReimbursableExportTypeWatcher();
-    this.createCreditCardExportTypeWatcher();
 
     this.setGeneralMappingsValidator();
   }
@@ -313,8 +289,8 @@ export class ExportSettingsComponent implements OnInit, OnDestroy {
       cccExpenseState: [this.exportSettings.expense_group_settings?.ccc_expense_state, Validators.required],
       creditCardExpense: [this.exportSettings.workspace_general_settings?.corporate_credit_card_expenses_object ? true : false, this.exportSelectionValidator()],
       creditCardExportType: [this.exportSettings.workspace_general_settings?.corporate_credit_card_expenses_object ? this.exportSettings.workspace_general_settings?.corporate_credit_card_expenses_object : CorporateCreditCardExpensesObject.BANK_TRANSACTION],
-      bankAccount: [this.exportSettings.general_mappings?.bank_account?.id ? this.exportSettings.general_mappings.bank_account : {name: this.bankAccounts[0]?.value, id: this.bankAccounts[0]?.destination_id}],
-      autoMapEmployees: [this.exportSettings.workspace_general_settings?.auto_map_employees ? this.exportSettings.workspace_general_settings?.auto_map_employees : AutoMapEmployee.NAME],
+      bankAccount: [this.exportSettings.general_mappings?.bank_account],
+      autoMapEmployees: [this.exportSettings.workspace_general_settings?.auto_map_employees],
       searchOption: []
     });
 
@@ -327,7 +303,10 @@ export class ExportSettingsComponent implements OnInit, OnDestroy {
   }
 
   private updateExportSettings(): boolean {
-    return this.exportSettings?.workspace_general_settings?.reimbursable_expenses_object !== null || this.exportSettings?.workspace_general_settings?.corporate_credit_card_expenses_object !== null;
+    if (this.exportSettings?.workspace_general_settings) {
+      return this.exportSettings?.workspace_general_settings?.reimbursable_expenses_object !== null || this.exportSettings?.workspace_general_settings?.corporate_credit_card_expenses_object !== null;
+    }
+    return false;
   }
 
   private paymentsSyncAffected(): boolean {
@@ -370,9 +349,9 @@ export class ExportSettingsComponent implements OnInit, OnDestroy {
       content = this.replaceContentBasedOnConfiguration(updatedCorporateCardExportType, existingCorporateCardExportType, 'credit card');
     }
 
-    if (this.paymentsSyncAffected()) {
-      content = this.replaceContentBasedOnConfiguration(updatedReimbursableExportType, existingReimbursableExportType, 'reimbursable');
-    }
+    // If (this.paymentsSyncAffected()) {
+    //   Content = this.replaceContentBasedOnConfiguration(updatedReimbursableExportType, existingReimbursableExportType, 'reimbursable');
+    // }
     return content;
   }
 

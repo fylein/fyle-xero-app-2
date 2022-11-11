@@ -90,8 +90,8 @@ export class DashboardComponent implements OnInit {
       if (res.results.filter(task => (task.status === 'IN_PROGRESS' || task.status === 'ENQUEUED') && exportableExpenseGroupIds.includes(task.expense_group)).length === 0) {
         this.isLoading = true;
         forkJoin([
-          this.getExportErrors$,
-          this.getLastExport$
+          this.dashboardService.getExportErrors(),
+          this.dashboardService.getLastExport()
         ]).subscribe(responses => {
           this.errors = this.formatErrors(responses[0]);
           this.groupedErrorStat = {

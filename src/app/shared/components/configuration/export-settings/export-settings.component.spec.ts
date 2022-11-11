@@ -133,13 +133,6 @@ describe('ExportSettingsComponent', () => {
     expect((component as any).createCreditCardExpenseWatcher()).toBeUndefined();
   });
 
-  it('showBankAccountField function check', () => {
-    component.tenantFieldMapping = TenantFieldMapping.TENANT;
-    component.exportSettingsForm.controls.reimbursableExportType.patchValue(ReimbursableExpensesObject.PURCHASE_BILL);
-    fixture.detectChanges();
-    expect(component.showBankAccountField()).toBeTrue();
-  });
-
   it('showReimbursableAccountsPayableField function check', () => {
     component.tenantFieldMapping = TenantFieldMapping.TENANT;
     component.exportSettingsForm.controls.reimbursableExportType.patchValue(ReimbursableExpensesObject.PURCHASE_BILL);

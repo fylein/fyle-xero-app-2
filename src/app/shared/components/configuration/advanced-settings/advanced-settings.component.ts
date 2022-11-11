@@ -126,7 +126,7 @@ export class AdvancedSettingsComponent implements OnInit, OnDestroy {
   }
 
   private setupForm(): void {
-    let paymentSync = 'None';
+    let paymentSync = '';
     if (this.advancedSettings.workspace_general_settings.sync_fyle_to_xero_payments) {
       paymentSync = PaymentSyncDirection.FYLE_TO_XERO;
     } else if (this.advancedSettings.workspace_general_settings.sync_xero_to_fyle_payments) {
