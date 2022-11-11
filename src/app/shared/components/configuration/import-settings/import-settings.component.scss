@@ -106,16 +106,11 @@
   }
 
   &--field-toggle-section {
-    padding: 0px 8px 19px 32px;
+    padding: 20px 8px 20px 32px;
     background: #FAFCFF;
-    border: 1px solid #F5F5F5;
     box-sizing: border-box;
   }
 
-  &--import-area {
-    padding-top: 40px;
-    padding-bottom: 16px;
-  }
 }
 
 :host {
@@ -148,7 +143,4 @@
 
 p {
   margin: 0;
-}
-h5 {
-  font-size: 14px;
 }
