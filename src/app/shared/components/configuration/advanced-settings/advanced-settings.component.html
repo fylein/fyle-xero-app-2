@@ -39,7 +39,7 @@
           </mat-select>
           <div class="mat-select-arrow-closed"></div>
         </mat-form-field>
-        <app-mandatory-error-message *ngIf="advancedSettingsForm.controls.exportScheduleFrequency.touched" [listName]="'frequency'"></app-mandatory-error-message>
+        <app-mandatory-error-message *ngIf="advancedSettingsForm.controls.exportScheduleFrequency.touched && !advancedSettingsForm.controls.exportScheduleFrequency.value" [listName]="'frequency'"></app-mandatory-error-message>
         <!-- <app-configuration-select-field [form]="advancedSettingsForm" [options]="frequencyIntervals"
           [placeholder]="'Select Frequency'" [isFieldMandatory]="true" [mandatoryErrorListName]="'Frequence'" [formControllerName]="'exportScheduleFrequency'">
         </app-configuration-select-field> -->
