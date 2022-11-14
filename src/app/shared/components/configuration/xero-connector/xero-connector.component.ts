@@ -192,9 +192,10 @@ export class XeroConnectorComponent implements OnInit, OnDestroy {
 
   private postXeroCredentials(code: string): void {
     this.xeroConnectorService.connectXero(this.workspaceService.getWorkspaceId(), code).subscribe((xeroCredentials: XeroCredentials) => {
-      this.postTenant();
-      this.showOrHideDisconnectXero();
-      this.xeroConnectionInProgress = false;
+      this.postTenant().then(() => {
+        this.showOrHideDisconnectXero();
+        this.xeroConnectionInProgress = false;
+      });
     }, (error) => {
       const errorMessage = 'message' in error.error ? error.error.message : 'Failed to connect to Xero Tenant. Please try again';
       if (errorMessage === 'Please choose the correct Xero account') {
@@ -250,8 +251,8 @@ export class XeroConnectorComponent implements OnInit, OnDestroy {
     }
   }
 
-  postTenant() {
-    this.xeroConnectorService.postXeroTenants().subscribe(() => {
+  postTenant(): Promise<DestinationAttribute | void> {
+    return this.xeroConnectorService.postXeroTenants().toPromise().then(() => {
       this.getTenant();
     });
   }
