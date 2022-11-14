@@ -93,7 +93,7 @@ describe('ImportSettingsComponent', () => {
       return formbuilder.group({
         source_field: [field.source_field],
         destination_field: [field.destination_field],
-        import_to_fyle: [field.import_to_fyle, null],
+        import_to_fyle: [field.import_to_fyle],
         disable_import_to_fyle: [field.disable_import_to_fyle],
         source_placeholder: ['']
       });

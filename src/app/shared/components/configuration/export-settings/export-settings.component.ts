@@ -309,10 +309,6 @@ export class ExportSettingsComponent implements OnInit, OnDestroy {
     return false;
   }
 
-  private paymentsSyncAffected(): boolean {
-    return this.exportSettings?.workspace_general_settings?.reimbursable_expenses_object !== ReimbursableExpensesObject.PURCHASE_BILL && this.exportSettingsForm.value.reimbursableExportType === ReimbursableExpensesObject.PURCHASE_BILL;
-  }
-
   private advancedSettingAffected(): boolean {
     if (this.updateExportSettings()) {
       return true;
@@ -349,23 +345,15 @@ export class ExportSettingsComponent implements OnInit, OnDestroy {
       content = this.replaceContentBasedOnConfiguration(updatedCorporateCardExportType, existingCorporateCardExportType, 'credit card');
     }
 
-    // If (this.paymentsSyncAffected()) {
-    //   Content = this.replaceContentBasedOnConfiguration(updatedReimbursableExportType, existingReimbursableExportType, 'reimbursable');
-    // }
     return content;
   }
 
   private showConfirmationDialog(): void {
     const content = this.constructWarningMessage();
-    let dialogcontent = 'Do you wish to continue?';
-
-    if (content.length > 0){
-      dialogcontent = `${content}<br><br>Do you wish to continue?`;
-    }
 
     const data: ConfirmationDialog = {
       title: 'Change in Configuration',
-      contents: dialogcontent,
+      contents: `${content}<br><br>Do you wish to continue?`,
       primaryCtaText: 'Continue'
     };
 

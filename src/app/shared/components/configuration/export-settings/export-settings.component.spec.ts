@@ -6,7 +6,7 @@ import { ExportSettingsComponent } from './export-settings.component';
 import { HttpClientModule } from '@angular/common/http';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { CorporateCreditCardExpensesObject, ExpenseGroupingFieldOption, ExpenseState, OnboardingState, ReimbursableExpensesObject, TenantFieldMapping } from 'src/app/core/models/enum/enum.model';
-import { destinationAttribute, errorResponse, exportResponse, replacecontent1, replacecontent2 } from './export-settings.fixture';
+import { destinationAttribute, errorResponse, exportResponse, exportResponse1, replacecontent1, replacecontent2 } from './export-settings.fixture';
 import { MappingService } from 'src/app/core/services/misc/mapping.service';
 import { WorkspaceService } from 'src/app/core/services/workspace/workspace.service';
 import { ExportSettingService } from 'src/app/core/services/configuration/export-setting.service';
@@ -154,11 +154,16 @@ describe('ExportSettingsComponent', () => {
   it('advancedSettingAffected function check', () => {
     component.exportSettings.workspace_general_settings.corporate_credit_card_expenses_object = CorporateCreditCardExpensesObject.BANK_TRANSACTION;
     component.exportSettings.workspace_general_settings.reimbursable_expenses_object = ReimbursableExpensesObject.PURCHASE_BILL;
-    component.exportSettingsForm.controls.reimbursableExportType.patchValue(ReimbursableExpensesObject.PURCHASE_BILL);
+    component.exportSettingsForm.controls.reimbursableExpense.patchValue(true);
+    fixture.detectChanges();
     expect((component as any).advancedSettingAffected()).toBeTrue();
     expect((component as any).updateExportSettings()).toBeTrue();
     component.exportSettings.workspace_general_settings.reimbursable_expenses_object = null;
     component.exportSettings.workspace_general_settings.corporate_credit_card_expenses_object = null;
+    fixture.detectChanges();
+    expect((component as any).updateExportSettings()).toBeFalse();
+    expect((component as any).advancedSettingAffected()).toBeFalse();
+    component.exportSettings = exportResponse1;
     fixture.detectChanges();
     expect((component as any).updateExportSettings()).toBeFalse();
     expect((component as any).advancedSettingAffected()).toBeFalse();
@@ -177,7 +182,7 @@ describe('ExportSettingsComponent', () => {
     expect((component as any).constructWarningMessage().length).toBeGreaterThanOrEqual(0);
     component.exportSettings.workspace_general_settings.reimbursable_expenses_object = ReimbursableExpensesObject.PURCHASE_BILL;
     component.exportSettings.workspace_general_settings.corporate_credit_card_expenses_object = CorporateCreditCardExpensesObject.BANK_TRANSACTION;
-    component.exportSettingsForm.controls.creditCardExportType.setValue(null);
+    component.exportSettingsForm.controls.creditCardExportType.setValue(CorporateCreditCardExpensesObject.BANK_TRANSACTION);
     component.exportSettingsForm.controls.reimbursableExportType.patchValue(ReimbursableExpensesObject.PURCHASE_BILL);
     expect((component as any).constructWarningMessage().length).toBeGreaterThanOrEqual(0);
     component.exportSettings.workspace_general_settings.reimbursable_expenses_object = null;
@@ -205,7 +210,8 @@ describe('ExportSettingsComponent', () => {
   });
 
   it('constructPayloadAndSave function check', () => {
-    component.isOnboarding = false;
+    component.isOnboarding = true;
+    spyOn(workspace, 'getOnboardingState').and.returnValue(OnboardingState.ADVANCED_CONFIGURATION);
     expect((component as any).constructPayloadAndSave()).toBeUndefined();
   });
 
@@ -218,6 +224,16 @@ describe('ExportSettingsComponent', () => {
     expect((component as any).constructPayloadAndSave()).toBeUndefined();
     expect(routerSpy.navigate).toHaveBeenCalledWith(['/workspaces/main/dashboard']);
     expect(mappingService.refreshMappingPages).toHaveBeenCalled();
+  });
+
+  it('constructPayloadAndSave function check', () => {
+    component.isOnboarding = false;
+    component.exportSettings.workspace_general_settings.reimbursable_expenses_object = ReimbursableExpensesObject.PURCHASE_BILL;
+    component.exportSettings.workspace_general_settings.corporate_credit_card_expenses_object = CorporateCreditCardExpensesObject.BANK_TRANSACTION;
+    component.exportSettingsForm.controls.reimbursableExpense.patchValue(true);
+    fixture.detectChanges();
+    expect((component as any).constructPayloadAndSave()).toBeUndefined();
+    expect(routerSpy.navigate).toHaveBeenCalledWith(['/workspaces/main/configuration/advanced_settings']);
   });
 
   it('constructPayloadAndSave function check for failure', () => {

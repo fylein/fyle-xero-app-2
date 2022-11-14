@@ -64,6 +64,20 @@ export const exportResponse: ExportSettingGet = {
   },
   workspace_id: 1
 };
+
+export const exportResponse1: ExportSettingGet = {
+  expense_group_settings: {
+    reimbursable_expense_state: ExpenseState.PAID,
+    reimbursable_export_date_type: null,
+    ccc_expense_state: ExpenseState.PAID
+  },
+  // @ts-ignore
+  workspace_general_settings: undefined,
+  general_mappings: {
+    bank_account: {id: '1', name: 'Fyle'}
+  },
+  workspace_id: 1
+};
 export const replacecontent1 = `You have changed the export type of reimbursable expense from <b>Check</b> to <b>Bill</b>,
 which would impact a few configurations in the <b>Advanced settings</b>. <br><br>Please revisit the <b>Advanced settings</b> to check and enable the
 features that could help customize and automate your integration workflows.`;

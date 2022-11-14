@@ -44,13 +44,13 @@ const mapping_settings: MappingSetting[] = [{
   updated_at: new Date(),
   workspace: 1,
   source_field: MappingSourceField.TAX_GROUP,
-  destination_field: MappingDestinationField.ACCOUNT,
+  destination_field: MappingSourceField.PROJECT,
   import_to_fyle: true,
   is_custom: true,
   source_placeholder: null
 },
 {
-  id: 1,
+  id: 2,
   created_at: new Date(),
   updated_at: new Date(),
   workspace: 1,
