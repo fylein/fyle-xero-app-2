@@ -194,8 +194,14 @@ export class XeroConnectorComponent implements OnInit, OnDestroy {
     this.xeroConnectorService.connectXero(this.workspaceService.getWorkspaceId(), code).subscribe((xeroCredentials: XeroCredentials) => {
       this.postTenant().then(() => {
         this.showOrHideDisconnectXero();
+      this.xeroConnectorService.getTenantMappings().subscribe((tenant: TenantMapping) => {
+        this.xeroCompanyName = tenant.tenant_name;
         this.xeroConnectionInProgress = false;
-      });
+        this.isContinueDisabled = false;
+        }, () => {
+          this.xeroConnectionInProgress = false;
+        });
+      })
     }, (error) => {
       const errorMessage = 'message' in error.error ? error.error.message : 'Failed to connect to Xero Tenant. Please try again';
       if (errorMessage === 'Please choose the correct Xero account') {
