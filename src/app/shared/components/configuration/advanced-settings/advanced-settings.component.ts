@@ -45,6 +45,10 @@ export class AdvancedSettingsComponent implements OnInit, OnDestroy {
 
   paymentSyncOptions: AdvancedSettingFormOption[] = [
     {
+      label: 'None',
+      value: 'None'
+    },
+    {
       label: 'Export Fyle ACH Payments to Xero',
       value: PaymentSyncDirection.FYLE_TO_XERO
     },
@@ -131,14 +135,14 @@ export class AdvancedSettingsComponent implements OnInit, OnDestroy {
 
     this.advancedSettingsForm = this.formBuilder.group({
       paymentSync: [paymentSync],
-      billPaymentAccount: [this.advancedSettings.general_mappings.payment_account?.id],
+      billPaymentAccount: [this.advancedSettings.general_mappings.payment_account],
       changeAccountingPeriod: [this.advancedSettings.workspace_general_settings.change_accounting_period],
       autoCreateVendors: [this.advancedSettings.workspace_general_settings.auto_create_destination_entity],
       exportSchedule: [this.advancedSettings.workspace_schedules?.enabled ? this.advancedSettings.workspace_schedules.interval_hours : false],
       exportScheduleFrequency: [this.advancedSettings.workspace_schedules?.enabled ? this.advancedSettings.workspace_schedules.interval_hours : null],
+      autoCreateMerchantDestinationEntity: [this.advancedSettings.workspace_general_settings.auto_create_merchant_destination_entity ? this.advancedSettings.workspace_general_settings.auto_create_merchant_destination_entity : false],
       searchOption: []
     });
-
     this.setCustomValidators();
     this.isLoading = false;
   }

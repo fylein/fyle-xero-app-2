@@ -87,3 +87,7 @@
 .configuration--form-field {
   padding-left: 0px;
 }
+
+:host ::ng-deep .required-error {
+  padding-left: 0 !important;
+}

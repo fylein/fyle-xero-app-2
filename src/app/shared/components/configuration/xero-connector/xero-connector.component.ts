@@ -208,11 +208,15 @@ export class XeroConnectorComponent implements OnInit, OnDestroy {
 
   private getSettings(): void {
     this.xeroConnectorService.getXeroCredentials(this.workspaceService.getWorkspaceId()).subscribe((xeroCredentials: XeroCredentials) => {
-      this.getTenant();
       this.xeroConnectorService.getTenantMappings().subscribe((tenant: TenantMapping) => {
         this.xeroCompanyName = tenant.tenant_name;
         this.isXeroConnected = true;
         this.isContinueDisabled = false;
+      },
+      () => {
+        this.getTenant();
+        this.isXeroConnected = false;
+        this.isContinueDisabled = true;
       });
       this.showOrHideDisconnectXero();
       this.xeroConnectionInProgress = false;

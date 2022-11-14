@@ -138,7 +138,7 @@ export class ImportSettingsComponent implements OnInit, OnDestroy {
     const expenseFieldsFormArray = this.xeroExpenseFields.map((field) => {
       return this.formBuilder.group({
         source_field: [field.source_field],
-        destination_field: [field.destination_field],
+        destination_field: [field.destination_field.toUpperCase()],
         import_to_fyle: [field.import_to_fyle, this.importToggleWatcher()],
         disable_import_to_fyle: [field.disable_import_to_fyle],
         source_placeholder: ['']
@@ -183,7 +183,7 @@ export class ImportSettingsComponent implements OnInit, OnDestroy {
       );
 
       this.xeroExpenseFields = xeroAttributes.map(attribute => {
-        const mappingSetting = this.importSettings.mapping_settings.filter((mappingSetting: MappingSetting) => mappingSetting.destination_field === attribute.attribute_type);
+        const mappingSetting = this.importSettings.mapping_settings.filter((mappingSetting: MappingSetting) => mappingSetting.destination_field.toUpperCase() === attribute.attribute_type);
         return {
           source_field: mappingSetting.length > 0 ? mappingSetting[0].source_field : '',
           destination_field: attribute.display_name,

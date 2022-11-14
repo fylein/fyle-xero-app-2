@@ -146,7 +146,7 @@ describe('MappingService', () => {
     });
     const req = httpMock.expectOne({
       method: 'GET',
-      url: `${API_BASE_URL}/workspaces/${workspace_id}/mappings/stats/?source_type=CATEGORY&destination_type=PROJECT`
+      url: `${API_BASE_URL}/workspaces/${workspace_id}/mappings/stats/?source_type=CATEGORY&destination_type=PROJECT&app_name=XERO`
     });
       req.flush(MappingStatsresponse);
   });
@@ -170,7 +170,7 @@ describe('MappingService', () => {
     });
     const req = httpMock.expectOne({
       method: 'GET',
-      url: `${API_BASE_URL}/workspaces/${workspace_id}/mappings/expense_attributes/?limit=1&offset=1&all_alphabets=true&mapped=ALL&mapping_source_alphabets=null&source_type=CATEGORY&destination_type=TAX_GROUP`
+      url: `${API_BASE_URL}/workspaces/${workspace_id}/mappings/expense_attributes/?limit=1&offset=1&all_alphabets=true&mapped=ALL&mapping_source_alphabets=null&source_type=CATEGORY&destination_type=TAX_GROUP&app_name=XERO`
     });
       req.flush(getMappingsresponse);
   });
@@ -183,7 +183,7 @@ describe('MappingService', () => {
     });
     const req = httpMock.expectOne({
       method: 'GET',
-      url: `${API_BASE_URL}/workspaces/${workspace_id}/mappings/expense_attributes/?limit=1&offset=1&all_alphabets=true&mapped=false&mapping_source_alphabets=all&source_type=CATEGORY&destination_type=TAX_GROUP`
+      url: `${API_BASE_URL}/workspaces/${workspace_id}/mappings/expense_attributes/?limit=1&offset=1&all_alphabets=true&mapped=false&mapping_source_alphabets=all&source_type=CATEGORY&destination_type=TAX_GROUP&app_name=XERO`
     });
       req.flush(getMappingsresponse);
   });

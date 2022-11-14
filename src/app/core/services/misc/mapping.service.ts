@@ -78,7 +78,7 @@ export class MappingService {
   }
 
   getMappingStats(sourceType: string, destinationType: string): Observable<MappingStats> {
-    return this.apiService.get(`/workspaces/${this.workspaceId}/mappings/stats/`, { source_type: sourceType, destination_type: destinationType });
+    return this.apiService.get(`/workspaces/${this.workspaceId}/mappings/stats/`, { source_type: sourceType, destination_type: destinationType, app_name: 'XERO' });
   }
 
   postMapping(mapping: MappingPost): Observable<PostMappingResponse> {
@@ -95,7 +95,8 @@ export class MappingService {
         mapped: mappingState === MappingState.ALL ? MappingState.ALL : false,
         mapping_source_alphabets: alphabetsFilter.length ? alphabetsFilter : null,
         source_type: sourceType,
-        destination_type: destinationType
+        destination_type: destinationType,
+        app_name: 'XERO'
       }
     );
   }

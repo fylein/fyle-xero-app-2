@@ -39,8 +39,9 @@
           </mat-select>
           <div class="mat-select-arrow-closed"></div>
         </mat-form-field>
+        <app-mandatory-error-message *ngIf="advancedSettingsForm.controls.exportScheduleFrequency.touched" [listName]="'frequency'"></app-mandatory-error-message>
         <!-- <app-configuration-select-field [form]="advancedSettingsForm" [options]="frequencyIntervals"
-          [placeholder]="'Select Frequency'" [formControllerName]="'exportScheduleFrequency'">
+          [placeholder]="'Select Frequency'" [isFieldMandatory]="true" [mandatoryErrorListName]="'Frequence'" [formControllerName]="'exportScheduleFrequency'">
         </app-configuration-select-field> -->
       </div>
 
@@ -64,6 +65,12 @@
         [iconPath]="'assets/images/svgs/general/expense.svg'" [label]="'Auto create Contacts'"
         [subLabel]="'While exporting reimbursable expenses from Fyle, the integration will automatically create a Contact if a match for an employee in Fyle does not exist in Xero already.'"
         [formControllerName]="'autoCreateVendors'">
+      </app-configuration-toggle-field>
+
+      <app-configuration-toggle-field [form]="advancedSettingsForm"
+        [iconPath]="'assets/images/svgs/general/expense.svg'" [label]="'Auto Create Fyle Merchants as Contacts on Xero'"
+        [subLabel]="'While exporting corporate card expenses from Fyle, the integration will auto-create a contact in Xero if a merchant added in Fyle does not exist in Xero.'"
+        [formControllerName]="'autoCreateMerchantDestinationEntity'">
       </app-configuration-toggle-field>
 
       <app-configuration-step-footer-section

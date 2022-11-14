@@ -53,7 +53,7 @@ export interface ImportSettingFormOption extends SelectFormOption {
 export class ImportSettingModel {
   static constructPayload(importSettingsForm: FormGroup, customMappingSettings: MappingSetting[]): ImportSettingPost {
     const emptyDestinationAttribute = {id: null, name: null};
-    const employeeSettingPayload: ImportSettingPost = {
+    const importSettingPayload: ImportSettingPost = {
       workspace_general_settings: {
         import_categories: importSettingsForm.get('chartOfAccount')?.value,
         charts_of_accounts: ImportSettingModel.formatChartOfAccounts(importSettingsForm.get('chartOfAccountTypes')?.value),
@@ -65,7 +65,7 @@ export class ImportSettingModel {
       },
       mapping_settings: ImportSettingModel.formatMappingSettings(importSettingsForm.get('expenseFields')?.value, customMappingSettings)
     };
-    return employeeSettingPayload;
+    return importSettingPayload;
   }
 
   static formatChartOfAccounts(chartOfAccounts: {enabled: boolean, name: string}[]): string[] {

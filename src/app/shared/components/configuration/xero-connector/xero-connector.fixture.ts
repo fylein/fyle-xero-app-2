@@ -1,7 +1,7 @@
 import { ExportSettingGet } from "src/app/core/models/configuration/export-setting.model";
 import { DestinationAttribute } from "src/app/core/models/db/destination-attribute.model";
 import { TenantMapping } from "src/app/core/models/db/tenant-mapping.model";
-import { ExpenseState, ReimbursableExpensesObject, CorporateCreditCardExpensesObject, AutoMapEmployee } from "src/app/core/models/enum/enum.model";
+import { ExpenseState, AutoMapEmployee } from "src/app/core/models/enum/enum.model";
 
 export const response = {
   id: 1,

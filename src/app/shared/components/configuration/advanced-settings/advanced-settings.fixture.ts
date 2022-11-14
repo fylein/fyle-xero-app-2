@@ -1,4 +1,4 @@
-import { AdvancedSettingGet, AdvancedSettingPost } from "src/app/core/models/configuration/advanced-setting.model";
+import { AdvancedSettingGet } from "src/app/core/models/configuration/advanced-setting.model";
 import { DestinationAttribute } from "src/app/core/models/db/destination-attribute.model";
 import { WorkspaceSchedule, WorkspaceScheduleEmailOptions } from "src/app/core/models/db/workspace-schedule.model";
 import { WorkspaceGeneralSetting } from "src/app/core/models/db/workspace-general-setting.model";
@@ -30,7 +30,8 @@ export const advancedSettingResponse:AdvancedSettingGet = {
         sync_fyle_to_xero_payments: false,
         sync_xero_to_fyle_payments: false,
         auto_create_destination_entity: true,
-        change_accounting_period: true
+        change_accounting_period: true,
+        auto_create_merchant_destination_entity: true
 
       },
       general_mappings: {
@@ -78,7 +79,8 @@ export const getadvancedSettingResponse:AdvancedSettingGet = {
     sync_fyle_to_xero_payments: false,
     sync_xero_to_fyle_payments: false,
     auto_create_destination_entity: true,
-    change_accounting_period: true
+    change_accounting_period: true,
+    auto_create_merchant_destination_entity: true
 
   },
   general_mappings: {
@@ -97,7 +99,8 @@ export const getadvancedSettingResponse2:AdvancedSettingGet = {
     sync_fyle_to_xero_payments: true,
     sync_xero_to_fyle_payments: false,
     auto_create_destination_entity: true,
-    change_accounting_period: true
+    change_accounting_period: true,
+    auto_create_merchant_destination_entity: true
 
   },
   general_mappings: {
