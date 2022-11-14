@@ -47,10 +47,6 @@ export class WorkspacesGuard implements CanActivate {
 
             const onboardingState: OnboardingState = this.workspaceService.getOnboardingState();
 
-            if (onboardingState !== OnboardingState.COMPLETE) {
-              return this.router.navigateByUrl('workspaces/onboarding/xero_connector');
-            }
-
             return this.router.navigateByUrl('workspaces/onboarding/landing');
           }
 
