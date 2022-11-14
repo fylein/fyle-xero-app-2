@@ -25,7 +25,7 @@ export class AppcuesService {
         'Org ID': user.org_id,
         'Workspace ID': this.workspaceService.getWorkspaceId(),
         'Workspace Name': user.org_name,
-        source: 'Fyle Quickbooks Integration - 2'
+        source: 'Fyle Xero Integration - 2'
       });
     }
   }
