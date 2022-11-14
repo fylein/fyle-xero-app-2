@@ -52,6 +52,6 @@ spec:
             timeoutSeconds: 1
           envFrom:
             - secretRef:
-                name: xero-app-secrets
+                name: xero-app-2-secrets
       imagePullSecrets:
         - name: myregistrykey2
