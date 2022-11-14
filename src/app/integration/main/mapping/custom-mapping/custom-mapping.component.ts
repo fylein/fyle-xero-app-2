@@ -103,7 +103,7 @@ export class CustomMappingComponent implements OnInit {
       this.mappingService.refreshMappingPages();
       this.snackBar.open('Custom Mapping Created Successfully');
       this.mappingSettings.push(response[0]);
-      this.setupPage();
+      this.setupSettingsAndSetupPage();
     });
   }
 
@@ -148,7 +148,7 @@ export class CustomMappingComponent implements OnInit {
             attribute_type: mappingRow.fyleField,
             display_name: this.helperService.getSpaceCasedTitleCase(mappingRow.fyleField)
           });
-          this.setupPage();
+          this.setupSettingsAndSetupPage();
         });
       }
     });
@@ -197,9 +197,7 @@ export class CustomMappingComponent implements OnInit {
 
   private setupPage(): void {
     // Remove already imported fyle fields from the options
-    this.fyleFields = this.fyleFields.filter(field => {
-      return !this.mappingSettings.some(mapping => mapping.source_field === field.attribute_type);
-    });
+    this.mappingSettings = this.mappingSettings.filter(field => !field.import_to_fyle);
     const mappedRows = this.mappingSettings.map((mappingSetting, index) => {
       const mappedRow: MappingSettingList = {
         id: mappingSetting.id,
@@ -244,7 +242,7 @@ export class CustomMappingComponent implements OnInit {
       this.mappingService.getXeroField()
     ]).subscribe(responses => {
       this.mappingSettings = responses[0].results.filter((mappingSetting: MappingSetting) => {
-        return (mappingSetting.destination_field !== MappingDestinationField.ACCOUNT && mappingSetting.destination_field !== MappingDestinationField.BANK_ACCOUNT && mappingSetting.destination_field !== MappingDestinationField.CONTACT && mappingSetting.destination_field !== MappingDestinationField.TAX_CODE) && !mappingSetting.import_to_fyle;
+        return (mappingSetting.destination_field !== MappingDestinationField.ACCOUNT && mappingSetting.destination_field !== MappingDestinationField.BANK_ACCOUNT && mappingSetting.destination_field !== MappingDestinationField.CONTACT && mappingSetting.destination_field !== MappingDestinationField.TAX_CODE);
       });
       this.fyleFields = responses[1].filter(field => {
         return !this.mappingSettings.some(mapping => mapping.source_field === field.attribute_type);

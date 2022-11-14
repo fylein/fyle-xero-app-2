@@ -88,7 +88,7 @@
         </div>
       </div>
 
-      <div fxLayout="row" *ngIf="!isLoading && showMappingList && xeroFields && fyleFields && isExistingRowMapped" class="custom-mapping--add-section">
+      <div fxLayout="row" *ngIf="!isLoading && showMappingList && xeroFields.length > 0 && fyleFields.length > 0 && isExistingRowMapped" class="custom-mapping--add-section">
         <div fxLayout="row" class="pointer" (click)="createMappingRow()">
           <img class="custom-mapping--add-icon" width="15px" height="25px" src="assets/images/svgs/actions/plus.svg">
           <h4 class="actionable-text">Add New Mapping</h4>
