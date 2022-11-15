@@ -253,7 +253,7 @@ describe('XeroConnectorComponent', () => {
   });
 
   it('postTenant function check', () => {
-    expect(component.postTenant()).toBeUndefined();
+    component.postTenant();
     expect(component.tenantList).toBe(tenant);
   });
 

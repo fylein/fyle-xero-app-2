@@ -192,14 +192,15 @@ export class XeroConnectorComponent implements OnInit, OnDestroy {
 
   private postXeroCredentials(code: string): void {
     this.xeroConnectorService.connectXero(this.workspaceService.getWorkspaceId(), code).subscribe((xeroCredentials: XeroCredentials) => {
-      this.postTenant();
-      this.showOrHideDisconnectXero();
+      this.postTenant().then(() => {
+        this.showOrHideDisconnectXero();
       this.xeroConnectorService.getTenantMappings().subscribe((tenant: TenantMapping) => {
         this.xeroCompanyName = tenant.tenant_name;
         this.xeroConnectionInProgress = false;
         this.isContinueDisabled = false;
-      }, () => {
-        this.xeroConnectionInProgress = false;
+        }, () => {
+          this.xeroConnectionInProgress = false;
+        });
       });
     }, (error) => {
       const errorMessage = 'message' in error.error ? error.error.message : 'Failed to connect to Xero Tenant. Please try again';
@@ -256,8 +257,8 @@ export class XeroConnectorComponent implements OnInit, OnDestroy {
     }
   }
 
-  postTenant() {
-    this.xeroConnectorService.postXeroTenants().subscribe(() => {
+  postTenant(): Promise<DestinationAttribute | void> {
+    return this.xeroConnectorService.postXeroTenants().toPromise().then(() => {
       this.getTenant();
     });
   }

@@ -69,7 +69,7 @@ export class ImportSettingModel {
   }
 
   static formatChartOfAccounts(chartOfAccounts: {enabled: boolean, name: string}[]): string[] {
-    return chartOfAccounts.filter(chartOfAccount => chartOfAccount.enabled).map(chartOfAccount => chartOfAccount.name);
+    return chartOfAccounts.filter(chartOfAccount => chartOfAccount.enabled).map(chartOfAccount => chartOfAccount.name.toUpperCase());
   }
 
   static formatMappingSettings(expenseFields: ExpenseFieldsFormOption[], existingMappingSettings: MappingSetting[]): ImportSettingMappingSetting[] {

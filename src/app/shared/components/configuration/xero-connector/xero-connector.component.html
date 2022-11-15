@@ -36,7 +36,7 @@
       <div class="xero-connector--connection-blocks">
         <div class="xero-connector--xero-org-section">
           <h5 class="xero-connector--fyle-section-text align-center sub-text-color bold">
-            XERO TENTANT
+            XERO TENANT
           </h5>
           <h3 [matTooltip]="xeroCompanyName" [matTooltipDisabled]="xeroCompanyName.length > 26 === false" matTooltipPosition="right" matTooltipClass="right" *ngIf="!xeroConnectionInProgress && xeroCompanyName" class="default-cursor single-line-text align-center">
             {{ xeroCompanyName | trimCharacter: 26 }}

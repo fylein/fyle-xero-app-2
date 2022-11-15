@@ -5,7 +5,7 @@
         {{ headerText }} <span *ngIf="isStepOptional" class="sub-text-color italic">(Optional)</span>
       </h3>
       <h5 class="sub-text-color paragraph">
-        {{ contentText }} <span class="header-section--learn-more-btn pointer" (click)="helperService.openExternalLink(helpArticleLink)">Learn more</span>
+        {{ contentText }} <span class="header-section--learn-more-btn pointer" (click)="helperService.openExternalLink(helpArticleLink)">Learn more<img class="help--open-in-new-tab-icon" src="assets/images/svgs/actions/open-in-new-tab-help.svg" width="10px" height="10px"/></span>
       </h5>
       <div *ngIf="activePage === 'import_settings'" class="header-section--info-section">
         <div fxLayout="row" class="header-section--info-content-section">

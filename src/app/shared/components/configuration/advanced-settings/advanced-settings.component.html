@@ -11,7 +11,7 @@
         [options]="paymentSyncOptions" [iconPath]="'assets/images/svgs/actions/sync.svg'"
         [label]="'Auto - Sync payment between Fyle and Xero'"
         [subLabel]="'When an expense is marked as \'Paid\' in Fyle the corresponding transaction will automatically be updated to \'Paid\' in Xero and vice versa.'"
-        [placeholder]="'Select Auto - sync type'"
+        [placeholder]="'Select how payments should be synced for reimbursable expenses'"
         [formControllerName]="'paymentSync'">
       </app-configuration-select-field>
       
@@ -39,7 +39,7 @@
           </mat-select>
           <div class="mat-select-arrow-closed"></div>
         </mat-form-field>
-        <app-mandatory-error-message *ngIf="advancedSettingsForm.controls.exportScheduleFrequency.touched" [listName]="'frequency'"></app-mandatory-error-message>
+        <app-mandatory-error-message *ngIf="advancedSettingsForm.controls.exportScheduleFrequency.touched && !advancedSettingsForm.controls.exportScheduleFrequency.value" [listName]="'frequency'"></app-mandatory-error-message>
         <!-- <app-configuration-select-field [form]="advancedSettingsForm" [options]="frequencyIntervals"
           [placeholder]="'Select Frequency'" [isFieldMandatory]="true" [mandatoryErrorListName]="'Frequence'" [formControllerName]="'exportScheduleFrequency'">
         </app-configuration-select-field> -->

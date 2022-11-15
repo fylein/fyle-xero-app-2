@@ -79,8 +79,9 @@ export class ImportSettingsComponent implements OnInit, OnDestroy {
   }
 
   createChartOfAccountField(type: string): FormGroup {
+    const chartOfAccounts = type.toUpperCase();
     return this.formBuilder.group({
-      enabled: [this.importSettings.workspace_general_settings.charts_of_accounts.includes(type) || type === 'Expense' ? true : false],
+      enabled: [this.importSettings.workspace_general_settings.charts_of_accounts.includes(chartOfAccounts) || type === 'Expense' ? true : false],
       name: [type]
     });
   }
