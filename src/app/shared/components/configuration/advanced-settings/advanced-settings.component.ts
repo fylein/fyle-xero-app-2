@@ -111,7 +111,7 @@ export class AdvancedSettingsComponent implements OnInit, OnDestroy {
         this.advancedSettingsForm.controls.exportScheduleFrequency.setValidators(Validators.required);
       } else {
         this.advancedSettingsForm.controls.exportScheduleFrequency.clearValidators();
-        this.advancedSettingsForm.controls.exportScheduleFrequency.setValue(null);
+        this.advancedSettingsForm.controls.exportScheduleFrequency.updateValueAndValidity();
       }
     });
   }
