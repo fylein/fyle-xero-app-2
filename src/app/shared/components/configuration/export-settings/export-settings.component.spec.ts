@@ -153,7 +153,7 @@ describe('ExportSettingsComponent', () => {
 
   it('advancedSettingAffected function check', () => {
     component.exportSettings.workspace_general_settings.corporate_credit_card_expenses_object = CorporateCreditCardExpensesObject.BANK_TRANSACTION;
-    component.exportSettings.workspace_general_settings.reimbursable_expenses_object = ReimbursableExpensesObject.PURCHASE_BILL;
+    component.exportSettings.workspace_general_settings.reimbursable_expenses_object = null;
     component.exportSettingsForm.controls.reimbursableExpense.patchValue(true);
     fixture.detectChanges();
     expect((component as any).advancedSettingAffected()).toBeTrue();
@@ -228,7 +228,7 @@ describe('ExportSettingsComponent', () => {
 
   it('constructPayloadAndSave function check', () => {
     component.isOnboarding = false;
-    component.exportSettings.workspace_general_settings.reimbursable_expenses_object = ReimbursableExpensesObject.PURCHASE_BILL;
+    component.exportSettings.workspace_general_settings.reimbursable_expenses_object = null;
     component.exportSettings.workspace_general_settings.corporate_credit_card_expenses_object = CorporateCreditCardExpensesObject.BANK_TRANSACTION;
     component.exportSettingsForm.controls.reimbursableExpense.patchValue(true);
     fixture.detectChanges();
