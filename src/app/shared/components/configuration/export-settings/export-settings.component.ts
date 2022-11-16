@@ -289,7 +289,7 @@ export class ExportSettingsComponent implements OnInit, OnDestroy {
       cccExpenseState: [this.exportSettings.expense_group_settings?.ccc_expense_state],
       creditCardExpense: [this.exportSettings.workspace_general_settings?.corporate_credit_card_expenses_object ? true : false, this.exportSelectionValidator()],
       creditCardExportType: [this.exportSettings.workspace_general_settings?.corporate_credit_card_expenses_object ? this.exportSettings.workspace_general_settings?.corporate_credit_card_expenses_object : CorporateCreditCardExpensesObject.BANK_TRANSACTION],
-      bankAccount: [this.exportSettings.general_mappings?.bank_account],
+      bankAccount: [this.exportSettings.general_mappings?.bank_account?.id ? this.exportSettings.general_mappings?.bank_account : null],
       autoMapEmployees: [this.exportSettings.workspace_general_settings?.auto_map_employees],
       searchOption: []
     });

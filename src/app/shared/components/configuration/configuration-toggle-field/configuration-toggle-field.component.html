@@ -15,7 +15,8 @@
   <h5 class="configuration--field-label sub-text-color paragraph">NOTE: If you don't want to import all the values and want to use only the categories you've added in Fyle, you can skip this step. Instead, after completing the integration configuration, you can map the categories that are already set up in Fyle to their corresponding Xero accounts under <b>Integration <br> Dashboard > Mappings Section </b></h5>
 </div>
 <div *ngIf="formControllerName === 'importCustomers'" class="configuration--field-toggle-note-section">
-  <h5 class="configuration--field-label sub-text-color paragraph">NOTE: To export billable expenses from Fyle, import Customers from Xero as Projects in Fyle.</h5>
+  <h5 *ngIf="!isImportCustomerDisabled" class="configuration--field-label sub-text-color paragraph">NOTE: To export billable expenses from Fyle, import Customers from Xero as Projects in Fyle.</h5>
+  <h5 *ngIf="isImportCustomerDisabled" class="configuration--field-label sub-text-color paragraph">NOTE: You have already mapped a tracking category from Xero to the Project field in Fyle. <br>Change the configured mapping to a new field to be able to import Customers in the Project field.</h5>
 </div>
 
 <!-- Advanced Setting Page - with icon -->
