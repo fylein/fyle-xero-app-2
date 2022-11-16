@@ -317,7 +317,7 @@ export class ExportSettingsComponent implements OnInit, OnDestroy {
     return false;
   }
 
-  private replaceContentBasedOnConfiguration(updatedConfiguration: string, existingConfiguration: string, exportType: 'reimbursable' | 'credit card'): string {
+  private replaceContentBasedOnConfiguration(updatedConfiguration: string, existingConfiguration: string, exportType: string): string {
     const configurationUpdate = `You have changed the export type of $exportType expense from <b>$existingExportType</b> to <b>$updatedExportType</b>,
     which would impact a few configurations in the <b>Advanced settings</b>. <br><br>Please revisit the <b>Advanced settings</b> to check and enable the
     features that could help customize and automate your integration workflows.`;
@@ -339,9 +339,13 @@ export class ExportSettingsComponent implements OnInit, OnDestroy {
     const existingCorporateCardExportType = this.exportSettings.workspace_general_settings?.corporate_credit_card_expenses_object ? this.exportSettings.workspace_general_settings.corporate_credit_card_expenses_object : 'None';
     const updatedReimbursableExportType = this.exportSettingsForm.value.reimbursableExpense ? this.exportSettingsForm.value.reimbursableExportType : 'None';
     const updatedCorporateCardExportType = this.exportSettingsForm.value.creditCardExpense ? this.exportSettingsForm.value.creditCardExportType : 'None';
-    if (updatedReimbursableExportType !== existingReimbursableExportType) {
+    if (updatedReimbursableExportType !== existingReimbursableExportType && existingCorporateCardExportType === updatedCorporateCardExportType) {
       content = this.replaceContentBasedOnConfiguration(updatedReimbursableExportType, existingReimbursableExportType, 'reimbursable');
-    } else if (existingCorporateCardExportType !== updatedCorporateCardExportType) {
+    } else if (existingCorporateCardExportType !== updatedCorporateCardExportType && updatedReimbursableExportType === existingReimbursableExportType) {
+      content = this.replaceContentBasedOnConfiguration(updatedCorporateCardExportType, existingCorporateCardExportType, 'credit card');
+    } else if (existingCorporateCardExportType !== updatedCorporateCardExportType && updatedReimbursableExportType === ReimbursableExpensesObject.PURCHASE_BILL && updatedCorporateCardExportType !== CorporateCreditCardExpensesObject.BANK_TRANSACTION) {
+      content = this.replaceContentBasedOnConfiguration(updatedReimbursableExportType, existingReimbursableExportType, 'reimbursable');
+    } else if (updatedReimbursableExportType !== existingReimbursableExportType && updatedCorporateCardExportType === CorporateCreditCardExpensesObject.BANK_TRANSACTION && updatedReimbursableExportType !== ReimbursableExpensesObject.PURCHASE_BILL) {
       content = this.replaceContentBasedOnConfiguration(updatedCorporateCardExportType, existingCorporateCardExportType, 'credit card');
     }
 
