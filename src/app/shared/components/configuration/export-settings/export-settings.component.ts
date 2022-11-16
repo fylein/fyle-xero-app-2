@@ -286,7 +286,7 @@ export class ExportSettingsComponent implements OnInit, OnDestroy {
       reimbursableExpense: [this.exportSettings.workspace_general_settings?.reimbursable_expenses_object ? true : false, this.exportSelectionValidator()],
       reimbursableExportType: [this.exportSettings.workspace_general_settings?.reimbursable_expenses_object ? this.exportSettings.workspace_general_settings?.reimbursable_expenses_object : ReimbursableExpensesObject.PURCHASE_BILL],
       reimbursableExportDate: [this.exportSettings.expense_group_settings?.reimbursable_export_date_type],
-      cccExpenseState: [this.exportSettings.expense_group_settings?.ccc_expense_state, Validators.required],
+      cccExpenseState: [this.exportSettings.expense_group_settings?.ccc_expense_state],
       creditCardExpense: [this.exportSettings.workspace_general_settings?.corporate_credit_card_expenses_object ? true : false, this.exportSelectionValidator()],
       creditCardExportType: [this.exportSettings.workspace_general_settings?.corporate_credit_card_expenses_object ? this.exportSettings.workspace_general_settings?.corporate_credit_card_expenses_object : CorporateCreditCardExpensesObject.BANK_TRANSACTION],
       bankAccount: [this.exportSettings.general_mappings?.bank_account],
@@ -304,7 +304,7 @@ export class ExportSettingsComponent implements OnInit, OnDestroy {
 
   private updateExportSettings(): boolean {
     if (this.exportSettings?.workspace_general_settings) {
-      return (this.exportSettings?.workspace_general_settings?.reimbursable_expenses_object !== null && this.exportSettingsForm.controls.creditCardExpense.value && this.exportSettingsForm.controls.reimbursableExpense.value) || (this.exportSettings?.workspace_general_settings?.corporate_credit_card_expenses_object !== null && this.exportSettingsForm.controls.reimbursableExpense.value && this.exportSettingsForm.controls.creditCardExpense.value) || (this.exportSettingsForm.controls.reimbursableExpense.value && !this.exportSettingsForm.controls.creditCardExpense.value && this.exportSettings?.workspace_general_settings?.corporate_credit_card_expenses_object !== null) || (this.exportSettings?.workspace_general_settings?.reimbursable_expenses_object !== null && !this.exportSettingsForm.controls.reimbursableExpense.value && this.exportSettingsForm.controls.creditCardExpense.value);
+      return (this.exportSettings?.workspace_general_settings?.reimbursable_expenses_object !== null && this.exportSettings?.workspace_general_settings?.corporate_credit_card_expenses_object === null && this.exportSettingsForm.controls.creditCardExpense.value && this.exportSettingsForm.controls.reimbursableExpense.value) || (this.exportSettings?.workspace_general_settings?.corporate_credit_card_expenses_object !== null && this.exportSettings?.workspace_general_settings?.reimbursable_expenses_object === null && this.exportSettingsForm.controls.reimbursableExpense.value && this.exportSettingsForm.controls.creditCardExpense.value) || (this.exportSettingsForm.controls.reimbursableExpense.value && !this.exportSettingsForm.controls.creditCardExpense.value && this.exportSettings?.workspace_general_settings?.corporate_credit_card_expenses_object !== null && this.exportSettings?.workspace_general_settings?.reimbursable_expenses_object === null) || (this.exportSettings?.workspace_general_settings?.reimbursable_expenses_object !== null && !this.exportSettingsForm.controls.reimbursableExpense.value && this.exportSettingsForm.controls.creditCardExpense.value && this.exportSettings?.workspace_general_settings?.corporate_credit_card_expenses_object === null);
     }
     return false;
   }
@@ -317,7 +317,7 @@ export class ExportSettingsComponent implements OnInit, OnDestroy {
     return false;
   }
 
-  private replaceContentBasedOnConfiguration(updatedConfiguration: string, existingConfiguration: string, exportType: 'reimbursable' | 'credit card'): string {
+  private replaceContentBasedOnConfiguration(updatedConfiguration: string, existingConfiguration: string, exportType: string): string {
     const configurationUpdate = `You have changed the export type of $exportType expense from <b>$existingExportType</b> to <b>$updatedExportType</b>,
     which would impact a few configurations in the <b>Advanced settings</b>. <br><br>Please revisit the <b>Advanced settings</b> to check and enable the
     features that could help customize and automate your integration workflows.`;
@@ -339,9 +339,13 @@ export class ExportSettingsComponent implements OnInit, OnDestroy {
     const existingCorporateCardExportType = this.exportSettings.workspace_general_settings?.corporate_credit_card_expenses_object ? this.exportSettings.workspace_general_settings.corporate_credit_card_expenses_object : 'None';
     const updatedReimbursableExportType = this.exportSettingsForm.value.reimbursableExpense ? this.exportSettingsForm.value.reimbursableExportType : 'None';
     const updatedCorporateCardExportType = this.exportSettingsForm.value.creditCardExpense ? this.exportSettingsForm.value.creditCardExportType : 'None';
-    if (updatedReimbursableExportType !== existingReimbursableExportType) {
+    if (updatedReimbursableExportType !== existingReimbursableExportType && existingCorporateCardExportType === updatedCorporateCardExportType) {
       content = this.replaceContentBasedOnConfiguration(updatedReimbursableExportType, existingReimbursableExportType, 'reimbursable');
-    } else if (existingCorporateCardExportType !== updatedCorporateCardExportType) {
+    } else if (existingCorporateCardExportType !== updatedCorporateCardExportType && updatedReimbursableExportType === existingReimbursableExportType) {
+      content = this.replaceContentBasedOnConfiguration(updatedCorporateCardExportType, existingCorporateCardExportType, 'credit card');
+    } else if (existingCorporateCardExportType !== updatedCorporateCardExportType && updatedReimbursableExportType === ReimbursableExpensesObject.PURCHASE_BILL && updatedCorporateCardExportType !== CorporateCreditCardExpensesObject.BANK_TRANSACTION) {
+      content = this.replaceContentBasedOnConfiguration(updatedReimbursableExportType, existingReimbursableExportType, 'reimbursable');
+    } else if (updatedReimbursableExportType !== existingReimbursableExportType && updatedCorporateCardExportType === CorporateCreditCardExpensesObject.BANK_TRANSACTION && updatedReimbursableExportType !== ReimbursableExpensesObject.PURCHASE_BILL) {
       content = this.replaceContentBasedOnConfiguration(updatedCorporateCardExportType, existingCorporateCardExportType, 'credit card');
     }
 
