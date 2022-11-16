@@ -37,7 +37,8 @@
         <app-configuration-toggle-field [form]="importSettingsForm"
           [label]="'Import Customers from Xero'"
           [subLabel]="'The Customers in Xero will be imported as Projects in Fyle and will be a selectable field while creating an expense.'"
-          [formControllerName]="'importCustomers'">
+          [formControllerName]="'importCustomers'"
+          [isImportCustomerDisabled]="isImportCustomerDisabled">
         </app-configuration-toggle-field>
 
         <div formArrayName="expenseFields" class="paragraph">

@@ -18,6 +18,8 @@ export class ConfigurationToggleFieldComponent implements OnInit {
 
   @Input() iconPath: string;
 
+  @Input() isImportCustomerDisabled: boolean = false;
+
   constructor() { }
 
   ngOnInit(): void {

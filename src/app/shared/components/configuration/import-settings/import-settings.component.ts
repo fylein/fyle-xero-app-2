@@ -4,7 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
-import { ClickEvent, ConfigurationCtaText, OnboardingState, OnboardingStep, ProgressPhase, SimpleSearchPage, SimpleSearchType, UpdateEvent } from 'src/app/core/models/enum/enum.model';
+import { ClickEvent, ConfigurationCtaText, FyleField, OnboardingState, OnboardingStep, ProgressPhase, SimpleSearchPage, SimpleSearchType, UpdateEvent } from 'src/app/core/models/enum/enum.model';
 import { ExpenseFieldsFormOption, ImportSettingGet, ImportSettingModel } from 'src/app/core/models/configuration/import-setting.model';
 import { MappingSetting } from 'src/app/core/models/db/mapping-setting.model';
 import { ImportSettingService } from 'src/app/core/services/configuration/import-setting.service';
@@ -53,6 +53,8 @@ export class ImportSettingsComponent implements OnInit, OnDestroy {
   ConfigurationCtaText = ConfigurationCtaText;
 
   ProgressPhase = ProgressPhase;
+
+  isImportCustomerDisabled: boolean = false;
 
   private readonly sessionStartTime = new Date();
 
@@ -113,9 +115,37 @@ export class ImportSettingsComponent implements OnInit, OnDestroy {
     });
   }
 
+  private createImportCustomerWatcher(): void {
+    this.importSettingsForm.controls.importCustomers.valueChanges.subscribe((isCustomerImportEnabled) => {
+      if (isCustomerImportEnabled) {
+        this.fyleExpenseFields = this.fyleExpenseFields.filter((field) => field !== FyleField.PROJECT);
+      } else {
+        if (this.fyleExpenseFields.indexOf(FyleField.PROJECT) === -1) {
+          this.fyleExpenseFields.push(FyleField.PROJECT);
+        }
+      }
+    });
+  }
+
+  private createExpenseFieldWatcher(): void {
+    this.importSettingsForm.controls.expenseFields.valueChanges.subscribe((expenseFields) => {
+      const projectMapping = expenseFields.filter((expenseField: any) => expenseField.source_field === FyleField.PROJECT);
+      if (projectMapping.length) {
+        this.importSettingsForm.controls.importCustomers.setValue(false);
+        this.importSettingsForm.controls.importCustomers.disable();
+        this.isImportCustomerDisabled = true;
+      } else {
+        this.importSettingsForm.controls.importCustomers.enable();
+        this.isImportCustomerDisabled = false;
+      }
+    });
+  }
+
   private setCustomValidatorsAndWatchers(): void {
     this.updateTaxGroupVisibility();
     this.createTaxCodeWatcher();
+    this.createImportCustomerWatcher();
+    this.createExpenseFieldWatcher();
   }
 
   private importToggleWatcher(): ValidatorFn {
