@@ -20,6 +20,8 @@ import { PreviewDialogComponent } from '../preview-dialog/preview-dialog.compone
 import { WorkspaceService } from 'src/app/core/services/workspace/workspace.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { ClickEventAdditionalProperty } from 'src/app/core/models/misc/tracking.model';
+import { ThisReceiver } from '@angular/compiler';
+import { xeroField } from './import-settings.fixture';
 
 @Component({
   selector: 'app-import-settings',
@@ -63,6 +65,10 @@ export class ImportSettingsComponent implements OnInit, OnDestroy {
   SimpleSearchPage = SimpleSearchPage;
 
   SimpleSearchType = SimpleSearchType;
+
+  isProjectMapped: boolean;
+
+  customMappedFyleFields: string[];
 
   constructor(
     public dialog: MatDialog,
@@ -120,7 +126,7 @@ export class ImportSettingsComponent implements OnInit, OnDestroy {
       if (isCustomerImportEnabled) {
         this.fyleExpenseFields = this.fyleExpenseFields.filter((field) => field !== FyleField.PROJECT);
       } else {
-        if (this.fyleExpenseFields.indexOf(FyleField.PROJECT) === -1) {
+        if (this.fyleExpenseFields.indexOf(FyleField.PROJECT) === -1 && !this.isProjectMapped) {
           this.fyleExpenseFields.push(FyleField.PROJECT);
         }
       }
@@ -129,16 +135,26 @@ export class ImportSettingsComponent implements OnInit, OnDestroy {
 
   private createExpenseFieldWatcher(): void {
     this.importSettingsForm.controls.expenseFields.valueChanges.subscribe((expenseFields) => {
+      this.isProjectMapped = this.customMappedFyleFields.indexOf(FyleField.PROJECT) > -1 ? true : false;
       const projectMapping = expenseFields.filter((expenseField: any) => expenseField.source_field === FyleField.PROJECT);
-      if (projectMapping.length) {
+      if (projectMapping.length || this.isProjectMapped) {
         this.importSettingsForm.controls.importCustomers.setValue(false);
         this.importSettingsForm.controls.importCustomers.disable();
         this.isImportCustomerDisabled = true;
       } else {
         this.importSettingsForm.controls.importCustomers.enable();
         this.isImportCustomerDisabled = false;
+        // This.isProjectMapped = false;
       }
     });
+    if (this.isProjectMapped) {
+      this.importSettingsForm.controls.importCustomers.setValue(false);
+      this.importSettingsForm.controls.importCustomers.disable();
+      this.isImportCustomerDisabled = true;
+    } else {
+      this.importSettingsForm.controls.importCustomers.enable();
+      this.isImportCustomerDisabled = false;
+    }
   }
 
   private setCustomValidatorsAndWatchers(): void {
@@ -200,14 +216,12 @@ export class ImportSettingsComponent implements OnInit, OnDestroy {
     ]).subscribe(response => {
       this.importSettings = response[0];
       this.fyleExpenseFields = response[1].map(field => field.attribute_type);
-
       // Remove custom mapped Fyle options
-      const customMappedFyleFields = this.importSettings.mapping_settings.filter(setting => !setting.import_to_fyle).map(setting => setting.source_field);
+      this.customMappedFyleFields = this.importSettings.mapping_settings.filter(setting => !setting.import_to_fyle).map(setting => setting.source_field);
       const customMappedXeroFields = this.importSettings.mapping_settings.filter(setting => !setting.import_to_fyle).map(setting => setting.destination_field);
-      if (customMappedFyleFields.length) {
-        this.fyleExpenseFields = this.fyleExpenseFields.filter(field => !customMappedFyleFields.includes(field));
+      if (this.customMappedFyleFields.length) {
+        this.fyleExpenseFields = this.fyleExpenseFields.filter(field => !this.customMappedFyleFields.includes(field));
       }
-
       // Remove custom mapped Xero fields
       const xeroAttributes = response[2].filter(
         field => !customMappedXeroFields.includes(field.attribute_type)
@@ -223,8 +237,8 @@ export class ImportSettingsComponent implements OnInit, OnDestroy {
           source_placeholder: ''
         };
       });
+      this.isProjectMapped = this.customMappedFyleFields.indexOf(FyleField.PROJECT) > -1 || this.xeroExpenseFields.filter((feild => feild.source_field === FyleField.PROJECT)).length > 0 ? true : false;
       this.taxCodes = response[3];
-
       this.setupForm();
     });
   }

@@ -6,7 +6,7 @@ import { RxwebValidators } from '@rxweb/reactive-form-validators';
 import { forkJoin } from 'rxjs';
 import { MappingSetting, MappingSettingList } from 'src/app/core/models/db/mapping-setting.model';
 import { MappingStats } from 'src/app/core/models/db/mapping.model';
-import { DeleteEvent, MappingDestinationField, MappingSourceField, ProgressPhase, UpdateEvent, ZeroStatePage } from 'src/app/core/models/enum/enum.model';
+import { DeleteEvent, FyleField, MappingDestinationField, MappingSourceField, ProgressPhase, UpdateEvent, ZeroStatePage } from 'src/app/core/models/enum/enum.model';
 import { ConfirmationDialog } from 'src/app/core/models/misc/confirmation-dialog.model';
 import { ExpenseField } from 'src/app/core/models/misc/expense-field.model';
 import { HelperService } from 'src/app/core/services/core/helper.service';
@@ -197,7 +197,7 @@ export class CustomMappingComponent implements OnInit {
 
   private setupPage(): void {
     // Remove already imported fyle fields from the options
-    this.mappingSettings = this.mappingSettings.filter(field => !field.import_to_fyle);
+    this.mappingSettings = this.mappingSettings.filter(field => !field.import_to_fyle && field.source_field !== FyleField.CORPORATE_CARD);
     const mappedRows = this.mappingSettings.map((mappingSetting, index) => {
       const mappedRow: MappingSettingList = {
         id: mappingSetting.id,

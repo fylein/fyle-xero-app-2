@@ -1,9 +1,11 @@
 import { Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { NavigationStart, Router } from '@angular/router';
+import { forkJoin } from 'rxjs';
 import { MappingSetting, MappingSettingResponse } from 'src/app/core/models/db/mapping-setting.model';
-import { FyleField, TenantFieldMapping } from 'src/app/core/models/enum/enum.model';
+import { FyleField, MappingDestinationField, TenantFieldMapping } from 'src/app/core/models/enum/enum.model';
 import { DashboardModule, DashboardModuleChild } from 'src/app/core/models/misc/dashboard-module.model';
 import { MappingService } from 'src/app/core/services/misc/mapping.service';
+import { ExpenseField } from '/Users/fyle/integrations/fyle-xero-app-2/src/app/core/models/misc/expense-field.model';
 
 @Component({
   selector: 'app-main',
@@ -68,6 +70,12 @@ export class MainComponent implements OnInit {
       ]
     }
   ];
+
+  mappingSettings: MappingSetting[];
+
+  fyleFields: ExpenseField[];
+
+  xeroFields: ExpenseField[];
 
   constructor(
     private renderer: Renderer2,
@@ -166,7 +174,7 @@ export class MainComponent implements OnInit {
     }];
 
     const sourceFieldRoutes: string[] = [`mapping/${FyleField.EMPLOYEE.toLowerCase()}`, `mapping/${FyleField.CATEGORY.toLowerCase()}`];
-    const importedFieldsFromXero = [];
+    const importedFieldsFromXero: string[] = [];
     mappingSettingResponse.results.forEach((mappingSetting: MappingSetting) => {
       if (mappingSetting.source_field !== TenantFieldMapping.TENANT && mappingSetting.source_field !== FyleField.EMPLOYEE && mappingSetting.source_field !== FyleField.CATEGORY && mappingSetting.source_field !== FyleField.TAX_GROUP && mappingSetting.source_field !== FyleField.CORPORATE_CARD) {
         if (mappingSetting.import_to_fyle) {
@@ -182,20 +190,34 @@ export class MainComponent implements OnInit {
     });
 
     // Show Custom Mapping menu if atleast one Xero field is available to be mapped
-    if (importedFieldsFromXero.length < 4) {
-      this.modules[2].childPages.push({
-        name: 'Custom Mapping',
-        route: 'mapping/custom',
-        isActive: false
+    forkJoin([
+      this.mappingService.getFyleExpenseFields(),
+      this.mappingService.getXeroField()
+    ]).subscribe(responses => {
+      this.mappingSettings = mappingSettingResponse.results.filter((mappingSetting: MappingSetting) => {
+        return (mappingSetting.destination_field !== MappingDestinationField.ACCOUNT && mappingSetting.destination_field !== MappingDestinationField.BANK_ACCOUNT && mappingSetting.destination_field !== MappingDestinationField.CONTACT && mappingSetting.destination_field !== MappingDestinationField.TAX_CODE);
       });
-    }
+      this.fyleFields = responses[0].filter(field => {
+        return !this.mappingSettings.some(mapping => mapping.source_field === field.attribute_type);
+      });
+      this.xeroFields = responses[1].filter((xeroField: ExpenseField) => {
+        return !this.mappingSettings.some(mapping => mapping.destination_field === xeroField.attribute_type);
+      });
+      if ((this.xeroFields.length !== 0 && this.fyleFields.length !== 0) || importedFieldsFromXero.length !== this.mappingSettings.length) {
+        this.modules[2].childPages.push({
+          name: 'Custom Mapping',
+          route: 'mapping/custom',
+          isActive: false
+        });
+      }
 
-    this.markModuleActive(this.router.url);
-    this.isLoading = false;
+      this.markModuleActive(this.router.url);
+      this.isLoading = false;
+    });
   }
 
   getSettingsAndSetupPage(): void {
-    this.mappingService.getMappingSettings().subscribe((mappingSettingResponse: MappingSettingResponse) => {
+      this.mappingService.getMappingSettings().subscribe((mappingSettingResponse: MappingSettingResponse) => {
       this.setupMappingModules(mappingSettingResponse);
     });
   }

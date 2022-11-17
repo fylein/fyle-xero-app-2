@@ -37,7 +37,7 @@
               <h4 matTooltip="{{childPage.name | titlecase | snakeCaseToSpaceCase}}" [matTooltipDisabled]="childPage.name.length > 25 === false" matTooltipPosition="right" matTooltipClass="right" class="side-nav-bar--module-block-text-inner side-nav-bar--text-properties capitalize"> {{ childPage.name | titlecase | snakeCaseToSpaceCase }}</h4>
             </div>
           </div>
-          <div *ngIf="module.isExpanded && module.name === 'Mappings' && module.childPages.length - 2 === i" class="side-nav-bar--separator"></div>
+          <div *ngIf="module.isExpanded && module.name === 'Mappings' && module.childPages.length - 2 === i && module.childPages[i+1].name === 'Custom Mapping'" class="side-nav-bar--separator"></div>
         </div>
       </div>
       <div #walkthrough *ngIf="showWalkThroughTooltip && module.name === 'Mappings'" class="walk-through-tooltip paragraph">

@@ -10,6 +10,7 @@ import { mappingSettingResponse, modules } from './main.fixture';
 import { SnakeCaseToSpaceCase } from '../../shared/pipes/snake-case-to-space-case.pipe';
 import { Renderer2, Type } from '@angular/core';
 import { By } from '@angular/platform-browser';
+import { fyleExpenseFields, xeroField } from './mapping/custom-mapping/custom-mapping.fixture';
 
 describe('MainComponent', () => {
   let component: MainComponent;
@@ -23,6 +24,8 @@ describe('MainComponent', () => {
     const service1 = {
       getMappingSettings: () => of(mappingSettingResponse),
       refreshMappingPages: () => undefined,
+      getFyleExpenseFields: () => of(fyleExpenseFields),
+      getXeroField: () => of(xeroField),
       getMappingPagesForSideNavBar: of(mappingSettingResponse),
       showWalkThroughTooltip: of(undefined)
     };
