@@ -5,7 +5,7 @@ import { MappingSetting, MappingSettingResponse } from 'src/app/core/models/db/m
 import { FyleField, MappingDestinationField, TenantFieldMapping } from 'src/app/core/models/enum/enum.model';
 import { DashboardModule, DashboardModuleChild } from 'src/app/core/models/misc/dashboard-module.model';
 import { MappingService } from 'src/app/core/services/misc/mapping.service';
-import { ExpenseField } from '/Users/fyle/integrations/fyle-xero-app-2/src/app/core/models/misc/expense-field.model';
+import { ExpenseField } from 'src/app/core/models/misc/expense-field.model';
 
 @Component({
   selector: 'app-main',
