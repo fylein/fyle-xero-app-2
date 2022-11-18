@@ -286,6 +286,34 @@ describe('ExportLogService', () => {
       workspace: +workspace_id,
       expenses: []
     };
+    service.xeroShortCode = "121";
+    const exportUrl = `${xeroUrl}/organisationlogin/default.aspx?shortcode=${service.xeroShortCode}&redirecturl=/AccountsPayable/Edit.aspx?InvoiceID=1`;
+    const actualresponse = [exportUrl, 1, 'Bill'];
+    const reponse = service.generateExportTypeAndId(expencegroup);
+    expect(reponse).toEqual(actualresponse);
+  });
+
+  it('generateExportTypeAndId() service bill check', () => {
+    const expencegroup:ExpenseGroup = {
+      id: 1,
+      fund_source: 'dummy',
+      description: {
+        claim_number: FyleReferenceType.EXPENSE_REPORT,
+        report_id: FyleReferenceType.EXPENSE_REPORT,
+        employee_email: 'employee@gmail.com',
+        expense_id: FyleReferenceType.EXPENSE,
+        settlement_id: FyleReferenceType.PAYMENT
+      },
+      // Having any here is okay, different qbo exports has different structures
+      response_logs: {Invoices: [{Status:	"AUTHORISED", InvoiceID: 1}]},
+      export_type: 'Expence',
+      employee_name: 'Fyle',
+      exported_at: new Date(),
+      created_at: new Date(),
+      updated_at: new Date(),
+      workspace: +workspace_id,
+      expenses: []
+    };
     const exportUrl = `${xeroUrl}/AccountsPayable/View.aspx?invoiceID=1`;
     const actualresponse = [exportUrl, 1, 'Bill'];
     const reponse = service.generateExportTypeAndId(expencegroup);
@@ -314,6 +342,34 @@ describe('ExportLogService', () => {
       expenses: []
     };
     const exportUrl = `${xeroUrl}/Bank/ViewTransaction.aspx?bankTransactionID=1&accountID=1`;
+    const actualresponse = [exportUrl, 1, 'Bank Transaction'];
+    const reponse = service.generateExportTypeAndId(expencegroup);
+    expect(reponse).toEqual(actualresponse);
+  });
+
+  it('generateExportTypeAndId() service JournalEntry check', () => {
+    const expencegroup:ExpenseGroup = {
+      id: 1,
+      fund_source: 'dummy',
+      description: {
+        claim_number: FyleReferenceType.EXPENSE_REPORT,
+        report_id: FyleReferenceType.EXPENSE_REPORT,
+        employee_email: 'employee@gmail.com',
+        expense_id: FyleReferenceType.EXPENSE,
+        settlement_id: FyleReferenceType.PAYMENT
+      },
+      // Having any here is okay, different qbo exports has different structures
+      response_logs: {BankTransactions: [{BankAccount: {AccountID:	1}, BankTransactionID: 1}]},
+      export_type: 'Expence',
+      employee_name: 'Fyle',
+      exported_at: new Date(),
+      created_at: new Date(),
+      updated_at: new Date(),
+      workspace: +workspace_id,
+      expenses: []
+    };
+    service.xeroShortCode = '123';
+    const exportUrl = `${xeroUrl}/organisationlogin/default.aspx?shortcode=${service.xeroShortCode}&redirecturl=/Bank/ViewTransaction.aspx?bankTransactionID=1`;
     const actualresponse = [exportUrl, 1, 'Bank Transaction'];
     const reponse = service.generateExportTypeAndId(expencegroup);
     expect(reponse).toEqual(actualresponse);

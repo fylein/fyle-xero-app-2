@@ -80,10 +80,10 @@ describe('ExportLogComponent', () => {
     component.exportLogForm.controls.searchOption.patchValue('dh');
     expect((component as any).setupForm()).toBeUndefined();
     fixture.detectChanges();
-    component.exportLogForm.controls.dateRange.patchValue([{startDate: new Date(), endDate: new Date((new Date().getTime() + 24) * (60 * 60 * 1000))}]);
+    component.exportLogForm.controls.searchOption.patchValue(false);
     expect((component as any).setupForm()).toBeUndefined();
     fixture.detectChanges();
-    component.exportLogForm.controls.dateRange.patchValue('');
+    component.exportLogForm.controls.dateRange.patchValue([{startDate: new Date(), endDate: new Date((new Date().getTime() + 24) * (60 * 60 * 1000))}]);
     expect((component as any).setupForm()).toBeUndefined();
   });
 

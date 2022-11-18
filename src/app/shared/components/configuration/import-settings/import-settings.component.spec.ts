@@ -8,8 +8,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { Router } from '@angular/router';
 import { of, throwError } from 'rxjs';
-import { chartOfAccountTypesList, errorResponse, destinationAttribute, expenseFieldresponse, getImportsettingResponse, postImportsettingresponse, XeroCredentialsResponse, xeroField } from './import-settings.fixture';
-import { MappingDestinationField, OnboardingState } from 'src/app/core/models/enum/enum.model';
+import { chartOfAccountTypesList, errorResponse, destinationAttribute, expenseFieldresponse, getImportsettingResponse, postImportsettingresponse, XeroCredentialsResponse, xeroField, xeroField1 } from './import-settings.fixture';
+import { FyleField, MappingDestinationField, OnboardingState } from 'src/app/core/models/enum/enum.model';
 import { ImportSettingService } from 'src/app/core/services/configuration/import-setting.service';
 import { WorkspaceService } from 'src/app/core/services/workspace/workspace.service';
 import { XeroConnectorService } from 'src/app/core/services/configuration/xero-connector.service';
@@ -230,5 +230,50 @@ describe('ImportSettingsComponent', () => {
   it('chartOfAccountTypes function check', () => {
     const response = component.importSettingsForm.get('chartOfAccountTypes') as FormArray;
     expect(component.chartOfAccountTypes).toEqual(response);
+  });
+
+  it('createImportCustomerWatcher function check', () => {
+    component.importSettingsForm.controls.importCustomers.patchValue(true);
+    expect((component as any).createImportCustomerWatcher()).toBeUndefined();
+    fixture.detectChanges();
+    expect(component.fyleExpenseFields).toBeDefined();
+    component.importSettingsForm.controls.importCustomers.patchValue(false);
+    expect((component as any).createImportCustomerWatcher()).toBeUndefined();
+    fixture.detectChanges();
+    expect(component.fyleExpenseFields).toBeDefined();
+  });
+
+  it('createExpenseFieldWatcher function check', () => {
+    component.isProjectMapped = true;
+    expect((component as any).createExpenseFieldWatcher()).toBeUndefined();
+    component.customMappedFyleFields = [FyleField.PROJECT];
+    component.xeroExpenseFields = xeroField;
+    const expenseFieldsFormArray = component.xeroExpenseFields.map((field) => {
+      return formbuilder.group({
+        source_field: [field.source_field],
+        destination_field: [field.destination_field],
+        import_to_fyle: [field.import_to_fyle],
+        disable_import_to_fyle: [field.disable_import_to_fyle],
+        source_placeholder: ['']
+      });
+    });
+    component.importSettingsForm.controls.expenseFields.patchValue([expenseFieldsFormArray]);
+    expect((component as any).createExpenseFieldWatcher()).toBeUndefined();
+    fixture.detectChanges();
+    expect(component.fyleExpenseFields).toBeDefined();
+    component.xeroExpenseFields = xeroField1;
+    const expenseFieldsFormArray1 = component.xeroExpenseFields.map((field) => {
+      return formbuilder.group({
+        source_field: [field.source_field],
+        destination_field: [field.destination_field],
+        import_to_fyle: [field.import_to_fyle],
+        disable_import_to_fyle: [field.disable_import_to_fyle],
+        source_placeholder: ['']
+      });
+    });
+    component.importSettingsForm.controls.expenseFields.patchValue([expenseFieldsFormArray1]);
+    expect((component as any).createExpenseFieldWatcher()).toBeUndefined();
+    fixture.detectChanges();
+    expect(component.fyleExpenseFields).toBeDefined();
   });
 });

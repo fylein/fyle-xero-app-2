@@ -3,6 +3,7 @@ import { MappingSetting, MappingSettingResponse, MinimalMappingSetting } from "s
 import { MappingList, MappingPost, MappingStats } from "src/app/core/models/db/mapping.model";
 import { MappingDestinationField, MappingSourceField, MappingState } from "src/app/core/models/enum/enum.model";
 import { environment } from "src/environments/environment";
+import { expenseAttribute } from "../../dashboard/dashboard-resolve-mapping-error-dialog/dashboard-resolve-mapping.fixture";
 const API_BASE_URL = environment.api_url;
 const workspace_id = environment.tests.workspaceId;
 export const mappingSetting:MappingSetting[] = [{
@@ -175,6 +176,30 @@ export const getMappingsresponse={
       "created_at": new Date("2022-04-29T07:14:58.746099Z"),
       "updated_at": new Date("2022-04-29T07:14:58.746128Z"),
       "workspace": 1
+  },
+  {
+    "id": 35,
+    "mapping": [
+      {
+        id: 2,
+        source: expenseAttribute,
+        destination: destinationAttribute,
+        created_at: new Date("2022-04-29T07:14:58.746099Z"),
+        updated_at: new Date("2022-04-29T07:14:58.746099Z"),
+        workspace: 2
+      }
+    ],
+    "attribute_type": "CATEGORY",
+    "display_name": "Category",
+    "value": "Advertising",
+    "source_id": 186449,
+    "auto_mapped": false,
+    "auto_created": false,
+    "active": false,
+    "detail": null,
+    "created_at": new Date("2022-04-29T07:14:58.746099Z"),
+    "updated_at": new Date("2022-04-29T07:14:58.746128Z"),
+    "workspace": 2
   }
   ]
 };

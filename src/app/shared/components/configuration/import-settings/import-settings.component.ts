@@ -20,8 +20,6 @@ import { PreviewDialogComponent } from '../preview-dialog/preview-dialog.compone
 import { WorkspaceService } from 'src/app/core/services/workspace/workspace.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { ClickEventAdditionalProperty } from 'src/app/core/models/misc/tracking.model';
-import { ThisReceiver } from '@angular/compiler';
-import { xeroField } from './import-settings.fixture';
 
 @Component({
   selector: 'app-import-settings',
@@ -144,7 +142,6 @@ export class ImportSettingsComponent implements OnInit, OnDestroy {
       } else {
         this.importSettingsForm.controls.importCustomers.enable();
         this.isImportCustomerDisabled = false;
-        // This.isProjectMapped = false;
       }
     });
     if (this.isProjectMapped) {
