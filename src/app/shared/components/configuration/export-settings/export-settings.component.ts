@@ -357,7 +357,7 @@ export class ExportSettingsComponent implements OnInit, OnDestroy {
 
     const data: ConfirmationDialog = {
       title: 'Change in Configuration',
-      contents: `${content}<br><br>Do you wish to continue?`,
+      contents: `${content}<br><br>Would you like to continue?`,
       primaryCtaText: 'Continue'
     };
 

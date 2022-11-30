@@ -39,6 +39,7 @@ body {
   margin: 0;
   font: 16px aktiv-grotesk,sans-serif;
   color: #161528;
+  background-color: #FAFAFA;
 }
 
 h3, h4, h5, h6 {
@@ -242,12 +243,13 @@ th.mat-header-cell:last-of-type {
   height: 40px;
   font-size: 14px !important;
   padding: 4px 0px 0px 14px !important;
+  background-color: white;
 }
 
 .mat-option.mat-selected:not(.mat-option-multiple):not(.mat-option-disabled), .mat-option:focus:not(.mat-selected), .mat-option:hover:not(.mat-selected) {
   background: #0000000a !important;
   border-radius: 4px !important;
-  margin: 2.5px;;
+  margin: 2px;
 }
 
 .mat-option.mat-active {
@@ -259,7 +261,7 @@ th.mat-header-cell:last-of-type {
 }
 
 .mat-form-field-wrapper {
-  padding-bottom: 0.5em;
+  padding-bottom: 0.1em !important;
 }
 
 .mat-accent .mat-option.mat-selected:not(.mat-option-disabled), .mat-primary .mat-option.mat-selected:not(.mat-option-disabled) {
@@ -600,7 +602,7 @@ th.mat-header-cell:last-of-type {
 }
 
 .navbar {
-  height: 72px;
+  height: 66px;
   padding: 6px 16px;
 
   &--fyle-logo {

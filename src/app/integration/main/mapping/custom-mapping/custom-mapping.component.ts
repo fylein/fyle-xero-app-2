@@ -116,7 +116,7 @@ export class CustomMappingComponent implements OnInit {
       title: 'Delete Custom Mapping',
       contents: `<li>You are deleting the custom mapping of <b>${xeroField}</b> in Xero to ${fyleField} in Fyle.</li>
         <li>This will delete all the mappings setup in the <b>${fyleField}</b> Mapping section.</li>
-        <br>Do you wish to continue?`,
+        <br>Would you like to continue?`,
       primaryCtaText: 'Save and Continue'
     };
 
@@ -166,7 +166,7 @@ export class CustomMappingComponent implements OnInit {
           This will open a separate mapping Page for ${fyleField} under the Mappings section of the integration.<br><br>
           <li>In the ${fyleField} Mappings section, you can map the individual Fyle ${fyleField} to their corresponding ${xeroField} values.</li>
           <li>Also, the Mappings cannot be edited once set up. However, you can delete the specific dimensions mapped and re-create if required.</li>
-          <br><br>Do you wish to continue?`,
+          <br><br>Would you like to continue?`,
         primaryCtaText: 'Save and Continue'
       };
 
