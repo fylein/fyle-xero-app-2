@@ -18,7 +18,7 @@
         <div *ngIf="module.name === 'Mappings' || module.name === 'Configuration'" class="side-nav-bar--separator"></div>
         <div fxLayout="row">
           <div *ngIf="module.isActive && (!module.childPages.length || !module.isExpanded)" class="side-nav-bar--active-tag-module"></div>
-          <div fxLayout="row" [ngClass]="[module.childPages.length ? 'side-nav-bar--module-block-content-expandable' : 'side-nav-bar--module-block-content', module.isActive && (!module.childPages.length || !module.isExpanded) ? 'side-nav-bar--active-module-block' : '', module.isActive && (!module.childPages.length || !module.isExpanded) ? 'side-nav-bar--active-module-block-expandable' : '']">
+          <div fxLayout="row" [ngClass]="[module.childPages.length ? 'side-nav-bar--module-block-content-expandable' : 'side-nav-bar--module-block-content', module.isActive && (!module.childPages.length || !module.isExpanded) ? 'side-nav-bar--active-module-block' : '', module.isActive && (!module.childPages.length || !module.isExpanded) ? 'side-nav-bar--active-module-block-expandable' : '', module.name === 'Export Log' ? 'side-nav-bar--module-block-expandable-export-log' : '', module.name === 'Export Log' && module.isActive ? 'side-nav-bar--active-module-block-expandable-export-log' : '']">
             <img [ngClass]="module.name === 'Export Log' ? 'side-nav-bar--export-icon' : 'side-nav-bar--icon'" src="{{ module.isActive ? module.iconPath + '-active.svg' :  module.iconPath + '.svg' }}">
             <h4 class="side-nav-bar--module-block-text side-nav-bar--text-properties capitalize">{{ module.name }}</h4>
             <img *ngIf="module.childPages.length && !module.isActive" height="10px" width="18px"
