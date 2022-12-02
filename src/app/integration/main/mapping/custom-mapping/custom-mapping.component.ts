@@ -6,7 +6,7 @@ import { RxwebValidators } from '@rxweb/reactive-form-validators';
 import { forkJoin } from 'rxjs';
 import { MappingSetting, MappingSettingList } from 'src/app/core/models/db/mapping-setting.model';
 import { MappingStats } from 'src/app/core/models/db/mapping.model';
-import { DeleteEvent, MappingDestinationField, MappingSourceField, ProgressPhase, UpdateEvent, ZeroStatePage } from 'src/app/core/models/enum/enum.model';
+import { DeleteEvent, FyleField, MappingDestinationField, MappingSourceField, ProgressPhase, UpdateEvent, ZeroStatePage } from 'src/app/core/models/enum/enum.model';
 import { ConfirmationDialog } from 'src/app/core/models/misc/confirmation-dialog.model';
 import { ExpenseField } from 'src/app/core/models/misc/expense-field.model';
 import { HelperService } from 'src/app/core/services/core/helper.service';
@@ -116,7 +116,7 @@ export class CustomMappingComponent implements OnInit {
       title: 'Delete Custom Mapping',
       contents: `<li>You are deleting the custom mapping of <b>${xeroField}</b> in Xero to ${fyleField} in Fyle.</li>
         <li>This will delete all the mappings setup in the <b>${fyleField}</b> Mapping section.</li>
-        <br>Do you wish to continue?`,
+        <br>Would you like to continue?`,
       primaryCtaText: 'Save and Continue'
     };
 
@@ -166,7 +166,7 @@ export class CustomMappingComponent implements OnInit {
           This will open a separate mapping Page for ${fyleField} under the Mappings section of the integration.<br><br>
           <li>In the ${fyleField} Mappings section, you can map the individual Fyle ${fyleField} to their corresponding ${xeroField} values.</li>
           <li>Also, the Mappings cannot be edited once set up. However, you can delete the specific dimensions mapped and re-create if required.</li>
-          <br><br>Do you wish to continue?`,
+          <br><br>Would you like to continue?`,
         primaryCtaText: 'Save and Continue'
       };
 
@@ -197,7 +197,7 @@ export class CustomMappingComponent implements OnInit {
 
   private setupPage(): void {
     // Remove already imported fyle fields from the options
-    this.mappingSettings = this.mappingSettings.filter(field => !field.import_to_fyle);
+    this.mappingSettings = this.mappingSettings.filter(field => !field.import_to_fyle && field.source_field !== FyleField.CORPORATE_CARD);
     const mappedRows = this.mappingSettings.map((mappingSetting, index) => {
       const mappedRow: MappingSettingList = {
         id: mappingSetting.id,

@@ -26,6 +26,7 @@
     background: #EFF5FC;
     border-radius: 4px;
     padding: 12px 26px 12px 12px;
+    line-height: 130%;
   }
 
   &--info-icon {
@@ -40,4 +41,8 @@
   &--learn-more-btn {
     color: #0660F6;
   }
+}
+
+.help--open-in-new-tab-icon {
+  padding-left: 5px;
 }

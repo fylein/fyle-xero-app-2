@@ -11,7 +11,7 @@ import { MappingService } from 'src/app/core/services/misc/mapping.service';
 import { Router } from '@angular/router';
 import { of } from 'rxjs';
 import { postMappingSettingResponse } from 'src/app/core/services/misc/mapping.service.fixture';
-import { fyleExpenseFields, mappedRowsFormArray, mappingRow, mappingRows, mappingRows1, mappingRows2, mappingSettingResponse, xeroField } from './custom-mapping.fixture';
+import { fyleExpenseFields, mappedRowsFormArray, mappingRow, mappingRows, mappingRows1, mappingRows2, mappingSettingResponse, xeroField, mappingSettings } from './custom-mapping.fixture';
 import { FyleField, MappingDestinationField } from 'src/app/core/models/enum/enum.model';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RxwebValidators } from '@rxweb/reactive-form-validators';
@@ -108,7 +108,7 @@ describe('CustomMappingComponent', () => {
   });
 
   it('should delete mapping setting', () => {
-    const mappedRowsFormArrays = mappingRows.map((mappingSetting, index) => {
+    const mappedRowsFormArrays = mappingRows1.map((mappingSetting, index) => {
       return formbuilder.group({
         id: mappingSetting.id,
         xeroField: [mappingSetting.xeroField, [Validators.required, RxwebValidators.unique()]],
@@ -117,14 +117,14 @@ describe('CustomMappingComponent', () => {
         existingMapping: [true]
       });
     });
-    component.mappingSettingForm = formbuilder.group({
-      mappingSetting: formbuilder.array(mappedRowsFormArrays)
-    });
+    component.mappingSettingForm.controls.mappingSetting.patchValue([mappedRowsFormArrays]);
+    component.mappingRows = mappingRows1;
     fixture.detectChanges();
     expect(component.deleteMappingSetting(0)).toBeUndefined();
   });
 
   it('should clear mapping row', () => {
+    component.mappingRows = mappingRows;
     const mappedRowsFormArrays = mappingRows.map((mappingSetting, index) => {
       return formbuilder.group({
         id: mappingSetting.id,
@@ -134,9 +134,7 @@ describe('CustomMappingComponent', () => {
         existingMapping: [true]
       });
     });
-    component.mappingSettingForm = formbuilder.group({
-      mappingSetting: formbuilder.array(mappedRowsFormArrays)
-    });
+    component.mappingSettingForm.controls.mappingSetting.patchValue([mappedRowsFormArrays]);
     fixture.detectChanges();
     const previousLength = component.mappingSettingForm.get('mappingSetting')?.value.length;
     expect(component.clearMappingRow(0)).toBeUndefined();
@@ -144,6 +142,7 @@ describe('CustomMappingComponent', () => {
   });
 
   it('should save mapping setting', () => {
+    component.mappingRows = mappingRows;
     const mappedRowsFormArrays = mappingRows.map((mappingSetting, index) => {
       return formbuilder.group({
         id: mappingSetting.id,
@@ -153,9 +152,7 @@ describe('CustomMappingComponent', () => {
         existingMapping: [true]
       });
     });
-    component.mappingSettingForm = formbuilder.group({
-      mappingSetting: formbuilder.array(mappedRowsFormArrays)
-    });
+    component.mappingSettingForm.controls.mappingSetting.patchValue([mappedRowsFormArrays]);
     fixture.detectChanges();
     expect(component.saveMappingSetting(0)).toBeUndefined();
   });
@@ -207,12 +204,13 @@ describe('CustomMappingComponent', () => {
     component.mappingSettingForm = formbuilder.group({
       mappingSetting: formbuilder.array(mappedRowsFormArrays)
     });
-    component.mappingRows = mappingRows;
+    component.mappingSettings = mappingSettings;
+    component.mappingRows = mappingRows1;
     fixture.detectChanges();
     expect(component.updateMappingRow(0, MappingDestinationField.ACCOUNT)).toBeUndefined();
     expect(component.mappingRows[0].xeroField).toBe(MappingDestinationField.ACCOUNT);
-
-    expect(component.updateMappingRow(0, '', FyleField.COST_CENTER)).toBeUndefined();
+    // @ts-ignore
+    expect(component.updateMappingRow(0, null, FyleField.COST_CENTER)).toBeUndefined();
     expect(component.mappingRows[0].fyleField).toBe(FyleField.COST_CENTER);
   });
 

@@ -51,7 +51,7 @@ export const destinationAttribute: GroupedDestinationAttribute={
 export const exportResponse: ExportSettingGet = {
   expense_group_settings: {
     reimbursable_expense_state: ExpenseState.PAID,
-    reimbursable_export_date_type: null,
+    reimbursable_export_date_type: ExportDateType.CURRENT_DATE,
     ccc_expense_state: ExpenseState.PAID
   },
   workspace_general_settings: {

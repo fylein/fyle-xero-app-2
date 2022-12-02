@@ -100,6 +100,13 @@ export const xeroField:ExpenseFieldsFormOption[] = [{
   disable_import_to_fyle: true,
   source_placeholder: null
 }];
+export const xeroField1:ExpenseFieldsFormOption[] = [{
+  source_field: MappingSourceField.PROJECT,
+  destination_field: MappingDestinationField.ACCOUNT,
+  import_to_fyle: true,
+  disable_import_to_fyle: true,
+  source_placeholder: null
+}];
 export const chartOfAccountTypesList: string[] = [
   'Expense', 'Other Expense', 'Fixed Asset', 'Cost of Goods Sold', 'Current Liability', 'Equity',
   'Other Current Asset', 'Other Current Liability', 'Long Term Liability', 'Current Asset'

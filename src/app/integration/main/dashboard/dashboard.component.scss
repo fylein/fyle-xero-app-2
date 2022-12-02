@@ -107,10 +107,10 @@
       width: 760px;
     }
 
-    min-height: 450px;
+    height: fit-content;
     max-height: 550px;
     @media only screen and (max-width: 1440px) {
-      min-height: 350px;
+      height: fit-content;
       max-height: 450px;
     }
 
@@ -157,6 +157,7 @@
   &--integration-error-section {
     background: #FAFCFF;
     height: 72px;
+    border-bottom: 1px solid #F5F5F5;
   }
 
   &--integration-error-contents {
