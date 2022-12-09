@@ -28,6 +28,7 @@ jobs:
           filters: |
             src:
               - 'src/**'
+              - 'cypress/**'
       - name: Prepare for end to end tests
         if: steps.filter.outputs.src == 'true'
         run: npm run setup:env
