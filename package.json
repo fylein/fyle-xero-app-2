@@ -9,7 +9,8 @@
     "test": "ng test",
     "unit_test_ci": "npm run setup_env && ng test --watch=false --browsers=ChromeHeadlessCustom",
     "setup_env": "node scripts/setup_env.js",
-    "lint": "ng lint"
+    "lint": "ng lint",
+    "cypress:open": "cypress open"
   },
   "private": true,
   "dependencies": {
