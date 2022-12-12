@@ -36,8 +36,8 @@
       </div>
 
       <div class="navbar--profile-section" data-cy="user-profile-section">
-        <div (click)="showOrHideProfileDropdown()" data-cy="profile-dropdown">
-          <div class="pointer" [matTooltip]="user.full_name" [matTooltipDisabled]="user.full_name.length > 20 === false" matTooltipPosition="below" matTooltipClass="below profile-tooltip">
+        <div (click)="showOrHideProfileDropdown()">
+          <div class="pointer" [matTooltip]="user.full_name" [matTooltipDisabled]="user.full_name.length > 20 === false" matTooltipPosition="below" matTooltipClass="below profile-tooltip" data-cy="profile-dropdown">
             {{ user.full_name | trimCharacter: 20 }}
           </div>
           <div class="navbar--user-org navbar--small-text sub-text-color pointer" [matTooltip]="user.org_name" [matTooltipDisabled]="user.org_name.length > 26 === false" matTooltipPosition="below" matTooltipClass="below">
