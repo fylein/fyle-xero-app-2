@@ -50,10 +50,6 @@ jobs:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
       COMMIT_INFO_MESSAGE: ${{github.event.pull_request.title}}
-      COMMIT_INFO_SHA: ${{github.event.pull_request.head.sha}}
-      APP_URL: ${{ secrets.APP_URL }}
-      API_URL: ${{ secrets.API_URL }}
-      E2E_TESTS_ENV: ${{ secrets.E2E_TESTS_ENV }}
       E2E_TESTS_REFRESH_TOKEN: ${{ secrets.E2E_TESTS_REFRESH_TOKEN }}
       E2E_TESTS_ORG_ID: ${{ secrets.E2E_TESTS_ORG_ID }}
 
