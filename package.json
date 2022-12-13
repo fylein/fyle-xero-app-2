@@ -4,11 +4,11 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "local_dev_dc": "npm run setup_env && ng serve --host 0.0.0.0 --disable-host-check",
-    "build": "npm run setup_env && ng build",
+    "local_dev_dc": "npm run setup:env && ng serve --host 0.0.0.0 --disable-host-check",
+    "build": "npm run setup:env && ng build",
     "test": "ng test",
-    "unit_test_ci": "npm run setup_env && ng test --watch=false --browsers=ChromeHeadlessCustom",
-    "setup_env": "node scripts/setup_env.js",
+    "unit_test_ci": "npm run setup:env && ng test --watch=false --browsers=ChromeHeadlessCustom",
+    "setup:env": "node scripts/setup_env.js",
     "lint": "ng lint",
     "cypress:open": "cypress open"
   },
