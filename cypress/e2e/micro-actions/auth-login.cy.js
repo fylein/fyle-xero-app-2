@@ -9,7 +9,7 @@ describe('auth login', () => {
       cy.url().should('include', '/auth/login')
       cy.getElement('fyle-logo')
       cy.assertText('login-header',"Fyle Xero Integration")
-      cy.assertText('signin-button', "Signin With Fyle").click()
+      cy.assertText('signin-button', "Signin With Fyle")
     })
   })
   
