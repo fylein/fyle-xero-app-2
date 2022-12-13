@@ -33,6 +33,7 @@
     "@sentry/angular": "^6.19.7",
     "@sentry/tracing": "^6.19.7",
     "esbuild": "^0.16.4",
+    "piscina": "^3.2.0",
     "rxjs": "~6.6.0",
     "ts-cacheable": "1.0.6",
     "tslib": "^2.2.0",
