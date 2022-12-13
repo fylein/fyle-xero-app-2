@@ -46,12 +46,12 @@ jobs:
         with:
           install: true
           runTests: false
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
-        COMMIT_INFO_MESSAGE: ${{github.event.pull_request.title}}
-        E2E_TESTS_REFRESH_TOKEN: ${{ secrets.E2E_TESTS_REFRESH_TOKEN }}
-        E2E_TESTS_ORG_ID: ${{ secrets.E2E_TESTS_ORG_ID }}
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+      COMMIT_INFO_MESSAGE: ${{github.event.pull_request.title}}
+      E2E_TESTS_REFRESH_TOKEN: ${{ secrets.E2E_TESTS_REFRESH_TOKEN }}
+      E2E_TESTS_ORG_ID: ${{ secrets.E2E_TESTS_ORG_ID }}
 
   end-to-end-test:
     runs-on: macos-latest
