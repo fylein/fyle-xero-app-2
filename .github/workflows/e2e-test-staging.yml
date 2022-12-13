@@ -107,4 +107,3 @@ jobs:
       E2E_TESTS_ORG_ID_1: ${{ secrets.E2E_TESTS_ORG_ID_1 }}
       E2E_TESTS_REFRESH_TOKEN_2: ${{ secrets.E2E_TESTS_REFRESH_TOKEN_2 }}
       E2E_TESTS_ORG_ID_2: ${{ secrets.E2E_TESTS_ORG_ID_2 }}
-      
