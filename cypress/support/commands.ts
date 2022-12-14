@@ -5,7 +5,7 @@ import environment from '../../src/environments/environment.json';
 declare global {
   namespace Cypress {
     interface Chainable {
-      login(): void;
+      microActionLogin(): void;
       getElement(attributeName: string): Cypress.Chainable<JQuery<HTMLElement>>;
       assertText(attributeName: string, text: string): void;
       setupHttpListeners(): void;
@@ -33,7 +33,7 @@ Cypress.Commands.add('getElement', (attributeName: string) => {
   return cy.get(`[data-cy=${attributeName}]`);
 })
 
-Cypress.Commands.add('login', () => {
+Cypress.Commands.add('microActionLogin', () => {
   const user = {
     email: 'ashwin.t@fyle.in',
     refresh_token:environment.e2e_tests[0].refresh_token,

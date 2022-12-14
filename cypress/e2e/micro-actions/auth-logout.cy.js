@@ -2,7 +2,7 @@
 
 describe('auth logout', () => {
     beforeEach(() => {
-      cy.login()
+      cy.microActionLogin()
       cy.visit('/')
     })
   
