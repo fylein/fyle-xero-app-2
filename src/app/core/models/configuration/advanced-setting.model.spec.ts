@@ -42,6 +42,10 @@ describe('AdvancedSettingModel', () => {
         start_datetime: new Date()
       }
     };
-    expect(AdvancedSettingModel.constructPayload(advancedSettingsForm)).toEqual(advancedSettingPayload);
+    expect(AdvancedSettingModel.constructPayload(advancedSettingsForm).general_mappings).toEqual(advancedSettingPayload.general_mappings);
+    expect(AdvancedSettingModel.constructPayload(advancedSettingsForm).workspace_general_settings).toEqual(advancedSettingPayload.workspace_general_settings);
+    expect(AdvancedSettingModel.constructPayload(advancedSettingsForm).workspace_schedules.enabled).toEqual(advancedSettingPayload.workspace_schedules.enabled);
+    expect(AdvancedSettingModel.constructPayload(advancedSettingsForm).workspace_schedules.interval_hours).toEqual(advancedSettingPayload.workspace_schedules.interval_hours);
+    expect(typeof (AdvancedSettingModel.constructPayload(advancedSettingsForm).workspace_schedules.start_datetime)).toBeDefined(Date);
     });
   });
