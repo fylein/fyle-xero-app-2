@@ -35,13 +35,13 @@ Cypress.Commands.add('getElement', (attributeName: string) => {
 
 Cypress.Commands.add('microActionLogin', () => {
   const user = {
-    email: 'ashwin.t@fyle.in',
-    refresh_token:environment.e2e_tests[0].refresh_token,
+    email: 'admin1@fyleforfylexero.in',
+    refresh_token:environment.e2e_tests.secret[0].refresh_token,
     expires_in: 3600,
-    full_name: "Ashwin",
+    full_name: "Anish",
     user_id: "xyz",
-    org_id:environment.e2e_tests[0].org_id,
-    env:environment.e2e_tests[0].env,
+    org_id:environment.e2e_tests.secret[0].org_id,
+    env:environment.e2e_tests.env,
     org_name: "XYZ Org"
   };
   window.localStorage.setItem('user', JSON.stringify(user))
