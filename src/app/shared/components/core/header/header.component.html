@@ -24,12 +24,12 @@
       <div class="navbar--help-icon">
         <img src="assets/images/svgs/actions/help.svg" />
       </div>
-      <div class="navbar--help-text navbar--small-text">
+      <div class="navbar--help-text navbar--small-text" data-cy="help-text">
         Help
       </div>
     </div>
     <div fxLayout="row" #menu>
-      <div (click)="showOrHideProfileDropdown()" class="navbar--avatar-section pointer">
+      <div (click)="showOrHideProfileDropdown()" class="navbar--avatar-section pointer" data-cy="avatar">
         <p class="navbar--avatar-text align-center">
           {{user.full_name[0]}}
         </p>
