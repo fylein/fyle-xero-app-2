@@ -40,7 +40,7 @@ Cypress.Commands.add('microActionLogin', () => {
     expires_in: 3600,
     full_name: "Anish",
     user_id: "xyz",
-    org_id:environment.e2e_tests.secret[0].org_id,
+    org_id: environment.e2e_tests.secret[0].org_id,
     env:environment.e2e_tests.env,
     org_name: "XYZ Org"
   };
