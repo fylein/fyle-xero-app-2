@@ -28,6 +28,7 @@ describe('employee mapping', () => {
         cy.get('.mapping-table--state-pill-text').contains('Unmapped')
         cy.get('.mapping-table--form-field').eq(0).click()
         cy.getElement('mapping-option').eq(0).click()
+        cy.get('.mapping-table--state-pill-text').eq(0).contains('Mapped')
     })
   })
   
