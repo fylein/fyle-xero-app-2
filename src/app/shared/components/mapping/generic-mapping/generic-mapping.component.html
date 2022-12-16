@@ -5,7 +5,7 @@
     <div class="mapping--core-section-content">
       <app-mapping-filter [page]="page" [form]="form" [searchTerm]="(sourceType | titlecase | snakeCaseToSpaceCase) + ' name'" (mappingFilterUpdateHandler)="getMappings()"></app-mapping-filter>
 
-      <div *ngIf="!isLoading" class="mapping--table">
+      <div *ngIf="!isLoading" class="mapping--table" data-cy="table-data">
         <app-mapping-table [mappings]="mappings" [sourceType]="mappingSetting.source_field" [destinationType]="mappingSetting.destination_field" [xeroData]="xeroData" [mappingForm]="mappingForm" (mappingSaveHandler)="save($event)"></app-mapping-table>
 
         <app-zero-state-with-illustration [page]="ZeroStatePage.mapping" [form]="form" [data]="mappings" [searchTerm]="(sourceType | titlecase | snakeCaseToSpaceCase) + ' name'"></app-zero-state-with-illustration>
