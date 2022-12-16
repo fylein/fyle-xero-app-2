@@ -1,20 +1,20 @@
 <div class="mapping">
   <app-mapping-header-section [mappingStats]="mappingStats" [totalCardActive]="true" [customMapping]="true"></app-mapping-header-section>
 
-  <div class="custom-mapping">
+  <div class="custom-mapping" data-cy="custom-mapping">
     <div class="custom-mapping--content">
-      <div class="custom-mapping--title-section">
-        <p class="custom-mapping--title">Select a dimension in Xero that you want to map to an expense field in Fyle</p>
+      <div class="custom-mapping--title-section" data-cy="custom-mapping-title">
+        <p class="custom-mapping--title" data-cy="select-dimension-text">Select a dimension in Xero that you want to map to an expense field in Fyle</p>
         <h5 class="sub-text-color">Mapping would help you export Fyle expenses with the correct dimension value to Xero.</h5>
       </div>
 
       <div class="custom-mapping--mapping-section" *ngIf="showMappingList || isLoading">
         <div>
           <div class="custom-mapping--table-header" fxLayout="row">
-            <h5 fxLayoutAlign=" center" class="custom-mapping--table-header-text custom-mapping--table-header-col-1">
+            <h5 fxLayoutAlign=" center" class="custom-mapping--table-header-text custom-mapping--table-header-col-1" data-cy="dimension-xero">
               Dimension from Xero
             </h5>
-            <h5 fxLayoutAlign=" center" class="custom-mapping--table-header-text custom-mapping--table-header-col-2">
+            <h5 fxLayoutAlign=" center" class="custom-mapping--table-header-text custom-mapping--table-header-col-2" data-cy="expense-xero">
               Expense field from Fyle
             </h5>
           </div>
@@ -58,7 +58,7 @@
 
                     <div *ngIf="!element.existingMapping" fxLayout="row" fxLayoutAlign="center center" class="custom-mapping--create-mapping-setting-cta">
                       <div fxLayout="row" fxLayoutAlign="space-between center" class="pointer configuration--submit-btn" [ngClass]="mappingSetting.controls[i].valid ? 'btn-enabled' : 'btn-disabled'" (click)="saveMappingSetting(i)">
-                        <h5 class="btn-cta-text-without-icon single-line-text">
+                        <h5 class="btn-cta-text-without-icon single-line-text" data-cy="create-mapping-text">
                           Create Mapping
                         </h5>
                       </div>
@@ -91,7 +91,7 @@
       <div fxLayout="row" *ngIf="!isLoading && showMappingList && xeroFields.length > 0 && fyleFields.length > 0 && isExistingRowMapped" class="custom-mapping--add-section">
         <div fxLayout="row" class="pointer" (click)="createMappingRow()">
           <img class="custom-mapping--add-icon" width="15px" height="25px" src="assets/images/svgs/actions/plus.svg">
-          <h4 class="actionable-text">Add New Mapping</h4>
+          <h4 class="actionable-text" data-cy="add-new-mapping-text">Add New Mapping</h4>
         </div>
       </div>
 
