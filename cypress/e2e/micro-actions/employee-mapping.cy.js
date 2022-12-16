@@ -26,6 +26,8 @@ describe('employee mapping', () => {
         cy.getElement('table-header-text').contains('Contact in Xero')
         cy.getElement('state-text').contains('State')
         cy.get('.mapping-table--state-pill-text').contains('Unmapped')
+        cy.get('.mapping-table--form-field').eq(0).click()
+        cy.getElement('mapping-option').eq(0).click()
     })
   })
   
