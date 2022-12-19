@@ -1,6 +1,6 @@
 <div fxLayout="row" fxLayoutAlign="space-between center" class="mapping--stats-section">
   <div fxLayout="row" fxLayoutAlign="space-around center">
-    <div class="mapping-header-section--card pointer" [ngClass]="{'mapping-header-section--card-active': totalCardActive}" (click)="switchView(true)">
+    <div class="mapping-header-section--card pointer" [ngClass]="{'mapping-header-section--card-active': totalCardActive}" (click)="switchView(true)" data-cy="mapping-card">
       <div fxLayout="row" fxLayoutAlign="end center">
         <img *ngIf="totalCardActive && !customMapping" src="assets/images/svgs/general/tick-filled.svg" class="mapping-header-section--card-active-icon">
         <p *ngIf="customMapping" class="mapping-header-section--card-active-icon"></p>

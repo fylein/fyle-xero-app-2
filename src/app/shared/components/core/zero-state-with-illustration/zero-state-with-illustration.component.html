@@ -1,5 +1,5 @@
 <div *ngIf="page !== 'dashboard' && page !== 'dashboard_error' && page !== 'custom_mapping' && !data.filteredData.length" fxLayout="column" fxLayoutAlign="center center">
-  <img class="zero-state-with-illustration--zero-state-img" src="assets/images/pngs/zero-state/export-log.png">
+  <img class="zero-state-with-illustration--zero-state-img" src="assets/images/pngs/zero-state/export-log.png" data-cy="zero-state-image">
   <h4 *ngIf="!dateFilter" class="zero-state-with-illustration--zero-state-text align-center">
     {{ form?.value.searchOption && !data.filteredData.length ? 'Sorry, no results found!' : 'No records to show yet!' }}
   </h4>
