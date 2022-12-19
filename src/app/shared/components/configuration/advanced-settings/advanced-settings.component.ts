@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
 import { AdvancedSettingFormOption, AdvancedSettingGet, AdvancedSettingModel } from 'src/app/core/models/configuration/advanced-setting.model';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
-import { ClickEvent, ConfigurationCtaText, OnboardingState, OnboardingStep, PaymentSyncDirection, ProgressPhase, RefinerSurveyType, ReimbursableExpensesObject, UpdateEvent } from 'src/app/core/models/enum/enum.model';
+import { ConfigurationCtaText, OnboardingState, OnboardingStep, PaymentSyncDirection, ProgressPhase, RefinerSurveyType, ReimbursableExpensesObject, UpdateEvent } from 'src/app/core/models/enum/enum.model';
 import { WorkspaceService } from 'src/app/core/services/workspace/workspace.service';
 import { AdvancedSettingService } from 'src/app/core/services/configuration/advanced-setting.service';
 import { HelperService } from 'src/app/core/services/core/helper.service';
@@ -202,7 +202,6 @@ export class AdvancedSettingsComponent implements OnInit, OnDestroy {
         this.trackSessionTime('success');
         if (this.isOnboarding) {
           this.workspaceService.setOnboardingState(OnboardingState.COMPLETE);
-          this.trackingService.onClickEvent(ClickEvent.ONBOARDING_DONE);
           this.refinerService.triggerSurvey(RefinerSurveyType.ONBOARDING_DONE);
           this.router.navigate([`/workspaces/onboarding/done`]);
         } else {
