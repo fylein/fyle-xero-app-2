@@ -6,7 +6,7 @@ describe('category mapping', () => {
       cy.visit('/')
     })
   
-    it('in xero-app : check employee mapping', () => {
+    it('in xero-app : check category mapping', () => {
         cy.getElement('side-nav-bar')
         cy.assertText('mappings-text','Mappings')
         cy.getElement('side-nav-bar-click').contains('Mappings').click()
