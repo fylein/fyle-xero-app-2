@@ -9,7 +9,7 @@
 .export {
   padding-left: 24px;
   padding-right: 24px;
-
+  
   &--core-section {
     background: #FFFFFF;
     border: 1px solid #F5F5F5;
@@ -17,7 +17,7 @@
     box-shadow: 0px 16px 20px -5px rgba(0, 0, 0, 0.06);
     border-radius: 8px;
     margin-top: -95px;
-    height: 120px;
+    height: fit-content;
   }
 
   &--content-section {
@@ -36,6 +36,10 @@
   &--arrow-section {
     width: 24px;
     padding-right: 12px;
+  }
+
+  &--in-process {
+    padding-bottom: 7px;
   }
 
   &--info-icon {
@@ -334,4 +338,14 @@ h2 {
     width: 104px;
     height: 44px;
   }
+}
+
+
+::ng-deep .mat-progress-bar-fill::after {
+  background: linear-gradient(90deg, #FF758C 25%, #FF7EB3 50%,#FF7EB3 75%, #F6F6F7 100% );
+}
+
+::ng-deep .mat-progress-bar {
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
 }
