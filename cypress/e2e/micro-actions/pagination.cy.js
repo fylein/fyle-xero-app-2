@@ -24,3 +24,4 @@ describe('pagination', () => {
         cy.get('.paginator--page-action-box').eq(0).click()
     })
   })
+  
