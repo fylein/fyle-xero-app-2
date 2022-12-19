@@ -16,7 +16,7 @@ describe('category mapping', () => {
         cy.get('.mapping-header-section--card').contains('Unmapped Categories').click()
         cy.getElement('mapping-filter')
         cy.getElement('search-svg')
-        cy.getElement('search-element').type('admin')
+        cy.getElement('search-element').type('bill')
         cy.getElement('clear-icon-svg').click()
         cy.getElement('search-element').type('invalid')
         cy.getElement('zero-state-image')
@@ -29,6 +29,8 @@ describe('category mapping', () => {
         cy.get('.mapping-table--form-field').eq(0).click()
         cy.getElement('mapping-option').eq(0).click()
         cy.get('.mapping-table--state-pill-text').eq(0).contains('Mapped')
+        cy.get('.mapping-header-section--card').contains('Unmapped Categories').click()
+        cy.get('.mapping-table--state-pill-text').contains('Unmapped')
     })
   })
   
