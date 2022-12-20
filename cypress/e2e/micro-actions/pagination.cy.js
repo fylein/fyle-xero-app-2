@@ -10,7 +10,7 @@ describe('pagination', () => {
         cy.getElement('side-nav-bar')
         cy.assertText('mappings-text','Mappings')
         cy.getElement('side-nav-bar-click').contains('Mappings').click()
-        cy.getElement('employee-mapping-text').contains('Employee Mapping').click()
+        cy.getElement('employee-mapping-text').contains('Category Mapping').click()
         cy.get('.paginator--page-info').contains('Page')
         cy.get('.paginator--page-size-text').contains('Show')
         cy.get('.paginator--page-size-input-field').click()
