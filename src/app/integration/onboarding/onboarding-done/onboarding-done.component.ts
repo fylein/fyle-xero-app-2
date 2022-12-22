@@ -28,7 +28,6 @@ export class OnboardingDoneComponent implements OnInit {
   navigateToDashboard(): void {
     this.trackSessionTime();
     this.trackingService.onClickEvent(ClickEvent.ONBOARDING_DONE);
-    this.refinerService.triggerSurvey(RefinerSurveyType.ONBOARDING_DONE);
     this.router.navigate([`/workspaces/main/dashboard`]);
   }
 
