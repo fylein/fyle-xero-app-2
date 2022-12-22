@@ -1,10 +1,10 @@
 <div class="header-section">
   <div fxLayout="row" fxLayoutAlign="space-between start" class="header-section--inner" [ngClass]="{'header-section--sync-inactive': !(showSyncButton && (activePage === 'export_settings' || activePage === 'import_settings' || activePage === 'advanced_settings'))}">
     <div>
-      <h3 class="header-section--header-text single-line-text">
+      <h3 class="header-section--header-text single-line-text" data-cy="connect-to-xero-tenant-text">
         {{ headerText }} <span *ngIf="isStepOptional" class="sub-text-color italic">(Optional)</span>
       </h3>
-      <h5 class="sub-text-color paragraph">
+      <h5 class="sub-text-color paragraph" data-cy="header-sub-text">
         {{ contentText }} <span class="header-section--learn-more-btn pointer" (click)="helperService.openExternalLink(helpArticleLink)">Learn more<img class="help--open-in-new-tab-icon" src="assets/images/svgs/actions/open-in-new-tab-help.svg" width="10px" height="10px"/></span>
       </h5>
       <div *ngIf="activePage === 'import_settings'" class="header-section--info-section">

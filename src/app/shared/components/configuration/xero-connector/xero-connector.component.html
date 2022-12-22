@@ -15,10 +15,10 @@
         <div class="xero-connector--switch-org-section">
           <div class="xero-connector--org-switch-separator"></div>
           <div class="xero-connector--switch-org-inner-section">
-            <h5 class="xero-connector--switch-org-info-text sub-text-color single-line-text">
+            <h5 class="xero-connector--switch-org-info-text sub-text-color single-line-text" data-cy="not-org-text">
               Not the organization that you wish to connect?
             </h5>
-            <h5 (click)="switchFyleOrg()" class="xero-connector--switch-org-text actionable-text align-center">
+            <h5 (click)="switchFyleOrg()" class="xero-connector--switch-org-text actionable-text align-center" data-cy="switch-org-text">
               Switch Organization
             </h5>
           </div>
@@ -27,7 +27,7 @@
       <div class="xero-connector--connection-blocks">
         <div class="xero-connector--connection-top-block">
           <div class="xero-connector--connection-block-separator-1"></div>
-          <div>
+          <div data-cy="disconnect-image">
             <img src="assets/gifs/disconnect.gif" height="100px" width="100px"/>
           </div>
           <div class="xero-connector--connection-block-separator-2"></div>
@@ -35,7 +35,7 @@
       </div>
       <div class="xero-connector--connection-blocks">
         <div class="xero-connector--xero-org-section">
-          <h5 class="xero-connector--fyle-section-text align-center sub-text-color bold">
+          <h5 class="xero-connector--fyle-section-text align-center sub-text-color bold" data-cy="xero-tenant-text">
             XERO TENANT
           </h5>
           <h3 [matTooltip]="xeroCompanyName" [matTooltipDisabled]="xeroCompanyName.length > 26 === false" matTooltipPosition="right" matTooltipClass="right" *ngIf="!xeroConnectionInProgress && xeroCompanyName" class="default-cursor single-line-text align-center bold">
@@ -46,9 +46,9 @@
           </p>
         </div>
         <div *ngIf="!xeroCompanyName && !isXeroConnected && !xeroConnectionInProgress && !xeroTokenExpired && !isDisconnectXeroClicked" class="align-center default-cursor">
-          <mat-form-field floatLabel="always" appearance="outline">
+          <mat-form-field floatLabel="always" appearance="outline" data-cy="select-tenant-form-field">
             <mat-select placeholder="Select a Xero tenant" formControlName="xeroTenant">
-              <mat-option *ngFor="let option of tenantList" [value]="{id: option.destination_id, name: option.value}" (click)="tenantSelected()">
+              <mat-option *ngFor="let option of tenantList" [value]="{id: option.destination_id, name: option.value}" (click)="tenantSelected()" data-cy="fyle-tenant-option">
                 {{ option.value }}
                 <img *ngIf="(xeroConnectorForm.value.xeroTenant | json) === ({id: option.destination_id, name: option.value} | json)" src="assets/images/svgs/general/tick-pink.svg" class="selected-value-check-mark">
               </mat-option>
@@ -59,7 +59,7 @@
         <div class="xero-connector--switch-org-section">
           <div class="xero-connector--org-switch-separator"></div>
           <div class="xero-connector--switch-org-inner-section">
-            <h5 *ngIf="!xeroCompanyName && !isXeroConnected && !xeroConnectionInProgress && !xeroTokenExpired" class="xero-connector--connection-in-progress-text align-center sub-text-color"> 
+            <h5 *ngIf="!xeroCompanyName && !isXeroConnected && !xeroConnectionInProgress && !xeroTokenExpired" class="xero-connector--connection-in-progress-text align-center sub-text-color" data-cy="select-tenant-to-proceed-text"> 
               You will need to select a tenant to proceed with the onboarding.
             </h5>
             <h5 *ngIf="!isXeroConnected && !xeroConnectionInProgress && !xeroTokenExpired && isDisconnectXeroClicked" (click)="connectXero()" class="xero-connector--switch-org-text actionable-text align-center">
