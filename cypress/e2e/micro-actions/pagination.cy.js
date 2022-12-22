@@ -6,7 +6,7 @@ describe('pagination', () => {
       cy.visit('/')
     })
   
-    it('in xero-app : check pagination in employee mapping', () => {
+    it('in xero-app : check pagination in category mapping', () => {
         cy.getElement('side-nav-bar')
         cy.assertText('mappings-text','Mappings')
         cy.getElement('side-nav-bar-click').contains('Mappings').click()
@@ -19,9 +19,15 @@ describe('pagination', () => {
         cy.get('mat-option').eq(2).contains('100')
         cy.get('mat-option').eq(1).contains('50')
         cy.get('mat-option').eq(0).contains('25').click()
-        cy.get('.paginator--page-text').contains('Page')
         cy.get('.paginator--page-action-box').eq(2).click()
+        cy.get('.paginator--page-action-box').eq(1).within(() => {
+          cy.get('.paginator--page-number-input').should('have.value', '2')
+        })
+        cy.get('.paginator--page-action-box')
         cy.get('.paginator--page-action-box').eq(0).click()
+        cy.get('.paginator--page-action-box').eq(1).within(() => {
+          cy.get('.paginator--page-number-input').should('have.value', '1')
+        })
     })
   })
   
