@@ -28,7 +28,8 @@ export const workspaceResponse: WorkspaceGeneralSetting = {
   updated_at: new Date("2022-04-28T12:48:39.150177Z"),
   workspace: 1,
   import_customers: false,
-  map_merchant_to_contact: false
+  map_merchant_to_contact: false,
+  is_simplify_report_closure_enabled: true
 };
 export const destinationAttribute: GroupedDestinationAttribute={
   BANK_ACCOUNT: [{
