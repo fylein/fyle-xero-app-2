@@ -1,7 +1,7 @@
 import { ExportSettingFormOption, ExportSettingGet } from "src/app/core/models/configuration/export-setting.model";
 import { GroupedDestinationAttribute } from "src/app/core/models/db/destination-attribute.model";
 import { WorkspaceGeneralSetting } from "src/app/core/models/db/workspace-general-setting.model";
-import { CorporateCreditCardExpensesObject, TenantFieldMapping, ExpenseState, ExportDateType, ReimbursableExpensesObject, AutoMapEmployee } from "src/app/core/models/enum/enum.model";
+import { CorporateCreditCardExpensesObject, TenantFieldMapping, ExpenseState, CCCExpenseState, ExportDateType, ReimbursableExpensesObject, AutoMapEmployee } from "src/app/core/models/enum/enum.model";
 
 export const export_settings: ExportSettingFormOption[] = [
   {
@@ -52,7 +52,7 @@ export const exportResponse: ExportSettingGet = {
   expense_group_settings: {
     reimbursable_expense_state: ExpenseState.PAID,
     reimbursable_export_date_type: ExportDateType.CURRENT_DATE,
-    ccc_expense_state: ExpenseState.PAID
+    ccc_expense_state: CCCExpenseState.PAID
   },
   workspace_general_settings: {
     reimbursable_expenses_object: null,
@@ -69,7 +69,7 @@ export const exportResponse1: ExportSettingGet = {
   expense_group_settings: {
     reimbursable_expense_state: ExpenseState.PAID,
     reimbursable_export_date_type: null,
-    ccc_expense_state: ExpenseState.PAID
+    ccc_expense_state: CCCExpenseState.PAID
   },
   // @ts-ignore
   workspace_general_settings: undefined,

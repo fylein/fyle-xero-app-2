@@ -11,6 +11,7 @@ export type WorkspaceGeneralSetting = {
   map_merchant_to_contact: boolean;
   auto_map_employees: string;
   auto_create_destination_entity: boolean;
+  is_simplify_report_closure_enabled: boolean;
   skip_cards_mapping?: boolean;
   import_tax_codes: boolean;
   import_customers: boolean;

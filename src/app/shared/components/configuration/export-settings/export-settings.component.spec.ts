@@ -71,8 +71,8 @@ describe('ExportSettingsComponent', () => {
     dialogSpy = spyOn(TestBed.get(MatDialog), 'open').and.returnValue(dialogRefSpyObj);
     component.exportSettings = exportResponse;
     component.exportSettingsForm = formbuilder.group({
-      cccExpenseState: [component.exportSettings.expense_group_settings?.ccc_expense_state, Validators.required],
-      reimbursableExpenseState: [component.exportSettings.expense_group_settings?.reimbursable_expense_state, Validators.required],
+      cccExpenseState: [component.exportSettings.expense_group_settings?.ccc_expense_state],
+      reimbursableExpenseState: [component.exportSettings.expense_group_settings?.reimbursable_expense_state],
       reimbursableExpense: [component.exportSettings.workspace_general_settings?.reimbursable_expenses_object ? true : false, (component as any).exportSelectionValidator()],
       reimbursableExportType: [component.exportSettings.workspace_general_settings?.reimbursable_expenses_object],
       reimbursableExportDate: [component.exportSettings.expense_group_settings?.reimbursable_export_date_type],
