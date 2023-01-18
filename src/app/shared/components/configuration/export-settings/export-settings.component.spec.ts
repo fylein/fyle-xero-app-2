@@ -113,7 +113,6 @@ describe('ExportSettingsComponent', () => {
     component.exportSettingsForm.controls.reimbursableExpense.patchValue(true);
     component.exportSettingsForm.controls.creditCardExpense.patchValue(true);
     component.saveInProgress = false;
-    // fixture.detectChanges();
     expect(component.save()).toBeUndefined();
   });
 
@@ -238,7 +237,6 @@ describe('ExportSettingsComponent', () => {
     component.exportSettings.workspace_general_settings.corporate_credit_card_expenses_object = CorporateCreditCardExpensesObject.BANK_TRANSACTION;
     component.exportSettingsForm.controls.reimbursableExportType.patchValue(ReimbursableExpensesObject.PURCHASE_BILL);
     component.exportSettingsForm.controls.creditCardExportType.patchValue(CorporateCreditCardExpensesObject.BANK_TRANSACTION);
-    // fixture.detectChanges();
     expect((component as any).constructWarningMessage().length).toBeGreaterThanOrEqual(0);
   });
 

@@ -180,6 +180,7 @@ export class DashboardComponent implements OnInit {
   private trackTimeTakenForResolvingMappingErrors(eventStartTime: Date, errorType: ErrorType): void {
     if (errorType === ErrorType.CATEGORY_MAPPING || errorType === ErrorType.EMPLOYEE_MAPPING || errorType === ErrorType.TAX_MAPPING) {
       const error = this.groupedErrorStat[errorType];
+
       if (error?.totalCount && error?.totalCount > 0) {
         const properties: ResolveMappingErrorProperty = {
           resolvedCount: error?.resolvedCount ? error?.resolvedCount : 0,
