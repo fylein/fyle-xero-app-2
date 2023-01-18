@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { forkJoin } from 'rxjs';
-import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
+import { forkJoin, Observable } from 'rxjs';
+import { DestinationAttribute, GroupedDestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { AutoMapEmployee, ConfigurationCtaText, CorporateCreditCardExpensesObject, ExpenseGroupingFieldOption, ExpenseState, CCCExpenseState, ExportDateType, OnboardingState, OnboardingStep, ProgressPhase, ReimbursableExpensesObject, TenantFieldMapping, UpdateEvent } from 'src/app/core/models/enum/enum.model';
 import { ExportSettingGet, ExportSettingFormOption, ExportSettingModel } from 'src/app/core/models/configuration/export-setting.model';
 import { ExportSettingService } from 'src/app/core/services/configuration/export-setting.service';
@@ -15,6 +15,7 @@ import { ConfirmationDialog } from 'src/app/core/models/misc/confirmation-dialog
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationDialogComponent } from '../../core/confirmation-dialog/confirmation-dialog.component';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
+import { WorkspaceGeneralSetting } from 'src/app/core/models/db/workspace-general-setting.model';
 
 @Component({
   selector: 'app-export-settings',
@@ -77,27 +78,9 @@ export class ExportSettingsComponent implements OnInit, OnDestroy {
     }
   ];
 
-  reimbursableExpenseStateOptions: ExportSettingFormOption[] = [
-    {
-      value: ExpenseState.PAYMENT_PROCESSING,
-      label: this.is_simplify_report_closure_enabled ? 'Processing' : 'Payment Processing'
-    },
-    {
-      label: this.is_simplify_report_closure_enabled ? 'Closed' : 'Paid',
-      value: ExpenseState.PAID
-    }
-  ]
+  reimbursableExpenseStateOptions: ExportSettingFormOption[];
 
-  cccExpenseStateOptions: ExportSettingFormOption[]  = [
-    {
-      label: this.is_simplify_report_closure_enabled ? 'Approved' : 'Payment Processing',
-      value: this.is_simplify_report_closure_enabled ? CCCExpenseState.APPROVED: CCCExpenseState.PAYMENT_PROCESSING
-    },
-    {
-      label: this.is_simplify_report_closure_enabled ? 'Closed' : 'Paid',
-      value: CCCExpenseState.PAID
-    }
-  ];
+  cccExpenseStateOptions: ExportSettingFormOption[];
 
   reimbursableExpenseGroupingDateOptions: ExportSettingFormOption[] = [
     {
@@ -285,15 +268,42 @@ export class ExportSettingsComponent implements OnInit, OnDestroy {
   private getSettingsAndSetupForm(): void {
     this.isOnboarding = this.windowReference.location.pathname.includes('onboarding');
     const destinationAttributes = ['BANK_ACCOUNT', 'TAX_CODE'];
-    forkJoin([
+
+    let getSettingsData: (Observable<ExportSettingGet> | Observable<GroupedDestinationAttribute> | Observable<WorkspaceGeneralSetting>)[]= [
       this.exportSettingService.getExportSettings(),
       this.mappingService.getGroupedXeroDestinationAttributes(destinationAttributes),
-      this.workspaceService.getWorkspaceGeneralSettings()
-    ]).subscribe(response => {
-      this.exportSettings = response[0];
-      this.bankAccounts = response[1].BANK_ACCOUNT;
-      this.is_simplify_report_closure_enabled = response[2].is_simplify_report_closure_enabled;
+    ]
+    
+    if(!this.isOnboarding){
+      getSettingsData.push(this.workspaceService.getWorkspaceGeneralSettings());
+    }
 
+    forkJoin(getSettingsData).subscribe(response => {
+      this.exportSettings = response[0] as ExportSettingGet;
+      this.bankAccounts = (response[1] as GroupedDestinationAttribute).BANK_ACCOUNT;
+      if(!this.isOnboarding){
+        this.is_simplify_report_closure_enabled = (response[2] as WorkspaceGeneralSetting).is_simplify_report_closure_enabled;
+      }
+      this.cccExpenseStateOptions = [
+        {
+          label: this.is_simplify_report_closure_enabled ? 'Approved' : 'Payment Processing',
+          value: this.is_simplify_report_closure_enabled ? CCCExpenseState.APPROVED: CCCExpenseState.PAYMENT_PROCESSING
+        },
+        {
+          label: this.is_simplify_report_closure_enabled ? 'Closed' : 'Paid',
+          value: CCCExpenseState.PAID
+        }
+      ];
+      this.reimbursableExpenseStateOptions = [
+        {
+          label: this.is_simplify_report_closure_enabled ? 'Processing' : 'Payment Processing',
+          value: ExpenseState.PAYMENT_PROCESSING
+        },
+        {
+          label: this.is_simplify_report_closure_enabled ? 'Closed' : 'Paid',
+          value: ExpenseState.PAID
+        }
+      ];
       this.setupForm();
     });
   }

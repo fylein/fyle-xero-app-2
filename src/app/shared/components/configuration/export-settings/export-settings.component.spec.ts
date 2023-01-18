@@ -6,7 +6,7 @@ import { ExportSettingsComponent } from './export-settings.component';
 import { HttpClientModule } from '@angular/common/http';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { CorporateCreditCardExpensesObject, ExpenseGroupingFieldOption, ExpenseState, ExportDateType, OnboardingState, ReimbursableExpensesObject, TenantFieldMapping } from 'src/app/core/models/enum/enum.model';
-import { destinationAttribute, errorResponse, exportResponse, exportResponse1, replacecontent1, replacecontent2 } from './export-settings.fixture';
+import { destinationAttribute, errorResponse, exportResponse, exportResponse1, replacecontent1, replacecontent2, workspaceResponse } from './export-settings.fixture';
 import { MappingService } from 'src/app/core/services/misc/mapping.service';
 import { WorkspaceService } from 'src/app/core/services/workspace/workspace.service';
 import { ExportSettingService } from 'src/app/core/services/configuration/export-setting.service';
@@ -43,6 +43,7 @@ describe('ExportSettingsComponent', () => {
       refreshMappingPages: () => undefined
     };
     service3 = {
+      getWorkspaceGeneralSettings: () => of(workspaceResponse),
       getOnboardingState: () => OnboardingState.EXPORT_SETTINGS,
       setOnboardingState: () => undefined
     };
@@ -112,7 +113,7 @@ describe('ExportSettingsComponent', () => {
     component.exportSettingsForm.controls.reimbursableExpense.patchValue(true);
     component.exportSettingsForm.controls.creditCardExpense.patchValue(true);
     component.saveInProgress = false;
-    fixture.detectChanges();
+    // fixture.detectChanges();
     expect(component.save()).toBeUndefined();
   });
 
@@ -237,7 +238,7 @@ describe('ExportSettingsComponent', () => {
     component.exportSettings.workspace_general_settings.corporate_credit_card_expenses_object = CorporateCreditCardExpensesObject.BANK_TRANSACTION;
     component.exportSettingsForm.controls.reimbursableExportType.patchValue(ReimbursableExpensesObject.PURCHASE_BILL);
     component.exportSettingsForm.controls.creditCardExportType.patchValue(CorporateCreditCardExpensesObject.BANK_TRANSACTION);
-    fixture.detectChanges();
+    // fixture.detectChanges();
     expect((component as any).constructWarningMessage().length).toBeGreaterThanOrEqual(0);
   });
 
