@@ -274,14 +274,14 @@ export class ExportSettingsComponent implements OnInit, OnDestroy {
       this.mappingService.getGroupedXeroDestinationAttributes(destinationAttributes)
     ];
 
-    if (!this.isOnboarding){
+    if (!this.isOnboarding) {
       getSettingsData.push(this.workspaceService.getWorkspaceGeneralSettings());
     }
 
     forkJoin(getSettingsData).subscribe(response => {
       this.exportSettings = response[0] as ExportSettingGet;
       this.bankAccounts = (response[1] as GroupedDestinationAttribute).BANK_ACCOUNT;
-      if (!this.isOnboarding){
+      if (!this.isOnboarding) {
         this.is_simplify_report_closure_enabled = (response[2] as WorkspaceGeneralSetting).is_simplify_report_closure_enabled;
       }
       this.cccExpenseStateOptions = [
