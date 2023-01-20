@@ -275,7 +275,7 @@ export class ExportSettingsComponent implements OnInit, OnDestroy {
     ]).subscribe(response => {
       this.exportSettings = response[0];
       this.bankAccounts = response[1].BANK_ACCOUNT;
-      this.is_simplify_report_closure_enabled = (response[0].workspace_general_settings as WorkspaceGeneralSetting).is_simplify_report_closure_enabled;
+      this.is_simplify_report_closure_enabled = (response[0].workspace_general_settings as WorkspaceGeneralSetting)?.is_simplify_report_closure_enabled;
 
       this.cccExpenseStateOptions = [
         {
