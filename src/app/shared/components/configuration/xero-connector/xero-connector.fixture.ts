@@ -1,7 +1,7 @@
 import { ExportSettingGet } from "src/app/core/models/configuration/export-setting.model";
 import { DestinationAttribute } from "src/app/core/models/db/destination-attribute.model";
 import { TenantMapping } from "src/app/core/models/db/tenant-mapping.model";
-import { ExpenseState, CCCExpenseState, AutoMapEmployee } from "src/app/core/models/enum/enum.model";
+import { ExpenseState, AutoMapEmployee } from "src/app/core/models/enum/enum.model";
 
 export const response = {
   id: 1,
@@ -40,7 +40,7 @@ export const exportResponse: ExportSettingGet = {
   expense_group_settings: {
     reimbursable_expense_state: ExpenseState.PAID,
     reimbursable_export_date_type: null,
-    ccc_expense_state: CCCExpenseState.PAID
+    ccc_expense_state: ExpenseState.PAID
   },
   workspace_general_settings: {
     reimbursable_expenses_object: null,

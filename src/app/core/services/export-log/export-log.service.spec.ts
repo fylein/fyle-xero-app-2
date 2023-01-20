@@ -2,7 +2,7 @@ import { getTestBed, TestBed } from '@angular/core/testing';
 
 import { ExportLogService } from './export-log.service';
 import { ExpenseGroupSetting } from '../../models/db/expense-group-setting.model';
-import { ExpenseState, CCCExpenseState, ExportDateType, FyleReferenceType } from '../../models/enum/enum.model';
+import { ExpenseState, ExportDateType, FyleReferenceType } from '../../models/enum/enum.model';
 import { HttpTestingController, HttpClientTestingModule } from '@angular/common/http/testing';
 import { environment } from 'src/environments/environment';
 import { ExpenseGroup, ExpenseGroupDescription, ExpenseGroupResponse } from '../../models/db/expense-group.model';
@@ -40,7 +40,7 @@ describe('ExportLogService', () => {
       reimbursable_export_date_type: ExportDateType.CURRENT_DATE,
       updated_at: new Date("2022-04-13T10:29:18.802749Z"),
       workspace: 1,
-      ccc_expense_state: CCCExpenseState.PAYMENT_PROCESSING,
+      ccc_expense_state: ExpenseState.PAYMENT_PROCESSING,
       ccc_export_date_type: ExportDateType.APPROVED_AT
     };
 

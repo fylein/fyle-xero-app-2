@@ -46,7 +46,6 @@ describe('WorkspaceService', () => {
       fyle_org_id: "orunxXsIajSE",
       xero_short_code: "",
       last_synced_at: new Date("2022-04-13T10:29:18.796760Z"),
-      ccc_last_synced_at: new Date("2022-04-13T10:29:18.796760Z"),
       source_synced_at: new Date("2022-04-13T10:29:18.796760Z"),
       destination_synced_at: new Date("2022-04-13T10:29:18.796760Z"),
       created_at: new Date("2022-04-13T10:29:18.796760Z"),
@@ -73,7 +72,6 @@ describe('WorkspaceService', () => {
       fyle_org_id: "orunxXsIajSE",
       xero_short_code: "",
       last_synced_at: new Date("2022-04-13T10:29:18.796760Z"),
-      ccc_last_synced_at: new Date("2022-04-13T10:29:18.796760Z"),
       source_synced_at: new Date("2022-04-13T10:29:18.796760Z"),
       destination_synced_at: new Date("2022-04-13T10:29:18.796760Z"),
       created_at: new Date("2022-04-13T10:29:18.796760Z"),
@@ -100,7 +98,6 @@ describe('WorkspaceService', () => {
       fyle_org_id: "orunxXsIajSE",
       xero_short_code: "",
       last_synced_at: new Date("2022-04-13T10:29:18.796760Z"),
-      ccc_last_synced_at: new Date("2022-04-13T10:29:18.796760Z"),
       source_synced_at: new Date("2022-04-13T10:29:18.796760Z"),
       destination_synced_at: new Date("2022-04-13T10:29:18.796760Z"),
       onboarding_state: OnboardingState.CONNECTION,
@@ -137,8 +134,7 @@ describe('WorkspaceService', () => {
       corporate_credit_card_expenses_object: '',
       map_merchant_to_contact: false,
       auto_map_employees: '',
-      import_customers: false,
-      is_simplify_report_closure_enabled: false
+      import_customers: false
     };
     service.getWorkspaceGeneralSettings().subscribe((value) => {
       expect(value).toEqual(response);

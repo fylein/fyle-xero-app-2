@@ -1,7 +1,7 @@
 import { ExportSettingFormOption, ExportSettingGet } from "src/app/core/models/configuration/export-setting.model";
 import { GroupedDestinationAttribute } from "src/app/core/models/db/destination-attribute.model";
 import { WorkspaceGeneralSetting } from "src/app/core/models/db/workspace-general-setting.model";
-import { CorporateCreditCardExpensesObject, TenantFieldMapping, ExpenseState, CCCExpenseState, ExportDateType, ReimbursableExpensesObject, AutoMapEmployee } from "src/app/core/models/enum/enum.model";
+import { CorporateCreditCardExpensesObject, TenantFieldMapping, ExpenseState, ExportDateType, ReimbursableExpensesObject, AutoMapEmployee } from "src/app/core/models/enum/enum.model";
 
 export const export_settings: ExportSettingFormOption[] = [
   {
@@ -28,8 +28,7 @@ export const workspaceResponse: WorkspaceGeneralSetting = {
   updated_at: new Date("2022-04-28T12:48:39.150177Z"),
   workspace: 1,
   import_customers: false,
-  map_merchant_to_contact: false,
-  is_simplify_report_closure_enabled: true
+  map_merchant_to_contact: false
 };
 export const destinationAttribute: GroupedDestinationAttribute={
   BANK_ACCOUNT: [{
@@ -53,7 +52,7 @@ export const exportResponse: ExportSettingGet = {
   expense_group_settings: {
     reimbursable_expense_state: ExpenseState.PAID,
     reimbursable_export_date_type: ExportDateType.CURRENT_DATE,
-    ccc_expense_state: CCCExpenseState.PAID
+    ccc_expense_state: ExpenseState.PAID
   },
   workspace_general_settings: {
     reimbursable_expenses_object: null,
@@ -70,7 +69,7 @@ export const exportResponse1: ExportSettingGet = {
   expense_group_settings: {
     reimbursable_expense_state: ExpenseState.PAID,
     reimbursable_export_date_type: null,
-    ccc_expense_state: CCCExpenseState.PAID
+    ccc_expense_state: ExpenseState.PAID
   },
   // @ts-ignore
   workspace_general_settings: undefined,
