@@ -1,7 +1,7 @@
 import { getTestBed, TestBed } from '@angular/core/testing';
 import { ExportSettingService } from './export-setting.service';
 import { ExportSettingGet, ExportSettingPost } from '../../models/configuration/export-setting.model';
-import { ExpenseState, ReimbursableExpensesObject, CorporateCreditCardExpensesObject, ExportDateType, AutoMapEmployee } from '../../models/enum/enum.model';
+import { ExpenseState, CCCExpenseState, ReimbursableExpensesObject, CorporateCreditCardExpensesObject, ExportDateType, AutoMapEmployee } from '../../models/enum/enum.model';
 import { HttpTestingController, HttpClientTestingModule } from '@angular/common/http/testing';
 import { environment } from 'src/environments/environment';
 
@@ -32,7 +32,7 @@ describe('ExportSettingService', () => {
       expense_group_settings: {
         reimbursable_expense_state: ExpenseState.PAID,
         reimbursable_export_date_type: ExportDateType.APPROVED_AT,
-        ccc_expense_state: ExpenseState.PAID
+        ccc_expense_state: CCCExpenseState.PAID
       },
       workspace_general_settings: {
         reimbursable_expenses_object: ReimbursableExpensesObject.PURCHASE_BILL,
@@ -60,7 +60,7 @@ describe('ExportSettingService', () => {
       expense_group_settings: {
         reimbursable_expense_state: ExpenseState.PAID,
         reimbursable_export_date_type: ExportDateType.APPROVED_AT,
-        ccc_expense_state: ExpenseState.PAID
+        ccc_expense_state: CCCExpenseState.PAID
       },
       workspace_general_settings: {
         reimbursable_expenses_object: ReimbursableExpensesObject.PURCHASE_BILL,
@@ -75,7 +75,7 @@ describe('ExportSettingService', () => {
       expense_group_settings: {
         reimbursable_expense_state: ExpenseState.PAID,
         reimbursable_export_date_type: null,
-        ccc_expense_state: ExpenseState.PAID
+        ccc_expense_state: CCCExpenseState.PAID
       },
       workspace_general_settings: {
         reimbursable_expenses_object: ReimbursableExpensesObject.PURCHASE_BILL,

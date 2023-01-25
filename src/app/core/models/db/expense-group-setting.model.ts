@@ -1,9 +1,9 @@
-import { ExpenseState, ExportDateType } from "../enum/enum.model";
+import { ExpenseState, CCCExpenseState, ExportDateType } from "../enum/enum.model";
 
 export type ExpenseGroupSettingPost = {
   reimbursable_expense_state: ExpenseState;
   reimbursable_export_date_type: ExportDateType | null;
-  ccc_expense_state: ExpenseState;
+  ccc_expense_state: CCCExpenseState;
 };
 
 export interface ExpenseGroupSetting extends ExpenseGroupSettingPost {

@@ -1,5 +1,5 @@
 import { WorkspaceGeneralSetting } from "../../../core/models/db/workspace-general-setting.model";
-import { ErrorType, ExpenseState, ExportDateType, ExportMode, TaskLogState, TaskLogType } from "../../../core/models/enum/enum.model";
+import { ErrorType, ExpenseState, CCCExpenseState, ExportDateType, ExportMode, TaskLogState, TaskLogType } from "../../../core/models/enum/enum.model";
 import { ExpenseGroupSetting } from '../../../core/models/db/expense-group-setting.model';
 import { MinimalUser } from "src/app/core/models/db/user.model";
 import { LastExport } from "src/app/core/models/db/last-export.model";
@@ -20,7 +20,7 @@ export const expenseGroupSettingResponse:ExpenseGroupSetting = {
   updated_at: new Date("2022-04-13T10:29:18.802749Z"),
   workspace: 1,
   reimbursable_expense_state: ExpenseState.PAYMENT_PROCESSING,
-  ccc_expense_state: ExpenseState.PAYMENT_PROCESSING
+  ccc_expense_state: CCCExpenseState.PAYMENT_PROCESSING
 };
 export const expenseGroupSettingResponse1 = {
   ccc_export_date_type: ExportDateType.CURRENT_DATE,
