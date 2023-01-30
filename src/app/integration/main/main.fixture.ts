@@ -1,6 +1,7 @@
 import { MappingSetting, MappingSettingResponse } from "src/app/core/models/db/mapping-setting.model";
 import { MappingSourceField, MappingDestinationField, FyleField } from "src/app/core/models/enum/enum.model";
 import { DashboardModule } from "src/app/core/models/misc/dashboard-module.model";
+import { ExpenseField } from "src/app/core/models/misc/expense-field.model";
 
 
 export const modules: DashboardModule[] = [
@@ -145,6 +146,20 @@ const mappingSetting:MappingSetting[] = [{
   import_to_fyle: false,
   is_custom: false,
   source_placeholder: null
+},
+{
+  id: 8,
+  created_at: new Date(),
+  updated_at: new Date(),
+  workspace: 2,
+  source_field: FyleField.CORPORATE_CARD,
+  destination_field: 'PROJECT2',
+  import_to_fyle: false,
+  is_custom: false,
+  source_placeholder: null
 }];
+
 export const mappingSettingResponse: MappingSettingResponse = {
   count: 0, next: 'aa', previous: 'aa', results: mappingSetting};
+
+  export const fyleExpenseFields2: ExpenseField[] = [];

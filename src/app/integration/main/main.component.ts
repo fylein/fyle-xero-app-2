@@ -2,10 +2,12 @@ import { Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/co
 import { NavigationStart, Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
 import { MappingSetting, MappingSettingResponse } from 'src/app/core/models/db/mapping-setting.model';
-import { FyleField, MappingDestinationField, TenantFieldMapping } from 'src/app/core/models/enum/enum.model';
+import { CCCExpenseState, CorporateCreditCardExpensesObject, FyleField, MappingDestinationField, TenantFieldMapping } from 'src/app/core/models/enum/enum.model';
 import { DashboardModule, DashboardModuleChild } from 'src/app/core/models/misc/dashboard-module.model';
 import { MappingService } from 'src/app/core/services/misc/mapping.service';
 import { ExpenseField } from 'src/app/core/models/misc/expense-field.model';
+import { ExportSettingService } from 'src/app/core/services/configuration/export-setting.service';
+import { ExportSettingGet } from 'src/app/core/models/configuration/export-setting.model';
 
 @Component({
   selector: 'app-main',
@@ -77,14 +79,20 @@ export class MainComponent implements OnInit {
 
   xeroFields: ExpenseField[];
 
+  exportSettingResponse: ExportSettingGet;
+
   constructor(
     private renderer: Renderer2,
     private router: Router,
-    private mappingService: MappingService
+    private mappingService: MappingService,
+    private exportSettingService: ExportSettingService
   ) {
     // Helps refresh sidenav bar on mapping setting change
     this.mappingService.getMappingPagesForSideNavBar.subscribe((mappingSettingResponse: MappingSettingResponse) => {
-      this.setupMappingModules(mappingSettingResponse);
+      this.exportSettingService.getExportSettings().subscribe((exportSettingGet:ExportSettingGet) => {
+        this.exportSettingResponse = exportSettingGet;
+        this.setupMappingModules(mappingSettingResponse);
+      });
     });
 
     // Subscribe to the event that is emitted when custom mapping is created
@@ -177,15 +185,24 @@ export class MainComponent implements OnInit {
     const importedFieldsFromXero: string[] = [];
     mappingSettingResponse.results.forEach((mappingSetting: MappingSetting) => {
       if (mappingSetting.source_field !== TenantFieldMapping.TENANT && mappingSetting.source_field !== FyleField.EMPLOYEE && mappingSetting.source_field !== FyleField.CATEGORY ) {
-        if (mappingSetting.import_to_fyle && (mappingSetting.source_field !== FyleField.TAX_GROUP || mappingSetting.source_field !== FyleField.TAX_GROUP)) {
+        if (mappingSetting.import_to_fyle) {
           importedFieldsFromXero.push(mappingSetting.destination_field);
         }
-        sourceFieldRoutes.push(`mapping/${mappingSetting.source_field.toLowerCase()}`);
-        this.modules[2].childPages.push({
-          name: `${mappingSetting.source_field.toLowerCase()} Mapping`,
-          route: `mapping/${mappingSetting.source_field.toLowerCase()}`,
-          isActive: false
+        if (mappingSetting.source_field === FyleField.CORPORATE_CARD && this.exportSettingResponse?.workspace_general_settings?.corporate_credit_card_expenses_object === CorporateCreditCardExpensesObject.BANK_TRANSACTION) {
+          sourceFieldRoutes.push(`mapping/${mappingSetting.source_field.toLowerCase()}`);
+          this.modules[2].childPages.push({
+            name: `${mappingSetting.source_field.toLowerCase()} Mapping`,
+            route: `mapping/${mappingSetting.source_field.toLowerCase()}`,
+            isActive: false
+          });
+        } else if (mappingSetting.source_field !== FyleField.CORPORATE_CARD) {
+          sourceFieldRoutes.push(`mapping/${mappingSetting.source_field.toLowerCase()}`);
+          this.modules[2].childPages.push({
+            name: `${mappingSetting.source_field.toLowerCase()} Mapping`,
+            route: `mapping/${mappingSetting.source_field.toLowerCase()}`,
+            isActive: false
         });
+        }
       }
     });
 
@@ -211,13 +228,19 @@ export class MainComponent implements OnInit {
         });
       }
 
+
       this.markModuleActive(this.router.url);
       this.isLoading = false;
     });
   }
 
   getSettingsAndSetupPage(): void {
-      this.mappingService.getMappingSettings().subscribe((mappingSettingResponse: MappingSettingResponse) => {
+    forkJoin([
+      this.mappingService.getMappingSettings(),
+      this.exportSettingService.getExportSettings()
+    ]).subscribe(responses => {
+      const mappingSettingResponse: MappingSettingResponse = responses[0];
+      this.exportSettingResponse = responses[1];
       this.setupMappingModules(mappingSettingResponse);
     });
   }
