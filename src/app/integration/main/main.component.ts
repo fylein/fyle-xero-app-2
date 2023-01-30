@@ -176,7 +176,7 @@ export class MainComponent implements OnInit {
     const sourceFieldRoutes: string[] = [`mapping/${FyleField.EMPLOYEE.toLowerCase()}`, `mapping/${FyleField.CATEGORY.toLowerCase()}`];
     const importedFieldsFromXero: string[] = [];
     mappingSettingResponse.results.forEach((mappingSetting: MappingSetting) => {
-      if (mappingSetting.source_field !== TenantFieldMapping.TENANT && mappingSetting.source_field !== FyleField.EMPLOYEE && mappingSetting.source_field !== FyleField.CATEGORY && mappingSetting.source_field !== FyleField.TAX_GROUP && mappingSetting.source_field !== FyleField.CORPORATE_CARD) {
+      if (mappingSetting.source_field !== TenantFieldMapping.TENANT && mappingSetting.source_field !== FyleField.EMPLOYEE && mappingSetting.source_field !== FyleField.CATEGORY && mappingSetting.source_field !== FyleField.TAX_GROUP) {
         if (mappingSetting.import_to_fyle) {
           importedFieldsFromXero.push(mappingSetting.destination_field);
         }
