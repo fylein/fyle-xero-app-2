@@ -425,7 +425,6 @@ export class ExportSettingsComponent implements OnInit, OnDestroy {
       this.saveInProgress = false;
       this.snackBar.open('Export settings saved successfully');
       this.trackSessionTime('success');
-      this.mappingService.refreshMappingPages();
       if (this.isOnboarding) {
         this.workspaceService.setOnboardingState(OnboardingState.IMPORT_SETTINGS);
         this.router.navigate([`/workspaces/onboarding/import_settings`]);
