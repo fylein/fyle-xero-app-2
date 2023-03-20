@@ -16,6 +16,7 @@ import { WorkspaceSchedule, WorkspaceScheduleEmailOptions } from 'src/app/core/m
 import { MappingService } from 'src/app/core/services/misc/mapping.service';
 import { WorkspaceGeneralSetting } from 'src/app/core/models/db/workspace-general-setting.model';
 import { RefinerService } from 'src/app/core/services/integration/refiner.service';
+import { AddEmailDialogComponent } from './add-email-dialog/add-email-dialog.component';
 
 @Component({
   selector: 'app-advanced-settings',
@@ -71,8 +72,6 @@ export class AdvancedSettingsComponent implements OnInit, OnDestroy {
   ConfigurationCtaText = ConfigurationCtaText;
 
   ProgressPhase = ProgressPhase;
-
-  scheduleSetting: WorkspaceSchedule;
 
   adminEmails: WorkspaceScheduleEmailOptions[];
 
@@ -143,7 +142,9 @@ export class AdvancedSettingsComponent implements OnInit, OnDestroy {
       exportSchedule: [this.advancedSettings.workspace_schedules?.enabled ? this.advancedSettings.workspace_schedules.interval_hours : false],
       exportScheduleFrequency: [this.advancedSettings.workspace_schedules?.enabled ? this.advancedSettings.workspace_schedules.interval_hours : null],
       autoCreateMerchantDestinationEntity: [this.advancedSettings.workspace_general_settings.auto_create_merchant_destination_entity ? this.advancedSettings.workspace_general_settings.auto_create_merchant_destination_entity : false],
-      searchOption: []
+      searchOption: [],
+      emails: [this.advancedSettings.workspace_schedules?.emails_selected ? this.advancedSettings.workspace_schedules?.emails_selected : []],
+      addedEmail: []
     });
     this.setCustomValidators();
     this.isLoading = false;
@@ -154,11 +155,13 @@ export class AdvancedSettingsComponent implements OnInit, OnDestroy {
     forkJoin([
       this.advancedSettingService.getAdvancedSettings(),
       this.mappingService.getXeroDestinationAttributes('BANK_ACCOUNT'),
-      this.workspaceService.getWorkspaceGeneralSettings()
+      this.workspaceService.getWorkspaceGeneralSettings(),
+      this.advancedSettingService.getWorkspaceAdmins()
     ]).subscribe(response => {
       this.advancedSettings = response[0];
       this.billPaymentAccounts = response[1];
       this.workspaceGeneralSettings = response[2];
+      this.adminEmails = this.advancedSettings.workspace_schedules?.additional_email_options ? this.advancedSettings.workspace_schedules?.additional_email_options.concat(response[3]) : response[3];
       this.setupForm();
     });
   }
@@ -182,7 +185,7 @@ export class AdvancedSettingsComponent implements OnInit, OnDestroy {
     if (this.advancedSettingsForm.valid && !this.saveInProgress) {
       const advancedSettingPayload = AdvancedSettingModel.constructPayload(this.advancedSettingsForm);
       this.saveInProgress = true;
-
+      console.log(advancedSettingPayload);
       this.advancedSettingService.postAdvancedSettings(advancedSettingPayload).subscribe((response: AdvancedSettingGet) => {
         if (this.workspaceService.getOnboardingState() === OnboardingState.ADVANCED_CONFIGURATION) {
           this.trackingService.onOnboardingStepCompletion(OnboardingStep.ADVANCED_SETTINGS, 5, advancedSettingPayload);
@@ -212,6 +215,27 @@ export class AdvancedSettingsComponent implements OnInit, OnDestroy {
         this.snackBar.open('Error saving advanced settings, please try again later');
       });
     }
+  }
+
+  openAddemailDialog(): void {
+    const dialogRef = this.dialog.open(AddEmailDialogComponent, {
+      width: '467px',
+      data: {
+        workspaceId: this.workspaceGeneralSettings.workspace,
+        hours: this.advancedSettingsForm.value.exportScheduleFrequency,
+        schedulEnabled: this.advancedSettingsForm.value.exportSchedule,
+        selectedEmails: this.advancedSettingsForm.value.emails
+      }
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.advancedSettingsForm.controls.exportScheduleFrequency.patchValue(result.hours);
+        this.advancedSettingsForm.controls.emails.patchValue(result.emails_selected);
+        this.advancedSettingsForm.controls.addedEmail.patchValue(result.email_added);
+        this.adminEmails = this.adminEmails.concat(result.email_added);
+      }
+    });
   }
 
   ngOnDestroy(): void {

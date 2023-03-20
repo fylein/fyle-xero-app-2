@@ -29,20 +29,23 @@
         [subLabel]="'Set up a schedule to automate the export of expenses from Fyle to Xero'"
         [formControllerName]="'exportSchedule'">
       </app-configuration-toggle-field>
-      <div *ngIf="advancedSettingsForm.value.exportSchedule" class="advanced-settings--schedule-dropdown">
-        <mat-form-field floatLabel="always" appearance="outline" class="configuration--form-field">
-          <mat-select placeholder="Select Frequency" formControlName="exportScheduleFrequency">
-            <mat-option *ngFor="let option of frequencyIntervals" [value]="option.value">
-              {{ option.label }}
-              <img *ngIf="advancedSettingsForm.value.exportScheduleFrequency === option.value" src="assets/images/svgs/general/tick-pink.svg" class="selected-value-check-mark">
-            </mat-option>
-          </mat-select>
-          <div class="mat-select-arrow-closed"></div>
-        </mat-form-field>
-        <app-mandatory-error-message *ngIf="advancedSettingsForm.controls.exportScheduleFrequency.touched && !advancedSettingsForm.controls.exportScheduleFrequency.value" [listName]="'frequency'"></app-mandatory-error-message>
-        <!-- <app-configuration-select-field [form]="advancedSettingsForm" [options]="frequencyIntervals"
-          [placeholder]="'Select Frequency'" [isFieldMandatory]="true" [mandatoryErrorListName]="'Frequence'" [formControllerName]="'exportScheduleFrequency'">
-        </app-configuration-select-field> -->
+      <div *ngIf="advancedSettingsForm.value.exportSchedule">
+        <app-configuration-select-field [form]="advancedSettingsForm" [options]="frequencyIntervals"
+          [isFieldMandatory]="true" [mandatoryErrorListName]="'frequency'" [label]="'Select frequency of export'"
+          [subLabel]="'Select the frequency at which you want your Automated import-export to happen'"
+          [placeholder]="'Select Frequency'" [formControllerName]="'exportScheduleFrequency'">
+        </app-configuration-select-field>
+        <app-email-multi-select-field [form]="advancedSettingsForm" [options]="adminEmails" [isFieldMandatory]="false"
+          [label]="'Select an email address to notify upon export failure'"
+          [subLabel]="'You can select one or more email address from the given list, or add new one to get email notifications on.'"
+          [placeholder]="'Select Email Address'" [formControllerName]="'emails'">
+        </app-email-multi-select-field>
+        <div fxLayout="row" class="advanced-settings--add-email-text pointer" fxLayoutAlign="end center"
+          (click)="openAddemailDialog()">
+          <span class="advanced-settings--span-or">or</span>
+          <img class="advanced-settings--add-btn" src="assets/images/svgs/actions/add.svg">
+          <span class="advanced-settings--span-or">Add new email address</span>
+        </div>
       </div>
 
       <div fxLayout="row" fxLayoutAlign="space-between start">
