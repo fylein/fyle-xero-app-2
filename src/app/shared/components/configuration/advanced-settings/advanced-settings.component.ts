@@ -185,7 +185,6 @@ export class AdvancedSettingsComponent implements OnInit, OnDestroy {
     if (this.advancedSettingsForm.valid && !this.saveInProgress) {
       const advancedSettingPayload = AdvancedSettingModel.constructPayload(this.advancedSettingsForm);
       this.saveInProgress = true;
-      console.log(advancedSettingPayload);
       this.advancedSettingService.postAdvancedSettings(advancedSettingPayload).subscribe((response: AdvancedSettingGet) => {
         if (this.workspaceService.getOnboardingState() === OnboardingState.ADVANCED_CONFIGURATION) {
           this.trackingService.onOnboardingStepCompletion(OnboardingStep.ADVANCED_SETTINGS, 5, advancedSettingPayload);
