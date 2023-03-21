@@ -126,8 +126,8 @@ describe('AdvancedSettingsComponent', () => {
       exportSchedule: [component.advancedSettings.workspace_schedules?.enabled ? component.advancedSettings.workspace_schedules.interval_hours : false],
       exportScheduleFrequency: [component.advancedSettings.workspace_schedules?.enabled ? component.advancedSettings.workspace_schedules.interval_hours : null],
       searchOption: [],
-      emails: [emailResponse.emails_selected]
-
+      emails: [emailResponse.emails_selected],
+      addedEmail: [emailResponse.additional_email_options]
     });
     component.saveInProgress = false;
     component.advancedSettingsForm = form;
@@ -152,8 +152,8 @@ describe('AdvancedSettingsComponent', () => {
       exportSchedule: [component.advancedSettings.workspace_schedules?.enabled ? component.advancedSettings.workspace_schedules.interval_hours : false],
       exportScheduleFrequency: [component.advancedSettings.workspace_schedules?.enabled ? component.advancedSettings.workspace_schedules.interval_hours : null],
       searchOption: [],
-      emails: [emailResponse.emails_selected]
-
+      emails: [emailResponse.emails_selected],
+      addedEmail: [emailResponse.additional_email_options]
     });
     component.saveInProgress = false;
     component.advancedSettingsForm = form;
@@ -176,8 +176,8 @@ describe('AdvancedSettingsComponent', () => {
       exportSchedule: [component.advancedSettings.workspace_schedules?.enabled ? component.advancedSettings.workspace_schedules.interval_hours : false],
       exportScheduleFrequency: [component.advancedSettings.workspace_schedules?.enabled ? component.advancedSettings.workspace_schedules.interval_hours : null],
       searchOption: [],
-      emails: [emailResponse.emails_selected]
-
+      emails: [emailResponse.emails_selected],
+      addedEmail: [emailResponse.additional_email_options]
     });
     component.saveInProgress = false;
     component.advancedSettingsForm = form;
