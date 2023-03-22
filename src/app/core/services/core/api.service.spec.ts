@@ -127,7 +127,9 @@ describe('ApiService', () => {
       workspace_schedules: {
         enabled: true,
         interval_hours: 10,
-        start_datetime: new Date()
+        start_datetime: new Date(),
+        emails_selected: [],
+        additional_email_options: []
       }
     };
 
@@ -145,7 +147,9 @@ describe('ApiService', () => {
       workspace_schedules: {
         enabled: true,
         interval_hours: 10,
-        start_datetime: new Date()
+        start_datetime: new Date(),
+        emails_selected: [],
+        additional_email_options: []
       },
       workspace_id: 1
     };
@@ -174,7 +178,9 @@ describe('ApiService', () => {
       workspace_schedules: {
         enabled: true,
         interval_hours: 10,
-        start_datetime: new Date()
+        start_datetime: new Date(),
+        emails_selected: [],
+        additional_email_options: []
       }
     };
 
@@ -192,7 +198,9 @@ describe('ApiService', () => {
       workspace_schedules: {
         enabled: true,
         interval_hours: 10,
-        start_datetime: new Date()
+        start_datetime: new Date(),
+        emails_selected: [],
+        additional_email_options: []
       },
       workspace_id: 1
     };

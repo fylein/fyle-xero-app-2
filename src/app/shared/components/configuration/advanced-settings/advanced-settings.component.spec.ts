@@ -5,7 +5,7 @@ import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { HttpClientModule } from '@angular/common/http';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { adminEmails, advancedSettingResponse, destinationAttribute, errorResponse, getadvancedSettingResponse, getadvancedSettingResponse2, response } from './advanced-settings.fixture';
+import { adminEmails, advancedSettingResponse, destinationAttribute, emailResponse, errorResponse, getadvancedSettingResponse, getadvancedSettingResponse2, response } from './advanced-settings.fixture';
 import { Router } from '@angular/router';
 import { AdvancedSettingService } from 'src/app/core/services/configuration/advanced-setting.service';
 import { MappingService } from 'src/app/core/services/misc/mapping.service';
@@ -82,8 +82,9 @@ describe('AdvancedSettingsComponent', () => {
       autoCreateVendors: [component.advancedSettings.workspace_general_settings.auto_create_destination_entity],
       exportSchedule: [component.advancedSettings.workspace_schedules?.enabled ? component.advancedSettings.workspace_schedules.interval_hours : false],
       exportScheduleFrequency: [component.advancedSettings.workspace_schedules?.enabled ? component.advancedSettings.workspace_schedules.interval_hours : null],
-      searchOption: []
-
+      searchOption: [],
+      emails: [emailResponse.emails_selected],
+      addedEmail: []
     });
     component.advancedSettingsForm = form;
     router = TestBed.inject(Router);
@@ -124,8 +125,9 @@ describe('AdvancedSettingsComponent', () => {
       autoCreateVendors: [component.advancedSettings.workspace_general_settings.auto_create_destination_entity],
       exportSchedule: [component.advancedSettings.workspace_schedules?.enabled ? component.advancedSettings.workspace_schedules.interval_hours : false],
       exportScheduleFrequency: [component.advancedSettings.workspace_schedules?.enabled ? component.advancedSettings.workspace_schedules.interval_hours : null],
-      searchOption: []
-
+      searchOption: [],
+      emails: [emailResponse.emails_selected],
+      addedEmail: []
     });
     component.saveInProgress = false;
     component.advancedSettingsForm = form;
@@ -149,8 +151,9 @@ describe('AdvancedSettingsComponent', () => {
       autoCreateVendors: [component.advancedSettings.workspace_general_settings.auto_create_destination_entity],
       exportSchedule: [component.advancedSettings.workspace_schedules?.enabled ? component.advancedSettings.workspace_schedules.interval_hours : false],
       exportScheduleFrequency: [component.advancedSettings.workspace_schedules?.enabled ? component.advancedSettings.workspace_schedules.interval_hours : null],
-      searchOption: []
-
+      searchOption: [],
+      emails: [emailResponse.emails_selected],
+      addedEmail: []
     });
     component.saveInProgress = false;
     component.advancedSettingsForm = form;
@@ -172,8 +175,9 @@ describe('AdvancedSettingsComponent', () => {
       autoCreateVendors: [component.advancedSettings.workspace_general_settings.auto_create_destination_entity],
       exportSchedule: [component.advancedSettings.workspace_schedules?.enabled ? component.advancedSettings.workspace_schedules.interval_hours : false],
       exportScheduleFrequency: [component.advancedSettings.workspace_schedules?.enabled ? component.advancedSettings.workspace_schedules.interval_hours : null],
-      searchOption: []
-
+      searchOption: [],
+      emails: [emailResponse.emails_selected],
+      addedEmail: []
     });
     component.saveInProgress = false;
     component.advancedSettingsForm = form;
@@ -205,5 +209,10 @@ describe('AdvancedSettingsComponent', () => {
     expect(component.showPaymentSyncField()).toBeTruthy();
   });
 
+  it('openAddemailDialog function check', () => {
+    expect(component.openAddemailDialog()).toBeUndefined();
+    fixture.detectChanges();
+    expect(dialogSpy1).toHaveBeenCalled();
+  });
 
 });
