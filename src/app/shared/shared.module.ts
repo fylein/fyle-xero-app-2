@@ -53,6 +53,7 @@ import { ConfirmationDialogComponent } from './components/core/confirmation-dial
 import { MandatoryErrorMessageComponent } from './components/helpers/mandatory-error-message/mandatory-error-message.component';
 import { EmailMultiSelectFieldComponent } from './components/configuration/email-multi-select-field/email-multi-select-field.component';
 import { DashboardExportLogDialogComponent } from './components/dashboard/dashboard-export-log-dialog/dashboard-export-log-dialog.component';
+import { AddEmailDialogComponent } from './components/configuration/advanced-settings/add-email-dialog/add-email-dialog.component';
 
 @NgModule({
   declarations: [
@@ -90,7 +91,8 @@ import { DashboardExportLogDialogComponent } from './components/dashboard/dashbo
     ConfirmationDialogComponent,
     MandatoryErrorMessageComponent,
     EmailMultiSelectFieldComponent,
-    DashboardExportLogDialogComponent
+    DashboardExportLogDialogComponent,
+    AddEmailDialogComponent
   ],
   imports: [
     CommonModule,

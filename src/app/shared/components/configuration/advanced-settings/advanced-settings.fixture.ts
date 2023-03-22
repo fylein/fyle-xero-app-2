@@ -22,7 +22,8 @@ export const response:WorkspaceGeneralSetting = {
   updated_at: new Date("2022-04-28T12:48:39.150177Z"),
   workspace: 1,
   import_customers: false,
-  map_merchant_to_contact: false
+  map_merchant_to_contact: false,
+  is_simplify_report_closure_enabled: true
 };
 
 export const advancedSettingResponse:AdvancedSettingGet = {
@@ -40,7 +41,9 @@ export const advancedSettingResponse:AdvancedSettingGet = {
       workspace_schedules: {
         enabled: true,
         interval_hours: 10,
-        start_datetime: new Date("2022-01-16")
+        start_datetime: new Date("2022-01-16"),
+        emails_selected: [],
+        additional_email_options: []
       },
   workspace_id: 1
 };
@@ -89,7 +92,9 @@ export const getadvancedSettingResponse:AdvancedSettingGet = {
   workspace_schedules: {
     enabled: true,
     interval_hours: 10,
-    start_datetime: new Date("2022-01-16")
+    start_datetime: new Date("2022-01-16"),
+    emails_selected: ['fyle@fyle.in', 'integrations@fyle.in' ],
+    additional_email_options: [{name: 'fyle3', email: 'fyle3@fyle.in'}]
   },
   workspace_id: 1
 };
@@ -109,7 +114,9 @@ export const getadvancedSettingResponse2:AdvancedSettingGet = {
   workspace_schedules: {
     enabled: true,
     interval_hours: 10,
-    start_datetime: new Date("2022-01-16")
+    start_datetime: new Date("2022-01-16"),
+    emails_selected: [],
+    additional_email_options: []
   },
   workspace_id: 1
 };
@@ -129,7 +136,9 @@ export const emailResponse: WorkspaceSchedule = {
   enabled: false,
   start_datetime: new Date("2022-01-16"),
   interval_hours: 1,
-  schedule: 1
+  schedule: 1,
+  emails_selected: ['fyle@fyle.in', 'integrations@fyle.in' ],
+  additional_email_options: [{name: 'fyle3', email: 'fyle3@fyle.in'}]
 };
 export const adminEmails: WorkspaceScheduleEmailOptions[] = [ {name: 'fyle', email: 'fyle@fyle.in'}, {name: 'fyle2', email: 'fyle2@fyle.in'}];
 export const memo = ['employee_email', 'merchant', 'purpose', 'category', 'report_number', 'expense_link'];

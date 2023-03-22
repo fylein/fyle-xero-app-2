@@ -3,6 +3,7 @@ import { Observable, Subject } from 'rxjs';
 import { Cacheable, CacheBuster } from 'ts-cacheable';
 import { AdvancedSettingGet, AdvancedSettingPost } from '../../models/configuration/advanced-setting.model';
 import { ApiService } from '../core/api.service';
+import { WorkspaceSchedule, WorkspaceScheduleEmailOptions } from '../../models/db/workspace-schedule.model';
 import { WorkspaceService } from '../workspace/workspace.service';
 
 const advancedSettingsCache$ = new Subject<void>();
@@ -31,4 +32,7 @@ export class AdvancedSettingService {
     return this.apiService.put(`/v2/workspaces/${this.workspaceId}/advanced_settings/`, advancedSettingPayload);
   }
 
+  getWorkspaceAdmins(): Observable<[WorkspaceScheduleEmailOptions]> {
+    return this.apiService.get(`/workspaces/${this.workspaceId}/admins/`, {});
+  }
 }

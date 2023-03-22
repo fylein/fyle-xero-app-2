@@ -3,50 +3,24 @@ Frontend Repository for Fyle &lt;> Xero Integration
 
 ### Setup
 
-* Download and install Docker desktop for Mac from [here.](https://www.docker.com/products/docker-desktop)
+### Setup - 1 (Recommended)
+Follow instructions mentioned in [Integrations Central](https://github.com/fylein/fyle-integrations-central/)
 
-* If you're using a linux machine, please download docker according to the distrubution you're on.
+### Setup - 2
+* Install dependencies
 
-* Navigate into the root folder
-
-* Copy docker-compose.template.yml as docker-compose.yml and add environment variables wherever needed
-
-    ```
-    cp docker-compose.template.yml docker-compose.yml
+    ```bash
+    npm install
     ```
 
-* Build docker images
+* Copy `environment.json` from integrations-central/ and add it to `src/environments`
 
-    ```
-    docker-compose build
-    ```
-
-* Run docker containers
-
-    ```
-    docker-compose up -d app
+    ```bash
+    cp ../fyle-integrations-central/app-secrets/xero-app-2/environment.json src/environments/environment.json
     ```
 
-* To tail the logs a service you can do
+* Run app
 
-    ```
-    docker-compose logs -f app
-    ```
-
-* To stop the containers
-
-    ```
-    docker-compose stop app
-    ```
-
-* To restart any containers -
-
-    ```
-    docker-compose restart app
-    ```
-
-* To run bash inside any container for purpose of debugging or for creating new components, services etc
-
-    ```
-    docker-compose exec app /bin/bash
+    ```bash
+    npm start
     ```

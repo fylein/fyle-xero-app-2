@@ -1,9 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { forkJoin } from 'rxjs';
-import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
-import { AutoMapEmployee, ConfigurationCtaText, CorporateCreditCardExpensesObject, ExpenseGroupingFieldOption, ExpenseState, ExportDateType, OnboardingState, OnboardingStep, ProgressPhase, ReimbursableExpensesObject, TenantFieldMapping, UpdateEvent } from 'src/app/core/models/enum/enum.model';
+import { forkJoin, Observable } from 'rxjs';
+import { DestinationAttribute, GroupedDestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
+import { AutoMapEmployee, ConfigurationCtaText, CorporateCreditCardExpensesObject, ExpenseGroupingFieldOption, ExpenseState, CCCExpenseState, ExportDateType, OnboardingState, OnboardingStep, ProgressPhase, ReimbursableExpensesObject, TenantFieldMapping, UpdateEvent } from 'src/app/core/models/enum/enum.model';
 import { ExportSettingGet, ExportSettingFormOption, ExportSettingModel } from 'src/app/core/models/configuration/export-setting.model';
 import { ExportSettingService } from 'src/app/core/services/configuration/export-setting.service';
 import { HelperService } from 'src/app/core/services/core/helper.service';
@@ -15,6 +15,7 @@ import { ConfirmationDialog } from 'src/app/core/models/misc/confirmation-dialog
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationDialogComponent } from '../../core/confirmation-dialog/confirmation-dialog.component';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
+import { WorkspaceGeneralSetting } from 'src/app/core/models/db/workspace-general-setting.model';
 
 @Component({
   selector: 'app-export-settings',
@@ -28,6 +29,8 @@ export class ExportSettingsComponent implements OnInit, OnDestroy {
   saveInProgress: boolean;
 
   isOnboarding: boolean = false;
+
+  is_simplify_report_closure_enabled: boolean = false;
 
   exportSettingsForm: FormGroup;
 
@@ -75,16 +78,9 @@ export class ExportSettingsComponent implements OnInit, OnDestroy {
     }
   ];
 
-  reimbursableExpenseStateOptions: ExportSettingFormOption[] = [
-    {
-      label: 'Payment Processing',
-      value: ExpenseState.PAYMENT_PROCESSING
-    },
-    {
-      label: 'Paid',
-      value: ExpenseState.PAID
-    }
-  ]
+  reimbursableExpenseStateOptions: ExportSettingFormOption[];
+
+  cccExpenseStateOptions: ExportSettingFormOption[];
 
   reimbursableExpenseGroupingDateOptions: ExportSettingFormOption[] = [
     {
@@ -173,13 +169,16 @@ export class ExportSettingsComponent implements OnInit, OnDestroy {
   private createReimbursableExpenseWatcher(): void {
     this.exportSettingsForm.controls.reimbursableExpense.valueChanges.subscribe((isReimbursableExpenseSelected) => {
       if (isReimbursableExpenseSelected) {
+        this.exportSettingsForm.controls.reimbursableExpenseState.setValidators(Validators.required);
         this.exportSettingsForm.controls.reimbursableExportType.setValidators(Validators.required);
         this.exportSettingsForm.controls.reimbursableExportType.patchValue(ReimbursableExpensesObject.PURCHASE_BILL);
         this.exportSettingsForm.controls.reimbursableExportDate.setValidators(Validators.required);
         this.exportSettingsForm.controls.reimbursableExportDate.patchValue(this.exportSettings.expense_group_settings?.reimbursable_export_date_type ? this.exportSettings.expense_group_settings?.reimbursable_export_date_type : ExportDateType.CURRENT_DATE);
       } else {
+        this.exportSettingsForm.controls.reimbursableExpenseState.clearValidators();
         this.exportSettingsForm.controls.reimbursableExportType.clearValidators();
         this.exportSettingsForm.controls.reimbursableExportDate.clearValidators();
+        this.exportSettingsForm.controls.reimbursableExpenseState.setValue(null);
         this.exportSettingsForm.controls.reimbursableExportType.setValue(null);
         this.exportSettingsForm.controls.reimbursableExportDate.setValue(null);
       }
@@ -269,20 +268,42 @@ export class ExportSettingsComponent implements OnInit, OnDestroy {
   private getSettingsAndSetupForm(): void {
     this.isOnboarding = this.windowReference.location.pathname.includes('onboarding');
     const destinationAttributes = ['BANK_ACCOUNT', 'TAX_CODE'];
+
     forkJoin([
       this.exportSettingService.getExportSettings(),
       this.mappingService.getGroupedXeroDestinationAttributes(destinationAttributes)
     ]).subscribe(response => {
       this.exportSettings = response[0];
       this.bankAccounts = response[1].BANK_ACCOUNT;
+      this.is_simplify_report_closure_enabled = (response[0].workspace_general_settings as WorkspaceGeneralSetting)?.is_simplify_report_closure_enabled;
 
+      this.cccExpenseStateOptions = [
+        {
+          label: this.is_simplify_report_closure_enabled ? 'Approved' : 'Payment Processing',
+          value: this.is_simplify_report_closure_enabled ? CCCExpenseState.APPROVED: CCCExpenseState.PAYMENT_PROCESSING
+        },
+        {
+          label: this.is_simplify_report_closure_enabled ? 'Closed' : 'Paid',
+          value: CCCExpenseState.PAID
+        }
+      ];
+      this.reimbursableExpenseStateOptions = [
+        {
+          label: this.is_simplify_report_closure_enabled ? 'Processing' : 'Payment Processing',
+          value: ExpenseState.PAYMENT_PROCESSING
+        },
+        {
+          label: this.is_simplify_report_closure_enabled ? 'Closed' : 'Paid',
+          value: ExpenseState.PAID
+        }
+      ];
       this.setupForm();
     });
   }
 
   private setupForm(): void {
     this.exportSettingsForm = this.formBuilder.group({
-      reimbursableExpenseState: [this.exportSettings.expense_group_settings?.reimbursable_expense_state, Validators.required],
+      reimbursableExpenseState: [this.exportSettings.expense_group_settings?.reimbursable_expense_state],
       reimbursableExpense: [this.exportSettings.workspace_general_settings?.reimbursable_expenses_object ? true : false, this.exportSelectionValidator()],
       reimbursableExportType: [this.exportSettings.workspace_general_settings?.reimbursable_expenses_object ? this.exportSettings.workspace_general_settings?.reimbursable_expenses_object : ReimbursableExpensesObject.PURCHASE_BILL],
       reimbursableExportDate: [this.exportSettings.expense_group_settings?.reimbursable_export_date_type],

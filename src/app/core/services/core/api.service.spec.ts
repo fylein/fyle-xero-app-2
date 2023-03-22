@@ -37,6 +37,7 @@ describe('ApiService', () => {
       user: [27, 30],
       xero_short_code: "!Ps3bq",
       last_synced_at: new Date("2022-04-13T10:29:18.796760Z"),
+      ccc_last_synced_at: new Date("2022-04-13T10:29:18.796760Z"),
       source_synced_at: new Date("2022-04-13T10:29:18.796760Z"),
       destination_synced_at: new Date("2022-04-13T10:29:18.796760Z"),
       onboarding_state: OnboardingState.CONNECTION,
@@ -78,6 +79,7 @@ describe('ApiService', () => {
       user: [27, 30],
       xero_short_code: "!Ps3bq",
       last_synced_at: new Date("2022-04-13T10:29:18.796760Z"),
+      ccc_last_synced_at: new Date("2022-04-13T10:29:18.796760Z"),
       source_synced_at: new Date("2022-04-13T10:29:18.796760Z"),
       destination_synced_at: new Date("2022-04-13T10:29:18.796760Z"),
       onboarding_state: OnboardingState.CONNECTION,
@@ -125,7 +127,9 @@ describe('ApiService', () => {
       workspace_schedules: {
         enabled: true,
         interval_hours: 10,
-        start_datetime: new Date()
+        start_datetime: new Date(),
+        emails_selected: [],
+        additional_email_options: []
       }
     };
 
@@ -143,7 +147,9 @@ describe('ApiService', () => {
       workspace_schedules: {
         enabled: true,
         interval_hours: 10,
-        start_datetime: new Date()
+        start_datetime: new Date(),
+        emails_selected: [],
+        additional_email_options: []
       },
       workspace_id: 1
     };
@@ -172,7 +178,9 @@ describe('ApiService', () => {
       workspace_schedules: {
         enabled: true,
         interval_hours: 10,
-        start_datetime: new Date()
+        start_datetime: new Date(),
+        emails_selected: [],
+        additional_email_options: []
       }
     };
 
@@ -190,7 +198,9 @@ describe('ApiService', () => {
       workspace_schedules: {
         enabled: true,
         interval_hours: 10,
-        start_datetime: new Date()
+        start_datetime: new Date(),
+        emails_selected: [],
+        additional_email_options: []
       },
       workspace_id: 1
     };
