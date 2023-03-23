@@ -79,8 +79,8 @@
       <app-configuration-step-footer-section
         [ctaText]="!saveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING"
         [showBackButton]="isOnboarding" [isButtonDisabled]="!advancedSettingsForm.valid || saveInProgress"
-        (navigateToPreviousStep)="navigateToPreviousStep()" (save)="save()" data-cy="advanced-settings-step-footer-section"></app-configuration-step-footer-section>
-
+        (navigateToPreviousStep)="navigateToPreviousStep()" (save)="save()" data-cy="advanced-settings-step-footer-section">
+    </app-configuration-step-footer-section>
     </form>
   </div>
 </div>
