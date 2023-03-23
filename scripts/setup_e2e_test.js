@@ -6,7 +6,7 @@ readFile('./src/environments/environment.json', 'utf8', (err, data) => {
   }
   const environment = JSON.parse(data);
   const baseUrl = environment.api_url;
-  const apiUrl = `${baseUrl}/workspaces/${environment.e2e_tests.secret[0].workspace_id}/setup_e2e_test/`;
+  const apiUrl = `${baseUrl}/workspaces/${environment.e2e_tests.secret[1].workspace_id}/setup_e2e_test/`;
   let http;
   let host;
   if (apiUrl.includes('http://')) {
@@ -20,7 +20,7 @@ readFile('./src/environments/environment.json', 'utf8', (err, data) => {
   const options = {
     hostname: host,
     port: host === 'localhost' ? 8001 : 443,
-    path: `/api/workspaces/${environment.e2e_tests.secret[0].workspace_id}/setup_e2e_test/`,
+    path: `/api/workspaces/${environment.e2e_tests.secret[1].workspace_id}/setup_e2e_test/`,
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -33,7 +33,7 @@ readFile('./src/environments/environment.json', 'utf8', (err, data) => {
       console.log('Prepared workspace for e2e tests');
 
       options.path = '/api/auth/refresh/';
-      const payload = JSON.stringify({refresh_token: environment.e2e_tests.secret[0].refresh_token});
+      const payload = JSON.stringify({refresh_token: environment.e2e_tests.secret[1].refresh_token});
       options.headers['Content-Length'] = Buffer.byteLength(payload)
 
       const request = http.request(options, function(response) {
@@ -43,7 +43,7 @@ readFile('./src/environments/environment.json', 'utf8', (err, data) => {
         });
         response.on('end', () => {
           const token = JSON.parse(body);
-          environment.e2e_tests.secret[0].access_token = token.access_token;
+          environment.e2e_tests.secret[1].access_token = token.access_token;
 
           const targetPath = './src/environments/environment.json';
           writeFile(targetPath, JSON.stringify(environment), 'utf8', (err) => {
@@ -68,7 +68,7 @@ readFile('./src/environments/environment.json', 'utf8', (err, data) => {
       console.log('Prepared workspace for e2e tests');
 
       options.path = '/api/auth/refresh/';
-      const payload = JSON.stringify({refresh_token: environment.e2e_tests.secret[1].refresh_token});
+      const payload = JSON.stringify({refresh_token: environment.e2e_tests.secret[0].refresh_token});
       options.headers['Content-Length'] = Buffer.byteLength(payload)
 
       const request = http.request(options, function(response) {
@@ -78,7 +78,7 @@ readFile('./src/environments/environment.json', 'utf8', (err, data) => {
         });
         response.on('end', () => {
           const token = JSON.parse(body);
-          environment.e2e_tests.secret[1].access_token = token.access_token;
+          environment.e2e_tests.secret[0].access_token = token.access_token;
 
           const targetPath = './src/environments/environment.json';
           writeFile(targetPath, JSON.stringify(environment), 'utf8', (err) => {
