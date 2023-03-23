@@ -1,9 +1,9 @@
-<footer class="footer" [ngClass]="{'footer--smaller-page': page === 'xero_connector'}">
-  <div class="footer--content align-center sub-text-color">
-    <span>
+<footer class="footer" [ngClass]="{'footer--smaller-page': page === 'xero_connector'}" data-cy="footer">
+  <div class="footer--content align-center sub-text-color" data-cy="footer-content">
+    <span data-cy="footer-text">
       Made with ❤️ by
     </span>
-    <a class="sub-text-color footer--link-to-fyle" [href]="RedirectLink.FYLE_WEBSITE" target="_blank" rel="noopener noreferrer">
+    <a class="sub-text-color footer--link-to-fyle" [href]="RedirectLink.FYLE_WEBSITE" target="_blank" rel="noopener noreferrer" data-cy="footer-link-to-fyle">
       Fyle
     </a>
   </div>
