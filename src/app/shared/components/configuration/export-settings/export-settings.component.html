@@ -1,17 +1,18 @@
-<div fxLayout="row" fxLayoutAlign="center center" class="configuration--section" [ngClass]="[isOnboarding ? 'configuration--onboarding-section' : '', !isOnboarding ? 'configuration--post-onboarding-section': '']">
-  <app-loader [ngClass]="{'loader-main': !isOnboarding}" [phase]="'pre_onboarding'" *ngIf="isLoading"></app-loader>
-  <div *ngIf="!isLoading" class="configuration--contents">
-    <app-configuration-step-header-section [showSyncButton]="isOnboarding" [phase]="isOnboarding ? ProgressPhase.ONBOARDING : ProgressPhase.POST_ONBOARDING"></app-configuration-step-header-section>
-    <form [formGroup]="exportSettingsForm">
+<div fxLayout="row" fxLayoutAlign="center center" class="configuration--section" [ngClass]="[isOnboarding ? 'configuration--onboarding-section' : '', !isOnboarding ? 'configuration--post-onboarding-section': '']" data-cy="configuration-section">
+  <app-loader [ngClass]="{'loader-main': !isOnboarding}" [phase]="'pre_onboarding'" *ngIf="isLoading" data-cy="configuration-loader"></app-loader>
+  <div *ngIf="!isLoading" class="configuration--contents" data-cy="configuration-contents">
+    <app-configuration-step-header-section [showSyncButton]="isOnboarding" [phase]="isOnboarding ? ProgressPhase.ONBOARDING : ProgressPhase.POST_ONBOARDING" data-cy="configuration-step-header-section"></app-configuration-step-header-section>
+    <form [formGroup]="exportSettingsForm" data-cy="configuration-export-settings-form">
       <app-configuration-toggle-field
         [form]="exportSettingsForm"
         [label]="'Export Reimbursable Expenses'"
         [subLabel]="'Enable this to export the reimbursable expenses from Fyle. If not enabled, any <span class=bold>out-of-pocket</span> expenses will not be exported to Xero.'"
         [formControllerName]="'reimbursableExpense'"
+        data-cy="configuration-reimbursable-expense-toggle"
       >
       </app-configuration-toggle-field>
 
-      <div *ngIf="exportSettingsForm.value.reimbursableExpense">
+      <div *ngIf="exportSettingsForm.value.reimbursableExpense" data-cy="reimbursable-expense-options">
         
         <app-configuration-select-field
           [form]="exportSettingsForm"
@@ -22,6 +23,7 @@
           [placeholder]="'Select auto map employee type'"
           [formControllerName]="'autoMapEmployees'"
           [phase]="isOnboarding ? ProgressPhase.ONBOARDING : ProgressPhase.POST_ONBOARDING"
+          data-cy="configuration-employee-match-select"
           >
         </app-configuration-select-field>
         
@@ -32,6 +34,7 @@
           [exportType] = "ReimbursableExpensesObject.PURCHASE_BILL"
           [formControllerName]="'reimbursableExportType'"
           [phase]="isOnboarding ? ProgressPhase.ONBOARDING : ProgressPhase.POST_ONBOARDING"
+          data-cy="configuration-reimbursable-expense-type-select"
           >
         </app-configuration-select-field>
 
