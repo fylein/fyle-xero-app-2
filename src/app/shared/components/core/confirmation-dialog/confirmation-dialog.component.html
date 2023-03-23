@@ -25,7 +25,7 @@
       <h5 class="confirmation-dialog--cancel-btn-text align-center">Cancel</h5>
     </div>
 
-    <div fxLayout="row" fxLayoutAlign="space-between center" class="configuration--submit-btn pointer btn-enabled" (click)="this.dialogRef.close(true)">
+    <div fxLayout="row" fxLayoutAlign="space-between center" class="configuration--submit-btn pointer btn-enabled" (click)="this.dialogRef.close(true)" data-cy="submit-button">
       <h5 class="btn-cta-text-without-icon single-line-text">
         {{ data.primaryCtaText }}
       </h5>

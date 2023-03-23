@@ -24,7 +24,7 @@
       </div>
     </div>
     <div fxLayout="row" #menu>
-      <div (click)="showOrHideProfileDropdown()" class="navbar--avatar-section pointer">
+      <div (click)="showOrHideProfileDropdown()" class="navbar--avatar-section pointer" data-cy="avatar">
         <p class="navbar--avatar-text align-center">
           {{user.full_name[0]}}
         </p>
