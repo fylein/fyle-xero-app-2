@@ -1,30 +1,30 @@
-<form *ngIf="totalPageCount !== 0" [formGroup]="form" fxLayout="row" fxLayoutAlign="space-between center">
-  <h5 class="paginator--page-info">Page {{ ((offset - 1) / limit) + 1 | number: '1.0-0' }} of {{ totalPageCount | number: '1.0-0' }}</h5>
-  <div fxLayout="row">
-    <div fxLayout="row" class="paginator--page-size-section">
-      <h5 class="paginator--page-size-text">
+<form *ngIf="totalPageCount !== 0" [formGroup]="form" fxLayout="row" fxLayoutAlign="space-between center" data-cy="paginator-form">
+  <h5 class="paginator--page-info" data-cy="paginator-page-info">Page {{ ((offset - 1) / limit) + 1 | number: '1.0-0' }} of {{ totalPageCount | number: '1.0-0' }}</h5>
+  <div fxLayout="row" data-cy="paginator-controls">
+    <div fxLayout="row" class="paginator--page-size-section" data-cy="paginator-page-size-section">
+      <h5 class="paginator--page-size-text" data-cy="paginator-page-size-text">
         Show
       </h5>
-      <mat-form-field floatLabel="always" appearance="outline" class="paginator--page-size-input-field">
-        <mat-select formControlName="pageLimit">
-          <mat-option *ngFor="let number of [25, 50, 100, 200, 500]" [value]="number">
+      <mat-form-field floatLabel="always" appearance="outline" class="paginator--page-size-input-field" data-cy="paginator-page-size-input-field">
+        <mat-select formControlName="pageLimit" data-cy="paginator-page-limit">
+          <mat-option *ngFor="let number of [25, 50, 100, 200, 500]" [value]="number" data-cy="paginator-page-limit-option">
             {{ number }}
           </mat-option>
         </mat-select>
-        <div class="mat-select-arrow-closed"></div>
+        <div class="mat-select-arrow-closed" data-cy="paginator-select-arrow-closed"></div>
       </mat-form-field>
     </div>
-    <div fxLayout="row" class="paginator--page-number-section">
-      <h5 class="paginator--page-text">Page</h5>
-      <div fxLayout="row" class="paginator--page-shift-section">
-        <div (click)="onPageChangeHandler('BACKWARD')" class="paginator--page-action-box">
-          <img class="paginator--page-navigation-icon pointer" src='{{ "assets/images/svgs/actions/arrow-left"+ (form.value.page <= 1 ? "-disabled" : "") +".svg" }}' />
+    <div fxLayout="row" class="paginator--page-number-section" data-cy="paginator-page-number-section">
+      <h5 class="paginator--page-text" data-cy="paginator-page-text">Page</h5>
+      <div fxLayout="row" class="paginator--page-shift-section" data-cy="paginator-page-shift-section">
+        <div (click)="onPageChangeHandler('BACKWARD')" class="paginator--page-action-box" data-cy="paginator-backward-button">
+          <img class="paginator--page-navigation-icon pointer" src='{{ "assets/images/svgs/actions/arrow-left"+ (form.value.page <= 1 ? "-disabled" : "") +".svg" }}' data-cy="paginator-backward-icon" />
         </div>
-        <div class="paginator--page-action-box">
-          <input (input)="onPageChangeHandler('CHANGE')" formControlName="page" class="paginator--page-number-input" />
+        <div class="paginator--page-action-box" data-cy="paginator-page-input-box">
+          <input (input)="onPageChangeHandler('CHANGE')" formControlName="page" class="paginator--page-number-input" data-cy="paginator-page-number-input" />
         </div>
-        <div (click)="onPageChangeHandler('FORWARD')" class="paginator--page-action-box">
-          <img class="paginator--page-navigation-icon pointer" src='{{ "assets/images/svgs/actions/arrow-right"+ (form.value.page >= totalPageCount ? "-disabled" : "") +".svg" }}' />
+        <div (click)="onPageChangeHandler('FORWARD')" class="paginator--page-action-box" data-cy="paginator-forward-button">
+          <img class="paginator--page-navigation-icon pointer" src='{{ "assets/images/svgs/actions/arrow-right"+ (form.value.page >= totalPageCount ? "-disabled" : "") +".svg" }}' data-cy="paginator-forward-icon" />
         </div>
       </div>
     </div>
