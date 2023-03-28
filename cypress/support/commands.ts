@@ -37,12 +37,12 @@ Cypress.Commands.add('getElement', (attributeName: string) => {
 Cypress.Commands.add('microActionLogin', () => {
   const user = {
     email: 'admin1@fyleforfylexero.in',
-    refresh_token:environment.e2e_tests.secret[0].refresh_token,
+    refresh_token: environment.e2e_tests.secret[0].refresh_token,
     expires_in: 3600,
     full_name: "Anish",
     user_id: "xyz",
     org_id: environment.e2e_tests.secret[0].org_id,
-    env:environment.e2e_tests.env,
+    env: environment.e2e_tests.env,
     org_name: "XYZ Org"
   };
   window.localStorage.setItem('user', JSON.stringify(user))
@@ -60,9 +60,9 @@ Cypress.Commands.add('journeyLogin', () => {
     env:environment.e2e_tests.env,
     org_name: "XYZ Org"
   };
-  window.localStorage.setItem('user', JSON.stringify(user))
-  window.localStorage.setItem('workspaceId', JSON.stringify(environment.e2e_tests.secret[1].workspace_id))
-  window.localStorage.setItem('access_token', JSON.stringify(user.access_token))
-  window.localStorage.setItem('refresh_token', JSON.stringify(user.refresh_token))
+  window.localStorage.setItem('user', JSON.stringify(user));
+  window.localStorage.setItem('workspaceId', JSON.stringify(environment.e2e_tests.secret[1].workspace_id));
+  window.localStorage.setItem('access_token', JSON.stringify(user.access_token));
+  window.localStorage.setItem('refresh_token', JSON.stringify(user.refresh_token));
   cy.setupHttpListeners();
-})
+});
