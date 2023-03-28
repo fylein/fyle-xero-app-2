@@ -1,12 +1,12 @@
 /// <reference types="cypress" />
 
-describe('employee mapping', () => {
+describe('Onboarding journey', () => {
     beforeEach(() => {
       cy.journeyLogin()
       cy.visit('/')
     })
 
-    function xeroConnectorPage() {
+    function assertXeroConnector() {
         cy.assertText('connect-to-xero-tenant-text', 'Connect to Xero Tenant');
         cy.assertText('header-sub-text', 'Connect to the Xero Tenant from which you would like to import and export data. The Fyle org and Xero Tenant cannot be changed once the configuration steps are complete.');
         cy.getElement('disconnect-image');
@@ -19,7 +19,7 @@ describe('employee mapping', () => {
         cy.getElement('save-and-continue-btn').click();
     }
 
-    function exportSettingsPage() {
+    function assertExportSettings() {
       cy.url().should('include', '/workspaces/onboarding/export_settings');
       cy.assertText('connect-to-xero-tenant-text', 'Export Settings');
       cy.assertText('header-sub-text', 'In this section, you will configure how and when expenses from Fyle can be exported to Xero.');
@@ -51,7 +51,7 @@ describe('employee mapping', () => {
       cy.getElement('save-and-continue-btn').click();
     }
 
-    function importSettingsPage() {
+    function assertImportSettings() {
       cy.url().should('include', '/workspaces/onboarding/import_settings')
       cy.assertText('connect-to-xero-tenant-text', 'Import Settings');
       cy.assertText('header-sub-text', 'You can Enable all the data that you wish to import from Xero. All the imported data from Xero would be available in Fyle under Admin Setting > Organization.');
@@ -61,19 +61,19 @@ describe('employee mapping', () => {
       cy.getElement('save-and-continue-btn').click();
     }
 
-    function advancedSettingsPage() {
+    function assertAdvancedSettings() {
       cy.url().should('include', '/workspaces/onboarding/advanced_settings')
       cy.assertText('connect-to-xero-tenant-text', 'Advanced Settings');
       cy.getElement('save-and-continue-btn').click();
     }
 
-    function onboardingComplete() {
+    function assertOnboardingComplete() {
       cy.url().should('include', '/workspaces/onboarding/done')
       cy.assertText('completion-prompt','Congratulations! Your integration setup is now complete.');
       cy.getElement('launch-cta').click();
     }
 
-    function dashboard() {
+    function assertDashboard() {
       cy.url().should('include', '/workspaces/main/dashboard')
       cy.assertText('export-prompt', 'Click on Export to start exporting expenses from Fyle as Xero transactions.');
       cy.getElement('export-btn').click();
@@ -96,12 +96,12 @@ describe('employee mapping', () => {
     }
 
     it('in xero-app : journey', () => {
-      xeroConnectorPage();
-      exportSettingsPage();
-      importSettingsPage();
-      advancedSettingsPage();
-      onboardingComplete();
-      dashboard();
+      assertXeroConnector();
+      assertExportSettings();
+      assertImportSettings();
+      assertAdvancedSettings();
+      assertOnboardingComplete();
+      assertDashboard();
     })
   })
   
