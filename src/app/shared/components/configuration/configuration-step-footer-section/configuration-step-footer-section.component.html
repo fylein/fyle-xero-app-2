@@ -8,7 +8,7 @@
     </div>
   </div>
 
-  <div fxLayout="row" fxLayoutAlign="space-between center" class="configuration--submit-btn pointer" [ngClass]="isButtonDisabled ? 'btn-disabled' : 'btn-enabled'" (click)="saveChanges()">
+  <div fxLayout="row" fxLayoutAlign="space-between center" class="configuration--submit-btn pointer" [ngClass]="isButtonDisabled ? 'btn-disabled' : 'btn-enabled'" (click)="saveChanges()" data-cy="save-and-continue-btn">
     <h5 class="single-line-text" [ngClass]="ctaText === 'Save' ? 'btn-cta-text-without-icon' : 'btn-cta-text-with-icon'">
       {{ ctaText }}
     </h5>

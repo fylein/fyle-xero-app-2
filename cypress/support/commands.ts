@@ -54,7 +54,6 @@ Cypress.Commands.add('journeyLogin', () => {
     email: 'admin1@fyleforfyleXeroJourney.com',
     refresh_token: environment.e2e_tests.secret[1].refresh_token,
     access_token: environment.e2e_tests.secret[1].access_token,
-    expires_in: 3600,
     full_name: "Anish",
     user_id: "xyz",
     org_id: environment.e2e_tests.secret[1].org_id,

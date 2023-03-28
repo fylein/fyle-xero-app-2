@@ -15,7 +15,7 @@
     <div *ngIf="exportType" class="configuration--form-field">
       <p class="configuration-select-field--export-type">{{exportType | titlecase}}</p>
     </div>
-    <mat-form-field *ngIf="!exportType" floatLabel="always" appearance="outline" class="configuration--form-field">
+    <mat-form-field *ngIf="!exportType" floatLabel="always" appearance="outline" class="configuration--form-field" data-cy="select-field">
       <mat-select [placeholder]="placeholder" [formControlName]="formControllerName" [compareWith]="helperService.compareObjects">
         <mat-option *ngFor="let option of options" [value]="option.value">
           {{ option.label }}
