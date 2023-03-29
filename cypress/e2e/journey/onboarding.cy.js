@@ -14,12 +14,14 @@ describe('Onboarding journey', () => {
         cy.assertText('switch-org-text', 'Switch Organization');
         cy.assertText('xero-tenant-text', 'XERO TENANT');
         cy.assertText('select-tenant-to-proceed-text', 'You will need to select a tenant to proceed with the onboarding.');
+        cy.wait('@getTenants').its('response.statusCode').should('equal', 200)
         cy.getElement('select-tenant-form-field').click();
         cy.getElement('fyle-tenant-option').click();
         cy.getElement('save-and-continue-btn').click();
     }
 
     function assertExportSettings() {
+      cy.wait('@getExportSettings').its('response.statusCode').should('equal', 200)
       cy.url().should('include', '/workspaces/onboarding/export_settings');
       cy.assertText('connect-to-xero-tenant-text', 'Export Settings');
       cy.assertText('header-sub-text', 'In this section, you will configure how and when expenses from Fyle can be exported to Xero.');
@@ -52,6 +54,7 @@ describe('Onboarding journey', () => {
     }
 
     function assertImportSettings() {
+      cy.wait('@getImportSettings').its('response.statusCode').should('equal', 200)
       cy.url().should('include', '/workspaces/onboarding/import_settings')
       cy.assertText('connect-to-xero-tenant-text', 'Import Settings');
       cy.assertText('header-sub-text', 'You can Enable all the data that you wish to import from Xero. All the imported data from Xero would be available in Fyle under Admin Setting > Organization.');
@@ -62,6 +65,7 @@ describe('Onboarding journey', () => {
     }
 
     function assertAdvancedSettings() {
+      cy.wait('@getAdvancedSettings').its('response.statusCode').should('equal', 200)
       cy.url().should('include', '/workspaces/onboarding/advanced_settings')
       cy.assertText('connect-to-xero-tenant-text', 'Advanced Settings');
       cy.getElement('save-and-continue-btn').click();
@@ -77,22 +81,63 @@ describe('Onboarding journey', () => {
       cy.url().should('include', '/workspaces/main/dashboard')
       cy.assertText('export-prompt', 'Click on Export to start exporting expenses from Fyle as Xero transactions.');
       cy.getElement('export-btn').click();
-      cy.get('.past-export--view-expense').then(($failedExports) => {
-        const failedExportsCount = parseInt($failedExports.text().trim());
-  
-        if (failedExportsCount > 0) {
-          cy.get('.errors--mapping-error-contents:contains("Category Mapping errors") .errors--resolve-btn').click();
-        }
-      });
+      cy.get('.errors--mapping-error-contents:contains("Category Mapping errors") .errors--resolve-btn').click();
       cy.getElement('resolve-form-field').eq(0).click();
       cy.get('.mat-select-panel input').type('Office Expenses');
       cy.get('.mat-select-panel .mat-option-text').contains('Office Expenses').click()
       cy.getElement('resolve-form-field').eq(1).click();
-      cy.get('.mat-select-panel input').type('Cost of Goods Sold');
-      cy.get('.mat-select-panel .mat-option-text').contains('Cost of Goods Sold').click()
+      cy.get('.mat-select-panel input').type('Wages Payable');
+      cy.get('.mat-select-panel .mat-option-text').contains('Wages Payable').click()
       cy.getElement('resolve-form-field').eq(2).click();
       cy.get('.mat-select-panel input').type('General Expenses');
       cy.get('.mat-select-panel .mat-option-text').contains('General Expenses').click()
+      cy.getElement('close-resolve-dialog').click();
+      cy.getElement('export-btn').click();
+      cy.wait(1000)
+      cy.wait('@tasksPolling').its('response.statusCode').should('equal', 200)
+      cy.wait('@tasksPolling').its('response.statusCode').should('equal', 200)
+      cy.wait('@tasksPolling').its('response.statusCode').should('equal', 200)
+      cy.wait('@tasksPolling').its('response.statusCode').should('equal', 200)
+      cy.wait('@tasksPolling').its('response.statusCode').should('equal', 200)
+      cy.get('.past-export--view-expense').then(($failedExports) => {
+        const failedExportsCount = parseInt($failedExports.text().trim());
+        if (failedExportsCount > 0) {
+          cy.wait('@tasksPolling').its('response.statusCode').should('equal', 200)
+          cy.wait('@tasksPolling').its('response.statusCode').should('equal', 200)
+          cy.wait('@tasksPolling').its('response.statusCode').should('equal', 200)
+          cy.wait('@tasksPolling').its('response.statusCode').should('equal', 200)
+          cy.wait('@tasksPolling').its('response.statusCode').should('equal', 200)
+          cy.wait('@tasksPolling').its('response.statusCode').should('equal', 200)
+          cy.assertText('xero-error-text','Xero Errors');
+          cy.assertText('xero-error-sub-text','Resolve these errors on your Xero Account before trying to re-export them again.');
+          cy.getElement('side-nav-bar-click').contains('Mappings').click()
+          cy.getElement('employee-mapping-text').contains('Category Mapping').click()
+          cy.getElement('search-element').type('Food'); 
+          cy.getElement('mapping-field-option').eq(0).click();
+          cy.get('.mat-select-panel input').type('Cost of Goods Sold');
+          cy.get('.mat-select-panel .mat-option-text').contains('Cost of Goods Sold').click()
+          cy.getElement('clear-icon-svg').click()
+          cy.getElement('search-element').type('Office Supplies'); 
+          cy.getElement('mapping-field-option').eq(0).click();
+          cy.get('.mat-select-panel input').type('Office Expenses');
+          cy.get('.mat-select-panel .mat-option-text').contains('Office Expenses').click()
+          cy.getElement('clear-icon-svg').click()
+          cy.getElement('search-element').type('Others'); 
+          cy.getElement('mapping-field-option').eq(0).click();
+          cy.get('.mat-select-panel input').type('General Expenses');
+          cy.get('.mat-select-panel .mat-option-text').contains('General Expenses').click()
+          cy.getElement('side-nav-bar-click').contains('Dashboard').click()
+          cy.getElement('export-btn').click();
+          cy.wait(500)
+          cy.wait('@tasksPolling').its('response.statusCode').should('equal', 200)
+        }
+      });
+      cy.wait(500)
+      cy.wait('@tasksPolling')
+      cy.wait('@exportDetail')
+      cy.wait('@syncExpenseGroups').its('response.statusCode').should('equal', 200)
+      cy.assertText('successful-export', 'Congratulations, you are winning!');
+      cy.assertText('successful-export-prompt', 'You exports did not face any error. If they do, you can resolve them right here and re-export successfully.');
     }
 
     it('in xero-app : journey', () => {

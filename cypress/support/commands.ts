@@ -10,6 +10,7 @@ declare global {
       getElement(attributeName: string): Cypress.Chainable<JQuery<HTMLElement>>;
       assertText(attributeName: string, text: string): void;
       setupHttpListeners(): void;
+      waitForExportDetail(): void;
     }
   }
 }
@@ -20,10 +21,17 @@ function setupInterceptor(method: 'GET' | 'POST', url: string, alias: string) {
     url: `**${url}**`,
   }).as(alias);
 }
-
+// /api/workspaces/25/tasks/all
 Cypress.Commands.add('setupHttpListeners', () => {
   // This helps cypress to wait for the http requests to complete with 200, regardless of the defaultCommandTimeout (10s)
-  setupInterceptor('GET', '/api/partner/orgs/', 'OrgDetails');
+  setupInterceptor('GET', '/tasks/all/', 'tasksPolling');
+  setupInterceptor('GET', '/export_settings', 'getExportSettings');
+  setupInterceptor('GET', '/tenants', 'getTenants');
+  setupInterceptor('GET', '/import_settings', 'getImportSettings');
+  setupInterceptor('GET', '/advanced_settings', 'getAdvancedSettings');
+  setupInterceptor('GET', '/export_detail', 'exportDetail');
+  setupInterceptor('POST', '/fyle/expense_groups/sync', 'syncExpenseGroups');
+
 });
 
 Cypress.Commands.add('assertText', (attributeName: string, text: string) => {

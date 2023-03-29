@@ -204,9 +204,9 @@
         </div>
 
         <div *ngIf="errors?.XERO_ERROR?.length" class="errors--integration-error-section">
-          <div class="errors--integration-error-contents">
+          <div class="errors--integration-error-contents" data-cy="xero-error-text">
             <p>Xero Errors</p>
-            <h5 class="errors--integration-error-sub-header sub-text-color">Resolve these errors on your Xero Account before trying to re-export them again.</h5>
+            <h5 class="errors--integration-error-sub-header sub-text-color" data-cy="xero-error-sub-text">Resolve these errors on your Xero Account before trying to re-export them again.</h5>
           </div>
         </div>
 

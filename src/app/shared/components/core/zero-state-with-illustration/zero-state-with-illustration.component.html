@@ -26,13 +26,13 @@
   <img *ngIf="page === 'dashboard_error'" class="zero-state-with-illustration--zero-state-img" src="assets/images/pngs/zero-state/dashboard-error-zero-state.svg" width="48px" height="48px">
   <div class="zero-state-with-illustration--info-section align-center">
     <h4 *ngIf="page === 'dashboard'">Curious on how exports work in Fyle-Xero integrations?</h4>
-    <h4 *ngIf="page === 'dashboard_error'">Congratulations, you are winning!</h4>
+    <h4 *ngIf="page === 'dashboard_error'" data-cy="successful-export">Congratulations, you are winning!</h4>
 
     <h4 *ngIf="page === 'dashboard'" class="zero-state-with-illustration--sub-info-section sub-text-color">
       Learn more here
       <img *ngIf="page === 'dashboard'" class="pointer" src="assets/images/svgs/actions/open-in-new-tab-dashboard.svg" height="12px" width="12px" (click)="helperService.openExternalLink(RedirectLink.EXPORT)"/>
     </h4>
-    <h5 *ngIf="page === 'dashboard_error'" class="zero-state-with-illustration--sub-info-section sub-text-color" [ngClass]="{'zero-state-with-illustration--sub-info-section-error': page === 'dashboard_error'}">
+    <h5 *ngIf="page === 'dashboard_error'" class="zero-state-with-illustration--sub-info-section sub-text-color" [ngClass]="{'zero-state-with-illustration--sub-info-section-error': page === 'dashboard_error'}" data-cy="successful-export-prompt">
       You exports did not face any error. If they do, you can resolve them right here and re-export successfully.
     </h5>
 
