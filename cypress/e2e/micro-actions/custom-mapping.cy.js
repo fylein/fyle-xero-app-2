@@ -2,7 +2,7 @@
 
 describe('Cost Center Mapping', () => {
     beforeEach(() => {
-      cy.journeyLogin()
+      cy.microActionLogin()
       cy.visit('/')
     })
   
