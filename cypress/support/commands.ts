@@ -6,6 +6,7 @@ declare global {
   namespace Cypress {
     interface Chainable {
       microActionLogin(): void;
+      selectMatOption(optionName: string): void;
       getElement(attributeName: string): Cypress.Chainable<JQuery<HTMLElement>>;
       assertText(attributeName: string, text: string): void;
       setupHttpListeners(): void;
@@ -23,6 +24,10 @@ function setupInterceptor(method: 'GET' | 'POST', url: string, alias: string) {
 Cypress.Commands.add('setupHttpListeners', () => {
   // This helps cypress to wait for the http requests to complete with 200, regardless of the defaultCommandTimeout (10s)
   setupInterceptor('GET', '/api/partner/orgs/', 'OrgDetails');
+});
+
+Cypress.Commands.add('selectMatOption', (optionName) => {
+  cy.get('mat-option').contains(optionName).click();
 });
 
 Cypress.Commands.add('assertText', (attributeName: string, text: string) => {
