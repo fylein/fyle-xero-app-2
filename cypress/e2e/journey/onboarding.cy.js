@@ -81,6 +81,8 @@ describe('Onboarding journey', () => {
       cy.url().should('include', '/workspaces/main/dashboard')
       cy.assertText('export-prompt', 'Click on Export to start exporting expenses from Fyle as Xero transactions.');
       cy.getElement('export-btn').click();
+      cy.wait('@tasksPolling').its('response.statusCode').should('equal', 200)
+      cy.wait('@tasksPolling').its('response.statusCode').should('equal', 200)
       cy.get('.errors--mapping-error-contents:contains("Category Mapping errors") .errors--resolve-btn').click();
       cy.getElement('resolve-form-field').eq(0).click();
       cy.get('.mat-select-panel input').type('Office Expenses');
@@ -102,8 +104,6 @@ describe('Onboarding journey', () => {
       cy.get('.past-export--view-expense').then(($failedExports) => {
         const failedExportsCount = parseInt($failedExports.text().trim());
         if (failedExportsCount > 0) {
-          cy.wait('@tasksPolling').its('response.statusCode').should('equal', 200)
-          cy.wait('@tasksPolling').its('response.statusCode').should('equal', 200)
           cy.wait('@tasksPolling').its('response.statusCode').should('equal', 200)
           cy.wait('@tasksPolling').its('response.statusCode').should('equal', 200)
           cy.wait('@tasksPolling').its('response.statusCode').should('equal', 200)
