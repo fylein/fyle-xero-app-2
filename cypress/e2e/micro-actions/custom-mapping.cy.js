@@ -17,7 +17,6 @@ describe('Cost Center Mapping', () => {
       cy.getElement('save-btn').contains('Save').click()
       cy.getElement('side-nav-bar-click').contains('Configuration').click()
       cy.getElement('side-nav-bar-click').contains('Mappings').click()
-      cy.wait('@exportDetail')
       cy.wait(1000)
       cy.getElement('employee-mapping-text').eq(2).click()
       cy.get('.mapping-header-section--card').contains('Unmapped Cost centers')
