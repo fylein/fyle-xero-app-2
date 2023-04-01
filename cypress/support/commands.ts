@@ -6,6 +6,7 @@ declare global {
   namespace Cypress {
     interface Chainable {
       microActionLogin(): void;
+      journeyLogin(): void;
       selectMatOption(optionName: string): void;
       getElement(attributeName: string): Cypress.Chainable<JQuery<HTMLElement>>;
       assertText(attributeName: string, text: string): void;
@@ -52,3 +53,21 @@ Cypress.Commands.add('microActionLogin', () => {
   window.localStorage.setItem('user', JSON.stringify(user))
   cy.setupHttpListeners();
 })
+
+Cypress.Commands.add('journeyLogin', () => {
+  const user = {
+    email: 'admin1@fyleforfyleXeroJourney.com',
+    refresh_token: environment.e2e_tests.secret[1].refresh_token,
+    access_token: environment.e2e_tests.secret[1].access_token,
+    full_name: "Anish",
+    user_id: "xyz",
+    org_id: environment.e2e_tests.secret[1].org_id,
+    env:environment.e2e_tests.env,
+    org_name: "XYZ Org"
+  };
+  window.localStorage.setItem('user', JSON.stringify(user));
+  window.localStorage.setItem('workspaceId', JSON.stringify(environment.e2e_tests.secret[1].workspace_id));
+  window.localStorage.setItem('access_token', JSON.stringify(user.access_token));
+  window.localStorage.setItem('refresh_token', JSON.stringify(user.refresh_token));
+  cy.setupHttpListeners();
+});
