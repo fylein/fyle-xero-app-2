@@ -23,7 +23,7 @@ function setupInterceptor(method: 'GET' | 'POST', url: string, alias: string) {
     url: `**${url}**`,
   }).as(alias);
 }
-// /api/workspaces/25/tasks/all
+
 Cypress.Commands.add('setupHttpListeners', () => {
   // This helps cypress to wait for the http requests to complete with 200, regardless of the defaultCommandTimeout (10s)
   setupInterceptor('GET', '/tasks/all/', 'tasksPolling');
