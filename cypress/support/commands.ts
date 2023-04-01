@@ -47,7 +47,7 @@ Cypress.Commands.add('microActionLogin', () => {
     full_name: "Anish",
     user_id: "xyz",
     org_id: environment.e2e_tests.secret[0].org_id,
-    env:environment.e2e_tests.env,
+    env: environment.e2e_tests.env,
     org_name: "XYZ Org"
   };
   window.localStorage.setItem('user', JSON.stringify(user))
