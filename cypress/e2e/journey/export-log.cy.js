@@ -1,6 +1,6 @@
 /// <reference types="cypress" />
 
-describe('Onboarding journey', () => {
+describe('Export Log', () => {
     beforeEach(() => {
       cy.journeyLogin()
       cy.visit('/')
