@@ -45,7 +45,7 @@
           <div *ngFor="let expenseField of expenseFields.controls; let i = index" [formGroupName]="i">
             <div class="import-settings--field-toggle-section">
               <div fxLayout="row" fxLayoutAlign="space-between center">
-                <div class="import-settings--field-label-section import-settings--import-area">
+                <div class="import-settings--field-label-section import-settings--import-area" data-cy="import-prompt">
                   Import {{ expenseField.value.destination_field | titlecase }} from Xero
                   <h5 class="configuration--field-label sub-text-color">
                     The imported {{ expenseField.value.destination_field | titlecase }} from Xero will be a selectable
@@ -54,7 +54,7 @@
                 </div>
                 <div class="configuration--input-toggle-section">
                   <mat-slide-toggle class="configuration--toggle-form-field" color="accent"
-                    [disabled]="expenseField.value.disable_import_to_fyle" formControlName="import_to_fyle">
+                    [disabled]="expenseField.value.disable_import_to_fyle" formControlName="import_to_fyle" data-cy="toggle-form-field">
                   </mat-slide-toggle>
                 </div>
               </div>
@@ -62,15 +62,15 @@
                 <div fxLayout="row">
                   <div fxLayout="row" class="import-settings--mapping-xero-fyle-section">
                     <div class="import-settings--xero-field">
-                      <h5 class="import-settings--xero-field-text single-line-text">
+                      <h5 class="import-settings--xero-field-text single-line-text" data-cy="form-field-text">
                         {{ expenseField.value.destination_field | titlecase }} in Xero
                       </h5>
                     </div>
                     <div class="import-settings--fields-separator"></div>
                     <div>
                       <mat-form-field floatLabel="always" appearance="outline" class="import-settings--fyle-field">
-                        <mat-select placeholder="Select a field from Fyle" formControlName="source_field">
-                          <mat-option *ngFor="let fyleExpenseField of fyleExpenseFields" [value]="fyleExpenseField">
+                        <mat-select placeholder="Select a field from Fyle" formControlName="source_field" data-cy="select-field">
+                          <mat-option *ngFor="let fyleExpenseField of fyleExpenseFields" [value]="fyleExpenseField" data-cy="select-option">
                             {{ fyleExpenseField.split('_').join(' ') | titlecase }}
                             <img *ngIf="fyleExpenseField === expenseField.value.source_field"
                               src="assets/images/svgs/general/tick-pink.svg" class="selected-value-check-mark">
@@ -157,7 +157,7 @@
       <app-configuration-step-footer-section
         [ctaText]="!saveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING"
         [showBackButton]="isOnboarding" [isButtonDisabled]="!importSettingsForm.valid || saveInProgress"
-        (navigateToPreviousStep)="navigateToPreviousStep()" (save)="save()"></app-configuration-step-footer-section>
+        (navigateToPreviousStep)="navigateToPreviousStep()" (save)="save()" data-cy="save-btn"></app-configuration-step-footer-section>
     </div>
   </div>
   <app-onboarding-footer *ngIf="isOnboarding && !isLoading"></app-onboarding-footer>

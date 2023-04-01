@@ -21,7 +21,7 @@
             <mat-select placeholder="Select date range" formControlName="dateRange">
               <mat-select-trigger *ngIf="selectedDateFilter" class="export-log--selected-date">
                 {{ selectedDateFilter.startDate | date: 'MMM dd, yyyy' }} - {{ selectedDateFilter.endDate | date: 'MMM dd, yyyy' }}
-                <img src="assets/images/svgs/actions/clear-date-filter.svg" (click)="clearDateFilter()" class="export-log--clear-date-filter" width="12px" height="12px">
+                <img src="assets/images/svgs/actions/clear-date-filter.svg" (click)="clearDateFilter()" class="export-log--clear-date-filter" width="12px" height="12px" data-cy="clear-date-filter">
               </mat-select-trigger>
               <mat-option class="export-log--date-select-option" *ngFor="let dateOption of dateOptions" [value]="dateOption">
                 <div>

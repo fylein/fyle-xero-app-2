@@ -7,6 +7,8 @@ declare global {
     interface Chainable {
       journeyLogin(): void;
       microActionLogin(): void;
+      journeyLogin(): void;
+      selectMatOption(optionName: string): void;
       getElement(attributeName: string): Cypress.Chainable<JQuery<HTMLElement>>;
       assertText(attributeName: string, text: string): void;
       setupHttpListeners(): void;
@@ -34,6 +36,10 @@ Cypress.Commands.add('setupHttpListeners', () => {
 
 });
 
+Cypress.Commands.add('selectMatOption', (optionName) => {
+  cy.get('mat-option').contains(optionName).click();
+});
+
 Cypress.Commands.add('assertText', (attributeName: string, text: string) => {
   cy.getElement(attributeName).should('include.text', text)
 })
@@ -50,9 +56,27 @@ Cypress.Commands.add('microActionLogin', () => {
     full_name: "Anish",
     user_id: "xyz",
     org_id: environment.e2e_tests.secret[0].org_id,
-    env:environment.e2e_tests.env,
+    env: environment.e2e_tests.env,
     org_name: "XYZ Org"
   };
   window.localStorage.setItem('user', JSON.stringify(user))
   cy.setupHttpListeners();
 })
+
+Cypress.Commands.add('journeyLogin', () => {
+  const user = {
+    email: 'admin1@fyleforfyleXeroJourney.com',
+    refresh_token: environment.e2e_tests.secret[1].refresh_token,
+    access_token: environment.e2e_tests.secret[1].access_token,
+    full_name: "Anish",
+    user_id: "xyz",
+    org_id: environment.e2e_tests.secret[1].org_id,
+    env:environment.e2e_tests.env,
+    org_name: "XYZ Org"
+  };
+  window.localStorage.setItem('user', JSON.stringify(user));
+  window.localStorage.setItem('workspaceId', JSON.stringify(environment.e2e_tests.secret[1].workspace_id));
+  window.localStorage.setItem('access_token', JSON.stringify(user.access_token));
+  window.localStorage.setItem('refresh_token', JSON.stringify(user.refresh_token));
+  cy.setupHttpListeners();
+});
