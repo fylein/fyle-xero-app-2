@@ -22,6 +22,7 @@ import { OnboardingComponent } from './onboarding.component';
 import { OnboardingLandingComponent } from './onboarding-landing/onboarding-landing.component';
 import { OnboardingXeroConnectorComponent } from './onboarding-xero-connector/onboarding-xero-connector.component';
 import { OnboardingRoutingModule } from './onboarding-routing.module';
+import { CloneSettingsComponent } from './clone-settings/clone-settings.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { OnboardingRoutingModule } from './onboarding-routing.module';
     OnboardingDoneComponent,
     OnboardingComponent,
     OnboardingLandingComponent,
-    OnboardingXeroConnectorComponent
+    OnboardingXeroConnectorComponent,
+    CloneSettingsComponent
   ],
   imports: [
     CommonModule,
