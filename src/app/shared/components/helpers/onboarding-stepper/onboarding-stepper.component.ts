@@ -14,6 +14,8 @@ export class OnboardingStepperComponent implements OnInit {
 
   @Input() currentStep: string;
 
+  isCloneSettingsActive: boolean;
+
   onboardingSteps: OnboardingStepper[] = [
     {
       active: false,
@@ -71,6 +73,26 @@ export class OnboardingStepperComponent implements OnInit {
   ) { }
 
   private updateActiveAndCompletedSteps(): void {
+    if (this.currentStep === 'Clone Settings') {
+      this.isCloneSettingsActive = true;
+      this.onboardingSteps[0].completed = true;
+      this.onboardingSteps = [this.onboardingSteps[0]];
+      this.onboardingSteps.push(
+        {
+          active: true,
+          completed: false,
+          number: 6,
+          step: 'Complete the Configurations',
+          icon: 'advanced-setting',
+          route: 'clone_settings',
+          size: {
+            height: '20px',
+            width: '20px'
+          }
+        }
+      )
+    }
+
     this.onboardingSteps.forEach(step => {
       if (step.step === this.currentStep) {
         step.active = true;
