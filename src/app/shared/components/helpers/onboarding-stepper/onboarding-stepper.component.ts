@@ -90,7 +90,7 @@ export class OnboardingStepperComponent implements OnInit {
             width: '20px'
           }
         }
-      )
+      );
     }
 
     this.onboardingSteps.forEach(step => {

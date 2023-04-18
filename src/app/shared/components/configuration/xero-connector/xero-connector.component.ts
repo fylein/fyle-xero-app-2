@@ -11,12 +11,11 @@ import { UserService } from 'src/app/core/services/misc/user.service';
 import { WorkspaceService } from 'src/app/core/services/workspace/workspace.service';
 import { ClickEvent, ConfigurationCtaText, OnboardingState, OnboardingStep, ProgressPhase } from 'src/app/core/models/enum/enum.model';
 import { ConfirmationDialog } from 'src/app/core/models/misc/confirmation-dialog.model';
-import { MatDialog } from '@angular/material/dialog';
-import { ConfirmationDialogComponent } from '../../core/confirmation-dialog/confirmation-dialog.component';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { TenantMapping, TenantMappingPost } from 'src/app/core/models/db/tenant-mapping.model';
+import { HelperService } from 'src/app/core/services/core/helper.service';
 
 @Component({
   selector: 'app-xero-connector',
@@ -59,9 +58,9 @@ export class XeroConnectorComponent implements OnInit, OnDestroy {
 
   constructor(
     private authService: AuthService,
-    private dialog: MatDialog,
     private xeroConnectorService: XeroConnectorService,
     private exportSettingService: ExportSettingService,
+    private helperService: HelperService,
     private route: ActivatedRoute,
     private router: Router,
     private snackBar: MatSnackBar,
@@ -105,12 +104,12 @@ export class XeroConnectorComponent implements OnInit, OnDestroy {
           this.isXeroConnected = true;
           this.xeroCompanyName = response.tenant_name;
           this.trackSessionTime('success');
-          this.router.navigate([`/workspaces/onboarding/export_settings`]);
+          this.router.navigate(['/workspaces/onboarding/export_settings']);
         });
       });
     } else if (!this.isContinueDisabled && this.xeroCompanyName){
       this.trackSessionTime('success');
-      this.router.navigate([`/workspaces/onboarding/export_settings`]);
+      this.router.navigate(['/workspaces/onboarding/export_settings']);
     }
   }
 
@@ -166,6 +165,20 @@ export class XeroConnectorComponent implements OnInit, OnDestroy {
     });
   }
 
+  private showCloneSettingsDialog(): void {
+    const workspceName = 'Fyle for Ashwin';
+    const data: ConfirmationDialog = {
+      title: 'Your settings are pre-filled',
+      contents: `<li>Your previous organization's settings <b>(${workspceName})</b> have been copied over to the current organization</li>
+        <li>You can change the settings or reset the configuration to restart the process from the beginning</li>`,
+      primaryCtaText: 'Continue',
+      hideSecondaryCTA: true,
+      hideWarningIcon: true
+    };
+
+    this.helperService.openDialogAndSetupRedirection(data, '/workspaces/onboarding/clone_settings');
+  }
+
   private showWarningDialog(): void {
     const data: ConfirmationDialog = {
       title: 'Incorrect account selected',
@@ -174,16 +187,7 @@ export class XeroConnectorComponent implements OnInit, OnDestroy {
       hideSecondaryCTA: true
     };
 
-    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      width: '551px',
-      data: data
-    });
-
-    dialogRef.afterClosed().subscribe((ctaClicked) => {
-      if (ctaClicked) {
-        this.router.navigate([`/workspaces/onboarding/landing`]);
-      }
-    });
+    this.helperService.openDialogAndSetupRedirection(data, '/workspaces/onboarding/landing');
   }
 
   tenantSelected(): void {
@@ -208,7 +212,7 @@ export class XeroConnectorComponent implements OnInit, OnDestroy {
         this.showWarningDialog();
       } else {
         this.snackBar.open(errorMessage, '', { duration: 7000 });
-        this.router.navigate([`/workspaces/onboarding/landing`]);
+        this.router.navigate(['/workspaces/onboarding/landing']);
       }
     });
   }
