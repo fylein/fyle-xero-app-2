@@ -48,20 +48,7 @@ export class ExportSettingsComponent implements OnInit, OnDestroy {
 
   windowReference: Window;
 
-  autoMapEmployeeTypes: ExportSettingFormOption[] = [
-    {
-      label: 'None',
-      value: null
-    },
-    {
-      label: 'Employee name on Fyle to contact name on Xero',
-      value: AutoMapEmployee.NAME
-    },
-    {
-      label: 'Employee email on Fyle to contact email on Xero',
-      value: AutoMapEmployee.EMAIL
-    }
-  ];
+  autoMapEmployeeTypes: ExportSettingFormOption[] = this.exportSettingService.getAutoMapEmployeeOptions();
 
   expenseGroupingFieldOptions: ExportSettingFormOption[] = [
     {
@@ -82,28 +69,7 @@ export class ExportSettingsComponent implements OnInit, OnDestroy {
 
   cccExpenseStateOptions: ExportSettingFormOption[];
 
-  reimbursableExpenseGroupingDateOptions: ExportSettingFormOption[] = [
-    {
-      label: 'Current Date',
-      value: ExportDateType.CURRENT_DATE
-    },
-    {
-      label: 'Verification Date',
-      value: ExportDateType.VERIFIED_AT
-    },
-    {
-      label: 'Spend Date',
-      value: ExportDateType.SPENT_AT
-    },
-    {
-      label: 'Approval Date',
-      value: ExportDateType.APPROVED_AT
-    },
-    {
-      label: 'Last Spend Date',
-      value: ExportDateType.LAST_SPENT_AT
-    }
-  ];
+  reimbursableExpenseGroupingDateOptions: ExportSettingFormOption[] = this.exportSettingService.getReimbursableExpenseGroupingDateOptions();
 
   cccExpenseGroupingDateOptions: ExportSettingFormOption[] = this.reimbursableExpenseGroupingDateOptions.concat();
 

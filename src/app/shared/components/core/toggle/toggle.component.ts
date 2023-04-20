@@ -12,6 +12,8 @@ export class ToggleComponent implements OnInit {
 
   @Input() formControllerName: string;
 
+  @Input() isCloneSettings: boolean;
+
   constructor() { }
 
   ngOnInit(): void {

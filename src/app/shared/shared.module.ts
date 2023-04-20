@@ -151,7 +151,10 @@ import { CloneAdvancedSettingsComponent } from './components/clone-settings/clon
     DashboardResolveMappingErrorDialogComponent,
     ExportLogChildTableComponent,
     MandatoryErrorMessageComponent,
-    DashboardExportLogDialogComponent
+    DashboardExportLogDialogComponent,
+    ToggleComponent,
+    SelectComponent,
+    EmailMultiSelectComponent
   ],
   providers: []
 })
