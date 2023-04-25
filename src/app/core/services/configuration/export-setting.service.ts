@@ -3,7 +3,8 @@ import { Observable } from 'rxjs';
 import { ExportSettingFormOption, ExportSettingGet, ExportSettingPost } from '../../models/configuration/export-setting.model';
 import { ApiService } from '../core/api.service';
 import { WorkspaceService } from '../workspace/workspace.service';
-import { AutoMapEmployee, ExportDateType } from '../../models/enum/enum.model';
+import { AutoMapEmployee, CCCExpenseState, ExpenseState, ExportDateType } from '../../models/enum/enum.model';
+import { AbstractControl, FormGroup, ValidatorFn } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root'
@@ -64,5 +65,62 @@ export class ExportSettingService {
         value: ExportDateType.LAST_SPENT_AT
       }
     ];
+  }
+
+  getReimbursableExpenseStateOptions(isSimplifyReportClosureEnabled: boolean): ExportSettingFormOption[] {
+    return [
+      {
+        label: isSimplifyReportClosureEnabled ? 'Processing' : 'Payment Processing',
+        value: ExpenseState.PAYMENT_PROCESSING
+      },
+      {
+        label: isSimplifyReportClosureEnabled ? 'Closed' : 'Paid',
+        value: ExpenseState.PAID
+      }
+    ];
+  }
+
+  getCCCExpenseStateOptions(isSimplifyReportClosureEnabled: boolean): ExportSettingFormOption[] {
+    return [
+      {
+        label: isSimplifyReportClosureEnabled ? 'Approved' : 'Payment Processing',
+        value: isSimplifyReportClosureEnabled ? CCCExpenseState.APPROVED: CCCExpenseState.PAYMENT_PROCESSING
+      },
+      {
+        label: isSimplifyReportClosureEnabled ? 'Closed' : 'Paid',
+        value: CCCExpenseState.PAID
+      }
+    ];
+  }
+
+  exportSelectionValidator(exportSettingsForm: FormGroup): ValidatorFn {
+    return (control: AbstractControl): { [key: string]: object } | null => {
+      let forbidden = true;
+      if (exportSettingsForm) {
+        if (typeof control.value === 'boolean') {
+          if (control.value) {
+            forbidden = false;
+          } else {
+            if (control.parent?.get('reimbursableExpense')?.value || control.parent?.get('creditCardExpense')?.value) {
+              forbidden = false;
+            }
+          }
+        } else if ((control.value === ExpenseState.PAID || control.value === ExpenseState.PAYMENT_PROCESSING) && (control.parent?.get('reimbursableExpense')?.value || control.parent?.get('creditCardExpense')?.value)) {
+          forbidden = false;
+        }
+
+        if (!forbidden) {
+          control.parent?.get('reimbursableExpense')?.setErrors(null);
+          control.parent?.get('creditCardExpense')?.setErrors(null);
+          return null;
+        }
+      }
+
+      return {
+        forbiddenOption: {
+          value: control.value
+        }
+      };
+    };
   }
 }

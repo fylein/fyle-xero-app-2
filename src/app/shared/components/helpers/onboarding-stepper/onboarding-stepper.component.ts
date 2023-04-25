@@ -91,26 +91,26 @@ export class OnboardingStepperComponent implements OnInit {
           }
         }
       );
-    }
+    } else {
+      this.onboardingSteps.forEach(step => {
+        if (step.step === this.currentStep) {
+          step.active = true;
+        }
+      });
 
-    this.onboardingSteps.forEach(step => {
-      if (step.step === this.currentStep) {
-        step.active = true;
+      const onboardingState: OnboardingState = this.workspaceService.getOnboardingState();
+
+      const onboardingStateStepMap = {
+        [OnboardingState.CONNECTION]: 1,
+        [OnboardingState.EXPORT_SETTINGS]: 2,
+        [OnboardingState.IMPORT_SETTINGS]: 3,
+        [OnboardingState.ADVANCED_CONFIGURATION]: 4,
+        [OnboardingState.COMPLETE]: 5
+      };
+
+      for (let index = onboardingStateStepMap[onboardingState] - 1; index > 0; index--) {
+        this.onboardingSteps[index - 1].completed = true;
       }
-    });
-
-    const onboardingState: OnboardingState = this.workspaceService.getOnboardingState();
-
-    const onboardingStateStepMap = {
-      [OnboardingState.CONNECTION]: 1,
-      [OnboardingState.EXPORT_SETTINGS]: 2,
-      [OnboardingState.IMPORT_SETTINGS]: 3,
-      [OnboardingState.ADVANCED_CONFIGURATION]: 4,
-      [OnboardingState.COMPLETE]: 5
-    };
-
-    for (let index = onboardingStateStepMap[onboardingState] - 1; index > 0; index--) {
-      this.onboardingSteps[index - 1].completed = true;
     }
   }
 
