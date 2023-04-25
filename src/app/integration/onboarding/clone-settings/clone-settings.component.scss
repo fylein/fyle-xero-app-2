@@ -6,6 +6,7 @@
 
     &--block {
         margin-top: -140px;
+        margin-bottom: 58px;
         width: 1098px;
         background: #FFFFFF;
         border: 1px solid #F5F5F5;
@@ -52,6 +53,62 @@
 
     &--export-type {
         padding-left: 10px;
+    }
+
+    &--field-header-section {
+        padding: 8px 0px 0px 32px;
+    }
+
+    &--field-header {
+        width: 608px;
+        height: 48px;
+        font-size: 14px;
+    }
+
+    &--xero-header {
+        padding-left: 14px;
+        padding-right: 264px;
+    }
+
+    &--coa-import-section {
+        padding: 12px 0px 12px 32px;
+    }
+
+    &--xero-field {
+        height: 34px;
+        width: 304px;
+        background: #F5F5F5;
+        border: 1px solid #DFDFE2;
+        border-radius: 4px;
+        font-size: 14px;
+        color: #2C304E;
+    }
+
+    &--xero-field-text {
+        padding-left: 14px;
+    }
+
+    &--connect-arrow-img {
+        padding-top: 17px;
+    }
+
+    &--footer-section {
+        height: 108px;
+    }
+
+    &--footer-inner-section {
+        padding: 12px 32px;
+    }
+
+    &--coa-list {
+        padding: 11px 0px 0px 12px;
+        color: #FF3366;
+        cursor: pointer;
+        font-size: 14px;
+    }
+
+    &--coa-list-icon {
+        padding-left: 15px;
     }
 }
 

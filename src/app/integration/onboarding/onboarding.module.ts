@@ -10,6 +10,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatMenuModule } from '@angular/material/menu';
 
 import { SharedModule } from 'src/app/shared/shared.module';
 
@@ -46,6 +47,7 @@ import { CloneSettingsComponent } from './clone-settings/clone-settings.componen
     MatSlideToggleModule,
     MatCheckboxModule,
     MatDialogModule,
+    MatMenuModule,
     SharedModule
   ]
 })

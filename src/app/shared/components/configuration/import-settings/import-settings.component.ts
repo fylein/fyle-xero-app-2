@@ -46,7 +46,7 @@ export class ImportSettingsComponent implements OnInit, OnDestroy {
 
   xeroExpenseFields: ExpenseFieldsFormOption[];
 
-  chartOfAccountTypesList: string[] = ['Expense', 'Asset', 'Equity', 'Liability', 'Revenue'];
+  chartOfAccountTypesList: string[] = this.importSettingService.getChartOfAccountTypesList();
 
   windowReference: Window;
 
@@ -82,14 +82,6 @@ export class ImportSettingsComponent implements OnInit, OnDestroy {
     private workspaceService: WorkspaceService
   ) {
     this.windowReference = this.windowService.nativeWindow;
-  }
-
-  createChartOfAccountField(type: string): FormGroup {
-    const chartOfAccounts = type.toUpperCase();
-    return this.formBuilder.group({
-      enabled: [this.importSettings.workspace_general_settings.charts_of_accounts.includes(chartOfAccounts) || type === 'Expense' ? true : false],
-      name: [type]
-    });
   }
 
   get chartOfAccountTypes() {
@@ -161,33 +153,9 @@ export class ImportSettingsComponent implements OnInit, OnDestroy {
     this.createExpenseFieldWatcher();
   }
 
-  private importToggleWatcher(): ValidatorFn {
-    return (control: AbstractControl): {[key: string]: object} | null => {
-      if (control.value) {
-        // Mark Fyle field as mandatory if toggle is enabled
-        control.parent?.get('source_field')?.setValidators(Validators.required);
-        control.parent?.get('source_field')?.setValidators(RxwebValidators.unique());
-      } else {
-        // Reset Fyle field if toggle is disabled
-        control.parent?.get('source_field')?.clearValidators();
-        control.parent?.get('source_field')?.setValue(null);
-      }
-
-      return null;
-    };
-  }
-
   private setupForm(): void {
-    const chartOfAccountTypeFormArray = this.chartOfAccountTypesList.map((type) => this.createChartOfAccountField(type));
-    const expenseFieldsFormArray = this.xeroExpenseFields.map((field) => {
-      return this.formBuilder.group({
-        source_field: [field.source_field],
-        destination_field: [field.destination_field.toUpperCase()],
-        import_to_fyle: [field.import_to_fyle, this.importToggleWatcher()],
-        disable_import_to_fyle: [field.disable_import_to_fyle],
-        source_placeholder: ['']
-      });
-    });
+    const chartOfAccountTypeFormArray = this.chartOfAccountTypesList.map((type) => this.importSettingService.createChartOfAccountField(type, this.importSettings.workspace_general_settings.charts_of_accounts));
+    const expenseFieldsFormArray = this.importSettingService.getExpenseFieldsFormArray(this.xeroExpenseFields, true);
 
     this.importSettingsForm = this.formBuilder.group({
       chartOfAccount: [this.importSettings.workspace_general_settings.import_categories],
@@ -224,16 +192,8 @@ export class ImportSettingsComponent implements OnInit, OnDestroy {
         field => !customMappedXeroFields.includes(field.attribute_type)
       );
 
-      this.xeroExpenseFields = xeroAttributes.map(attribute => {
-        const mappingSetting = this.importSettings.mapping_settings.filter((mappingSetting: MappingSetting) => mappingSetting.destination_field.toUpperCase() === attribute.attribute_type);
-        return {
-          source_field: mappingSetting.length > 0 ? mappingSetting[0].source_field : '',
-          destination_field: attribute.display_name,
-          import_to_fyle: mappingSetting.length > 0 ? mappingSetting[0].import_to_fyle : false,
-          disable_import_to_fyle: false,
-          source_placeholder: ''
-        };
-      });
+      this.xeroExpenseFields = this.importSettingService.getXeroExpenseFields(xeroAttributes, this.importSettings.mapping_settings);
+
       this.isProjectMapped = this.customMappedFyleFields.indexOf(FyleField.PROJECT) > -1 || this.xeroExpenseFields.filter((feild => feild.source_field === FyleField.PROJECT)).length > 0 ? true : false;
       this.taxCodes = response[3];
       this.setupForm();

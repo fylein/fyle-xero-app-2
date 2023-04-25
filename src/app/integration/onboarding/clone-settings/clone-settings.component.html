@@ -2,9 +2,10 @@
 
 <div class="clone-settings--section">
     <div class="clone-settings--block">
+        <!-- TODO: check loader -->
         <app-loader [phase]="'pre_onboarding'" *ngIf="isLoading" data-cy="configuration-loader"></app-loader>
 
-        <div *ngIf="!isLoading">
+        <div *ngIf="!isLoading" [formGroup]="cloneSettingsForm">
             <!-- Export Settings -->
             <div>
                 <div fxLayoutAlign="start start" class="clone-settings--header-section" data-cy="configuration-contents">
@@ -182,6 +183,7 @@
                 </div>
             </div>
 
+
             <!-- Import Settings -->
             <div>
                 <div fxLayoutAlign="start start" class="clone-settings--header-section" data-cy="configuration-contents">
@@ -193,8 +195,84 @@
                         <h5 class="clone-settings--header-caption sub-text-color">In this section, you can configure how the dimensions you import from Xero should be mapped in Fyle</h5>
                     </div>
                 </div>
+
+                <div class="clone-settings--field-header-section">
+                    <div fxLayoutAlign="start center" class="clone-settings--field-header">
+                        <div class="clone-settings--xero-header">
+                            Xero Field
+                        </div>
+                        <div>
+                            Fyle Field
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <div fxLayoutAlign="start start" class="clone-settings--coa-import-section">
+                        <div fxLayoutAlign="start center" class="clone-settings--xero-field">
+                            <p class="clone-settings--xero-field-text">
+                                Chart of Accounts
+                            </p>
+                        </div>
+
+                        <img class="clone-settings--connect-arrow-img" src="assets/images/svgs/general/connect-arrow.svg">
+
+                        <div fxLayoutAlign="start center" class="clone-settings--xero-field">
+                            <p class="clone-settings--xero-field-text">
+                                Category
+                            </p>
+                        </div>
+
+                        <div class="clone-settings--coa-list" [matMenuTriggerFor]="menu">
+                            View Accounts
+                            <img class="clone-settings--coa-list-icon" src="assets/images/svgs/actions/arrow-mark-down-pink.svg">
+                        </div>
+                        <mat-menu formArrayName="chartOfAccountTypes" #menu="matMenu">
+                            <div *ngFor="let chartOfAccountType of chartOfAccountTypes.controls; let i = index" [formGroupName]="i" mat-menu-item (click)="$event.stopPropagation()">
+                                <mat-checkbox [checked]="chartOfAccountType.value.enabled" [disabled]="chartOfAccountType.value.name === 'Expense'">
+                                    {{ chartOfAccountType.value.name }}
+                                </mat-checkbox>
+                            </div>
+                          </mat-menu>
+                    </div>
+
+                    <div formArrayName="expenseFields">
+                        <div *ngFor="let expenseField of expenseFields.controls; let i = index" [formGroupName]="i" fxLayoutAlign="start start" class="clone-settings--coa-import-section">
+                            <div fxLayoutAlign="start center" class="clone-settings--xero-field">
+                                <p class="clone-settings--xero-field-text">
+                                    {{ expenseField.value.destination_field | titlecase }}
+                                </p>
+                            </div>
+
+                            <img class="clone-settings--connect-arrow-img" src="assets/images/svgs/general/connect-arrow.svg">
+
+                            <mat-form-field floatLabel="always" appearance="outline" class="import-settings--fyle-field">
+                                <mat-select placeholder="Select a field from Fyle" formControlName="source_field" data-cy="select-field">
+                                  <mat-option *ngFor="let fyleExpenseField of fyleExpenseFields" [value]="fyleExpenseField" data-cy="select-option">
+                                    {{ fyleExpenseField.split('_').join(' ') | titlecase }}
+                                    <img *ngIf="fyleExpenseField === expenseField.value.source_field"
+                                      src="assets/images/svgs/general/tick-pink.svg" class="selected-value-check-mark">
+                                  </mat-option>
+                                </mat-select>
+                                <div class="mat-select-arrow-closed"></div>
+                              </mat-form-field>
+                        </div>
+                    </div>
+                </div>                
+            </div>
+
+            <div class="clone-settings--footer-section">
+                <div class="clone-settings--footer-inner-section">
+                    <div fxLayoutAlign="space-between center">
+                        <div fxLayoutAlign="start center">
+                            <div>1</div>
+                            <div>2</div>
+                        </div>
+                        <div>2</div>
+                    </div>
+                </div>
             </div>
         </div>
-
     </div>
 </div>
+<app-onboarding-footer *ngIf="!isLoading"></app-onboarding-footer>
