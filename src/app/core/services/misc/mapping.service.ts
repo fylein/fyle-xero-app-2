@@ -85,20 +85,21 @@ export class MappingService {
     return this.apiService.post(`/workspaces/${this.workspaceId}/mappings/`, mapping);
   }
 
-  getMappings(mappingState: MappingState, allAlphabets: boolean, limit: number, offset: number, alphabetsFilter: string[], sourceType: string, destinationType: string): Observable<ExtendedExpenseAttributeResponse> {
-    return this.apiService.get(
-      `/workspaces/${this.workspaceId}/mappings/expense_attributes/`,
-      {
-        limit,
-        offset,
-        all_alphabets: allAlphabets,
-        mapped: mappingState === MappingState.ALL ? MappingState.ALL : false,
-        mapping_source_alphabets: alphabetsFilter.length ? alphabetsFilter : null,
-        source_type: sourceType,
-        destination_type: destinationType,
-        app_name: 'XERO'
-      }
-    );
+  getMappings(mappingState: MappingState, limit: number, offset: number, alphabetsFilter: string[], sourceType: string, destinationType: string): Observable<ExtendedExpenseAttributeResponse> {
+    const params: any = {
+      limit,
+      offset,
+      mapped: mappingState === MappingState.ALL ? MappingState.ALL : false,
+      source_type: sourceType,
+      destination_type: destinationType,
+      app_name: 'XERO'
+    };
+
+    if (alphabetsFilter.length) {
+      params.mapping_source_alphabets = alphabetsFilter;
+    }
+
+    return this.apiService.get(`/workspaces/${this.workspaceId}/mappings/expense_attributes/`, params);
   }
 
   emitWalkThroughTooltip(): void {

@@ -163,27 +163,27 @@ describe('MappingService', () => {
   });
 
   it('getMappings() service check', () => {
-    service.getMappings(MappingState.ALL, true, 1, 1, [], FyleField.CATEGORY, FyleField.TAX_GROUP).subscribe(value => {
+    service.getMappings(MappingState.ALL, 1, 1, [], FyleField.CATEGORY, FyleField.TAX_GROUP).subscribe(value => {
       const responseKeys = Object.keys(getMappingsresponse).sort();
       const actualResponseKeys = Object.keys(value).sort();
       expect(actualResponseKeys).toEqual(responseKeys);
     });
     const req = httpMock.expectOne({
       method: 'GET',
-      url: `${API_BASE_URL}/workspaces/${workspace_id}/mappings/expense_attributes/?limit=1&offset=1&all_alphabets=true&mapped=ALL&mapping_source_alphabets=null&source_type=CATEGORY&destination_type=TAX_GROUP&app_name=XERO`
+      url: `${API_BASE_URL}/workspaces/${workspace_id}/mappings/expense_attributes/?limit=1&offset=1&mapped=ALL&source_type=CATEGORY&destination_type=TAX_GROUP&app_name=XERO`
     });
       req.flush(getMappingsresponse);
   });
 
   it('getMappings() service check', () => {
-    service.getMappings(MappingState.UNMAPPED, true, 1, 1, ['all'], FyleField.CATEGORY, FyleField.TAX_GROUP).subscribe(value => {
+    service.getMappings(MappingState.UNMAPPED, 1, 1, ['A'], FyleField.CATEGORY, FyleField.TAX_GROUP).subscribe(value => {
       const responseKeys = Object.keys(getMappingsresponse).sort();
       const actualResponseKeys = Object.keys(value).sort();
       expect(actualResponseKeys).toEqual(responseKeys);
     });
     const req = httpMock.expectOne({
       method: 'GET',
-      url: `${API_BASE_URL}/workspaces/${workspace_id}/mappings/expense_attributes/?limit=1&offset=1&all_alphabets=true&mapped=false&mapping_source_alphabets=all&source_type=CATEGORY&destination_type=TAX_GROUP&app_name=XERO`
+      url: `${API_BASE_URL}/workspaces/${workspace_id}/mappings/expense_attributes/?limit=1&offset=1&mapped=false&source_type=CATEGORY&destination_type=TAX_GROUP&app_name=XERO&mapping_source_alphabets=A`
     });
       req.flush(getMappingsresponse);
   });
