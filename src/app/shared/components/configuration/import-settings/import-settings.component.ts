@@ -151,6 +151,7 @@ export class ImportSettingsComponent implements OnInit, OnDestroy {
     this.createTaxCodeWatcher();
     this.createImportCustomerWatcher();
     this.createExpenseFieldWatcher();
+    this.setupExpenseFieldWatcher();
   }
 
   private setupForm(): void {
@@ -200,16 +201,13 @@ export class ImportSettingsComponent implements OnInit, OnDestroy {
     });
   }
 
-  private patchExpenseFieldValue(destinationType: string, sourceField: string = '', source_placeholder: string = ''): void {
-    const expenseField = {
-      source_field: sourceField,
-      destination_field: destinationType,
-      import_to_fyle: sourceField ? true : false,
-      disable_import_to_fyle: sourceField ? true : false,
-      source_placeholder: source_placeholder
-    };
-
-    this.expenseFields.controls.filter(field => field.value.destination_field === destinationType)[0].patchValue(expenseField);
+  private setupExpenseFieldWatcher(): void {
+    this.importSettingService.patchExpenseFieldEmitter.subscribe((expenseField) => {
+      if (expenseField.addSourceField) {
+        this.fyleExpenseFields.push(expenseField.source_field);
+      }
+      this.expenseFields.controls.filter(field => field.value.destination_field === expenseField.destination_field)[0].patchValue(expenseField);
+    });
   }
 
   showFyleExpenseFormPreview(): void {
@@ -228,21 +226,7 @@ export class ImportSettingsComponent implements OnInit, OnDestroy {
   }
 
   createExpenseField(destinationType: string): void {
-    const existingFields = this.importSettings.mapping_settings.map(setting => setting.source_field.split('_').join(' '));
-    const dialogRef = this.dialog.open(ExpenseFieldCreationDialogComponent, {
-      width: '551px',
-      data: existingFields
-    });
-
-    this.patchExpenseFieldValue(destinationType);
-
-    dialogRef.afterClosed().subscribe((expenseField) => {
-      if (expenseField) {
-        const sourceType = expenseField.name.split(' ').join('_').toUpperCase();
-        this.fyleExpenseFields.push(sourceType);
-        this.patchExpenseFieldValue(destinationType, sourceType, expenseField.source_placeholder);
-      }
-    });
+    this.importSettingService.createExpenseField(destinationType, this.importSettings.mapping_settings);
   }
 
   navigateToPreviousStep(): void {

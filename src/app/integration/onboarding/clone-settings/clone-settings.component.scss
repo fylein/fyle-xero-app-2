@@ -67,7 +67,7 @@
 
     &--xero-header {
         padding-left: 14px;
-        padding-right: 264px;
+        padding-right: 280px;
     }
 
     &--coa-import-section {
@@ -88,10 +88,6 @@
         padding-left: 14px;
     }
 
-    &--connect-arrow-img {
-        padding-top: 17px;
-    }
-
     &--footer-section {
         height: 108px;
     }
@@ -101,14 +97,20 @@
     }
 
     &--coa-list {
-        padding: 11px 0px 0px 12px;
-        color: #FF3366;
-        cursor: pointer;
+        padding-left: 12px;
         font-size: 14px;
+    }
+
+    &--cta-text {
+        color: #FF3366;
     }
 
     &--coa-list-icon {
         padding-left: 15px;
+    }
+
+    &--delete-icon {
+        padding-right: 34px;
     }
 }
 

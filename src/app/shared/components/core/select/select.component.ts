@@ -36,6 +36,8 @@ export class SelectComponent implements OnInit {
 
   @Input() phase: ProgressPhase;
 
+  @Input() isCloneSettingField: boolean;
+
   SimpleSearchPage = SimpleSearchPage;
 
   SimpleSearchType = SimpleSearchType;

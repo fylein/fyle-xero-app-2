@@ -1,5 +1,5 @@
 <div [formGroup]="form">
-    <mat-form-field *ngIf="!exportType" floatLabel="always" appearance="outline" class="configuration--form-field">
+    <mat-form-field *ngIf="!exportType" floatLabel="always" appearance="outline" class="configuration--form-field" [ngClass]="{'select-field--clone-settings-tax': isCloneSettingField}">
         <mat-select [placeholder]="placeholder" [formControlName]="formControllerName"
             [compareWith]="helperService.compareObjects">
             <mat-option *ngFor="let option of options" [value]="option.value">
