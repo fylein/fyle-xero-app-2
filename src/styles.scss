@@ -249,7 +249,6 @@ th.mat-header-cell:last-of-type {
 .mat-option.mat-selected:not(.mat-option-multiple):not(.mat-option-disabled), .mat-option:focus:not(.mat-selected), .mat-option:hover:not(.mat-selected) {
   background: #0000000a !important;
   border-radius: 4px !important;
-  margin: 2px;
 }
 
 .mat-option.mat-active {
@@ -268,10 +267,6 @@ th.mat-header-cell:last-of-type {
   background: #F5F5F5;
   border-radius: 4px;
   color: #2C304E;
-}
-
-.mat-option.mat-selected:not(.mat-option-multiple):not(.mat-option-disabled), .mat-option:focus:not(.mat-selected), .mat-option:hover:not(.mat-selected) {
-  margin: 0 !important;
 }
 
 .mat-form-field-appearance-outline .mat-form-field-infix {

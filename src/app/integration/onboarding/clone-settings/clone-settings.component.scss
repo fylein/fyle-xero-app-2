@@ -112,6 +112,44 @@
     &--delete-icon {
         padding-right: 34px;
     }
+
+    &--tax-group-field {
+        margin-right: 12px;
+    }
+
+    &--header-advanced-setting {
+        padding-top: 24px;
+    }
+
+    &--configuration-payment-section {
+        padding: 0px 32px 24px 32px;
+    }
+
+    &--configuration-payment-field {
+        padding-left: 28px;
+    }
+
+    &--add-email-text {
+        padding-right: 210px;
+        padding-top: 18px;
+    }
+
+    &--add-btn {
+        margin-bottom: 8px;
+        height: 16px;
+        width: 16px;
+    }
+
+    &--span-or {
+        margin: 1px 15px 8px 5px ;
+        font-weight: 500;
+        font-size: 14px;
+        color: #2c304e;
+    }
+
+    &--additional-email-text {
+        margin-top: -40px;
+    }
 }
 
 p {

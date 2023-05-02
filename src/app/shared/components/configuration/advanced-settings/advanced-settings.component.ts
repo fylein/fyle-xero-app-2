@@ -45,27 +45,9 @@ export class AdvancedSettingsComponent implements OnInit, OnDestroy {
 
   memoPreviewText: string = '';
 
-  paymentSyncOptions: AdvancedSettingFormOption[] = [
-    {
-      label: 'None',
-      value: 'None'
-    },
-    {
-      label: 'Export Fyle ACH Payments to Xero',
-      value: PaymentSyncDirection.FYLE_TO_XERO
-    },
-    {
-      label: 'Import Xero Payments into Fyle',
-      value: PaymentSyncDirection.XERO_TO_FYLE
-    }
-  ];
+  paymentSyncOptions: AdvancedSettingFormOption[] = this.advancedSettingService.getPaymentSyncOptions();
 
-  frequencyIntervals: AdvancedSettingFormOption[] = [...Array(24).keys()].map(day => {
-    return {
-      label: (day + 1) === 1 ? (day + 1) + ' Hour' : (day + 1) + ' Hours',
-      value: day + 1
-    };
-  });
+  frequencyIntervals: AdvancedSettingFormOption[] = this.advancedSettingService.getFrequencyIntervals();
 
   windowReference: Window;
 
@@ -120,6 +102,7 @@ export class AdvancedSettingsComponent implements OnInit, OnDestroy {
   private setCustomValidators(): void {
     this.createPaymentSyncWatcher();
     this.createScheduledWatcher();
+    this.setupAdditionalEmailsWatcher();
   }
 
   showPaymentSyncField(): boolean {
@@ -216,25 +199,14 @@ export class AdvancedSettingsComponent implements OnInit, OnDestroy {
     }
   }
 
-  openAddemailDialog(): void {
-    const dialogRef = this.dialog.open(AddEmailDialogComponent, {
-      width: '467px',
-      data: {
-        workspaceId: this.workspaceGeneralSettings.workspace,
-        hours: this.advancedSettingsForm.value.exportScheduleFrequency,
-        schedulEnabled: this.advancedSettingsForm.value.exportSchedule,
-        selectedEmails: this.advancedSettingsForm.value.emails
-      }
+  private setupAdditionalEmailsWatcher(): void {
+    this.advancedSettingService.patchAdminEmailsEmitter.subscribe((additionalEmails) => {
+      this.adminEmails = additionalEmails;
     });
+  }
 
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
-        this.advancedSettingsForm.controls.exportScheduleFrequency.patchValue(result.hours);
-        this.advancedSettingsForm.controls.emails.patchValue(result.emails_selected);
-        this.advancedSettingsForm.controls.addedEmail.patchValue(result.email_added);
-        this.adminEmails = this.adminEmails.concat(result.email_added);
-      }
-    });
+  openAddemailDialog(): void {
+    this.advancedSettingService.openAddemailDialog(this.advancedSettingsForm, this.adminEmails);
   }
 
   ngOnDestroy(): void {

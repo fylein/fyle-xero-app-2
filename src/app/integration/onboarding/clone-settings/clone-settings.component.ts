@@ -1,14 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { forkJoin } from 'rxjs';
+import { AdvancedSettingFormOption } from 'src/app/core/models/configuration/advanced-setting.model';
 import { CloneSetting } from 'src/app/core/models/configuration/clone-setting.model';
 import { ExportSettingFormOption } from 'src/app/core/models/configuration/export-setting.model';
 import { ExpenseFieldsFormOption } from 'src/app/core/models/configuration/import-setting.model';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { MappingSetting } from 'src/app/core/models/db/mapping-setting.model';
-import { ProgressPhase } from 'src/app/core/models/enum/enum.model';
+import { WorkspaceScheduleEmailOptions } from 'src/app/core/models/db/workspace-schedule.model';
+import { PaymentSyncDirection, ProgressPhase } from 'src/app/core/models/enum/enum.model';
 import { ConfirmationDialog } from 'src/app/core/models/misc/confirmation-dialog.model';
 import { ExpenseField } from 'src/app/core/models/misc/expense-field.model';
+import { AdvancedSettingService } from 'src/app/core/services/configuration/advanced-setting.service';
 import { CloneSettingService } from 'src/app/core/services/configuration/clone-setting.service';
 import { ExportSettingService } from 'src/app/core/services/configuration/export-setting.service';
 import { ImportSettingService } from 'src/app/core/services/configuration/import-setting.service';
@@ -31,6 +34,12 @@ export class CloneSettingsComponent implements OnInit {
   reimbursableExpenseGroupingDateOptions: ExportSettingFormOption[] = this.exportSettingService.getReimbursableExpenseGroupingDateOptions();
 
   chartOfAccountTypesList: string[] = this.importSettingService.getChartOfAccountTypesList();
+
+  paymentSyncOptions: AdvancedSettingFormOption[] = this.advancedSettingService.getPaymentSyncOptions();
+
+  frequencyIntervals: AdvancedSettingFormOption[] = this.advancedSettingService.getFrequencyIntervals();
+
+  adminEmails: WorkspaceScheduleEmailOptions[];
 
   reimbursableExpenseStateOptions: ExportSettingFormOption[];
 
@@ -61,6 +70,7 @@ export class CloneSettingsComponent implements OnInit {
   cloneSettings: CloneSetting;
 
   constructor(
+    private advancedSettingService: AdvancedSettingService,
     private cloneSettingService: CloneSettingService,
     private exportSettingService: ExportSettingService,
     private formBuilder: FormBuilder,
@@ -104,6 +114,7 @@ export class CloneSettingsComponent implements OnInit {
     this.setupExportWatchers();
     this.setGeneralMappingsValidator();
     this.setupExpenseFieldWatcher();
+    this.setupAdditionalEmailsWatcher();
   }
 
   private setupExpenseFieldWatcher(): void {
@@ -113,6 +124,16 @@ export class CloneSettingsComponent implements OnInit {
       }
       this.expenseFields.controls.filter(field => field.value.destination_field === expenseField.destination_field)[0].patchValue(expenseField);
     });
+  }
+
+  private setupAdditionalEmailsWatcher(): void {
+    this.advancedSettingService.patchAdminEmailsEmitter.subscribe((additionalEmails) => {
+      this.adminEmails = additionalEmails;
+    });
+  }
+
+  openAddemailDialog(): void {
+    this.advancedSettingService.openAddemailDialog(this.cloneSettingsForm, this.adminEmails);
   }
 
   get chartOfAccountTypes() {
@@ -149,6 +170,13 @@ export class CloneSettingsComponent implements OnInit {
     const chartOfAccountTypeFormArray = this.chartOfAccountTypesList.map((type) => this.importSettingService.createChartOfAccountField(type, this.cloneSettings.import_settings.workspace_general_settings.charts_of_accounts));
     const expenseFieldsFormArray = this.importSettingService.getExpenseFieldsFormArray(this.xeroExpenseFields, false);
 
+    let paymentSync = '';
+    if (this.cloneSettings.advanced_settings.workspace_general_settings.sync_fyle_to_xero_payments) {
+      paymentSync = PaymentSyncDirection.FYLE_TO_XERO;
+    } else if (this.cloneSettings.advanced_settings.workspace_general_settings.sync_xero_to_fyle_payments) {
+      paymentSync = PaymentSyncDirection.XERO_TO_FYLE;
+    }
+
     this.cloneSettingsForm = this.formBuilder.group({
       reimbursableExpense: [this.cloneSettings.export_settings.workspace_general_settings.reimbursable_expenses_object],
       autoMapEmployees: [this.cloneSettings.export_settings.workspace_general_settings.auto_map_employees],
@@ -160,6 +188,15 @@ export class CloneSettingsComponent implements OnInit {
       chartOfAccountTypes: this.formBuilder.array(chartOfAccountTypeFormArray),
       expenseFields: this.formBuilder.array(expenseFieldsFormArray),
       defaultTaxCode: [this.cloneSettings.import_settings.general_mappings?.default_tax_code?.id ? this.cloneSettings.import_settings.general_mappings.default_tax_code : null],
+      paymentSync: [paymentSync],
+      billPaymentAccount: [this.cloneSettings.advanced_settings.general_mappings?.payment_account],
+      exportSchedule: [this.cloneSettings.advanced_settings.workspace_schedules?.enabled ? this.cloneSettings.advanced_settings.workspace_schedules.interval_hours : false],
+      exportScheduleFrequency: [this.cloneSettings.advanced_settings.workspace_schedules?.enabled ? this.cloneSettings.advanced_settings.workspace_schedules.interval_hours : null],
+      emails: [this.cloneSettings.advanced_settings.workspace_schedules?.emails_selected ? this.cloneSettings.advanced_settings.workspace_schedules?.emails_selected : []],
+      addedEmail: [],
+      changeAccountingPeriod: [this.cloneSettings.advanced_settings.workspace_general_settings.change_accounting_period],
+      autoCreateVendors: [this.cloneSettings.advanced_settings.workspace_general_settings.auto_create_destination_entity],
+      autoCreateMerchantDestinationEntity: [this.cloneSettings.advanced_settings.workspace_general_settings.auto_create_merchant_destination_entity ? this.cloneSettings.advanced_settings.workspace_general_settings.auto_create_merchant_destination_entity : false],
       searchOption: []
     });
 
@@ -173,12 +210,14 @@ export class CloneSettingsComponent implements OnInit {
       this.mappingService.getGroupedXeroDestinationAttributes(['BANK_ACCOUNT', 'TAX_CODE']),
       this.mappingService.getFyleExpenseFields(),
       this.mappingService.getXeroField(),
-      this.mappingService.getMappingSettings()
+      this.mappingService.getMappingSettings(),
+      this.advancedSettingService.getWorkspaceAdmins()
     ]).subscribe(responses => {
       this.cloneSettings = responses[0];
       this.bankAccounts = responses[1].BANK_ACCOUNT;
       this.taxCodes = responses[1].TAX_CODE;
       this.mappingSettings = responses[4].results;
+      this.adminEmails = this.cloneSettings.advanced_settings.workspace_schedules?.additional_email_options ? this.cloneSettings.advanced_settings.workspace_schedules?.additional_email_options.concat(responses[5]) : responses[5];
 
       this.reimbursableExpenseStateOptions = this.exportSettingService.getReimbursableExpenseStateOptions(this.cloneSettings.export_settings.workspace_general_settings.is_simplify_report_closure_enabled);
       this.cccExpenseStateOptions = this.exportSettingService.getCCCExpenseStateOptions(this.cloneSettings.export_settings.workspace_general_settings.is_simplify_report_closure_enabled);

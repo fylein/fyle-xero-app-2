@@ -154,7 +154,8 @@ import { CloneAdvancedSettingsComponent } from './components/clone-settings/clon
     DashboardExportLogDialogComponent,
     ToggleComponent,
     SelectComponent,
-    EmailMultiSelectComponent
+    EmailMultiSelectComponent,
+    EmailMultiSelectFieldComponent
   ],
   providers: []
 })
