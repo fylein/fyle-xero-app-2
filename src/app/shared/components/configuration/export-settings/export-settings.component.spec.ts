@@ -177,14 +177,6 @@ describe('ExportSettingsComponent', () => {
     expect((component as any).setGeneralMappingsValidator()).toBeUndefined();
   });
 
-  it('function check', () => {
-    expect((component as any).getExportGroup([ExpenseGroupingFieldOption.EXPENSE_ID])).toEqual('expense_id');
-    expect((component as any).getExportGroup([ExpenseGroupingFieldOption.CLAIM_NUMBER])).toEqual('claim_number');
-    expect((component as any).getExportGroup([ExpenseGroupingFieldOption.SETTLEMENT_ID])).toEqual('settlement_id');
-    expect((component as any).getExportGroup([CorporateCreditCardExpensesObject.BANK_TRANSACTION])).toEqual('claim_number');
-    expect((component as any).getExportGroup(null)).toEqual('');
-  });
-
   it('advancedSettingAffected function check', () => {
     component.exportSettings.workspace_general_settings.corporate_credit_card_expenses_object = CorporateCreditCardExpensesObject.BANK_TRANSACTION;
     component.exportSettings.workspace_general_settings.reimbursable_expenses_object = null;

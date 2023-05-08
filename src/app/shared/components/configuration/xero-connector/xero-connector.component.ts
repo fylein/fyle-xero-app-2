@@ -16,6 +16,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { TenantMapping, TenantMappingPost } from 'src/app/core/models/db/tenant-mapping.model';
 import { HelperService } from 'src/app/core/services/core/helper.service';
+import { CloneSettingService } from 'src/app/core/services/configuration/clone-setting.service';
+import { CloneSettingExist } from 'src/app/core/models/configuration/clone-setting.model';
 
 @Component({
   selector: 'app-xero-connector',
@@ -58,6 +60,7 @@ export class XeroConnectorComponent implements OnInit, OnDestroy {
 
   constructor(
     private authService: AuthService,
+    private cloneSettingService: CloneSettingService,
     private xeroConnectorService: XeroConnectorService,
     private exportSettingService: ExportSettingService,
     private helperService: HelperService,
@@ -83,6 +86,16 @@ export class XeroConnectorComponent implements OnInit, OnDestroy {
     this.trackingService.trackTimeSpent(OnboardingStep.CONNECT_XERO, {phase: ProgressPhase.ONBOARDING, durationInSeconds: Math.floor(differenceInMs / 1000), eventState: eventState});
   }
 
+  checkCloneSettingsAvailablity(): void {
+    this.cloneSettingService.checkCloneSettingsExists().subscribe((response: CloneSettingExist) => {
+      if (response.is_available) {
+        this.showCloneSettingsDialog(response.workspace_name);
+      } else {
+        this.router.navigate(['/workspaces/onboarding/export_settings']);
+      }
+    });
+  }
+
   continueToNextStep(): void {
     if (this.isContinueDisabled) {
       return;
@@ -104,12 +117,12 @@ export class XeroConnectorComponent implements OnInit, OnDestroy {
           this.isXeroConnected = true;
           this.xeroCompanyName = response.tenant_name;
           this.trackSessionTime('success');
-          this.router.navigate(['/workspaces/onboarding/export_settings']);
+          this.checkCloneSettingsAvailablity();
         });
       });
     } else if (!this.isContinueDisabled && this.xeroCompanyName){
       this.trackSessionTime('success');
-      this.router.navigate(['/workspaces/onboarding/export_settings']);
+      this.checkCloneSettingsAvailablity();
     }
   }
 
@@ -165,11 +178,10 @@ export class XeroConnectorComponent implements OnInit, OnDestroy {
     });
   }
 
-  private showCloneSettingsDialog(): void {
-    const workspceName = 'Fyle for Ashwin';
+  private showCloneSettingsDialog(workspaceName: string): void {
     const data: ConfirmationDialog = {
       title: 'Your settings are pre-filled',
-      contents: `<li>Your previous organization's settings <b>(${workspceName})</b> have been copied over to the current organization</li>
+      contents: `<li>Your previous organization's settings <b>(${workspaceName})</b> have been copied over to the current organization</li>
         <li>You can change the settings or reset the configuration to restart the process from the beginning</li>`,
       primaryCtaText: 'Continue',
       hideSecondaryCTA: true,

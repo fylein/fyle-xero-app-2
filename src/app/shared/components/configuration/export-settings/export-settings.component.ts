@@ -132,39 +132,6 @@ export class ExportSettingsComponent implements OnInit, OnDestroy {
     return `How should the expense in ${this.getExportType(exportType)} be grouped?`;
   }
 
-  private createReimbursableExpenseWatcher(): void {
-    this.exportSettingsForm.controls.reimbursableExpense.valueChanges.subscribe((isReimbursableExpenseSelected) => {
-      if (isReimbursableExpenseSelected) {
-        this.exportSettingsForm.controls.reimbursableExpenseState.setValidators(Validators.required);
-        this.exportSettingsForm.controls.reimbursableExportType.setValidators(Validators.required);
-        this.exportSettingsForm.controls.reimbursableExportType.patchValue(ReimbursableExpensesObject.PURCHASE_BILL);
-        this.exportSettingsForm.controls.reimbursableExportDate.setValidators(Validators.required);
-        this.exportSettingsForm.controls.reimbursableExportDate.patchValue(this.exportSettings.expense_group_settings?.reimbursable_export_date_type ? this.exportSettings.expense_group_settings?.reimbursable_export_date_type : ExportDateType.CURRENT_DATE);
-      } else {
-        this.exportSettingsForm.controls.reimbursableExpenseState.clearValidators();
-        this.exportSettingsForm.controls.reimbursableExportType.clearValidators();
-        this.exportSettingsForm.controls.reimbursableExportDate.clearValidators();
-        this.exportSettingsForm.controls.reimbursableExpenseState.setValue(null);
-        this.exportSettingsForm.controls.reimbursableExportType.setValue(null);
-        this.exportSettingsForm.controls.reimbursableExportDate.setValue(null);
-      }
-    });
-  }
-
-  private createCreditCardExpenseWatcher(): void {
-    this.exportSettingsForm.controls.creditCardExpense.valueChanges.subscribe((isCreditCardExpenseSelected) => {
-      if (isCreditCardExpenseSelected) {
-        this.exportSettingsForm.controls.cccExpenseState.setValidators(Validators.required);
-        this.exportSettingsForm.controls.cccExpenseState.patchValue(this.exportSettings.expense_group_settings?.ccc_expense_state ? this.exportSettings.expense_group_settings?.ccc_expense_state : null);
-      } else {
-        this.exportSettingsForm.controls.creditCardExportType.clearValidators();
-        this.exportSettingsForm.controls.cccExpenseState.clearValidators();
-        this.exportSettingsForm.controls.cccExpenseState.setValue(null);
-        this.exportSettingsForm.controls.creditCardExportType.setValue(null);
-      }
-    });
-  }
-
   private setGeneralMappingsValidator(): void {
     this.exportSettingsForm.controls.creditCardExpense.valueChanges.subscribe((isCreditCardExpenseSelected) => {
       if (isCreditCardExpenseSelected) {
@@ -189,21 +156,10 @@ export class ExportSettingsComponent implements OnInit, OnDestroy {
     this.setupExportWatchers();
 
     // Toggles
-    this.createReimbursableExpenseWatcher();
-    this.createCreditCardExpenseWatcher();
+    this.exportSettingService.createReimbursableExpenseWatcher(this.exportSettingsForm, this.exportSettings);
+    this.exportSettingService.createCreditCardExpenseWatcher(this.exportSettingsForm, this.exportSettings);
 
     this.setGeneralMappingsValidator();
-  }
-
-  private getExportGroup(exportGroups: string[] | null): string {
-    if (exportGroups) {
-      const exportGroup = exportGroups.find((exportGroup) => {
-        return exportGroup === ExpenseGroupingFieldOption.EXPENSE_ID || exportGroup === ExpenseGroupingFieldOption.CLAIM_NUMBER || exportGroup === ExpenseGroupingFieldOption.SETTLEMENT_ID;
-      });
-      return exportGroup ? exportGroup : ExpenseGroupingFieldOption.CLAIM_NUMBER;
-    }
-
-    return '';
   }
 
   private getSettingsAndSetupForm(): void {

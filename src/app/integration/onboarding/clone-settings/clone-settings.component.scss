@@ -71,7 +71,7 @@
     }
 
     &--coa-import-section {
-        padding: 12px 0px 12px 32px;
+        padding: 20px 0px 12px 32px;
     }
 
     &--xero-field {
@@ -88,11 +88,21 @@
         padding-left: 14px;
     }
 
-    &--footer-section {
-        height: 108px;
+    &--back-btn {
+        margin-right: 12px;
+    }
+
+    &--error-message {
+        padding-top: 10px;
+        margin-left: -22px;
+    }
+
+    &--reset-btn {
+        width: 186px;
     }
 
     &--footer-inner-section {
+        height: 84px;
         padding: 12px 32px;
     }
 

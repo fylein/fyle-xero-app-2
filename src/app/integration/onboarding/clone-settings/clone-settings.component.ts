@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
+import { RxwebValidators } from '@rxweb/reactive-form-validators';
 import { forkJoin } from 'rxjs';
 import { AdvancedSettingFormOption } from 'src/app/core/models/configuration/advanced-setting.model';
-import { CloneSetting } from 'src/app/core/models/configuration/clone-setting.model';
+import { CloneSetting, CloneSettingModel } from 'src/app/core/models/configuration/clone-setting.model';
 import { ExportSettingFormOption } from 'src/app/core/models/configuration/export-setting.model';
 import { ExpenseFieldsFormOption } from 'src/app/core/models/configuration/import-setting.model';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
@@ -55,6 +58,8 @@ export class CloneSettingsComponent implements OnInit {
 
   mappingSettings: MappingSetting[];
 
+  isSaveInProgress: boolean = false;
+
   hoveredIndex: {
     categoryImport: number,
     expenseFieldImport: number,
@@ -76,10 +81,12 @@ export class CloneSettingsComponent implements OnInit {
     private formBuilder: FormBuilder,
     private helperService: HelperService,
     private importSettingService: ImportSettingService,
-    private mappingService: MappingService
+    private router: Router,
+    private mappingService: MappingService,
+    private snackBar: MatSnackBar
   ) { }
 
-  private resetConfiguraions(): void {
+  resetConfiguraions(): void {
     const data: ConfirmationDialog = {
       title: 'Are you sure?',
       contents: `By resetting the configuration, you will be configuring each setting individually from the beginning. <br><br>
@@ -87,7 +94,42 @@ export class CloneSettingsComponent implements OnInit {
       primaryCtaText: 'Yes'
     };
 
-    this.helperService.openDialogAndSetupRedirection(data, '/workspaces/onboarding/landing');
+    this.helperService.openDialogAndSetupRedirection(data, '/workspaces/onboarding/export_settings');
+  }
+
+  navigateToPreviousStep(): void {
+    this.router.navigate([`/workspaces/onboarding/xero_connector`]);
+  }
+
+  save(): void {
+    if (this.cloneSettingsForm.valid) {
+      this.isSaveInProgress = true;
+      const customMappingSettings = this.mappingSettings.filter(setting => !setting.import_to_fyle);
+      const cloneSettingPayload = CloneSettingModel.constructPayload(this.cloneSettingsForm, customMappingSettings);
+
+      this.cloneSettingService.saveCloneSettings(cloneSettingPayload).subscribe(() => {
+        this.isSaveInProgress = false;
+        this.snackBar.open('Cloned settings successfully');
+
+        // TODO: navigate to next page
+      }, () => {
+        this.isSaveInProgress = false;
+        this.snackBar.open('Failed to clone settings');
+      });
+    }
+  }
+
+  disableImportCoa(): void {
+    this.cloneSettingsForm.controls.chartOfAccountTypes.reset();
+  }
+
+  disableImportTax(): void {
+    this.cloneSettingsForm.controls.taxCode.setValue(false);
+    this.cloneSettingsForm.controls.defaultTaxCode.setValue(null);
+  }
+
+  deleteExpenseField(index: number): void {
+    this.expenseFields.removeAt(index);
   }
 
   private setGeneralMappingsValidator(): void {
@@ -106,12 +148,16 @@ export class CloneSettingsComponent implements OnInit {
   }
 
   private setupExportWatchers(): void {
-    this.cloneSettingsForm?.controls.reimbursableExpense?.setValidators(this.exportSettingService.exportSelectionValidator(this.cloneSettingsForm));
-    this.cloneSettingsForm?.controls.creditCardExpense?.setValidators(this.exportSettingService.exportSelectionValidator(this.cloneSettingsForm));
+    this.cloneSettingsForm?.controls.reimbursableExpense?.setValidators(this.exportSettingService.exportSelectionValidator(this.cloneSettingsForm, true));
+    this.cloneSettingsForm?.controls.creditCardExpense?.setValidators(this.exportSettingService.exportSelectionValidator(this.cloneSettingsForm, true));
   }
 
   private setCustomValidatorsAndWatchers(): void {
     this.setupExportWatchers();
+
+    this.exportSettingService.createReimbursableExpenseWatcher(this.cloneSettingsForm, this.cloneSettings.export_settings);
+    this.exportSettingService.createCreditCardExpenseWatcher(this.cloneSettingsForm, this.cloneSettings.export_settings);
+
     this.setGeneralMappingsValidator();
     this.setupExpenseFieldWatcher();
     this.setupAdditionalEmailsWatcher();
@@ -170,6 +216,10 @@ export class CloneSettingsComponent implements OnInit {
     const chartOfAccountTypeFormArray = this.chartOfAccountTypesList.map((type) => this.importSettingService.createChartOfAccountField(type, this.cloneSettings.import_settings.workspace_general_settings.charts_of_accounts));
     const expenseFieldsFormArray = this.importSettingService.getExpenseFieldsFormArray(this.xeroExpenseFields, false);
 
+    expenseFieldsFormArray.forEach((expenseField) => {
+      expenseField.controls.source_field.setValidators([RxwebValidators.unique(), Validators.required]);
+    });
+
     let paymentSync = '';
     if (this.cloneSettings.advanced_settings.workspace_general_settings.sync_fyle_to_xero_payments) {
       paymentSync = PaymentSyncDirection.FYLE_TO_XERO;
@@ -187,6 +237,7 @@ export class CloneSettingsComponent implements OnInit {
       cccExpenseState: [this.cloneSettings.export_settings.expense_group_settings.ccc_expense_state],
       chartOfAccountTypes: this.formBuilder.array(chartOfAccountTypeFormArray),
       expenseFields: this.formBuilder.array(expenseFieldsFormArray),
+      taxCode: [this.cloneSettings.import_settings.workspace_general_settings.import_tax_codes],
       defaultTaxCode: [this.cloneSettings.import_settings.general_mappings?.default_tax_code?.id ? this.cloneSettings.import_settings.general_mappings.default_tax_code : null],
       paymentSync: [paymentSync],
       billPaymentAccount: [this.cloneSettings.advanced_settings.general_mappings?.payment_account],
@@ -201,6 +252,9 @@ export class CloneSettingsComponent implements OnInit {
     });
 
     this.setCustomValidatorsAndWatchers();
+
+    this.cloneSettingsForm.markAllAsTouched();
+
     this.isLoading = false;
   }
 

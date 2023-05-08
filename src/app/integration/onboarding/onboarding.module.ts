@@ -12,6 +12,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { SharedModule } from 'src/app/shared/shared.module';
 
@@ -50,7 +51,8 @@ import { CloneSettingsComponent } from './clone-settings/clone-settings.componen
     MatDialogModule,
     MatMenuModule,
     MatTooltipModule,
-    SharedModule
+    SharedModule,
+    MatProgressSpinnerModule
   ]
 })
 export class OnboardingModule { }
