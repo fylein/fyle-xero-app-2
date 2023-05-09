@@ -1,4 +1,5 @@
 import { AdvancedSettingGet } from "../configuration/advanced-setting.model";
+import { CloneSetting } from "../configuration/clone-setting.model";
 import { ExportSettingGet } from "../configuration/export-setting.model";
 import { ImportSettingGet } from "../configuration/import-setting.model";
 import { CorporateCreditCardExpensesObject, ErrorType, PaginatorPage, ProgressPhase, ReimbursableExpensesObject } from "../enum/enum.model";
@@ -15,8 +16,8 @@ export type ClickEventAdditionalProperty = {
 export type UpdateEventAdditionalProperty = {
   phase: ProgressPhase,
   page: PaginatorPage,
-  oldState: ExportSettingGet | ImportSettingGet | AdvancedSettingGet | number,
-  newState: ExportSettingGet | ImportSettingGet | AdvancedSettingGet | number | {source_field: string, destination_field: string}
+  oldState: ExportSettingGet | ImportSettingGet | AdvancedSettingGet | CloneSetting | number,
+  newState: ExportSettingGet | ImportSettingGet | AdvancedSettingGet | CloneSetting | number | {source_field: string, destination_field: string}
 };
 
 export type DeleteEventAdditionalProperty = {

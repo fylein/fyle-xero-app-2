@@ -11,7 +11,7 @@ import { ExpenseFieldsFormOption } from 'src/app/core/models/configuration/impor
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { MappingSetting } from 'src/app/core/models/db/mapping-setting.model';
 import { WorkspaceScheduleEmailOptions } from 'src/app/core/models/db/workspace-schedule.model';
-import { PaymentSyncDirection, ProgressPhase } from 'src/app/core/models/enum/enum.model';
+import { ClickEvent, OnboardingStep, PaymentSyncDirection, ProgressPhase } from 'src/app/core/models/enum/enum.model';
 import { ConfirmationDialog } from 'src/app/core/models/misc/confirmation-dialog.model';
 import { ExpenseField } from 'src/app/core/models/misc/expense-field.model';
 import { AdvancedSettingService } from 'src/app/core/services/configuration/advanced-setting.service';
@@ -19,6 +19,7 @@ import { CloneSettingService } from 'src/app/core/services/configuration/clone-s
 import { ExportSettingService } from 'src/app/core/services/configuration/export-setting.service';
 import { ImportSettingService } from 'src/app/core/services/configuration/import-setting.service';
 import { HelperService } from 'src/app/core/services/core/helper.service';
+import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { MappingService } from 'src/app/core/services/misc/mapping.service';
 
 @Component({
@@ -74,6 +75,8 @@ export class CloneSettingsComponent implements OnInit {
 
   cloneSettings: CloneSetting;
 
+  private readonly sessionStartTime = new Date();
+
   constructor(
     private advancedSettingService: AdvancedSettingService,
     private cloneSettingService: CloneSettingService,
@@ -83,7 +86,8 @@ export class CloneSettingsComponent implements OnInit {
     private importSettingService: ImportSettingService,
     private router: Router,
     private mappingService: MappingService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private trackingService: TrackingService
   ) { }
 
   resetConfiguraions(): void {
@@ -93,11 +97,13 @@ export class CloneSettingsComponent implements OnInit {
         Would you like to continue?`,
       primaryCtaText: 'Yes'
     };
+    this.trackingService.onClickEvent(ClickEvent.CLONE_SETTINGS_RESET, {page: OnboardingStep.CLONE_SETTINGS});
 
     this.helperService.openDialogAndSetupRedirection(data, '/workspaces/onboarding/export_settings');
   }
 
   navigateToPreviousStep(): void {
+    this.trackingService.onClickEvent(ClickEvent.CLONE_SETTINGS_BACK, {page: OnboardingStep.CLONE_SETTINGS});
     this.router.navigate([`/workspaces/onboarding/xero_connector`]);
   }
 
@@ -107,11 +113,16 @@ export class CloneSettingsComponent implements OnInit {
       const customMappingSettings = this.mappingSettings.filter(setting => !setting.import_to_fyle);
       const cloneSettingPayload = CloneSettingModel.constructPayload(this.cloneSettingsForm, customMappingSettings);
 
-      this.cloneSettingService.saveCloneSettings(cloneSettingPayload).subscribe(() => {
+      this.cloneSettingService.saveCloneSettings(cloneSettingPayload).subscribe((response) => {
         this.isSaveInProgress = false;
         this.snackBar.open('Cloned settings successfully');
+        this.trackingService.onCloneSettingsSave({
+          oldState: this.cloneSettings,
+          newState: response
+        });
+        this.trackSessionTime();
 
-        // TODO: navigate to next page
+        this.router.navigate([`/workspaces/main/dashboard`]);
       }, () => {
         this.isSaveInProgress = false;
         this.snackBar.open('Failed to clone settings');
@@ -130,6 +141,12 @@ export class CloneSettingsComponent implements OnInit {
 
   deleteExpenseField(index: number): void {
     this.expenseFields.removeAt(index);
+  }
+
+  private trackSessionTime(): void {
+    const differenceInMs = new Date().getTime() - this.sessionStartTime.getTime();
+
+    this.trackingService.trackTimeSpent(OnboardingStep.CLONE_SETTINGS, { durationInSeconds: Math.floor(differenceInMs / 1000) });
   }
 
   private setGeneralMappingsValidator(): void {

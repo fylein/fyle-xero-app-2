@@ -159,7 +159,9 @@ export enum ClickEvent {
   UNMAPPED_MAPPINGS_FILTER = 'Unmapped Mappings Filter',
   MAPPED_MAPPINGS_FILTER = 'Mapped Mappings Filter',
   DISCONNECT_XERO = 'Disconnect Xero',
-  SYNC_DIMENSION = 'Sync Dimension'
+  SYNC_DIMENSION = 'Sync Dimension',
+  CLONE_SETTINGS_BACK = 'Clone Settings Back',
+  CLONE_SETTINGS_RESET = 'Clone Settings Reset'
 }
 
 export enum ProgressPhase {
@@ -173,7 +175,8 @@ export enum OnboardingStep {
   EXPORT_SETTINGS = 'Export Settings',
   IMPORT_SETTINGS = 'Import Settings',
   ADVANCED_SETTINGS = 'Advanced Settings',
-  ONBOARDING_DONE = 'Onboarding Done'
+  ONBOARDING_DONE = 'Onboarding Done',
+  CLONE_SETTINGS = 'Clone Settings'
 }
 
 export enum UpdateEvent {
