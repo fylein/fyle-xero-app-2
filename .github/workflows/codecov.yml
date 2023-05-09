@@ -1,8 +1,11 @@
-name: Unit testing
+name: Codecov Report Upload
 
 on:
+  push:
+    branches:
+      - master
   pull_request:
-    types: [assigned,  opened,  synchronize,  reopened]
+    types: [labeled]
 
 jobs:
   unit-test:
@@ -18,16 +21,16 @@ jobs:
     - name: Test
       run: npm run unit_test_ci
       env:
-        FYLE_CLIENT_ID: ${{secrets.FYLE_CLIENT_ID}} 
-        CALLBACK_URL: ${{secrets.CALLBACK_URL}} 
-        API_URL: ${{secrets.API_URL}} 
-        APP_URL: ${{secrets.APP_URL}} 
-        XERO_CLIENT_ID: ${{secrets.XERO_CLIENT_ID}} 
-        XERO_SCOPE: ${{secrets.XERO_SCOPE}} 
-        XERO_AUTHORIZE_URI: ${{secrets.XERO_AUTHORIZE_URI}} 
-        SENTRY_DSN: ${{secrets.SENTRY_DSN}} 
-        RELEASE: ${{secrets.RELEASE}} 
-        FYLE_APP_URL: ${{secrets.FYLE_APP_URL}} 
+        FYLE_CLIENT_ID: ${{secrets.FYLE_CLIENT_ID}}
+        CALLBACK_URL: ${{secrets.CALLBACK_URL}}
+        API_URL: ${{secrets.API_URL}}
+        APP_URL: ${{secrets.APP_URL}}
+        XERO_CLIENT_ID: ${{secrets.XERO_CLIENT_ID}}
+        XERO_SCOPE: ${{secrets.XERO_SCOPE}}
+        XERO_AUTHORIZE_URI: ${{secrets.XERO_AUTHORIZE_URI}}
+        SENTRY_DSN: ${{secrets.SENTRY_DSN}}
+        RELEASE: ${{secrets.RELEASE}}
+        FYLE_APP_URL: ${{secrets.FYLE_APP_URL}}
         TESTS_WORKSPACEID: ${{secrets.TESTS_WORKSPACEID}}
         XERO_CALLBACK_URI: ${{secrets.XERO_CALLBACK_URI}}
     - name: Comment Test Coverage
