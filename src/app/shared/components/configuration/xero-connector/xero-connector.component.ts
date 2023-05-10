@@ -58,6 +58,8 @@ export class XeroConnectorComponent implements OnInit, OnDestroy {
 
   isDisconnectXeroClicked: boolean = false;
 
+  private disableCloneSettings: boolean;
+
   constructor(
     private authService: AuthService,
     private cloneSettingService: CloneSettingService,
@@ -98,6 +100,9 @@ export class XeroConnectorComponent implements OnInit, OnDestroy {
 
   continueToNextStep(): void {
     if (this.isContinueDisabled) {
+      return;
+    } else if (this.disableCloneSettings) {
+      this.router.navigate(['/workspaces/onboarding/export_settings']);
       return;
     }
     if (this.xeroConnectorForm.valid && !this.isContinueDisabled) {
@@ -179,6 +184,8 @@ export class XeroConnectorComponent implements OnInit, OnDestroy {
   }
 
   private showCloneSettingsDialog(workspaceName: string): void {
+    this.isContinueDisabled = false;
+    this.disableCloneSettings = true;
     const data: ConfirmationDialog = {
       title: 'Your settings are pre-filled',
       contents: `<li>Your previous organization's settings <b>(${workspaceName})</b> have been copied over to the current organization</li>
