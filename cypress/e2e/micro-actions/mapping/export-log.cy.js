@@ -2,7 +2,7 @@
 
 describe('Export Log', () => {
     beforeEach(() => {
-      cy.journeyLogin()
+      cy.microActionLogin()
       cy.visit('/')
     })
   
