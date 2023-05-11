@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { RxwebValidators } from '@rxweb/reactive-form-validators';
@@ -11,7 +11,7 @@ import { ExpenseFieldsFormOption } from 'src/app/core/models/configuration/impor
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { MappingSetting } from 'src/app/core/models/db/mapping-setting.model';
 import { WorkspaceScheduleEmailOptions } from 'src/app/core/models/db/workspace-schedule.model';
-import { ClickEvent, OnboardingStep, PaymentSyncDirection, ProgressPhase } from 'src/app/core/models/enum/enum.model';
+import { ClickEvent, OnboardingStep, PaymentSyncDirection, ProgressPhase, SimpleSearchPage, SimpleSearchType } from 'src/app/core/models/enum/enum.model';
 import { ConfirmationDialog } from 'src/app/core/models/misc/confirmation-dialog.model';
 import { ExpenseField } from 'src/app/core/models/misc/expense-field.model';
 import { AdvancedSettingService } from 'src/app/core/services/configuration/advanced-setting.service';
@@ -49,6 +49,8 @@ export class CloneSettingsComponent implements OnInit {
 
   xeroExpenseFields: ExpenseFieldsFormOption[];
 
+  additionalXeroExpenseFields: ExpenseFieldsFormOption[];
+
   cccExpenseStateOptions: ExportSettingFormOption[];
 
   fyleExpenseFields: string[];
@@ -73,6 +75,10 @@ export class CloneSettingsComponent implements OnInit {
 
   ProgressPhase = ProgressPhase;
 
+  SimpleSearchPage = SimpleSearchPage;
+
+  SimpleSearchType = SimpleSearchType;
+
   cloneSettings: CloneSetting;
 
   private readonly sessionStartTime = new Date();
@@ -82,7 +88,7 @@ export class CloneSettingsComponent implements OnInit {
     private cloneSettingService: CloneSettingService,
     private exportSettingService: ExportSettingService,
     private formBuilder: FormBuilder,
-    private helperService: HelperService,
+    public helperService: HelperService,
     private importSettingService: ImportSettingService,
     private router: Router,
     private mappingService: MappingService,
@@ -131,16 +137,47 @@ export class CloneSettingsComponent implements OnInit {
   }
 
   disableImportCoa(): void {
+    this.cloneSettingsForm.controls.chartOfAccount.setValue(false);
     this.cloneSettingsForm.controls.chartOfAccountTypes.reset();
   }
 
   disableImportTax(): void {
     this.cloneSettingsForm.controls.taxCode.setValue(false);
+    this.cloneSettingsForm.controls.defaultTaxCode.clearValidators();
     this.cloneSettingsForm.controls.defaultTaxCode.setValue(null);
   }
 
-  deleteExpenseField(index: number): void {
+  enableTaxImport(): void {
+    this.cloneSettingsForm.controls.taxCode.setValue(true);
+    this.cloneSettingsForm.controls.defaultTaxCode.setValidators(Validators.required);
+  }
+
+  enableAccountImport(): void {
+    this.cloneSettingsForm.controls.chartOfAccount.setValue(true);
+  }
+
+  addExpenseField(field: ExpenseFieldsFormOption): void {
+    this.expenseFields.push(this.formBuilder.group({
+      source_field: [field.source_field, Validators.compose([RxwebValidators.unique(), Validators.required])],
+      destination_field: [field.destination_field.toUpperCase()],
+      disable_import_to_fyle: [field.disable_import_to_fyle],
+      import_to_fyle: [field.import_to_fyle],
+      source_placeholder: ['']
+    }));
+    this.expenseFields.markAllAsTouched();
+    this.additionalXeroExpenseFields = this.additionalXeroExpenseFields.filter((expenseField) => expenseField.destination_field !== field.destination_field);
+  }
+
+  deleteExpenseField(index: number, expenseField: AbstractControl): void {
     this.expenseFields.removeAt(index);
+    const additionalField = {
+      source_field: '',
+      destination_field: expenseField.value.destination_field,
+      disable_import_to_fyle: false,
+      import_to_fyle: false,
+      source_placeholder: ''
+    };
+    this.additionalXeroExpenseFields.push(additionalField);
   }
 
   private trackSessionTime(): void {
@@ -211,11 +248,36 @@ export class CloneSettingsComponent implements OnInit {
     this.importSettingService.createExpenseField(destinationType, this.mappingSettings);
   }
 
+  private getXeroExpenseFields(xeroAttributes: string[], mappingSettings: MappingSetting[], isCloneSettings: boolean = false, fyleFields: string[] = []): ExpenseFieldsFormOption[] {
+    return xeroAttributes.map(attribute => {
+      const mappingSetting = mappingSettings.filter((mappingSetting: MappingSetting) => {
+        if (mappingSetting.destination_field.toUpperCase() === attribute) {
+          if (isCloneSettings) {
+            return fyleFields.includes(mappingSetting.source_field.toUpperCase()) ? mappingSetting : false;
+          }
+
+          return mappingSetting;
+        }
+
+        return false;
+      });
+
+      return {
+        source_field: mappingSetting.length > 0 ? mappingSetting[0].source_field : '',
+        destination_field: attribute,
+        import_to_fyle: mappingSetting.length > 0 ? mappingSetting[0].import_to_fyle : false,
+        disable_import_to_fyle: false,
+        source_placeholder: ''
+      };
+    });
+  }
+
   private setImportFields(fyleFields: ExpenseField[], xeroFields: ExpenseField[]): void {
     this.fyleExpenseFields = fyleFields.map(field => field.attribute_type);
       // Remove custom mapped Fyle options
       const customMappedFyleFields = this.mappingSettings.filter(setting => !setting.import_to_fyle).map(setting => setting.source_field);
       const customMappedXeroFields = this.mappingSettings.filter(setting => !setting.import_to_fyle).map(setting => setting.destination_field);
+      const importedXeroFields = this.cloneSettings.import_settings.mapping_settings.filter(setting => setting.import_to_fyle).map(setting => setting.destination_field);
 
       if (customMappedFyleFields.length) {
         this.fyleExpenseFields = this.fyleExpenseFields.filter(field => !customMappedFyleFields.includes(field));
@@ -225,7 +287,14 @@ export class CloneSettingsComponent implements OnInit {
       const xeroAttributes = xeroFields.filter(
         field => !customMappedXeroFields.includes(field.attribute_type)
       );
-      this.xeroExpenseFields = this.importSettingService.getXeroExpenseFields(xeroAttributes, this.cloneSettings.import_settings.mapping_settings, true, this.fyleExpenseFields);
+
+      this.xeroExpenseFields = this.getXeroExpenseFields(importedXeroFields, this.cloneSettings.import_settings.mapping_settings, true, this.fyleExpenseFields);
+      const allExpenseFields = this.importSettingService.getXeroExpenseFields(xeroAttributes, this.cloneSettings.import_settings.mapping_settings, true, this.fyleExpenseFields);
+
+      this.additionalXeroExpenseFields = allExpenseFields.filter((field) => {
+        return !this.xeroExpenseFields.some((xeroField) => xeroField.destination_field.toUpperCase() === field.destination_field.toUpperCase());
+      });
+
   }
 
   private setupForm(): void {
@@ -252,6 +321,7 @@ export class CloneSettingsComponent implements OnInit {
       creditCardExpense: [this.cloneSettings.export_settings.workspace_general_settings.corporate_credit_card_expenses_object],
       bankAccount: [bankAccount.length ? this.cloneSettings.export_settings.general_mappings.bank_account : null],
       cccExpenseState: [this.cloneSettings.export_settings.expense_group_settings.ccc_expense_state],
+      chartOfAccount: [this.cloneSettings.import_settings.workspace_general_settings.import_categories],
       chartOfAccountTypes: this.formBuilder.array(chartOfAccountTypeFormArray),
       expenseFields: this.formBuilder.array(expenseFieldsFormArray),
       taxCode: [this.cloneSettings.import_settings.workspace_general_settings.import_tax_codes],
