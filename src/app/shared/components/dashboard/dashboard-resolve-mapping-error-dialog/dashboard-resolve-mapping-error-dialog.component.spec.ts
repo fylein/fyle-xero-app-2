@@ -11,6 +11,7 @@ import { of } from 'rxjs';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MappingPostpayload } from '../../mapping/generic-mapping/generic-mapping.fixture';
+import { Router } from '@angular/router';
 // Import { MappingList } from 'src/app/core/models/db/mapping.model';
 
 describe('DashboardResolveMappingErrorDialogComponent', () => {
@@ -25,6 +26,9 @@ describe('DashboardResolveMappingErrorDialogComponent', () => {
   let dialogSpy: jasmine.Spy;
   const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of({}), close: null });
   dialogRefSpyObj.componentInstance = { body: '' }; // Attach componentInstance to the spy object...
+  const routerSpy = { navigate: jasmine.createSpy('navigate'), url: '/path' };
+  let router: Router;
+
   beforeEach(async () => {
     const service1 = {
       getXeroDestinationAttributes: () => of([]),
@@ -42,7 +46,8 @@ describe('DashboardResolveMappingErrorDialogComponent', () => {
         provide: MatDialogRef,
         useValue: {}
       },
-      { provide: MappingService, useValue: service1 }
+      { provide: MappingService, useValue: service1 },
+      { provide: Router, useValue: routerSpy },
     ],
       declarations: [ DashboardResolveMappingErrorDialogComponent ]
     })

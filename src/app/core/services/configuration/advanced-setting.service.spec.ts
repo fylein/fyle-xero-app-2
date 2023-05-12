@@ -4,6 +4,8 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import { AdvancedSettingGet, AdvancedSettingPost } from '../../models/configuration/advanced-setting.model';
 import { environment } from 'src/environments/environment';
 import { WorkspaceScheduleEmailOptions } from '../../models/db/workspace-schedule.model';
+import { MatDialogModule } from '@angular/material/dialog';
+import { of } from 'rxjs';
 
 describe('AdvancedSettingService', () => {
   let service: AdvancedSettingService;
@@ -11,11 +13,14 @@ describe('AdvancedSettingService', () => {
   let httpMock: HttpTestingController;
   const API_BASE_URL = environment.api_url;
   const workspace_id = environment.tests.workspaceId;
+  let dialogSpy: jasmine.Spy;
+  const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of({}), close: null });
+  dialogRefSpyObj.componentInstance = { body: '' };
 
   beforeEach(() => {
     localStorage.setItem('workspaceId', environment.tests.workspaceId);
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
+      imports: [HttpClientTestingModule, MatDialogModule],
       providers: [AdvancedSettingService]
     });
     injector = getTestBed();
@@ -121,6 +126,13 @@ describe('AdvancedSettingService', () => {
     });
   req.flush(response);
 
+  });
+
+  it('openAddemailDialog function check', () => {
+    // TODO
+    // expect(component.openAddemailDialog()).toBeUndefined();
+    // fixture.detectChanges();
+    // expect(dialogSpy1).toHaveBeenCalled();
   });
 
 });

@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { environment } from 'src/environments/environment';
 import { WorkspaceService } from 'src/app/core/services/workspace/workspace.service';
+import { MatDialogModule } from '@angular/material/dialog';
 
 describe('ConfigurationStepHeaderSectionComponent', () => {
   let component: ConfigurationStepHeaderSectionComponent;
@@ -23,12 +24,13 @@ describe('ConfigurationStepHeaderSectionComponent', () => {
   let service1: any;
   const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of({}), close: null });
   dialogRefSpyObj.componentInstance = { body: '' }; // Attach componentInstance to the spy object...
+
   beforeEach(async () => {
     service1 = {
       refreshXeroDimensions: () => of({})
     };
     await TestBed.configureTestingModule({
-      imports: [RouterTestingModule, HttpClientModule, MatSnackBarModule, BrowserAnimationsModule, HttpClientTestingModule],
+      imports: [RouterTestingModule, HttpClientModule, MatSnackBarModule, BrowserAnimationsModule, HttpClientTestingModule, MatDialogModule],
       declarations: [ ConfigurationStepHeaderSectionComponent],
       providers: [ {
         provide: WorkspaceService,
@@ -37,8 +39,9 @@ describe('ConfigurationStepHeaderSectionComponent', () => {
         provide: Router,
         useValue: {
            url: '/path'
-        }
-     }]
+        },
+     }
+    ]
     })
     .compileComponents();
   });

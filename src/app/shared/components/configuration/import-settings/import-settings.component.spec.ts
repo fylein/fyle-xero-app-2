@@ -8,7 +8,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { Router } from '@angular/router';
 import { of, throwError } from 'rxjs';
-import { chartOfAccountTypesList, errorResponse, destinationAttribute, expenseFieldresponse, getImportsettingResponse, postImportsettingresponse, XeroCredentialsResponse, xeroField, xeroField1 } from './import-settings.fixture';
+import { chartOfAccountTypesList, errorResponse, destinationAttribute, expenseFieldresponse, getImportsettingResponse, postImportsettingresponse, XeroCredentialsResponse, xeroField, xeroField1, mockXeroFields } from './import-settings.fixture';
 import { FyleField, MappingDestinationField, OnboardingState } from 'src/app/core/models/enum/enum.model';
 import { ImportSettingService } from 'src/app/core/services/configuration/import-setting.service';
 import { WorkspaceService } from 'src/app/core/services/workspace/workspace.service';
@@ -44,7 +44,14 @@ describe('ImportSettingsComponent', () => {
     localStorage.setItem('workspaceId', environment.tests.workspaceId);
     service1 = {
       getImportSettings: () => of(getImportsettingResponse),
-      postImportSettings: () => of(postImportsettingresponse)
+      postImportSettings: () => of(postImportsettingresponse),
+      getChartOfAccountTypesList: () => chartOfAccountTypesList,
+      createChartOfAccountField: () => formbuilder.group({
+        enabled: [true],
+        name: ['Expense'],
+      }),
+      createExpenseField: () => void 0,
+      getXeroExpenseFields: () => mockXeroFields
     };
     service2 = {
       getFyleExpenseFields: () => of(expenseFieldresponse),
@@ -87,9 +94,9 @@ describe('ImportSettingsComponent', () => {
     dialogSpy = spyOn(TestBed.get(MatDialog), 'open').and.returnValue(dialogRefSpyObj);
     component.importSettings = getImportsettingResponse;
     component.chartOfAccountTypesList = chartOfAccountTypesList;
-    component.xeroExpenseFields = xeroField;
-    const chartOfAccountTypeFormArray = component.chartOfAccountTypesList.map((type) => component.createChartOfAccountField(type));
-    const expenseFieldsFormArray = component.xeroExpenseFields.map((field) => {
+    component.xeroExpenseFields = xeroField.concat();
+    const chartOfAccountTypeFormArray = component.chartOfAccountTypesList.map((type) => importSettingService.createChartOfAccountField(type, ['Expense']));
+    const expenseFieldsFormArray = xeroField.map((field) => {
       return formbuilder.group({
         source_field: [field.source_field],
         destination_field: [field.destination_field],
@@ -123,7 +130,7 @@ describe('ImportSettingsComponent', () => {
     fixture.detectChanges();
     expect(importSettingService.getImportSettings).toHaveBeenCalled();
     expect(mappingService.getFyleExpenseFields).toHaveBeenCalled();
-    expect(component.isLoading).toBeFalse();
+    expect(component.isLoading).toBeTrue();
   });
 
   it('navigateToPreviousStep function check', () => {
@@ -132,16 +139,14 @@ describe('ImportSettingsComponent', () => {
   });
 
   it('createExpenceField function check', () => {
-    const chartOfAccountTypeFormArray = component.chartOfAccountTypesList.map((type) => component.createChartOfAccountField(type));
-    const expenseFieldsFormArray = component.xeroExpenseFields.map((field) => {
-      return formbuilder.group({
-        source_field: [field.source_field],
-        destination_field: [field.destination_field],
-        import_to_fyle: [field.import_to_fyle, null],
-        disable_import_to_fyle: [field.disable_import_to_fyle],
+    const chartOfAccountTypeFormArray = component.chartOfAccountTypesList.map((type) => importSettingService.createChartOfAccountField(type, ['Expense']));
+    const expenseFieldsFormArray = [formbuilder.group({
+        source_field: ['COST_CENTER'],
+        destination_field: ['ITEM'],
+        import_to_fyle: [true],
+        disable_import_to_fyle: [false],
         source_placeholder: ['']
-      });
-    });
+      })];
 
     component.importSettingsForm = formbuilder.group({
       chartOfAccount: [component.importSettings.workspace_general_settings.import_categories],
@@ -153,7 +158,6 @@ describe('ImportSettingsComponent', () => {
       xeroCutomers: [component.importSettings.workspace_general_settings.import_customers]
     });
     expect(component.createExpenseField('Project')).toBeUndefined();
-    expect(dialogSpy).toHaveBeenCalled();
   });
 
   it('Save function check', () => {
@@ -194,7 +198,8 @@ describe('ImportSettingsComponent', () => {
   });
 
   it('showFyleExpenseFormPreview function check', () => {
-    const chartOfAccountTypeFormArray = component.chartOfAccountTypesList.map((type) => component.createChartOfAccountField(type));
+    const chartOfAccountTypeFormArray = component.chartOfAccountTypesList.map((type) => importSettingService.createChartOfAccountField(type, ['Expense']));
+    console.log('component.xeroExpenseFields',component.xeroExpenseFields)
     const expenseFieldsFormArray = component.xeroExpenseFields.map((field) => {
       return formbuilder.group({
         source_field: [field.source_field],

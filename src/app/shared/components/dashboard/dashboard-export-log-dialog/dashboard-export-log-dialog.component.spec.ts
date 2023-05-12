@@ -6,6 +6,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { DashboardExportLogDialogComponent } from './dashboard-export-log-dialog.component';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { environment } from 'src/environments/environment';
+import { Router } from '@angular/router';
 
 describe('DashboardExportLogDialogComponent', () => {
   let component: DashboardExportLogDialogComponent;
@@ -15,6 +16,9 @@ describe('DashboardExportLogDialogComponent', () => {
   let httpMock: HttpTestingController;
   const API_BASE_URL = environment.api_url;
   const workspace_id = environment.tests.workspaceId;
+  const routerSpy = { navigate: jasmine.createSpy('navigate'), url: '/path' };
+  let router: Router;
+
   beforeEach(async () => {
     localStorage.setItem('user', JSON.stringify({org_id: 'dummy'}));
     const serviceSpy = jasmine.createSpyObj('ExportLogService', ['getExpenseGroups', 'generateExportTypeAndId', 'getReferenceType', 'generateFyleUrl']);
@@ -32,7 +36,9 @@ describe('DashboardExportLogDialogComponent', () => {
         // I was expecting this will pass the desired value
         provide: MatDialogRef,
         useValue: {}
-      }]
+      },
+      { provide: Router, useValue: routerSpy },
+    ]
     })
     .compileComponents();
   });

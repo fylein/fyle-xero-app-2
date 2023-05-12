@@ -9,16 +9,23 @@ import { destinationAttribute, mappingList } from './mapping-table.fixture';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { By } from '@angular/platform-browser';
+import { Router } from '@angular/router';
 
 describe('MappingTableComponent', () => {
   let component: MappingTableComponent;
   let fixture: ComponentFixture<MappingTableComponent>;
   let formBuilder: FormBuilder;
+  const routerSpy = { navigate: jasmine.createSpy('navigate'), url: '/path' };
+  let router: Router;
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [SharedModule, BrowserAnimationsModule],
       declarations: [MappingTableComponent],
-      providers: [FormBuilder],
+      providers: [
+        FormBuilder,
+        { provide: Router, useValue: routerSpy },
+      ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
     })
       .compileComponents();

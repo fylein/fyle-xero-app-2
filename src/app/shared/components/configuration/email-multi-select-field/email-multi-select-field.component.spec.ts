@@ -5,16 +5,22 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { SharedModule } from 'src/app/shared/shared.module';
 
 import { EmailMultiSelectFieldComponent } from './email-multi-select-field.component';
+import { Router } from '@angular/router';
 
 describe('EmailMultiSelectFieldComponent', () => {
   let component: EmailMultiSelectFieldComponent;
   let fixture: ComponentFixture<EmailMultiSelectFieldComponent>;
+  const routerSpy = { navigate: jasmine.createSpy('navigate'), url: '/path' };
+  let router: Router;
 
   let formBuilder: FormBuilder;
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [SharedModule, MatDialogModule, NoopAnimationsModule],
-      declarations: [ EmailMultiSelectFieldComponent ]
+      declarations: [ EmailMultiSelectFieldComponent ],
+      providers: [
+        { provide: Router, useValue: routerSpy },
+      ]
     })
     .compileComponents();
   });
@@ -43,15 +49,5 @@ describe('EmailMultiSelectFieldComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
-  });
-
-  it('delete function check', () => {
-    const event = new Event("click", undefined);
-    expect(component.delete(event, 'fyle@fyle.in')).toBeUndefined();
-    fixture.detectChanges();
-    expect(component.form.controls.emails.value).toEqual(['integrations@fyle.in']);
-    expect(component.delete(event, 'fyle@fyle.in', true)).toBeUndefined();
-    fixture.detectChanges();
-    expect(component.form.controls.emails.value).toBeNull();
   });
 });

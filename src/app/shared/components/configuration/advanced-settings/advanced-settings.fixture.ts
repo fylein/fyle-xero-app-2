@@ -2,7 +2,7 @@ import { AdvancedSettingGet } from "src/app/core/models/configuration/advanced-s
 import { DestinationAttribute } from "src/app/core/models/db/destination-attribute.model";
 import { WorkspaceSchedule, WorkspaceScheduleEmailOptions } from "src/app/core/models/db/workspace-schedule.model";
 import { WorkspaceGeneralSetting } from "src/app/core/models/db/workspace-general-setting.model";
-import { CorporateCreditCardExpensesObject, ReimbursableExpensesObject } from "src/app/core/models/enum/enum.model";
+import { CorporateCreditCardExpensesObject, PaymentSyncDirection, ReimbursableExpensesObject } from "src/app/core/models/enum/enum.model";
 
 export const response:WorkspaceGeneralSetting = {
   auto_create_destination_entity: true,
@@ -142,3 +142,18 @@ export const emailResponse: WorkspaceSchedule = {
 };
 export const adminEmails: WorkspaceScheduleEmailOptions[] = [ {name: 'fyle', email: 'fyle@fyle.in'}, {name: 'fyle2', email: 'fyle2@fyle.in'}];
 export const memo = ['employee_email', 'merchant', 'purpose', 'category', 'report_number', 'expense_link'];
+
+export const mockPaymentSyncOptions = [
+  {
+    label: 'None',
+    value: 'None'
+  },
+  {
+    label: 'Export Fyle ACH Payments to Xero',
+    value: PaymentSyncDirection.FYLE_TO_XERO
+  },
+  {
+    label: 'Import Xero Payments into Fyle',
+    value: PaymentSyncDirection.XERO_TO_FYLE
+  }
+];

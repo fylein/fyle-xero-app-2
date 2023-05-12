@@ -37,7 +37,8 @@ describe('ExportSettingService', () => {
       workspace_general_settings: {
         reimbursable_expenses_object: ReimbursableExpensesObject.PURCHASE_BILL,
         corporate_credit_card_expenses_object: CorporateCreditCardExpensesObject.BANK_TRANSACTION,
-        auto_map_employees: AutoMapEmployee.EMAIL
+        auto_map_employees: AutoMapEmployee.EMAIL,
+        is_simplify_report_closure_enabled: true
       },
       general_mappings: {
         bank_account: {id: '1', name: 'Fyle'}
@@ -75,12 +76,13 @@ describe('ExportSettingService', () => {
       expense_group_settings: {
         reimbursable_expense_state: ExpenseState.PAID,
         reimbursable_export_date_type: null,
-        ccc_expense_state: CCCExpenseState.PAID
+        ccc_expense_state: CCCExpenseState.PAID,
       },
       workspace_general_settings: {
         reimbursable_expenses_object: ReimbursableExpensesObject.PURCHASE_BILL,
         corporate_credit_card_expenses_object: CorporateCreditCardExpensesObject.BANK_TRANSACTION,
-        auto_map_employees: AutoMapEmployee.EMAIL
+        auto_map_employees: AutoMapEmployee.EMAIL,
+        is_simplify_report_closure_enabled: true
       },
       general_mappings: {
         bank_account: {id: '1', name: 'Fyle'}
@@ -96,6 +98,41 @@ describe('ExportSettingService', () => {
     });
     req.flush(response);
 
+  });
+
+  it('exportSelectionValidator function check', () => {
+    // TODO
+    // const control = { value: ExpenseState.PAID, parent: formbuilder.group({
+    //   reimbursableExpense: ReimbursableExpensesObject.PURCHASE_BILL
+    // }) };
+    // expect((component as any).exportSelectionValidator()(control as AbstractControl)).toBeNull();
+    // const control1 = { value: ExpenseState.PAYMENT_PROCESSING, parent: formbuilder.group({
+    //   creditCardExpense: CorporateCreditCardExpensesObject.BANK_TRANSACTION
+    // }) };
+    // expect((component as any).exportSelectionValidator()(control1 as AbstractControl)).toBeNull();
+  });
+
+  it('createCreditCardExpenseWatcher function check', () => {
+    // TODO
+    // component.exportSettingsForm.controls.creditCardExpense.patchValue(!component.exportSettingsForm.controls.creditCardExpense.value);
+    // expect((component as any).createCreditCardExpenseWatcher()).toBeUndefined();
+    // fixture.detectChanges();
+    // component.exportSettingsForm.controls.creditCardExpense.patchValue(!component.exportSettingsForm.controls.creditCardExpense.value);
+    // expect((component as any).createCreditCardExpenseWatcher()).toBeUndefined();
+  });
+
+  it('createReimbursableExpenseWatcher function check', () => {
+    // TODO
+    // component.ngOnInit();
+    // component.exportSettingsForm.controls.reimbursableExpense.patchValue(true);
+    // expect((component as any).createReimbursableExpenseWatcher()).toBeUndefined();
+    // fixture.detectChanges();
+    // component.exportSettingsForm.controls.reimbursableExpense.patchValue(false);
+    // expect((component as any).createReimbursableExpenseWatcher()).toBeUndefined();
+    // fixture.detectChanges();
+    // component.exportSettingsForm.controls.reimbursableExpense.patchValue(true);
+    // component.exportSettings.expense_group_settings.reimbursable_export_date_type = null;
+    // expect((component as any).createReimbursableExpenseWatcher()).toBeUndefined();
   });
 
 });

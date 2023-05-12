@@ -94,13 +94,22 @@ export const expenseFieldresponse:ExpenseField[]=[
       "display_name": "Xero Field"
   }
 ];
-export const xeroField:ExpenseFieldsFormOption[] = [{
-  source_field: MappingSourceField.TAX_GROUP,
-  destination_field: MappingDestinationField.ACCOUNT,
-  import_to_fyle: true,
-  disable_import_to_fyle: true,
-  source_placeholder: null
-}];
+export const xeroField:ExpenseFieldsFormOption[] = [
+  {
+    source_field: MappingSourceField.TAX_GROUP,
+    destination_field: MappingDestinationField.TAX_CODE,
+    import_to_fyle: true,
+    disable_import_to_fyle: true,
+    source_placeholder: null
+  },
+  {
+    source_field: MappingSourceField.PROJECT,
+    destination_field: MappingDestinationField.ITEM,
+    import_to_fyle: true,
+    disable_import_to_fyle: true,
+    source_placeholder: null
+  }
+];
 export const xeroField1:ExpenseFieldsFormOption[] = [{
   source_field: MappingSourceField.PROJECT,
   destination_field: MappingDestinationField.ACCOUNT,
@@ -175,4 +184,12 @@ export const errorResponse = {
     is_expired: true,
     company_name: 'Xero'
   }
+};
+
+export const mockXeroFields = {
+  source_field: 'PROJECT',
+  destination_field: 'ITEM',
+  import_to_fyle: true,
+  disable_import_to_fyle: false,
+  source_placeholder: ''
 };

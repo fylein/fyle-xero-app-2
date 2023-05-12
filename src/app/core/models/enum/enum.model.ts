@@ -44,7 +44,8 @@ export enum MappingDestinationField {
   ACCOUNT = 'ACCOUNT',
   CONTACT = 'CONTACT',
   BANK_ACCOUNT = 'BANK_ACCOUNT',
-  TAX_CODE = 'TAX_CODE'
+  TAX_CODE = 'TAX_CODE',
+  ITEM = 'ITEM',
 }
 
 export enum ExpenseGroupingFieldOption {

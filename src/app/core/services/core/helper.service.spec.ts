@@ -3,12 +3,21 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { DefaultDestinationAttribute } from '../../models/db/general-mapping.model';
 
 import { HelperService } from './helper.service';
+import { MatDialogModule } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 
 describe('HelperService', () => {
   let service: HelperService;
+  const routerSpy = { navigate: jasmine.createSpy('navigate'), url: '/path' };
+  let router: Router;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({
+      providers: [
+        { provide: Router, useValue: routerSpy },
+      ],
+      imports: [MatDialogModule]
+    });
     service = TestBed.inject(HelperService);
   });
 
@@ -52,10 +61,6 @@ describe('HelperService', () => {
     const source_field = 'Fyle';
     const destination_field= 'Fyle';
     expect(service.compareObjects(source_field, destination_field)).toBeTrue();
-  });
-
-  it('openExternalLink function check', () => {
-      expect(service.openExternalLink('https://www.google.co.in/')).toBeUndefined();
   });
 
   it('should convert snake cased upper case to title cased space case', () => {

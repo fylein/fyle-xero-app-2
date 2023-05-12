@@ -12,11 +12,15 @@ import { UserService } from 'src/app/core/services/misc/user.service';
 import { ExportLogModule } from '../export-log.module';
 import { ExpenseList } from 'src/app/core/models/db/expense.model';
 import { MatTableDataSource } from '@angular/material/table';
+import { Router } from '@angular/router';
 
 describe('ExportLogChildDialogComponent', () => {
   let component: ExportLogChildDialogComponent;
   let fixture: ComponentFixture<ExportLogChildDialogComponent>;
   let formBuilder: FormBuilder;
+  const routerSpy = { navigate: jasmine.createSpy('navigate'), url: '/path' };
+  let router: Router;
+
   beforeEach(async () => {
     const service1 = {
       getUserProfile: () => of(user)
@@ -25,6 +29,7 @@ describe('ExportLogChildDialogComponent', () => {
       declarations: [ ExportLogChildDialogComponent ],
       imports: [HttpClientModule, FormsModule, ReactiveFormsModule, MatDialogModule, HttpClientTestingModule, ExportLogModule],
       providers: [
+        { provide: Router, useValue: routerSpy },
         FormBuilder,
         { provide: UserService, useValue: service1},
       {

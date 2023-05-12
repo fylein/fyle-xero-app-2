@@ -6,16 +6,22 @@ import { DebugElement } from '@angular/core';
 import { expenseList } from './export-log-child-table.fixture';
 import { By } from '@angular/platform-browser';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { Router } from '@angular/router';
 
 describe('ExportLogChildTableComponent', () => {
   let component: ExportLogChildTableComponent;
   let fixture: ComponentFixture<ExportLogChildTableComponent>;
   let el: DebugElement;
+  const routerSpy = { navigate: jasmine.createSpy('navigate'), url: '/path' };
+  let router: Router;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [SharedModule],
-      declarations: [ ExportLogChildTableComponent ]
+      declarations: [ ExportLogChildTableComponent ],
+      providers: [
+        { provide: Router, useValue: routerSpy },
+      ]
     })
     .compileComponents();
   });

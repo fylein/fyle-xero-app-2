@@ -10,6 +10,7 @@ import { ExportLogChildDialogComponent } from 'src/app/integration/main/export-l
 import { SharedModule } from 'src/app/shared/shared.module';
 import { ExportLogTableComponent } from './export-log-table.component';
 import { EXPENSE_GROUP_LISTS } from './export-log-table.fixture';
+import { Router } from '@angular/router';
 
 describe('ExportLogTableComponent', () => {
   let component: ExportLogTableComponent;
@@ -18,12 +19,17 @@ describe('ExportLogTableComponent', () => {
   let dialogSpy: jasmine.Spy;
   const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of({}), close: null });
   dialogRefSpyObj.componentInstance = { body: '' };
+  let router: Router;
+  const routerSpy = { navigate: jasmine.createSpy('navigate'), url: '/path' };
 
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [SharedModule, MatDialogModule],
-      declarations: [ ExportLogTableComponent ]
+      declarations: [ ExportLogTableComponent ],
+      providers: [
+        { provide: Router, useValue: routerSpy },
+      ]
     })
     .compileComponents();
   });
