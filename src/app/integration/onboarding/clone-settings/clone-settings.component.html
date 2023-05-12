@@ -428,7 +428,7 @@
                                 <img class="clone-settings--info-icon" src="assets/images/svgs/general/info-disabled.svg" matTooltip="Schedule to automate the export of expenses from Fyle to Xero" matTooltipPosition="above" matTooltipClass="clone-settings">
                             </div>
 
-                            <div class="clone-settings--sub-options-text">
+                            <div class="clone-settings--sub-options-text clone-settings--export-type">
                                 <app-toggle [isCloneSettings]="true" [form]="cloneSettingsForm"
                                 [formControllerName]="'exportSchedule'"></app-toggle>
                             </div>
@@ -489,7 +489,7 @@
                                 <img class="clone-settings--info-icon" src="assets/images/svgs/general/info-disabled.svg" matTooltip="If the accounting period in Xero is closed for the expenses in Fyle that haven't been exported, the expense will be exported with a date stamp of the first day in the next open accounting period." matTooltipPosition="above" matTooltipClass="clone-settings">
                             </div>
 
-                            <div class="clone-settings--sub-options-text">
+                            <div class="clone-settings--sub-options-text clone-settings--export-type">
                                 <app-toggle [isCloneSettings]="true" [form]="cloneSettingsForm"
                                 [formControllerName]="'changeAccountingPeriod'"></app-toggle>
                             </div>
@@ -505,7 +505,7 @@
                                 <img class="clone-settings--info-icon" src="assets/images/svgs/general/info-disabled.svg" matTooltip="While exporting reimbursable expenses from Fyle, the integration will automatically create a Contact if a match for an employee in Fyle does not exist in Xero already." matTooltipPosition="above" matTooltipClass="clone-settings">
                             </div>
 
-                            <div class="clone-settings--sub-options-text">
+                            <div class="clone-settings--sub-options-text clone-settings--export-type">
                                 <app-toggle [isCloneSettings]="true" [form]="cloneSettingsForm"
                                 [formControllerName]="'autoCreateVendors'"></app-toggle>
                             </div>
@@ -521,7 +521,7 @@
                                 <img class="clone-settings--info-icon" src="assets/images/svgs/general/info-disabled.svg" matTooltip="While exporting corporate card expenses from Fyle, the integration will auto-create a contact in Xero if a merchant added in Fyle does not exist in Xero." matTooltipPosition="above" matTooltipClass="clone-settings">
                             </div>
 
-                            <div class="clone-settings--sub-options-text">
+                            <div class="clone-settings--sub-options-text clone-settings--export-type">
                                 <app-toggle [isCloneSettings]="true" [form]="cloneSettingsForm"
                                 [formControllerName]="'autoCreateMerchantDestinationEntity'"></app-toggle>
                             </div>
