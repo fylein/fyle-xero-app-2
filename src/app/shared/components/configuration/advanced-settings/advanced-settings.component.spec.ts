@@ -45,7 +45,7 @@ describe('AdvancedSettingsComponent', () => {
       getWorkspaceAdmins: () => of(adminEmails),
       getPaymentSyncOptions: () => mockPaymentSyncOptions,
       getFrequencyIntervals: () => [{label: '1 Hour', value: 1}],
-      patchAdminEmailsEmitter: of(adminEmails),
+      patchAdminEmailsEmitter: of(adminEmails)
     };
 
     service2 = {

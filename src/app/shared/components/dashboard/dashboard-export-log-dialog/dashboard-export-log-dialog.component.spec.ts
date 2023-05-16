@@ -37,7 +37,7 @@ describe('DashboardExportLogDialogComponent', () => {
         provide: MatDialogRef,
         useValue: {}
       },
-      { provide: Router, useValue: routerSpy },
+      { provide: Router, useValue: routerSpy }
     ]
     })
     .compileComponents();

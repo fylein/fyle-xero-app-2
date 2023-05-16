@@ -149,16 +149,16 @@ describe('AdvancedSettingService', () => {
     const expectedOptions: AdvancedSettingFormOption[] = [
       {
         label: 'None',
-        value: 'None',
+        value: 'None'
       },
       {
         label: 'Export Fyle ACH Payments to Xero',
-        value: PaymentSyncDirection.FYLE_TO_XERO,
+        value: PaymentSyncDirection.FYLE_TO_XERO
       },
       {
         label: 'Import Xero Payments into Fyle',
-        value: PaymentSyncDirection.XERO_TO_FYLE,
-      },
+        value: PaymentSyncDirection.XERO_TO_FYLE
+      }
     ];
 
     const result = service.getPaymentSyncOptions();
@@ -191,6 +191,6 @@ describe('AdvancedSettingService', () => {
     });
     const adminEmails: WorkspaceScheduleEmailOptions[] = [];
 
-    expect(service.openAddemailDialog(advancedSettingsForm, adminEmails)).toBeUndefined()
+    expect(service.openAddemailDialog(advancedSettingsForm, adminEmails)).toBeUndefined();
   });
 });

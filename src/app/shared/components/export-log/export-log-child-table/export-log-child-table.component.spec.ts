@@ -20,7 +20,7 @@ describe('ExportLogChildTableComponent', () => {
       imports: [SharedModule],
       declarations: [ ExportLogChildTableComponent ],
       providers: [
-        { provide: Router, useValue: routerSpy },
+        { provide: Router, useValue: routerSpy }
       ]
     })
     .compileComponents();

@@ -14,7 +14,7 @@ describe('HelperService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
-        { provide: Router, useValue: routerSpy },
+        { provide: Router, useValue: routerSpy }
       ],
       imports: [MatDialogModule]
     });

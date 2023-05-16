@@ -20,7 +20,7 @@ describe('EmailMultiSelectComponent', () => {
       declarations: [ EmailMultiSelectComponent, SearchPipe ],
       providers: [
         FormBuilder,
-        { provide: Router, useValue: routerSpy },
+        { provide: Router, useValue: routerSpy }
       ]
     })
     .compileComponents();

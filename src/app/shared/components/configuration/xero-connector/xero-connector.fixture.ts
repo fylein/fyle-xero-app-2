@@ -46,7 +46,7 @@ export const exportResponse: ExportSettingGet = {
     reimbursable_expenses_object: null,
     corporate_credit_card_expenses_object: null,
     auto_map_employees: AutoMapEmployee.EMAIL,
-    is_simplify_report_closure_enabled: true,
+    is_simplify_report_closure_enabled: true
   },
   general_mappings: {
     bank_account: {id: '1', name: 'Fyle'}

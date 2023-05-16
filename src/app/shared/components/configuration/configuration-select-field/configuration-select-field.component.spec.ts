@@ -24,7 +24,7 @@ describe('ConfigurationSelectFieldComponent', () => {
       imports: [SharedModule, MatDialogModule, NoopAnimationsModule],
       declarations: [ ConfigurationSelectFieldComponent, SearchPipe ],
       providers: [
-        { provide: Router, useValue: routerSpy },
+        { provide: Router, useValue: routerSpy }
       ]
     })
     .compileComponents();

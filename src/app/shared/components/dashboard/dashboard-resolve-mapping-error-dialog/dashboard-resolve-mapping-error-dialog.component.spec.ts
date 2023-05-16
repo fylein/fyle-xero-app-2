@@ -47,7 +47,7 @@ describe('DashboardResolveMappingErrorDialogComponent', () => {
         useValue: {}
       },
       { provide: MappingService, useValue: service1 },
-      { provide: Router, useValue: routerSpy },
+      { provide: Router, useValue: routerSpy }
     ],
       declarations: [ DashboardResolveMappingErrorDialogComponent ]
     })

@@ -24,7 +24,7 @@ describe('ZeroStateWithIllustrationComponent', () => {
       imports: [SharedModule],
       declarations: [ ZeroStateWithIllustrationComponent ],
       providers: [
-        { provide: Router, useValue: routerSpy },
+        { provide: Router, useValue: routerSpy }
       ]
     })
     .compileComponents();

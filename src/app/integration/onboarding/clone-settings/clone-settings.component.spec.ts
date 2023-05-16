@@ -37,14 +37,14 @@ describe('CloneSettingsComponent', () => {
       getGroupedXeroDestinationAttributes: () => of(mockGroupedDestinationAttribtues),
       getFyleExpenseFields: () => of(expenseFieldresponse),
       getXeroField: () => of(expenseFieldresponse),
-      getMappingSettings: () => of(getMappingSettingResponse),
+      getMappingSettings: () => of(getMappingSettingResponse)
     };
     service3 = {
       patchAdminEmailsEmitter: of(adminEmails),
       getPaymentSyncOptions: () => mockPaymentSyncOptions,
       getFrequencyIntervals: () => [{label: '1 Hour', value: 1}],
-      getWorkspaceAdmins: () => of(adminEmails),
-    }
+      getWorkspaceAdmins: () => of(adminEmails)
+    };
     await TestBed.configureTestingModule({
       declarations: [ CloneSettingsComponent ],
       imports: [
@@ -55,7 +55,7 @@ describe('CloneSettingsComponent', () => {
         { provide: Router, useValue: routerSpy },
         { provide: CloneSettingService, useValue: service1 },
         { provide: MappingService, useValue: service2 },
-        { provide: AdvancedSettingService, useValue: service3 },
+        { provide: AdvancedSettingService, useValue: service3 }
       ]
     })
     .compileComponents();

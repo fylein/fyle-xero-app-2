@@ -28,7 +28,7 @@ describe('ExportLogTableComponent', () => {
       imports: [SharedModule, MatDialogModule],
       declarations: [ ExportLogTableComponent ],
       providers: [
-        { provide: Router, useValue: routerSpy },
+        { provide: Router, useValue: routerSpy }
       ]
     })
     .compileComponents();

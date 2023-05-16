@@ -48,12 +48,12 @@ describe('ImportSettingsComponent', () => {
       getChartOfAccountTypesList: () => chartOfAccountTypesList,
       createChartOfAccountField: () => formbuilder.group({
         enabled: [true],
-        name: ['Expense'],
+        name: ['Expense']
       }),
       createExpenseField: () => void 0,
       getXeroExpenseFields: () => mockXeroFields,
       getExpenseFieldsFormArray: () => mockExpenseFieldsFormArray,
-      patchExpenseFieldEmitter: of(mockPatchExpenseFieldsFormArray),
+      patchExpenseFieldEmitter: of(mockPatchExpenseFieldsFormArray)
     };
     service2 = {
       getFyleExpenseFields: () => of(expenseFieldresponse),

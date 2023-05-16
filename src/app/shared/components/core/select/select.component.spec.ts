@@ -21,7 +21,7 @@ describe('SelectComponent', () => {
       declarations: [ SelectComponent, SearchPipe ],
       providers: [
         FormBuilder,
-        { provide: Router, useValue: routerSpy },
+        { provide: Router, useValue: routerSpy }
       ],
       imports: [
         MatDialogModule, NoopAnimationsModule

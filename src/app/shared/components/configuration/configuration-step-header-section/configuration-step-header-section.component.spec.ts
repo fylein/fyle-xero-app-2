@@ -39,7 +39,7 @@ describe('ConfigurationStepHeaderSectionComponent', () => {
         provide: Router,
         useValue: {
            url: '/path'
-        },
+        }
      }
     ]
     })

@@ -24,7 +24,7 @@ describe('MappingTableComponent', () => {
       declarations: [MappingTableComponent],
       providers: [
         FormBuilder,
-        { provide: Router, useValue: routerSpy },
+        { provide: Router, useValue: routerSpy }
       ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
     })

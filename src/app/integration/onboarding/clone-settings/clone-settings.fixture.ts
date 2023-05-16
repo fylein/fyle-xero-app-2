@@ -88,7 +88,7 @@ export const mockCloneSettingsGet: CloneSetting = {
           auto_create_destination_entity: true,
           change_accounting_period: true,
           auto_create_merchant_destination_entity: true
-      
+
         },
         general_mappings: {
           payment_account: {id: '1', name: 'Fyle'}

@@ -19,7 +19,7 @@ describe('EmailMultiSelectFieldComponent', () => {
       imports: [SharedModule, MatDialogModule, NoopAnimationsModule],
       declarations: [ EmailMultiSelectFieldComponent ],
       providers: [
-        { provide: Router, useValue: routerSpy },
+        { provide: Router, useValue: routerSpy }
       ]
     })
     .compileComponents();
