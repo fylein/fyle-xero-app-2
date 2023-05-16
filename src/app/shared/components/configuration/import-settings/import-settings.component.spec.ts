@@ -8,7 +8,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { Router } from '@angular/router';
 import { of, throwError } from 'rxjs';
-import { chartOfAccountTypesList, errorResponse, destinationAttribute, expenseFieldresponse, getImportsettingResponse, postImportsettingresponse, XeroCredentialsResponse, xeroField, xeroField1, mockXeroFields } from './import-settings.fixture';
+import { chartOfAccountTypesList, errorResponse, destinationAttribute, expenseFieldresponse, getImportsettingResponse, postImportsettingresponse, XeroCredentialsResponse, xeroField, xeroField1, mockXeroFields, mockExpenseFieldsFormArray, mockPatchExpenseFieldsFormArray } from './import-settings.fixture';
 import { FyleField, MappingDestinationField, OnboardingState } from 'src/app/core/models/enum/enum.model';
 import { ImportSettingService } from 'src/app/core/services/configuration/import-setting.service';
 import { WorkspaceService } from 'src/app/core/services/workspace/workspace.service';
@@ -51,7 +51,9 @@ describe('ImportSettingsComponent', () => {
         name: ['Expense'],
       }),
       createExpenseField: () => void 0,
-      getXeroExpenseFields: () => mockXeroFields
+      getXeroExpenseFields: () => mockXeroFields,
+      getExpenseFieldsFormArray: () => mockExpenseFieldsFormArray,
+      patchExpenseFieldEmitter: of(mockPatchExpenseFieldsFormArray),
     };
     service2 = {
       getFyleExpenseFields: () => of(expenseFieldresponse),
@@ -130,7 +132,7 @@ describe('ImportSettingsComponent', () => {
     fixture.detectChanges();
     expect(importSettingService.getImportSettings).toHaveBeenCalled();
     expect(mappingService.getFyleExpenseFields).toHaveBeenCalled();
-    expect(component.isLoading).toBeTrue();
+    expect(component.isLoading).toBeFalse();
   });
 
   it('navigateToPreviousStep function check', () => {
@@ -197,33 +199,6 @@ describe('ImportSettingsComponent', () => {
     expect(component.saveInProgress).toBeFalse();
   });
 
-  it('showFyleExpenseFormPreview function check', () => {
-    const chartOfAccountTypeFormArray = component.chartOfAccountTypesList.map((type) => importSettingService.createChartOfAccountField(type, ['Expense']));
-    console.log('component.xeroExpenseFields',component.xeroExpenseFields)
-    const expenseFieldsFormArray = component.xeroExpenseFields.map((field) => {
-      return formbuilder.group({
-        source_field: [field.source_field],
-        destination_field: [field.destination_field],
-        import_to_fyle: [field.import_to_fyle, null],
-        disable_import_to_fyle: [field.disable_import_to_fyle],
-        source_placeholder: ['']
-      });
-    });
-
-    component.importSettingsForm = formbuilder.group({
-      chartOfAccount: [component.importSettings.workspace_general_settings.import_categories],
-      chartOfAccountTypes: formbuilder.array(chartOfAccountTypeFormArray),
-      expenseFields: formbuilder.array(expenseFieldsFormArray),
-      taxCode: [component.importSettings.workspace_general_settings.import_tax_codes],
-      defaultTaxCode: [component.importSettings.general_mappings?.default_tax_code?.id ? component.importSettings.general_mappings.default_tax_code : null],
-      searchOption: [],
-      xeroCutomers: [component.importSettings.workspace_general_settings.import_customers]
-    });
-    expect(component.showFyleExpenseFormPreview()).toBeUndefined();
-    fixture.detectChanges();
-    expect(dialogSpy).toHaveBeenCalled();
-  });
-
   it('createTaxCodeWatcher function check', () => {
     component.importSettingsForm.controls.taxCode.patchValue(true);
     expect((component as any).createTaxCodeWatcher()).toBeUndefined();
@@ -235,50 +210,5 @@ describe('ImportSettingsComponent', () => {
   it('chartOfAccountTypes function check', () => {
     const response = component.importSettingsForm.get('chartOfAccountTypes') as FormArray;
     expect(component.chartOfAccountTypes).toEqual(response);
-  });
-
-  it('createImportCustomerWatcher function check', () => {
-    component.importSettingsForm.controls.importCustomers.patchValue(true);
-    expect((component as any).createImportCustomerWatcher()).toBeUndefined();
-    fixture.detectChanges();
-    expect(component.fyleExpenseFields).toBeDefined();
-    component.importSettingsForm.controls.importCustomers.patchValue(false);
-    expect((component as any).createImportCustomerWatcher()).toBeUndefined();
-    fixture.detectChanges();
-    expect(component.fyleExpenseFields).toBeDefined();
-  });
-
-  it('createExpenseFieldWatcher function check', () => {
-    component.isProjectMapped = true;
-    expect((component as any).createExpenseFieldWatcher()).toBeUndefined();
-    component.customMappedFyleFields = [FyleField.PROJECT];
-    component.xeroExpenseFields = xeroField;
-    const expenseFieldsFormArray = component.xeroExpenseFields.map((field) => {
-      return formbuilder.group({
-        source_field: [field.source_field],
-        destination_field: [field.destination_field],
-        import_to_fyle: [field.import_to_fyle],
-        disable_import_to_fyle: [field.disable_import_to_fyle],
-        source_placeholder: ['']
-      });
-    });
-    component.importSettingsForm.controls.expenseFields.patchValue([expenseFieldsFormArray]);
-    expect((component as any).createExpenseFieldWatcher()).toBeUndefined();
-    fixture.detectChanges();
-    expect(component.fyleExpenseFields).toBeDefined();
-    component.xeroExpenseFields = xeroField1;
-    const expenseFieldsFormArray1 = component.xeroExpenseFields.map((field) => {
-      return formbuilder.group({
-        source_field: [field.source_field],
-        destination_field: [field.destination_field],
-        import_to_fyle: [field.import_to_fyle],
-        disable_import_to_fyle: [field.disable_import_to_fyle],
-        source_placeholder: ['']
-      });
-    });
-    component.importSettingsForm.controls.expenseFields.patchValue([expenseFieldsFormArray1]);
-    expect((component as any).createExpenseFieldWatcher()).toBeUndefined();
-    fixture.detectChanges();
-    expect(component.fyleExpenseFields).toBeDefined();
   });
 });

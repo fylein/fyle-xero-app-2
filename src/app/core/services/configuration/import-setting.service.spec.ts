@@ -13,7 +13,7 @@ describe('ImportSettingService', () => {
   let injector: TestBed;
   let httpMock: HttpTestingController;
   const API_BASE_URL = environment.api_url;
-  const workspace_id = environment.tests.workspaceId;
+  const workspace_id = 1;
   let formbuilder: FormBuilder;
 
   beforeEach(() => {

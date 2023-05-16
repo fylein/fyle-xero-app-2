@@ -16,7 +16,7 @@ describe('JwtInterceptor', () => {
   let interceptor: JwtInterceptor;
   let authService: AuthService;
   const API_BASE_URL = environment.api_url;
-  const workspace_id = environment.tests.workspaceId;
+  const workspace_id = 1;
   beforeEach(() => {
     const service1 = {
       updateAccessToken: () => 'fyle',

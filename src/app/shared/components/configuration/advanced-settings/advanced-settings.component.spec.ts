@@ -44,7 +44,8 @@ describe('AdvancedSettingsComponent', () => {
       getAdvancedSettings: () => of(getadvancedSettingResponse),
       getWorkspaceAdmins: () => of(adminEmails),
       getPaymentSyncOptions: () => mockPaymentSyncOptions,
-      getFrequencyIntervals: () => [{label: '1 Hour', value: 1}]
+      getFrequencyIntervals: () => [{label: '1 Hour', value: 1}],
+      patchAdminEmailsEmitter: of(adminEmails),
     };
 
     service2 = {

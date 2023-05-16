@@ -4,20 +4,24 @@ import { ExportSettingGet, ExportSettingPost } from '../../models/configuration/
 import { ExpenseState, CCCExpenseState, ReimbursableExpensesObject, CorporateCreditCardExpensesObject, ExportDateType, AutoMapEmployee } from '../../models/enum/enum.model';
 import { HttpTestingController, HttpClientTestingModule } from '@angular/common/http/testing';
 import { environment } from 'src/environments/environment';
+import { AbstractControl, FormBuilder } from '@angular/forms';
+import { exportResponse } from 'src/app/shared/components/configuration/xero-connector/xero-connector.fixture';
 
 describe('ExportSettingService', () => {
   let service: ExportSettingService;
   let injector: TestBed;
   let httpMock: HttpTestingController;
   const API_BASE_URL = environment.api_url;
-  const workspace_id = environment.tests.workspaceId;
+  const workspace_id = 1;
+  let formbuilder: FormBuilder;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
-      providers: [ExportSettingService]
+      providers: [ExportSettingService, FormBuilder]
     });
     injector = getTestBed();
+    formbuilder = TestBed.inject(FormBuilder);
     service = injector.inject(ExportSettingService);
     httpMock = injector.inject(HttpTestingController);
   });
@@ -101,38 +105,45 @@ describe('ExportSettingService', () => {
   });
 
   it('exportSelectionValidator function check', () => {
-    // TODO
-    // const control = { value: ExpenseState.PAID, parent: formbuilder.group({
-    //   reimbursableExpense: ReimbursableExpensesObject.PURCHASE_BILL
-    // }) };
-    // expect((component as any).exportSelectionValidator()(control as AbstractControl)).toBeNull();
-    // const control1 = { value: ExpenseState.PAYMENT_PROCESSING, parent: formbuilder.group({
-    //   creditCardExpense: CorporateCreditCardExpensesObject.BANK_TRANSACTION
-    // }) };
-    // expect((component as any).exportSelectionValidator()(control1 as AbstractControl)).toBeNull();
+    const control = { value: ExpenseState.PAID, parent: formbuilder.group({
+      reimbursableExpense: ReimbursableExpensesObject.PURCHASE_BILL
+    }) };
+    expect((service as any).exportSelectionValidator()(control as AbstractControl)).toEqual({forbiddenOption: { value: 'PAID' }});
+    const control1 = { value: ExpenseState.PAYMENT_PROCESSING, parent: formbuilder.group({
+      creditCardExpense: CorporateCreditCardExpensesObject.BANK_TRANSACTION
+    }) };
+    expect((service as any).exportSelectionValidator()(control1 as AbstractControl)).toEqual({forbiddenOption: { value: 'PAYMENT_PROCESSING' }});
   });
 
   it('createCreditCardExpenseWatcher function check', () => {
-    // TODO
-    // component.exportSettingsForm.controls.creditCardExpense.patchValue(!component.exportSettingsForm.controls.creditCardExpense.value);
-    // expect((component as any).createCreditCardExpenseWatcher()).toBeUndefined();
-    // fixture.detectChanges();
-    // component.exportSettingsForm.controls.creditCardExpense.patchValue(!component.exportSettingsForm.controls.creditCardExpense.value);
-    // expect((component as any).createCreditCardExpenseWatcher()).toBeUndefined();
+    const form = formbuilder.group({
+      creditCardExpense: true,
+      cccExpenseState: ExpenseState.PAID
+    });
+    expect((service as any).createCreditCardExpenseWatcher(form, exportResponse)).toBeUndefined();
+    form.controls.creditCardExpense.patchValue(false);
+    expect((service as any).createCreditCardExpenseWatcher(form, exportResponse)).toBeUndefined();
+    expect(form.value.cccExpenseState).toBeNull();
+
+    form.controls.creditCardExpense.patchValue(true);
+    expect((service as any).createCreditCardExpenseWatcher(form, exportResponse)).toBeUndefined();
+    expect(form.value.cccExpenseState).toEqual(ExpenseState.PAID);
   });
 
   it('createReimbursableExpenseWatcher function check', () => {
-    // TODO
-    // component.ngOnInit();
-    // component.exportSettingsForm.controls.reimbursableExpense.patchValue(true);
-    // expect((component as any).createReimbursableExpenseWatcher()).toBeUndefined();
-    // fixture.detectChanges();
-    // component.exportSettingsForm.controls.reimbursableExpense.patchValue(false);
-    // expect((component as any).createReimbursableExpenseWatcher()).toBeUndefined();
-    // fixture.detectChanges();
-    // component.exportSettingsForm.controls.reimbursableExpense.patchValue(true);
-    // component.exportSettings.expense_group_settings.reimbursable_export_date_type = null;
-    // expect((component as any).createReimbursableExpenseWatcher()).toBeUndefined();
+    const form = formbuilder.group({
+      reimbursableExpense: true,
+      reimbursableExpenseState: ExpenseState.PAID,
+      reimbursableExportDate: ExportDateType.APPROVED_AT
+    });
+    expect((service as any).createReimbursableExpenseWatcher(form, exportResponse)).toBeUndefined();
+    form.controls.reimbursableExpense.patchValue(false);
+    expect((service as any).createReimbursableExpenseWatcher(form, exportResponse)).toBeUndefined();
+    expect(form.value.reimbursableExpenseState).toBeNull();
+
+    form.controls.reimbursableExpense.patchValue(true);
+    expect((service as any).createReimbursableExpenseWatcher(form, exportResponse)).toBeUndefined();
+    expect(form.value.reimbursableExpenseState).toBeNull();
   });
 
 });

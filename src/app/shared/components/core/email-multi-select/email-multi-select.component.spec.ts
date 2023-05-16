@@ -5,18 +5,21 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { Router } from '@angular/router';
 import { SearchPipe } from 'src/app/shared/pipes/search.pipe';
+import { FormBuilder } from '@angular/forms';
 
 describe('EmailMultiSelectComponent', () => {
   let component: EmailMultiSelectComponent;
   let fixture: ComponentFixture<EmailMultiSelectComponent>;
   const routerSpy = { navigate: jasmine.createSpy('navigate'), url: '/path' };
   let router: Router;
+  let formBuilder: FormBuilder;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [MatDialogModule, NoopAnimationsModule],
       declarations: [ EmailMultiSelectComponent, SearchPipe ],
       providers: [
+        FormBuilder,
         { provide: Router, useValue: routerSpy },
       ]
     })
@@ -26,6 +29,19 @@ describe('EmailMultiSelectComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(EmailMultiSelectComponent);
     component = fixture.componentInstance;
+    formBuilder = TestBed.inject(FormBuilder);
+    const form = formBuilder.group({
+      searchOption: [],
+      emails: [['fyle@fyle.in', 'integrations@fyle.in']],
+      employeeMapping: [['EMPLOYEE']]
+    });
+    component.form = form;
+    const adminEmails: any[] = [{name: 'fyle', email: 'fyle@fyle.in'}, {name: 'dhaara', email: 'fyle1@fyle.in'}];
+    component.options = adminEmails;
+    component.formControllerName = 'employeeMapping';
+    component.isFieldMandatory = true;
+    component.placeholder = 'Select representation';
+
     fixture.detectChanges();
   });
 

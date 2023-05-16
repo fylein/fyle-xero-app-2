@@ -7,7 +7,7 @@ import { environment } from "src/environments/environment";
 import { ExportableExpenseGroup } from "src/app/core/models/db/expense-group.model";
 
 const API_BASE_URL = environment.api_url;
-const workspace_id = environment.tests.workspaceId;
+const workspace_id = 1;
 
 export const expenseGroupSettingResponse:ExpenseGroupSetting = {
   ccc_export_date_type: ExportDateType.CURRENT_DATE,
