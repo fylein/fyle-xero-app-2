@@ -62,7 +62,7 @@
                                 <img class="clone-settings--info-icon" src="assets/images/svgs/general/info-disabled.svg" matTooltip="Reimbursable expense in Fyle will be exported to Xero as Purchase Bill" matTooltipPosition="above" matTooltipClass="clone-settings">
                             </div>
 
-                            <div class="clone-settings--sub-options-text clone-settings--export-type">
+                            <div class="clone-settings--sub-options-text clone-settings--export-type clone-settings--export-type-text">
                                 Purchase Bill
                             </div>
                         </div>
@@ -132,7 +132,7 @@
                                 <img class="clone-settings--info-icon" src="assets/images/svgs/general/info-disabled.svg" matTooltip="Corporate card expense in Fyle will be exported to Xero as Bank Transaction" matTooltipPosition="above" matTooltipClass="clone-settings">
                             </div>
 
-                            <div class="clone-settings--sub-options-text clone-settings--export-type">
+                            <div class="clone-settings--sub-options-text clone-settings--export-type clone-settings--export-type-text">
                                 Bank Transactions
                             </div>
                         </div>
@@ -458,7 +458,6 @@
                             <div class="clone-settings--field-section clone-settings--configuration-payment-field" fxLayout="row" fxLayoutAlign="start center">
                                 <p class="clone-settings--sub-options-text clone-settings--additional-email-text">
                                     Select an email address to notify upon export failure
-                                    <app-mandatory-field></app-mandatory-field>
                                 </p>
                             </div>
 
@@ -469,6 +468,7 @@
                                     [isFieldMandatory]="false"
                                     [placeholder]="'Select Email Address'"
                                     [formControllerName]="'emails'"
+                                    [isCloneSettings]="true"
                                 ></app-email-multi-select>
                                 <div fxLayout="row" class="clone-settings--add-email-text pointer" fxLayoutAlign="end center"
                                     (click)="openAddemailDialog()">

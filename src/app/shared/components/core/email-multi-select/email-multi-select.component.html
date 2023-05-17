@@ -22,7 +22,7 @@
                         </div>
                     </div>
                 </div>
-                <div *ngIf="form.value.emails?.length > 1" class="email-multi-select--delele-all-icon"
+                <div *ngIf="form.value.emails?.length > 1" [ngClass]="[isCloneSettings ? 'email-multi-select--delele-all-icon-clone-settings' : 'email-multi-select--delele-all-icon']"
                     (click)="delete($event, form.value.emails[0], true)">
                     <img src="assets/images/svgs/actions/close.svg">
                 </div>

@@ -128,7 +128,7 @@ export class CloneSettingsComponent implements OnInit {
         });
         this.trackSessionTime();
 
-        this.router.navigate([`/workspaces/main/dashboard`]);
+        this.router.navigate([`/workspaces/onboarding/done`]);
       }, () => {
         this.isSaveInProgress = false;
         this.snackBar.open('Failed to clone settings');
@@ -138,7 +138,6 @@ export class CloneSettingsComponent implements OnInit {
 
   disableImportCoa(): void {
     this.cloneSettingsForm.controls.chartOfAccount.setValue(false);
-    this.cloneSettingsForm.controls.chartOfAccountTypes.reset();
   }
 
   disableImportTax(): void {
@@ -294,12 +293,17 @@ export class CloneSettingsComponent implements OnInit {
       this.additionalXeroExpenseFields = allExpenseFields.filter((field) => {
         return !this.xeroExpenseFields.some((xeroField) => xeroField.destination_field.toUpperCase() === field.destination_field.toUpperCase());
       });
+  }
 
+  private constructChartOfAccountTypes(): FormArray {
+    const chartOfAccountTypeFormArray = this.chartOfAccountTypesList.map((type) => this.importSettingService.createChartOfAccountField(type, this.cloneSettings.import_settings.workspace_general_settings.charts_of_accounts));
+
+    return this.formBuilder.array(chartOfAccountTypeFormArray);
   }
 
   private setupForm(): void {
     const bankAccount = this.bankAccounts.filter(bankAccount => bankAccount.destination_id === this.cloneSettings.export_settings.general_mappings?.bank_account?.id);
-    const chartOfAccountTypeFormArray = this.chartOfAccountTypesList.map((type) => this.importSettingService.createChartOfAccountField(type, this.cloneSettings.import_settings.workspace_general_settings.charts_of_accounts));
+    const chartOfAccounts = this.constructChartOfAccountTypes();
     const expenseFieldsFormArray = this.importSettingService.getExpenseFieldsFormArray(this.xeroExpenseFields, false);
 
     expenseFieldsFormArray.forEach((expenseField) => {
@@ -322,7 +326,7 @@ export class CloneSettingsComponent implements OnInit {
       bankAccount: [bankAccount.length ? this.cloneSettings.export_settings.general_mappings.bank_account : null],
       cccExpenseState: [this.cloneSettings.export_settings.expense_group_settings.ccc_expense_state],
       chartOfAccount: [this.cloneSettings.import_settings.workspace_general_settings.import_categories],
-      chartOfAccountTypes: this.formBuilder.array(chartOfAccountTypeFormArray),
+      chartOfAccountTypes: chartOfAccounts,
       expenseFields: this.formBuilder.array(expenseFieldsFormArray),
       taxCode: [this.cloneSettings.import_settings.workspace_general_settings.import_tax_codes],
       defaultTaxCode: [this.cloneSettings.import_settings.general_mappings?.default_tax_code?.id ? this.cloneSettings.import_settings.general_mappings.default_tax_code : null],

@@ -446,6 +446,7 @@ th.mat-header-cell:last-of-type {
 .mat-menu-panel {
   margin-top: 10px;
   margin-left: 10px;
+  min-height: 40px !important;
 }
 
 .mat-menu-item {
@@ -468,6 +469,11 @@ th.mat-header-cell:last-of-type {
 
 .btn-shadow {
   box-shadow: 0px 4px 4px rgba(44, 48, 78, 0.1);
+}
+
+.cdk-overlay-dark-backdrop {
+  background: #2C304E;
+  opacity: 0.7 !important;
 }
 
 .configuration {

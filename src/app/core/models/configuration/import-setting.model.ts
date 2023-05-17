@@ -57,7 +57,7 @@ export class ImportSettingModel {
     const importSettingPayload: ImportSettingPost = {
       workspace_general_settings: {
         import_categories: importSettingsForm.get('chartOfAccount')?.value,
-        charts_of_accounts: chartOfAccounts.length > 0 ? chartOfAccounts : ['Expense'],
+        charts_of_accounts: importSettingsForm.get('chartOfAccount')?.value ? chartOfAccounts : ['Expense'],
         import_tax_codes: importSettingsForm.get('taxCode')?.value,
         import_customers: importSettingsForm.get('importCustomers')?.value ? importSettingsForm.get('importCustomers')?.value : false
       },

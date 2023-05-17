@@ -26,6 +26,8 @@ export class EmailMultiSelectComponent implements OnInit {
 
   @Input() customErrorMessage: string;
 
+  @Input() isCloneSettings: boolean;
+
   SimpleSearchPage = SimpleSearchPage;
 
   SimpleSearchType = SimpleSearchType;
