@@ -3,4 +3,5 @@ export type ConfirmationDialog = {
   primaryCtaText: string,
   contents: string,
   hideSecondaryCTA?: boolean
+  hideWarningIcon?: boolean
 };

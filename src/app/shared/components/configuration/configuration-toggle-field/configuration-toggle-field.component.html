@@ -7,8 +7,7 @@
     </div>
   </div>
   <div class="configuration--input-toggle-section">
-    <mat-slide-toggle class="configuration--toggle-form-field" color="accent" [formControlName]="formControllerName">
-    </mat-slide-toggle>
+    <app-toggle [form]="form" [formControllerName]="formControllerName"></app-toggle>
   </div>
 </div>
 <div *ngIf="formControllerName === 'chartOfAccount'" class="configuration--field-toggle-note-section">
@@ -32,7 +31,7 @@
       </div>
     </div>
     <div class="advanced-setting-toggle-section">
-      <mat-slide-toggle class="configuration--toggle-form-field" color="accent" [formControlName]="formControllerName"></mat-slide-toggle>
+      <app-toggle [form]="form" [formControllerName]="formControllerName"></app-toggle>
     </div>
   </div>
 </div>

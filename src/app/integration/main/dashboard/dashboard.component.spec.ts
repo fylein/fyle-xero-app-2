@@ -26,7 +26,7 @@ describe('DashboardComponent', () => {
   let dialogSpy: jasmine.Spy;
   const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of({}), close: null });
   dialogRefSpyObj.componentInstance = { body: '' };
-  const workspaceId = environment.tests.workspaceId;
+  const workspaceId = 1;
   beforeEach(async () => {
     const service1 = {
       getExpenseGroupSettings: () => of(expenseGroupSettingResponse)

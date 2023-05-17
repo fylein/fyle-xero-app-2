@@ -17,7 +17,7 @@ describe('DashboardHeaderSectionComponent', () => {
   let injector: TestBed;
   let httpMock: HttpTestingController;
   const API_BASE_URL = environment.api_url;
-  const workspace_id = environment.tests.workspaceId;
+  const workspace_id = 1;
   let dialogSpy: jasmine.Spy;
   const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of({}), close: null });
   dialogRefSpyObj.componentInstance = { body: '' }; // Attach componentInstance to the spy object...

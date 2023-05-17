@@ -34,8 +34,6 @@ export class ConfigurationSelectFieldComponent implements OnInit {
 
   @Input() isFieldMandatory: boolean;
 
-  // @Input() liveEntityExample: {[EmployeeFieldMapping.EMPLOYEE]: string | undefined, [EmployeeFieldMapping.VENDOR]: string | undefined};
-
   @Input() mandatoryErrorListName: string;
 
   @Input() customErrorMessage: string;
@@ -49,25 +47,8 @@ export class ConfigurationSelectFieldComponent implements OnInit {
   SimpleSearchType = SimpleSearchType;
 
   constructor(
-    private dialog: MatDialog,
-    public helperService: HelperService,
-    private trackingService: TrackingService
+    public helperService: HelperService
   ) { }
-
-  showXeroExportPreview(reimbursableExportType: ReimbursableExpensesObject | null, creditCardExportType: CorporateCreditCardExpensesObject | null): void {
-    const data = {
-      XeroReimburse: reimbursableExportType,
-      XeroCCC: creditCardExportType
-    };
-
-    this.trackingService.onClickEvent(ClickEvent.PREVIEW_XERO_EXPORT, {phase: this.phase, exportType: reimbursableExportType || creditCardExportType});
-
-    this.dialog.open(PreviewDialogComponent, {
-      width: '960px',
-      height: '530px',
-      data: data
-    });
-  }
 
   ngOnInit(): void {
   }

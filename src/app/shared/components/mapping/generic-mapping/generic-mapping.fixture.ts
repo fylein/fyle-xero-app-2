@@ -5,7 +5,7 @@ import { MappingDestinationField, MappingSourceField, MappingState } from "src/a
 import { environment } from "src/environments/environment";
 import { expenseAttribute } from "../../dashboard/dashboard-resolve-mapping-error-dialog/dashboard-resolve-mapping.fixture";
 const API_BASE_URL = environment.api_url;
-const workspace_id = environment.tests.workspaceId;
+const workspace_id = 1;
 export const mappingSetting:MappingSetting[] = [{
   id: 1,
   created_at: new Date(),

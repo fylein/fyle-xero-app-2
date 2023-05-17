@@ -135,4 +135,8 @@ export class TrackingService {
   onSwitchToOldApp(): void {
     this.eventTrack('Switching to old app');
   }
+
+  onCloneSettingsSave(properties: Partial<UpdateEventAdditionalProperty>): void {
+    this.eventTrack('Clone Settings Saved', properties);
+  }
 }

@@ -7,6 +7,7 @@ import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { of } from 'rxjs';
 import { By } from '@angular/platform-browser';
+import { Router } from '@angular/router';
 
 describe('ConfigurationSelectFieldComponent', () => {
   let component: ConfigurationSelectFieldComponent;
@@ -15,10 +16,16 @@ describe('ConfigurationSelectFieldComponent', () => {
   let dialogSpy: jasmine.Spy;
   const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of({}), close: null });
   dialogRefSpyObj.componentInstance = { body: '' };
+  const routerSpy = { navigate: jasmine.createSpy('navigate'), url: '/path' };
+  let router: Router;
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [SharedModule, MatDialogModule, NoopAnimationsModule],
-      declarations: [ ConfigurationSelectFieldComponent, SearchPipe ]
+      declarations: [ ConfigurationSelectFieldComponent, SearchPipe ],
+      providers: [
+        { provide: Router, useValue: routerSpy }
+      ]
     })
     .compileComponents();
   });
@@ -50,11 +57,6 @@ describe('ConfigurationSelectFieldComponent', () => {
   // Figure out a way to send the data to the component [@Input()]
   it('should create', () => {
     expect(component).toBeTruthy();
-  });
-
-  it('showXeroExportPreview function check', () => {
-    component.showXeroExportPreview(null, null);
-    expect(dialogSpy).toHaveBeenCalled();
   });
 
   it('HTML check', () => {

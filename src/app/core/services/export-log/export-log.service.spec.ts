@@ -13,7 +13,7 @@ describe('ExportLogService', () => {
   let httpMock: HttpTestingController;
   const xeroUrl = 'https://go.xero.com';
   const API_BASE_URL = environment.api_url;
-  const workspace_id = environment.tests.workspaceId;
+  const workspace_id = 1;
   const FYLE_APP_URL = environment.fyle_app_url;
 
   beforeEach(() => {

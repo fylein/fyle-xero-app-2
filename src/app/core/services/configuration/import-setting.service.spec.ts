@@ -5,19 +5,22 @@ import { MappingSourceField, MappingDestinationField } from '../../models/enum/e
 import { HttpTestingController, HttpClientTestingModule } from '@angular/common/http/testing';
 import { environment } from 'src/environments/environment';
 import { getImportsettingResponse } from 'src/app/shared/components/configuration/import-settings/import-settings.fixture';
+import { MatDialogModule } from '@angular/material/dialog';
+import { FormBuilder } from '@angular/forms';
 
 describe('ImportSettingService', () => {
   let service: ImportSettingService;
   let injector: TestBed;
   let httpMock: HttpTestingController;
   const API_BASE_URL = environment.api_url;
-  const workspace_id = environment.tests.workspaceId;
+  const workspace_id = 1;
+  let formbuilder: FormBuilder;
 
   beforeEach(() => {
     localStorage.setItem('workspaceId', environment.tests.workspaceId);
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
-      providers: [ImportSettingService]
+      imports: [HttpClientTestingModule, MatDialogModule],
+      providers: [ImportSettingService, FormBuilder]
     });
     injector = getTestBed();
     service = injector.inject(ImportSettingService);
