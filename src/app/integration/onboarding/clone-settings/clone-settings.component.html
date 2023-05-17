@@ -319,7 +319,7 @@
                             <mat-form-field floatLabel="always" appearance="outline"
                                 class="import-settings--fyle-field">
                                 <mat-select placeholder="Select Default Tax Code"
-                                    formControlName="defaultTaxCode">
+                                    formControlName="defaultTaxCode" [compareWith]="helperService.compareObjects">
                                     <app-simple-text-search *ngIf="taxCodes" [page]="SimpleSearchPage.CONFIGURATION"
                                         [searchType]="SimpleSearchType.SELECT_FIELD" [form]="cloneSettingsForm"></app-simple-text-search>
                                     <div *ngFor="let option of taxCodes | search : cloneSettingsForm.value.searchOption">
