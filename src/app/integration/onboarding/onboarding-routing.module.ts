@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { TenantGuard } from 'src/app/core/guard/tenant.guard';
 import { WorkspacesGuard } from 'src/app/core/guard/workspaces.guard';
+import { CloneSettingsComponent } from './clone-settings/clone-settings.component';
 import { OnboardingAdvancedSettingsComponent } from './onboarding-advanced-settings/onboarding-advanced-settings.component';
 import { OnboardingDoneComponent } from './onboarding-done/onboarding-done.component';
 import { OnboardingExportSettingsComponent } from './onboarding-export-settings/onboarding-export-settings.component';
@@ -20,6 +21,11 @@ const routes: Routes = [
     path: '',
     component: OnboardingComponent,
     children: [
+      {
+        path: 'clone_settings',
+        component: CloneSettingsComponent,
+        canActivate: [WorkspacesGuard, TenantGuard]
+      },
       {
         path: 'export_settings',
         component: OnboardingExportSettingsComponent,

@@ -58,7 +58,8 @@ export const exportResponse: ExportSettingGet = {
   workspace_general_settings: {
     reimbursable_expenses_object: null,
     corporate_credit_card_expenses_object: CorporateCreditCardExpensesObject.BANK_TRANSACTION,
-    auto_map_employees: AutoMapEmployee.EMAIL
+    auto_map_employees: AutoMapEmployee.EMAIL,
+    is_simplify_report_closure_enabled: true
   },
   general_mappings: {
     bank_account: {id: '1', name: 'Fyle'}
@@ -100,3 +101,41 @@ export const errorResponse = {
     company_name: 'Xero'
   }
 };
+
+export const mockAutoMapEmployeeOptions = [
+  {
+    label: 'None',
+    value: null
+  },
+  {
+    label: 'Employee name on Fyle to contact name on Xero',
+    value: AutoMapEmployee.NAME
+  },
+  {
+    label: 'Employee email on Fyle to contact email on Xero',
+    value: AutoMapEmployee.EMAIL
+  }
+];
+
+export const mockReimbursableExpenseGroupingDateOptions = [
+  {
+    label: 'Current Date',
+    value: ExportDateType.CURRENT_DATE
+  },
+  {
+    label: 'Verification Date',
+    value: ExportDateType.VERIFIED_AT
+  },
+  {
+    label: 'Spend Date',
+    value: ExportDateType.SPENT_AT
+  },
+  {
+    label: 'Approval Date',
+    value: ExportDateType.APPROVED_AT
+  },
+  {
+    label: 'Last Spend Date',
+    value: ExportDateType.LAST_SPENT_AT
+  }
+];

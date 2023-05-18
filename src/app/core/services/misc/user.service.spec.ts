@@ -12,7 +12,7 @@ describe('UserService', () => {
   let httpMock: HttpTestingController;
   let api:ApiService;
   const API_BASE_URL = environment.api_url;
-  const workspace_id = environment.tests.workspaceId;
+  const workspace_id = 1;
 
   beforeEach(() => {
     TestBed.configureTestingModule({

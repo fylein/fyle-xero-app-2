@@ -10,15 +10,22 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { EXPENSE_GROUP_LISTS } from './zero-state-with-illustration.fixture';
 
 import { ZeroStateWithIllustrationComponent } from './zero-state-with-illustration.component';
+import { Router } from '@angular/router';
 
 describe('ZeroStateWithIllustrationComponent', () => {
   let component: ZeroStateWithIllustrationComponent;
   let fixture: ComponentFixture<ZeroStateWithIllustrationComponent>;
   let el: DebugElement;
+  let router: Router;
+  const routerSpy = { navigate: jasmine.createSpy('navigate'), url: '/path' };
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [SharedModule],
-      declarations: [ ZeroStateWithIllustrationComponent ]
+      declarations: [ ZeroStateWithIllustrationComponent ],
+      providers: [
+        { provide: Router, useValue: routerSpy }
+      ]
     })
     .compileComponents();
   });

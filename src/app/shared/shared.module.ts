@@ -54,6 +54,12 @@ import { MandatoryErrorMessageComponent } from './components/helpers/mandatory-e
 import { EmailMultiSelectFieldComponent } from './components/configuration/email-multi-select-field/email-multi-select-field.component';
 import { DashboardExportLogDialogComponent } from './components/dashboard/dashboard-export-log-dialog/dashboard-export-log-dialog.component';
 import { AddEmailDialogComponent } from './components/configuration/advanced-settings/add-email-dialog/add-email-dialog.component';
+import { ToggleComponent } from './components/core/toggle/toggle.component';
+import { SelectComponent } from './components/core/select/select.component';
+import { EmailMultiSelectComponent } from './components/core/email-multi-select/email-multi-select.component';
+import { CloneExportSettingsComponent } from './components/clone-settings/clone-export-settings/clone-export-settings.component';
+import { CloneImportSettingsComponent } from './components/clone-settings/clone-import-settings/clone-import-settings.component';
+import { CloneAdvancedSettingsComponent } from './components/clone-settings/clone-advanced-settings/clone-advanced-settings.component';
 
 @NgModule({
   declarations: [
@@ -92,7 +98,13 @@ import { AddEmailDialogComponent } from './components/configuration/advanced-set
     MandatoryErrorMessageComponent,
     EmailMultiSelectFieldComponent,
     DashboardExportLogDialogComponent,
-    AddEmailDialogComponent
+    AddEmailDialogComponent,
+    ToggleComponent,
+    SelectComponent,
+    EmailMultiSelectComponent,
+    CloneExportSettingsComponent,
+    CloneImportSettingsComponent,
+    CloneAdvancedSettingsComponent
   ],
   imports: [
     CommonModule,
@@ -139,7 +151,11 @@ import { AddEmailDialogComponent } from './components/configuration/advanced-set
     DashboardResolveMappingErrorDialogComponent,
     ExportLogChildTableComponent,
     MandatoryErrorMessageComponent,
-    DashboardExportLogDialogComponent
+    DashboardExportLogDialogComponent,
+    ToggleComponent,
+    SelectComponent,
+    EmailMultiSelectComponent,
+    EmailMultiSelectFieldComponent
   ],
   providers: []
 })

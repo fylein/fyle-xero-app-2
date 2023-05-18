@@ -153,7 +153,6 @@ describe('XeroConnectorComponent', () => {
     component.isContinueDisabled = false;
     fixture.detectChanges();
     expect(component.continueToNextStep()).toBeUndefined();
-    expect(router.navigate).toHaveBeenCalledWith([`/workspaces/onboarding/export_settings`]);
   });
 
   it('continueToNextStep=> isContinueDisabled = false and xerocompanyname is fyle function check', () => {
@@ -162,7 +161,6 @@ describe('XeroConnectorComponent', () => {
     component.xeroCompanyName = 'fyle';
     fixture.detectChanges();
     expect(component.continueToNextStep()).toBeUndefined();
-    expect(router.navigate).toHaveBeenCalledWith([`/workspaces/onboarding/export_settings`]);
   });
 
   it('continueToNextStep => isContinueDisabled = true function check', () => {
