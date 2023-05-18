@@ -188,8 +188,8 @@ export class XeroConnectorComponent implements OnInit, OnDestroy {
     this.disableCloneSettings = true;
     const data: ConfirmationDialog = {
       title: 'Your settings are pre-filled',
-      contents: `<li>Your previous organization's settings <b>(${workspaceName})</b> have been copied over to the current organization</li>
-        <li>You can change the settings or reset the configuration to restart the process from the beginning</li>`,
+      contents: `Your previous organization's settings <b>(${workspaceName})</b> have been copied over to the current organization
+        <br><br>You can change the settings or reset the configuration to restart the process from the beginning<br>`,
       primaryCtaText: 'Continue',
       hideSecondaryCTA: true,
       hideWarningIcon: true
