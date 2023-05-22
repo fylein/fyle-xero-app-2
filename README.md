@@ -66,9 +66,6 @@ Follow instructions mentioned in [Integrations Central](https://github.com/fylei
 * To reset the org to initial data, use the `reset_workspace_e2e()` sql function and re run tests
 
 ### Bonus points
-* Execute tests in the journey folder with below sequence.
-    For example, if we try to run `cypress/e2e/journey/export-log.cy.js` initially without running `cypress/e2e/journey/onboarding.cy.js`, the test will fail.
-    For Micro-action tests we dont follow any specific sequence.
 * If we are writing a test that represent an user journey, create the test in the journey folder. Or if it represents a micro action, place it in the micro-actions folder. If we add a new feature and wanted to cover all possible scenarios to write a test, add it to the feature folder, along with month and year.
 
 ### End to End Tests on Github
