@@ -31,10 +31,10 @@ Follow instructions mentioned in [Integrations Central](https://github.com/fylei
 * It would be very easy if we use this org for running tests since we have pre populated data in Fyle to run tests
     ```
     For Journey/Onboarding E2E Tests
-    Email: admin1@fyleforfyleXeroJourney.com | Org Name: Fyle For Xero Journey
+    Email: Ashwin's Staging | Org Name: Fyle For Xero Journey
 
     For Micro-actions E2E Tests
-    Email: admin1@fyleforfylexero.in | Org Name: Fyle For XeroMicroAction
+    Email: Ashwin's Staging | Org Name: Fyle For XeroMicroAction
     
     ```
 * Login to this org on [local](http:localhost:4200) once and complete Xero OAuth connection
