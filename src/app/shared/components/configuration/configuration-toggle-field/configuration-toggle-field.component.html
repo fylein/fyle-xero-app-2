@@ -6,9 +6,8 @@
       <h5 class="configuration--field-label sub-text-color paragraph" [innerHTML]="subLabel"></h5>
     </div>
   </div>
-  <div class="configuration--input-toggle-section" data-cy="toggle-field">
-    <mat-slide-toggle class="configuration--toggle-form-field" color="accent" [formControlName]="formControllerName">
-    </mat-slide-toggle>
+  <div class="configuration--input-toggle-section">
+    <app-toggle [form]="form" [formControllerName]="formControllerName"></app-toggle>
   </div>
 </div>
 <div *ngIf="formControllerName === 'chartOfAccount'" class="configuration--field-toggle-note-section">
@@ -32,7 +31,7 @@
       </div>
     </div>
     <div class="advanced-setting-toggle-section">
-      <mat-slide-toggle class="configuration--toggle-form-field" color="accent" [formControlName]="formControllerName"></mat-slide-toggle>
+      <app-toggle [form]="form" [formControllerName]="formControllerName"></app-toggle>
     </div>
   </div>
 </div>

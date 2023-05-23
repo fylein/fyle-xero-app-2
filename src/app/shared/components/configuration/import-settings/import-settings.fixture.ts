@@ -6,6 +6,7 @@ import { ExpenseField } from "src/app/core/models/misc/expense-field.model";
 import { MappingSetting } from "src/app/core/models/db/mapping-setting.model";
 import { DestinationAttribute } from "src/app/core/models/db/destination-attribute.model";
 import { XeroCredentials } from "src/app/core/models/configuration/xero-connector.model";
+import { FormBuilder, FormGroup } from "@angular/forms";
 
 const workspaceresponse:WorkspaceGeneralSetting = {
   auto_create_destination_entity: true,
@@ -94,13 +95,22 @@ export const expenseFieldresponse:ExpenseField[]=[
       "display_name": "Xero Field"
   }
 ];
-export const xeroField:ExpenseFieldsFormOption[] = [{
-  source_field: MappingSourceField.TAX_GROUP,
-  destination_field: MappingDestinationField.ACCOUNT,
-  import_to_fyle: true,
-  disable_import_to_fyle: true,
-  source_placeholder: null
-}];
+export const xeroField:ExpenseFieldsFormOption[] = [
+  {
+    source_field: MappingSourceField.TAX_GROUP,
+    destination_field: MappingDestinationField.TAX_CODE,
+    import_to_fyle: true,
+    disable_import_to_fyle: true,
+    source_placeholder: null
+  },
+  {
+    source_field: MappingSourceField.PROJECT,
+    destination_field: MappingDestinationField.ITEM,
+    import_to_fyle: true,
+    disable_import_to_fyle: true,
+    source_placeholder: null
+  }
+];
 export const xeroField1:ExpenseFieldsFormOption[] = [{
   source_field: MappingSourceField.PROJECT,
   destination_field: MappingDestinationField.ACCOUNT,
@@ -175,4 +185,31 @@ export const errorResponse = {
     is_expired: true,
     company_name: 'Xero'
   }
+};
+
+export const mockXeroFields = [{
+  source_field: 'PROJECT',
+  destination_field: 'ITEM',
+  import_to_fyle: true,
+  disable_import_to_fyle: false,
+  source_placeholder: ''
+}];
+
+export const mockExpenseFieldsFormArray: FormGroup[] = [
+  new FormBuilder().group({
+    source_field: ['PROJECT'],
+    destination_field: ['CUSTOMER'],
+    disable_import_to_fyle: [false],
+    import_to_fyle: [true],
+    source_placeholder: ['']
+  })
+];
+
+export const mockPatchExpenseFieldsFormArray = {
+  source_field: 'PROJECT',
+  destination_field: 'CUSTOMER',
+  import_to_fyle: true,
+  disable_import_to_fyle: false,
+  source_placeholder: '',
+  addSourceField: true
 };

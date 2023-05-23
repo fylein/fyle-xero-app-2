@@ -5,7 +5,7 @@ import { MappingDestinationField, MappingSourceField } from "../../models/enum/e
 import { ExpenseField } from "../../models/misc/expense-field.model";
 
 const API_BASE_URL = environment.api_url;
-const workspace_id = environment.tests.workspaceId;
+const workspace_id = 1;
 
 export const mappingSettingPayload: MappingSettingPost[] = [{
   source_field: MappingSourceField.COST_CENTER,

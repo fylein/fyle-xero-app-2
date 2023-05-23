@@ -45,8 +45,8 @@
     font-weight: 500;
   }
 
-  &--caption {
-   padding: 52px 126px 35px 89px;
+  &--caption-block {
+    padding-top: 52px;
   }
 
   &--footer {
@@ -54,5 +54,26 @@
     position: absolute;
     bottom: 0;
     width: 100%;
+  }
+
+  &--horizontal-separator {
+    border-top: 1px solid #F5F5F5;
+    width: 100%;
+    align-self: center;
+    padding-bottom: 24px;
+  }
+
+  &--content-block {
+    padding-left: 32px;
+  }
+
+  &--tick-img {
+    padding-top: 2px;
+  }
+
+  &--caption {
+    padding-left: 30px;
+    padding-bottom: 24px;
+    font-size: 14px;
   }
 }

@@ -44,17 +44,6 @@ export class EmailMultiSelectFieldComponent implements OnInit {
     public helperService: HelperService
   ) { }
 
-  delete(event: Event, email: string, deleteAll: boolean = false) {
-    event.preventDefault();
-    event.stopPropagation();
-    if (deleteAll) {
-      this.form.controls.emails.patchValue(null);
-    } else {
-      const emails = this.form.value.emails.filter((value: string) => value !== email);
-      this.form.controls.emails.patchValue(emails);
-    }
-  }
-
   ngOnInit(): void {
   }
 

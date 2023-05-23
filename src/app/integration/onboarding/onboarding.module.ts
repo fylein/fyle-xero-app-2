@@ -10,6 +10,9 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { SharedModule } from 'src/app/shared/shared.module';
 
@@ -22,6 +25,7 @@ import { OnboardingComponent } from './onboarding.component';
 import { OnboardingLandingComponent } from './onboarding-landing/onboarding-landing.component';
 import { OnboardingXeroConnectorComponent } from './onboarding-xero-connector/onboarding-xero-connector.component';
 import { OnboardingRoutingModule } from './onboarding-routing.module';
+import { CloneSettingsComponent } from './clone-settings/clone-settings.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +35,8 @@ import { OnboardingRoutingModule } from './onboarding-routing.module';
     OnboardingDoneComponent,
     OnboardingComponent,
     OnboardingLandingComponent,
-    OnboardingXeroConnectorComponent
+    OnboardingXeroConnectorComponent,
+    CloneSettingsComponent
   ],
   imports: [
     CommonModule,
@@ -44,7 +49,10 @@ import { OnboardingRoutingModule } from './onboarding-routing.module';
     MatSlideToggleModule,
     MatCheckboxModule,
     MatDialogModule,
-    SharedModule
+    MatMenuModule,
+    MatTooltipModule,
+    SharedModule,
+    MatProgressSpinnerModule
   ]
 })
 export class OnboardingModule { }
