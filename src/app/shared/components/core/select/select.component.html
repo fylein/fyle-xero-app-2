@@ -43,7 +43,7 @@
 
     <div *ngIf="formControllerName === 'autoMapEmployees'"
         class="select-field--select-example-section paragraph">
-        <h5 *ngIf="form.value.autoMapEmployees === 'NAME'" class="sub-text-color">
+        <h5 *ngIf="form.value.autoMapEmployees === 'NAME'" class="sub-text-color" data-cy="autoMap-sub-text">
             Example: Ryan Clark will map to Ryan Clark in Xero.
         </h5>
         <h5 *ngIf="form.value.autoMapEmployees === 'EMAIL'" class="sub-text-color">

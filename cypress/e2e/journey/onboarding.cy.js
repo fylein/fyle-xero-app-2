@@ -33,10 +33,11 @@ describe('Onboarding journey', () => {
       cy.getElement('select-field').eq(0).click();
       cy.get('.mat-select-panel').within(() => {
         cy.get('.mat-option').eq(0).contains('None');
-        cy.get('.mat-option').eq(1).contains('Employee name on Fyle to contact name on Xero').click();
         cy.get('.mat-option').eq(2).contains('Employee email on Fyle to contact email on Xero');
+        cy.get('.mat-option').eq(1).contains('Employee name on Fyle to contact name on Xero').click();
       });
-      cy.getElement('select-field').eq(1).click();
+      cy.assertText('autoMap-sub-text','Example: Ryan Clark will map to Ryan Clark in Xero.');
+      cy.getElement('select-field').eq(2).click();
       cy.get('.mat-select-panel').within(() => {
         cy.get('.mat-option').eq(1).contains('Verification Date');
         cy.get('.mat-option').eq(2).contains('Spend Date');
@@ -44,7 +45,7 @@ describe('Onboarding journey', () => {
         cy.get('.mat-option').eq(4).contains('Last Spend Date');
         cy.get('.mat-option').eq(0).contains('Current Date').click();
       });
-      cy.getElement('select-field').eq(2).click();
+      cy.getElement('select-field').eq(3).click();
       cy.get('.mat-select-panel').within(() => {
         cy.get('.mat-option').eq(1).contains('Paid');
         cy.get('.mat-option').eq(0).contains('Payment Processing').click();
@@ -82,7 +83,7 @@ describe('Onboarding journey', () => {
       cy.assertText('export-prompt', 'Click on Export to start exporting expenses from Fyle as Xero transactions.');
       cy.getElement('export-btn').click();
       cy.wait('@tasksPolling').its('response.statusCode').should('equal', 200)
-      cy.wait('@tasksPolling').its('response.statusCode').should('equal', 200)
+      cy.wait('@exportDetail')
       cy.get('.errors--mapping-error-contents:contains("Category Mapping errors") .errors--resolve-btn').click();
       cy.getElement('resolve-form-field').eq(0).click();
       cy.get('.mat-select-panel input').type('Office Expenses');
@@ -94,20 +95,21 @@ describe('Onboarding journey', () => {
       cy.get('.mat-select-panel input').type('General Expenses');
       cy.get('.mat-select-panel .mat-option-text').contains('General Expenses').click()
       cy.getElement('close-resolve-dialog').click();
+      cy.get('.errors--mapping-error-contents:contains("Employee Mapping errors") .errors--resolve-btn').click();
+      cy.getElement('resolve-form-field').eq(0).click();
+      cy.get('.mat-select-panel input').type('Brian');
+      cy.get('.mat-select-panel .mat-option-text').contains('Brian Foster').click()
+      cy.getElement('resolve-form-field').eq(1).click();
+      cy.get('.mat-select-panel input').type('Ashwin');
+      cy.get('.mat-select-panel .mat-option-text').contains('Ashwin').click()
+      cy.getElement('close-resolve-dialog').click();
       cy.getElement('export-btn').click();
-      cy.wait(1000)
-      cy.wait('@tasksPolling').its('response.statusCode').should('equal', 200)
-      cy.wait('@tasksPolling').its('response.statusCode').should('equal', 200)
-      cy.wait('@tasksPolling').its('response.statusCode').should('equal', 200)
-      cy.wait('@tasksPolling').its('response.statusCode').should('equal', 200)
       cy.wait('@tasksPolling').its('response.statusCode').should('equal', 200)
       cy.get('.past-export--view-expense').then(($failedExports) => {
         const failedExportsCount = parseInt($failedExports.text().trim());
         if (failedExportsCount > 0) {
           cy.wait('@tasksPolling').its('response.statusCode').should('equal', 200)
-          cy.wait('@tasksPolling').its('response.statusCode').should('equal', 200)
-          cy.wait('@tasksPolling').its('response.statusCode').should('equal', 200)
-          cy.wait('@tasksPolling').its('response.statusCode').should('equal', 200)
+          cy.wait('@exportDetail')
           cy.assertText('xero-error-text','Xero Errors');
           cy.assertText('xero-error-sub-text','Resolve these errors on your Xero Account before trying to re-export them again.');
           cy.getElement('side-nav-bar-click').contains('Mappings').click()
@@ -128,14 +130,13 @@ describe('Onboarding journey', () => {
           cy.get('.mat-select-panel .mat-option-text').contains('General Expenses').click()
           cy.getElement('side-nav-bar-click').contains('Dashboard').click()
           cy.getElement('export-btn').click();
-          cy.wait(500)
           cy.wait('@tasksPolling').its('response.statusCode').should('equal', 200)
         }
       });
-      cy.wait(500)
-      cy.wait('@tasksPolling')
+      cy.wait('@tasksPolling').its('response.statusCode').should('equal', 200)
       cy.wait('@exportDetail')
       cy.wait('@syncExpenseGroups').its('response.statusCode').should('equal', 200)
+      cy.wait('@tasksPolling').its('response.statusCode').should('equal', 200)
       cy.assertText('successful-export', 'Congratulations, you are winning!');
       cy.assertText('successful-export-prompt', 'You exports did not face any error. If they do, you can resolve them right here and re-export successfully.');
     }
