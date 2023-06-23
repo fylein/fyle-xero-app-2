@@ -98,6 +98,18 @@
           >
         </app-configuration-select-field>
 
+        <app-configuration-select-field
+          [form]="exportSettingsForm"
+          [options]="cccExpenseGroupingDateOptions"
+          [isFieldMandatory]="true"
+          [mandatoryErrorListName]="'Bank Transaction Date'"
+          [iconPath]="'assets/images/svgs/general/calendar.svg'"
+          [label]="'Set the Bank Transaction date as'"
+          [subLabel]="'The selected date will reflect in expenses exported to Xero'"
+          [placeholder]="'Select the Bank Transaction date'"
+          [formControllerName]="'cccExportDate'">
+        </app-configuration-select-field>
+
           <app-configuration-select-field
             [form]="exportSettingsForm"
             [options]="cccExpenseStateOptions"

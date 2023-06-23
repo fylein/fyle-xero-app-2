@@ -18,4 +18,6 @@ export interface ExpenseGroupSetting extends ExpenseGroupSettingPost {
   workspace: number;
 }
 
-export interface ExpenseGroupSettingGet extends ExpenseGroupSettingPost {}
+export interface ExpenseGroupSettingGet extends ExpenseGroupSettingPost {
+  ccc_export_date_type: any;
+}
