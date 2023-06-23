@@ -21,6 +21,7 @@ describe('DashboardExportLogDialogComponent', () => {
 
   beforeEach(async () => {
     localStorage.setItem('user', JSON.stringify({org_id: 'dummy'}));
+    localStorage.setItem('workspaceId', environment.tests.workspaceId);
     const serviceSpy = jasmine.createSpyObj('ExportLogService', ['getExpenseGroups', 'generateExportTypeAndId', 'getReferenceType', 'generateFyleUrl']);
     await TestBed.configureTestingModule({
       imports: [MatDialogModule, SharedModule, HttpClientTestingModule],
