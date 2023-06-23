@@ -285,6 +285,7 @@ th.mat-header-cell:last-of-type {
   background: #2C304E;
   border-radius: 2px;
   color: #FFFFFF;
+  max-width: none !important;
   min-width: fit-content;
   font-size: 12px;
   position: relative;
