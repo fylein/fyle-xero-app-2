@@ -16,6 +16,7 @@ import { ImportSettingService } from 'src/app/core/services/configuration/import
 import { AdvancedSettingService } from 'src/app/core/services/configuration/advanced-setting.service';
 import { adminEmails, mockPaymentSyncOptions } from 'src/app/shared/components/configuration/advanced-settings/advanced-settings.fixture';
 import { MatMenuModule } from '@angular/material/menu';
+import { environment } from 'src/environments/environment';
 
 describe('CloneSettingsComponent', () => {
   let component: CloneSettingsComponent;
@@ -62,6 +63,7 @@ describe('CloneSettingsComponent', () => {
   });
 
   beforeEach(() => {
+    localStorage.setItem('workspaceId', environment.tests.workspaceId);
     fixture = TestBed.createComponent(CloneSettingsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
