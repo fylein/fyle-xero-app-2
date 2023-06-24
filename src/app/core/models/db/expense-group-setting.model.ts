@@ -19,5 +19,5 @@ export interface ExpenseGroupSetting extends ExpenseGroupSettingPost {
 }
 
 export interface ExpenseGroupSettingGet extends ExpenseGroupSettingPost {
-  ccc_export_date_type: ExportDateType;
+  ccc_export_date_type: ExportDateType | null;
 }
