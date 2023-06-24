@@ -71,10 +71,16 @@ export class ExportSettingsComponent implements OnInit, OnDestroy {
 
   reimbursableExpenseGroupingDateOptions: ExportSettingFormOption[] = this.exportSettingService.getReimbursableExpenseGroupingDateOptions();
 
-  cccExpenseGroupingDateOptions: ExportSettingFormOption[] = this.reimbursableExpenseGroupingDateOptions.concat([{
-    label: 'Posted Date',
-    value: ExportDateType.POSTED_AT
-  }]);
+  cccExpenseGroupingDateOptions: ExportSettingFormOption[] = [
+    {
+      label: 'Spend Date',
+      value: ExportDateType.SPENT_AT
+    },
+    {
+      label: 'Posted Date',
+      value: ExportDateType.POSTED_AT
+    }
+  ];
 
   creditCardExportTypes: ExportSettingFormOption[] = [
     {
