@@ -210,6 +210,5 @@ export const mockPatchExpenseFieldsFormArray = {
   destination_field: 'CUSTOMER',
   import_to_fyle: true,
   disable_import_to_fyle: false,
-  source_placeholder: '',
-  addSourceField: true
+  source_placeholder: ''
 };
