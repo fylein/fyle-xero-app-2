@@ -141,3 +141,14 @@ export const mockReimbursableExpenseGroupingDateOptions = [
     value: ExportDateType.LAST_SPENT_AT
   }
 ];
+
+export const mockCCCExpenseGroupingDateOptions = [
+  {
+    label: 'Spend Date',
+    value: ExportDateType.SPENT_AT
+  },
+  {
+    label: 'Posted Date',
+    value: ExportDateType.POSTED_AT
+  }
+];
