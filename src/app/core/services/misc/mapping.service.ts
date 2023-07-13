@@ -44,7 +44,7 @@ export class MappingService {
   }
 
   getGroupedXeroDestinationAttributes(attributeTypes: string[]): Observable<GroupedDestinationAttribute> {
-    return from(this.getXeroDestinationAttributes(attributeTypes, true).toPromise().then((response: DestinationAttribute[]) => {
+    return from(this.getXeroDestinationAttributes(attributeTypes).toPromise().then((response: DestinationAttribute[]) => {
       return response.reduce((groupedAttributes: GroupedDestinationAttribute | any, attribute: DestinationAttribute) => {
         const group: DestinationAttribute[] = groupedAttributes[attribute.attribute_type] || [];
         group.push(attribute);
