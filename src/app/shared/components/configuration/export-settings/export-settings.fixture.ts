@@ -53,7 +53,8 @@ export const exportResponse: ExportSettingGet = {
   expense_group_settings: {
     reimbursable_expense_state: ExpenseState.PAID,
     reimbursable_export_date_type: ExportDateType.CURRENT_DATE,
-    ccc_expense_state: CCCExpenseState.PAID
+    ccc_expense_state: CCCExpenseState.PAID,
+    ccc_export_date_type: ExportDateType.SPENT_AT
   },
   workspace_general_settings: {
     reimbursable_expenses_object: null,
@@ -71,7 +72,8 @@ export const exportResponse1: ExportSettingGet = {
   expense_group_settings: {
     reimbursable_expense_state: ExpenseState.PAID,
     reimbursable_export_date_type: null,
-    ccc_expense_state: CCCExpenseState.PAID
+    ccc_expense_state: CCCExpenseState.PAID,
+    ccc_export_date_type: null
   },
   // @ts-ignore
   workspace_general_settings: undefined,
@@ -137,5 +139,16 @@ export const mockReimbursableExpenseGroupingDateOptions = [
   {
     label: 'Last Spend Date',
     value: ExportDateType.LAST_SPENT_AT
+  }
+];
+
+export const mockCCCExpenseGroupingDateOptions = [
+  {
+    label: 'Spend Date',
+    value: ExportDateType.SPENT_AT
+  },
+  {
+    label: 'Posted Date',
+    value: ExportDateType.POSTED_AT
   }
 ];

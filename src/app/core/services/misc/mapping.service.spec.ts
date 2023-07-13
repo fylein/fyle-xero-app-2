@@ -81,7 +81,7 @@ describe('MappingService', () => {
     expect(actualResponseKeys).toEqual(responseKeys);
     const req = httpMock.expectOne({
       method: 'GET',
-      url: `${API_BASE_URL}/workspaces/${workspace_id}/xero/destination_attributes/?attribute_types=BANK_ACCOUNT,CONTACT,ACCOUNT,TENANT`
+      url: `${API_BASE_URL}/workspaces/${workspace_id}/xero/destination_attributes/?attribute_types=BANK_ACCOUNT,CONTACT,ACCOUNT,TENANT&active=true`
     });
       req.flush(GroupedXeroDestinationAttributesresponse);
   });
@@ -96,7 +96,7 @@ describe('MappingService', () => {
     expect(actualResponseKeys).toEqual(responseKeys);
     const req = httpMock.expectOne({
       method: 'GET',
-      url: `${API_BASE_URL}/workspaces/${workspace_id}/xero/destination_attributes/?attribute_types=BANK_ACCOUNT,CONTACT,ACCOUNT,TENANT`
+      url: `${API_BASE_URL}/workspaces/${workspace_id}/xero/destination_attributes/?attribute_types=BANK_ACCOUNT,CONTACT,ACCOUNT,TENANT&active=true`
     });
       req.flush([]);
   });

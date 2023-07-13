@@ -30,7 +30,8 @@ describe('ExportSettingModel', () => {
       expense_group_settings: {
         reimbursable_expense_state: ExpenseState.PAID,
         reimbursable_export_date_type: ExportDateType.CURRENT_DATE,
-        ccc_expense_state: CCCExpenseState.PAID
+        ccc_expense_state: CCCExpenseState.PAID,
+        ccc_export_date_type: ExportDateType.SPENT_AT
       },
       workspace_general_settings: {
         reimbursable_expenses_object: ReimbursableExpensesObject.PURCHASE_BILL,

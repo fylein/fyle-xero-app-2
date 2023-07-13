@@ -159,6 +159,25 @@
                         </div>
                     </div>
 
+                    <div class="clone-settings--configuration-section">
+                        <div fxLayout="row">
+                            <div class="clone-settings--field-section" fxLayout="row" fxLayoutAlign="start center">
+                                <img class="clone-settings--sub-options-icon"
+                                    src="assets/images/svgs/general/calendar-disabled.svg">
+                                <p class="clone-settings--sub-options-text">Date of export</p>
+                                <img class="clone-settings--info-icon" src="assets/images/svgs/general/info-disabled.svg" matTooltip="The selected date will reflect in expenses exported to Xero" matTooltipPosition="above" matTooltipClass="clone-settings">
+                            </div>
+
+                            <div class="clone-settings--sub-options-text">
+                                <app-select [form]="cloneSettingsForm"
+                                    [options]="cccExpenseGroupingDateOptions" [isFieldMandatory]="true"
+                                    [mandatoryErrorListName]="'Bank Transaction Date'"
+                                    [placeholder]="'Select the Bank Transaction date'"
+                                    [formControllerName]="'cccExportDate'"
+                                    [phase]="ProgressPhase.ONBOARDING"></app-select>
+                            </div>
+                        </div>
+                    </div>
 
                     <div class="clone-settings--configuration-section">
                         <div fxLayout="row">

@@ -6,7 +6,7 @@ import { ExportSettingsComponent } from './export-settings.component';
 import { HttpClientModule } from '@angular/common/http';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { CorporateCreditCardExpensesObject, ExpenseGroupingFieldOption, ExpenseState, ExportDateType, OnboardingState, ReimbursableExpensesObject, TenantFieldMapping } from 'src/app/core/models/enum/enum.model';
-import { destinationAttribute, errorResponse, exportResponse, exportResponse1, mockAutoMapEmployeeOptions, mockReimbursableExpenseGroupingDateOptions, replacecontent1, replacecontent2, workspaceResponse } from './export-settings.fixture';
+import { destinationAttribute, errorResponse, exportResponse, exportResponse1, mockAutoMapEmployeeOptions, mockCCCExpenseGroupingDateOptions, mockReimbursableExpenseGroupingDateOptions, replacecontent1, replacecontent2, workspaceResponse } from './export-settings.fixture';
 import { MappingService } from 'src/app/core/services/misc/mapping.service';
 import { WorkspaceService } from 'src/app/core/services/workspace/workspace.service';
 import { ExportSettingService } from 'src/app/core/services/configuration/export-setting.service';
@@ -38,7 +38,8 @@ describe('ExportSettingsComponent', () => {
       getExportSettings: () => of(exportResponse),
       postExportSettings: () => of(exportResponse),
       getAutoMapEmployeeOptions: () => mockAutoMapEmployeeOptions,
-      getReimbursableExpenseGroupingDateOptions: () => mockReimbursableExpenseGroupingDateOptions
+      getReimbursableExpenseGroupingDateOptions: () => mockReimbursableExpenseGroupingDateOptions,
+      getCCCExpenseGroupingDateOptions: () => mockCCCExpenseGroupingDateOptions
     };
     service2 = {
       getGroupedXeroDestinationAttributes: () => of(destinationAttribute),

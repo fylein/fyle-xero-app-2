@@ -67,6 +67,19 @@ export class ExportSettingService {
     ];
   }
 
+  getCCCExpenseGroupingDateOptions(): ExportSettingFormOption[] {
+    return [
+     {
+       label: 'Spend Date',
+       value: ExportDateType.SPENT_AT
+     },
+     {
+       label: 'Posted Date',
+       value: ExportDateType.POSTED_AT
+     }
+   ];
+ }
+
   getReimbursableExpenseStateOptions(isSimplifyReportClosureEnabled: boolean): ExportSettingFormOption[] {
     return [
       {

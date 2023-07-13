@@ -71,7 +71,7 @@ export class ExportSettingsComponent implements OnInit, OnDestroy {
 
   reimbursableExpenseGroupingDateOptions: ExportSettingFormOption[] = this.exportSettingService.getReimbursableExpenseGroupingDateOptions();
 
-  cccExpenseGroupingDateOptions: ExportSettingFormOption[] = this.reimbursableExpenseGroupingDateOptions.concat();
+  cccExpenseGroupingDateOptions: ExportSettingFormOption[] = this.exportSettingService.getCCCExpenseGroupingDateOptions();
 
   creditCardExportTypes: ExportSettingFormOption[] = [
     {
@@ -188,6 +188,7 @@ export class ExportSettingsComponent implements OnInit, OnDestroy {
       reimbursableExportDate: [this.exportSettings.expense_group_settings?.reimbursable_export_date_type],
       cccExpenseState: [this.exportSettings.expense_group_settings?.ccc_expense_state],
       creditCardExpense: [this.exportSettings.workspace_general_settings?.corporate_credit_card_expenses_object ? true : false],
+      cccExportDate: [this.exportSettings.expense_group_settings?.ccc_export_date_type],
       creditCardExportType: [this.exportSettings.workspace_general_settings?.corporate_credit_card_expenses_object ? this.exportSettings.workspace_general_settings?.corporate_credit_card_expenses_object : CorporateCreditCardExpensesObject.BANK_TRANSACTION],
       bankAccount: [this.exportSettings.general_mappings?.bank_account?.id ? this.exportSettings.general_mappings?.bank_account : null],
       autoMapEmployees: [this.exportSettings.workspace_general_settings?.auto_map_employees],

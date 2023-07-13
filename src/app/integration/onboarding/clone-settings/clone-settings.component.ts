@@ -11,7 +11,7 @@ import { ExpenseFieldsFormOption } from 'src/app/core/models/configuration/impor
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { MappingSetting } from 'src/app/core/models/db/mapping-setting.model';
 import { WorkspaceScheduleEmailOptions } from 'src/app/core/models/db/workspace-schedule.model';
-import { ClickEvent, OnboardingStep, PaymentSyncDirection, ProgressPhase, SimpleSearchPage, SimpleSearchType } from 'src/app/core/models/enum/enum.model';
+import { ClickEvent, ExportDateType, OnboardingStep, PaymentSyncDirection, ProgressPhase, SimpleSearchPage, SimpleSearchType } from 'src/app/core/models/enum/enum.model';
 import { ConfirmationDialog } from 'src/app/core/models/misc/confirmation-dialog.model';
 import { ExpenseField } from 'src/app/core/models/misc/expense-field.model';
 import { AdvancedSettingService } from 'src/app/core/services/configuration/advanced-setting.service';
@@ -36,6 +36,8 @@ export class CloneSettingsComponent implements OnInit {
   autoMapEmployeeTypes: ExportSettingFormOption[] = this.exportSettingService.getAutoMapEmployeeOptions();
 
   reimbursableExpenseGroupingDateOptions: ExportSettingFormOption[] = this.exportSettingService.getReimbursableExpenseGroupingDateOptions();
+
+  cccExpenseGroupingDateOptions: ExportSettingFormOption[] = this.exportSettingService.getCCCExpenseGroupingDateOptions();
 
   chartOfAccountTypesList: string[] = this.importSettingService.getChartOfAccountTypesList();
 
@@ -321,6 +323,7 @@ export class CloneSettingsComponent implements OnInit {
       reimbursableExpense: [this.cloneSettings.export_settings.workspace_general_settings.reimbursable_expenses_object],
       autoMapEmployees: [this.cloneSettings.export_settings.workspace_general_settings.auto_map_employees],
       reimbursableExportDate: [this.cloneSettings.export_settings.expense_group_settings.reimbursable_export_date_type],
+      cccExportDate: [this.cloneSettings.export_settings.expense_group_settings?.ccc_export_date_type],
       reimbursableExpenseState: [this.cloneSettings.export_settings.expense_group_settings.reimbursable_expense_state],
       creditCardExpense: [this.cloneSettings.export_settings.workspace_general_settings.corporate_credit_card_expenses_object],
       bankAccount: [bankAccount.length ? this.cloneSettings.export_settings.general_mappings.bank_account : null],

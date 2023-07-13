@@ -95,7 +95,7 @@ export class DashboardResolveMappingErrorDialogComponent implements OnInit {
   }
 
   private setupPage(): void {
-    this.mappingService.getXeroDestinationAttributes(this.data.destinationType).subscribe((xeroData: DestinationAttribute[]) => {
+    this.mappingService.getXeroDestinationAttributes(this.data.destinationType, true).subscribe((xeroData: DestinationAttribute[]) => {
       this.xeroData = xeroData;
 
       const mappings: any[] = [];
