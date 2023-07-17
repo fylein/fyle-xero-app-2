@@ -74,7 +74,7 @@ export class ExportSettingService {
        value: ExportDateType.SPENT_AT
      },
      {
-       label: 'Posted Date',
+       label: 'Card Transaction Post date',
        value: ExportDateType.POSTED_AT
      }
    ];
