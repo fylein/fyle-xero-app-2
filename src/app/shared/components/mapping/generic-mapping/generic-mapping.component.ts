@@ -185,7 +185,7 @@ export class GenericMappingComponent implements OnInit {
   }
 
   private getMappingsAndSetupPage(): void {
-    this.sourceType = this.route.snapshot.params.source_field;
+    this.sourceType = decodeURIComponent(decodeURIComponent(this.route.snapshot.params.source_field));
     this.mappingService.getMappingSettings().subscribe((mappingSettingResponse: MappingSettingResponse) => {
       const mappingSetting = mappingSettingResponse.results.filter((mappingSetting) => mappingSetting.source_field === this.sourceType.toUpperCase());
       this.mappingSetting = mappingSetting.length ? mappingSetting[0] : {source_field: FyleField.CATEGORY, destination_field: MappingDestinationField.ACCOUNT};
