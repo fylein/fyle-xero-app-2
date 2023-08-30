@@ -31,7 +31,7 @@ describe('ImportSettingModel', () => {
       searchOption: new FormControl([]),
       importVendorsAsMerchants: new FormControl(true),
       importCustomers: new FormControl(false),
-      importSuppliersAsMerchants: new FormControl(false),
+      importSuppliersAsMerchants: new FormControl(false)
     });
     const employeeSettingPayload: ImportSettingPost = {
       workspace_general_settings: {
