@@ -74,6 +74,7 @@ describe('GenericMappingComponent', () => {
       searchOption: [[' fyle ']]
     });
     component.form = form;
+    activatedRoute.snapshot.params = { source_field: 'project'};
     fixture.detectChanges();
   });
 
