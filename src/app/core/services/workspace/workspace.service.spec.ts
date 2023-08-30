@@ -128,6 +128,7 @@ describe('WorkspaceService', () => {
       import_categories: false,
       import_projects: false,
       import_tax_codes: false,
+      import_suppliers_as_merchants: false,
       skip_cards_mapping: false,
       sync_fyle_to_xero_payments: false,
       sync_xero_to_fyle_payments: false,

@@ -41,6 +41,13 @@
           [isImportCustomerDisabled]="isImportCustomerDisabled">
         </app-configuration-toggle-field>
 
+        <app-configuration-toggle-field *ngIf="workspaceGeneralSettings.corporate_credit_card_expenses_object"
+          [form]="importSettingsForm"
+          [label]="'Import Suppilers from Xero as Merchants'"
+          [subLabel]="'The Suppilers in Xero will be imported as Merchants in Fyle and will be a selectable field while creating an expense.'"
+          [formControllerName]="'importSuppliersAsMerchants'">
+        </app-configuration-toggle-field>
+
         <div formArrayName="expenseFields" class="paragraph">
           <div *ngFor="let expenseField of expenseFields.controls; let i = index" [formGroupName]="i">
             <div class="import-settings--field-toggle-section">
