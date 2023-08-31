@@ -34,7 +34,7 @@ describe('AdvancedSettingsComponent', () => {
   const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of({hours: 1,
     schedule_enabled: true,
     emails_selected: ["fyle@fyle.in"],
-    email_added: {name: "fyle", email: 'fyle@fyle.in'}}), close: null });
+    email_added: {name: "fyle", email: 'fyle@fyle.in'}}), close: '' });
   dialogRefSpyObj.componentInstance = { body: '' };
 
   beforeEach(async () => {
