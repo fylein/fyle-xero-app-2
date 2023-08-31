@@ -123,7 +123,7 @@ describe('XeroConnectorService', () => {
     });
     const req = httpMock.expectOne({
       method: 'GET',
-      url: `${API_BASE_URL}/workspaces/${workspace_id}/xero/tenants/`
+      url: `${API_BASE_URL}/workspaces/${workspace_id}/xero/tenants/?attribute_type=TENANT`
     });
     req.flush(response);
   });

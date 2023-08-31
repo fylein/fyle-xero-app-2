@@ -27,8 +27,8 @@ export class MappingService {
   ) { }
 
   getXeroDestinationAttributes(attributeTypes: string | string[], active:boolean = false): Observable<DestinationAttribute[]> {
-    const params: {attribute_types: string | string[], active?: boolean} = {
-      attribute_types: attributeTypes
+    const params: {attribute_types__in: string | string[], active?: boolean} = {
+      attribute_types__in: attributeTypes
     };
 
     if (active) {
