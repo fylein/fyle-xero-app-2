@@ -20,6 +20,7 @@ import { PreviewDialogComponent } from '../preview-dialog/preview-dialog.compone
 import { WorkspaceService } from 'src/app/core/services/workspace/workspace.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { ClickEventAdditionalProperty } from 'src/app/core/models/misc/tracking.model';
+import { WorkspaceGeneralSetting } from 'src/app/core/models/db/workspace-general-setting.model';
 
 @Component({
   selector: 'app-import-settings',
@@ -39,6 +40,8 @@ export class ImportSettingsComponent implements OnInit, OnDestroy {
   importSettings: ImportSettingGet;
 
   importSettingsForm: FormGroup;
+
+  workspaceGeneralSettings: WorkspaceGeneralSetting;
 
   taxCodes: DestinationAttribute[];
 
@@ -165,7 +168,8 @@ export class ImportSettingsComponent implements OnInit, OnDestroy {
       taxCode: [this.importSettings.workspace_general_settings.import_tax_codes],
       defaultTaxCode: [this.importSettings.general_mappings?.default_tax_code?.id ? this.importSettings.general_mappings.default_tax_code : null],
       searchOption: [],
-      importCustomers: [this.importSettings.workspace_general_settings.import_customers]
+      importCustomers: [this.importSettings.workspace_general_settings.import_customers],
+      importSuppliersAsMerchants: [this.importSettings.workspace_general_settings.import_suppliers_as_merchants]
     });
 
     this.setCustomValidatorsAndWatchers();
@@ -178,10 +182,12 @@ export class ImportSettingsComponent implements OnInit, OnDestroy {
       this.importSettingService.getImportSettings(),
       this.mappingService.getFyleExpenseFields(),
       this.mappingService.getXeroField(),
-      this.mappingService.getXeroDestinationAttributes('TAX_CODE')
+      this.mappingService.getXeroDestinationAttributes('TAX_CODE'),
+      this.workspaceService.getWorkspaceGeneralSettings()
     ]).subscribe(response => {
       this.importSettings = response[0];
       this.fyleExpenseFields = response[1].map(field => field.attribute_type);
+      this.workspaceGeneralSettings = response[4];
       // Remove custom mapped Fyle options
       this.customMappedFyleFields = this.importSettings.mapping_settings.filter(setting => !setting.import_to_fyle).map(setting => setting.source_field);
       const customMappedXeroFields = this.importSettings.mapping_settings.filter(setting => !setting.import_to_fyle).map(setting => setting.destination_field);

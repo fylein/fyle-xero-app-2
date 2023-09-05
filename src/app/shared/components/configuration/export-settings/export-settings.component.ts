@@ -16,6 +16,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationDialogComponent } from '../../core/confirmation-dialog/confirmation-dialog.component';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { WorkspaceGeneralSetting } from 'src/app/core/models/db/workspace-general-setting.model';
+import { ImportSettingModel, ImportSettingPost } from 'src/app/core/models/configuration/import-setting.model';
 
 @Component({
   selector: 'app-export-settings',

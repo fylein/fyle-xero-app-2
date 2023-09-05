@@ -9,7 +9,8 @@ export type ImportSettingWorkspaceGeneralSetting = {
   import_categories: boolean,
   charts_of_accounts: string[],
   import_tax_codes: boolean,
-  import_customers: boolean
+  import_customers: boolean,
+  import_suppliers_as_merchants: boolean
 }
 
 export type ImportSettingGeneralMapping = {
@@ -59,6 +60,7 @@ export class ImportSettingModel {
         import_categories: importSettingsForm.get('chartOfAccount')?.value,
         charts_of_accounts: importSettingsForm.get('chartOfAccount')?.value ? chartOfAccounts : ['Expense'],
         import_tax_codes: importSettingsForm.get('taxCode')?.value,
+        import_suppliers_as_merchants: importSettingsForm.get('importSuppliersAsMerchants')?.value,
         import_customers: importSettingsForm.get('importCustomers')?.value ? importSettingsForm.get('importCustomers')?.value : false
       },
       general_mappings: {
