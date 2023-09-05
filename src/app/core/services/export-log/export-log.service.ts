@@ -33,22 +33,21 @@ export class ExportLogService {
     return this.apiService.get(`/workspaces/${this.workspaceId}/fyle/expense_group_settings/`, {});
   }
 
-  getExpenseGroups(state: string, limit: number, offset: number, selectedDateFilter: SelectedDateFilter | null, exportedAt: Date | void): Observable<ExpenseGroupResponse> {
+  getExpenseGroups(limit: number, offset: number, selectedDateFilter: SelectedDateFilter | null, exportedAt: string | void): Observable<ExpenseGroupResponse> {
     const params: any = {
       limit,
-      offset,
-      state
+      offset
     };
 
     if (selectedDateFilter) {
       const startDate = selectedDateFilter.startDate.toLocaleDateString().split('/');
       const endDate = selectedDateFilter.endDate.toLocaleDateString().split('/');
-      params.start_date = `${startDate[2]}-${startDate[1]}-${startDate[0]}T00:00:00`;
-      params.end_date = `${endDate[2]}-${endDate[1]}-${endDate[0]}T23:59:59`;
+      params.exported_at__gte = `${startDate[2]}-${startDate[1]}-${startDate[0]}T00:00:00`;
+      params.exported_at__lte = `${endDate[2]}-${endDate[1]}-${endDate[0]}T23:59:59`;
     }
 
     if (exportedAt) {
-      params.exported_at = exportedAt;
+      params.exported_at__gte = exportedAt;
     }
     return this.apiService.get(`/workspaces/${this.workspaceId}/fyle/expense_groups/`, params);
   }
