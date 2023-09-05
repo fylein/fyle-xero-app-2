@@ -8,7 +8,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { Router } from '@angular/router';
 import { of, throwError } from 'rxjs';
-import { chartOfAccountTypesList, errorResponse, destinationAttribute, expenseFieldresponse, getImportsettingResponse, postImportsettingresponse, XeroCredentialsResponse, xeroField, xeroField1, mockXeroFields, mockExpenseFieldsFormArray, mockPatchExpenseFieldsFormArray } from './import-settings.fixture';
+import { chartOfAccountTypesList, errorResponse, destinationAttribute, expenseFieldresponse, getImportsettingResponse, postImportsettingresponse, XeroCredentialsResponse, xeroField, xeroField1, mockXeroFields, mockExpenseFieldsFormArray, mockPatchExpenseFieldsFormArray, workspaceresponse } from './import-settings.fixture';
 import { FyleField, MappingDestinationField, OnboardingState } from 'src/app/core/models/enum/enum.model';
 import { ImportSettingService } from 'src/app/core/services/configuration/import-setting.service';
 import { WorkspaceService } from 'src/app/core/services/workspace/workspace.service';
@@ -63,6 +63,7 @@ describe('ImportSettingsComponent', () => {
     };
     service3 = {
       getOnboardingState: () => 'IMPORT_SETTINGS',
+      getWorkspaceGeneralSettings: () => of(workspaceresponse),
       setOnboardingState: () => undefined,
       getWorkspaceId: () => environment.tests.workspaceId
     };

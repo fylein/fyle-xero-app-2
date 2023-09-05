@@ -8,7 +8,7 @@ import { DestinationAttribute } from "src/app/core/models/db/destination-attribu
 import { XeroCredentials } from "src/app/core/models/configuration/xero-connector.model";
 import { FormBuilder, FormGroup } from "@angular/forms";
 
-const workspaceresponse:WorkspaceGeneralSetting = {
+export const workspaceresponse:WorkspaceGeneralSetting = {
   auto_create_destination_entity: true,
   change_accounting_period: true,
   charts_of_accounts: ['Expense'],
@@ -27,7 +27,8 @@ const workspaceresponse:WorkspaceGeneralSetting = {
   auto_map_employees: "",
   import_customers: false,
   map_merchant_to_contact: false,
-  is_simplify_report_closure_enabled: true
+  is_simplify_report_closure_enabled: true,
+  import_suppliers_as_merchants: false
 };
 
 const general_mappings:GeneralMapping = {

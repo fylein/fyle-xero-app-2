@@ -29,7 +29,7 @@ describe('CloneSettingsComponent', () => {
   let service2: any;
   let service3: any;
   let dialogSpy: jasmine.Spy;
-  const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of({}), close: null });
+  const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of({}), close: '' });
   dialogRefSpyObj.componentInstance = { body: '' };
   let matDialogMock: jasmine.SpyObj<MatDialog>;
   let dialogRefMock: jasmine.SpyObj<MatDialogRef<any>>;
