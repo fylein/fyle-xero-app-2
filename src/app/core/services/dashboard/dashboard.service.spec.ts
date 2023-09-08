@@ -116,7 +116,7 @@ describe('DashboardService', () => {
     });
     const req = httpMock.expectOne({
       method: 'GET',
-      url: `${API_BASE_URL}/workspaces/${workspace_id}/tasks/all/?limit=500&offset=0&status=ENQUEUED,IN_PROGRESS&task_type=FETCHING_EXPENSE,CREATING_BILL,CREATING_BANK_TRANSACTION`
+      url: `${API_BASE_URL}/workspaces/${workspace_id}/tasks/all/?limit=500&offset=0&status__in=ENQUEUED,IN_PROGRESS&type__in=FETCHING_EXPENSE,CREATING_BILL,CREATING_BANK_TRANSACTION`
     });
     req.flush(response);
   });
@@ -136,7 +136,7 @@ describe('DashboardService', () => {
     });
     const req = httpMock.expectOne({
       method: 'GET',
-      url: `${API_BASE_URL}/workspaces/${workspace_id}/tasks/all/?limit=500&offset=0&status=ENQUEUED,IN_PROGRESS&expense_group_ids=3&task_type=FETCHING_EXPENSE,CREATING_BILL,CREATING_BANK_TRANSACTION`
+      url: `${API_BASE_URL}/workspaces/${workspace_id}/tasks/all/?limit=500&offset=0&status__in=ENQUEUED,IN_PROGRESS&expense_group_id__in=3&type__in=FETCHING_EXPENSE,CREATING_BILL,CREATING_BANK_TRANSACTION`
     });
     req.flush(response);
   });
@@ -180,7 +180,7 @@ describe('DashboardService', () => {
     expect(response).toBeTruthy();
     const req = httpMock.expectOne({
       method: 'GET',
-      url: `${API_BASE_URL}/workspaces/${workspace_id}/tasks/all/?limit=500&offset=0&status=ENQUEUED,IN_PROGRESS,FAILED&expense_group_ids=3&task_type=FETCHING_EXPENSE,CREATING_BILL,CREATING_BANK_TRANSACTION`
+      url: `${API_BASE_URL}/workspaces/${workspace_id}/tasks/all/?limit=500&offset=0&status__in=ENQUEUED,IN_PROGRESS,FAILED&expense_group_id__in=3&type__in=FETCHING_EXPENSE,CREATING_BILL,CREATING_BANK_TRANSACTION`
     });
     req.flush(response);
   });
@@ -222,7 +222,7 @@ describe('DashboardService', () => {
     expect(response).toBeTruthy();
     const req = httpMock.expectOne({
       method: 'GET',
-      url: `${API_BASE_URL}/workspaces/${workspace_id}/tasks/all/?limit=500&offset=0&status=ENQUEUED,IN_PROGRESS,FAILED&expense_group_ids=3&task_type=FETCHING_EXPENSE,CREATING_BILL,CREATING_BANK_TRANSACTION`
+      url: `${API_BASE_URL}/workspaces/${workspace_id}/tasks/all/?limit=500&offset=0&status__in=ENQUEUED,IN_PROGRESS,FAILED&expense_group_id__in=3&type__in=FETCHING_EXPENSE,CREATING_BILL,CREATING_BANK_TRANSACTION`
     });
     req.flush(response1);
   });
