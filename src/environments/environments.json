@@ -1,0 +1,26 @@
+{
+    "production": false,
+    "fyle_client_id": "tpaoTkeEaiFeg",
+    "callback_uri": "http://localhost:4200/auth/callback",
+    "api_url": "http://localhost:8003/api",
+    "app_url": "http://localhost:4200",
+    "xero_authorize_uri": "https://login.xero.com/identity/connect/authorize",
+    "xero_client_id": "BB139467D5424B14BE3DBF92895EB6CF",
+    "xero_scope": "accounting.transactions accounting.settings accounting.contacts offline_access accounting.attachments",
+    "xero_callback_uri": "http://localhost:4200/xero_callback",
+    "old_xero_app_url": "http://localhost:4201/auth/shared_login",
+    "sentry_dsn": "",
+    "sentry_env": "",
+    "release": "local",
+    "fyle_app_url": "https://staging1.fyle.tech",
+    "tests": {
+      "user": {
+        "refresh_token": "eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NTIwOTg1NTQsImlzcyI6IkZ5bGVBcHAiLCJvcmdfdXNlcl9pZCI6Ilwib3VoUlI4MnlmZUdaXCIiLCJ0cGFfaWQiOiJcInRwYVlmVTdWTHlyRU5cIiIsInRwYV9uYW1lIjoiXCJGeWxlIFFCTyBJbnRlZ3IuLlwiIiwiY2x1c3Rlcl9kb21haW4iOiJcImh0dHBzOi8vc3RhZ2luZy5meWxlLnRlY2hcIiIsImV4cCI6MTk2NzQ1ODU1NH0.8xpSzOO9anpJch4T_yK0_FaUkHtalZrQEnE3AtvWWkg"
+      },
+      "workspaceId": "1"
+    },
+    "refiner_survey": {
+      "onboarding_done_survery_id": "",
+      "export_done_survery_id": ""
+    }
+  }
