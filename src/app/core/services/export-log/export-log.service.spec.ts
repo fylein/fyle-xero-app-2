@@ -160,12 +160,12 @@ describe('ExportLogService', () => {
       previous: "xxx",
       results: []
     };
-    service.getExpenseGroups(10, 5, null ).subscribe(result => {
+    service.getExpenseGroups('COMPLETE', 10, 5, null ).subscribe(result => {
       expect(result).toEqual(response);
     });
     const req = httpMock.expectOne({
       method: 'GET',
-      url: `${API_BASE_URL}/workspaces/${workspace_id}/fyle/expense_groups/?limit=10&offset=5`
+      url: `${API_BASE_URL}/workspaces/${workspace_id}/fyle/expense_groups/?limit=10&offset=5&tasklog__status=COMPLETE`
     });
       req.flush(response);
   });
@@ -183,7 +183,7 @@ describe('ExportLogService', () => {
       endDate: new Date()
     };
 
-    service.getExpenseGroups(10, 5, dates).subscribe(result => {
+    service.getExpenseGroups('COMPLETE', 10, 5, dates).subscribe(result => {
       expect(result).toEqual(response);
     });
 
@@ -217,7 +217,7 @@ describe('ExportLogService', () => {
     };
 
     const exportAt = new Date();
-    service.getExpenseGroups(10, 5, dates, exportAt.toLocaleDateString()).subscribe(result => {
+    service.getExpenseGroups('COMPLETE', 10, 5, dates, exportAt.toLocaleDateString()).subscribe(result => {
       expect(result).toEqual(response);
     });
     const req = httpMock.expectOne(
