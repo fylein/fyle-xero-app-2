@@ -53,9 +53,9 @@
             <div class="import-settings--field-toggle-section">
               <div fxLayout="row" fxLayoutAlign="space-between center">
                 <div class="import-settings--field-label-section import-settings--import-area" data-cy="import-prompt">
-                  Import {{ expenseField.value.destination_field | titlecase }} from Xero
+                  Import {{ expenseField.value.destination_field | snakeCaseToSpaceCase | titlecase }} from Xero
                   <h5 class="configuration--field-label sub-text-color">
-                    The imported {{ expenseField.value.destination_field | titlecase }} from Xero will be a selectable
+                    The imported {{ expenseField.value.destination_field | snakeCaseToSpaceCase | titlecase }} from Xero will be a selectable
                     field while creating an expense.
                   </h5>
                 </div>
