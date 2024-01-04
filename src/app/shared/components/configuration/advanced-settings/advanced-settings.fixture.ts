@@ -121,7 +121,7 @@ export const getadvancedSettingResponse2:AdvancedSettingGet = {
   },
   workspace_id: 1
 };
-export const previewResponse = 'john.doe@acme.com - Pizza Hut - Client Meeting - Meals and Entertainment - C/2021/12/R/1 - https://app.fylehq.com/app/main/#/enterprise/view_expense/';
+export const previewResponse = 'john.doe@acme.com - Pizza Hut - Client Meeting - Meals and Entertainment - C/2021/12/R/1 - https://app.fylehq.com/app/admin/#/enterprise/view_expense/';
 export const errorResponse = {
   status: 404,
   statusText: "Not Found",
