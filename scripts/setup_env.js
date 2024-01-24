@@ -4,7 +4,7 @@ const environment = {
   production: `${process.env.PRODUCTION ? process.env.PRODUCTION : "false"}`,
   fyle_client_id: `${process.env.FYLE_CLIENT_ID ? process.env.FYLE_CLIENT_ID : '{{FYLE_CLIENT_ID}}'}`,
   callback_uri: `${process.env.CALLBACK_URI ? process.env.CALLBACK_URI : '{{CALLBACK_URI}}'}`,
-  api_url: `${process.env.API_URL ? process.env.API_URL : '{{API_URL}}'}`,
+  cluster_domain_api_url: `${process.env.CLUSTER_DOMAIN_API_URL ? process.env.CLUSTER_DOMAIN_API_URL : '{{CLUSTER_DOMAIN_API_URL}}'}`,
   app_url: `${process.env.APP_URL ? process.env.APP_URL : '{{APP_URL}}'}`,
   xero_client_id: `${process.env.XERO_CLIENT_ID ? process.env.XERO_CLIENT_ID : '{{XERO_CLIENT_ID}}'}`,
   old_xero_app_url: `${process.env.OLD_XERO_APP_URL ? process.env.OLD_XERO_APP_URL : '{{OLD_XERO_APP_URL}}'}`,

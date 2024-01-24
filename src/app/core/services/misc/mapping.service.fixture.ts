@@ -4,7 +4,7 @@ import { MappingPost, MappingStats, PostMappingResponse } from "../../models/db/
 import { MappingDestinationField, MappingSourceField } from "../../models/enum/enum.model";
 import { ExpenseField } from "../../models/misc/expense-field.model";
 
-const API_BASE_URL = environment.api_url;
+const API_BASE_URL = environment.cluster_domain_api_url;
 const workspace_id = 1;
 
 export const mappingSettingPayload: MappingSettingPost[] = [{
