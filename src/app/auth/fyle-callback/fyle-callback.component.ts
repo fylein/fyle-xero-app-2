@@ -46,9 +46,9 @@ export class FyleCallbackComponent implements OnInit {
           'org_name': response.user.org_name
         };
         this.userService.storeUserProfile(user);
-  
+
         this.router.navigate(['/workspaces']);
-  
+
         // Store orgs count in background, need not be a sync call
         this.userService.storeFyleOrgsCount();
     });
