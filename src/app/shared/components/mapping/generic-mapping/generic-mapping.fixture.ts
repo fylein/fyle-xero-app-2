@@ -4,7 +4,7 @@ import { MappingList, MappingPost, MappingStats } from "src/app/core/models/db/m
 import { MappingDestinationField, MappingSourceField, MappingState } from "src/app/core/models/enum/enum.model";
 import { environment } from "src/environments/environment";
 import { expenseAttribute } from "../../dashboard/dashboard-resolve-mapping-error-dialog/dashboard-resolve-mapping.fixture";
-const API_BASE_URL = environment.api_url;
+const API_BASE_URL = environment.cluster_domain_api_url;
 const workspace_id = 1;
 export const mappingSetting:MappingSetting[] = [{
   id: 1,

@@ -4,7 +4,7 @@ import {
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Token } from '../../models/misc/token.model';
+import { ClusterDomainWithToken, Token } from '../../models/misc/token.model';
 
 import { environment } from 'src/environments/environment';
 import { ApiService } from './api.service';
@@ -50,6 +50,14 @@ export class AuthService {
 
   redirectToOnboardingLogin(): void {
     this.windowReference.location.href = `${environment.app_url}/auth/login`;
+  }
+
+  loginWithRefreshToken(refreshToken: string): Observable<Token> {
+    return this.apiService.post('/auth/login_with_refresh_token/', { refresh_token: refreshToken });
+  }
+
+  getClusterDomainByCode(code: string): Observable<ClusterDomainWithToken> {
+    return this.apiService.post('/auth/cluster_domain/', { code }, environment.cluster_domain_api_url);
   }
 
   login(code: string): Observable<Token> {
