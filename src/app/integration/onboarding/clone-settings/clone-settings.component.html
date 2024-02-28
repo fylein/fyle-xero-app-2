@@ -266,6 +266,54 @@
                         </div>
                     </div>
 
+                    <div *ngIf="cloneSettingsForm.value.importSuppliersAsMerchants" fxLayoutAlign="space-between center" class="clone-settings--coa-import-section"
+                        (mouseenter)="hoveredIndex.supplierImport= 1" (mouseleave)="hoveredIndex.supplierImport= -1">
+                        <div fxLayoutAlign="start center">
+                            <div fxLayoutAlign="start center" class="clone-settings--xero-field">
+                                <p class="clone-settings--xero-field-text">
+                                    Supplier
+                                </p>
+                            </div>
+
+                            <img src="assets/images/svgs/general/connect-arrow.svg">
+
+                            <div fxLayoutAlign="start center" class="clone-settings--xero-field">
+                                <p class="clone-settings--xero-field-text">
+                                    Merchant
+                                </p>
+                            </div>
+                        </div>
+                        <div *ngIf="hoveredIndex.supplierImport === 1">
+                            <img matTooltip="Delete" matTooltipPosition="left" matTooltipClass="left" width="18px"
+                                height="20px" src="assets/images/svgs/actions/delete.svg"
+                                class="clone-settings--delete-icon pointer" (click)="disableImportSupplier()">
+                        </div>
+                    </div>
+
+                    <div *ngIf="cloneSettingsForm.value.importCustomers" fxLayoutAlign="space-between center" class="clone-settings--coa-import-section"
+                        (mouseenter)="hoveredIndex.customerImport= 1" (mouseleave)="hoveredIndex.customerImport= -1">
+                        <div fxLayoutAlign="start center">
+                            <div fxLayoutAlign="start center" class="clone-settings--xero-field">
+                                <p class="clone-settings--xero-field-text">
+                                    Customer
+                                </p>
+                            </div>
+
+                            <img src="assets/images/svgs/general/connect-arrow.svg">
+
+                            <div fxLayoutAlign="start center" class="clone-settings--xero-field">
+                                <p class="clone-settings--xero-field-text">
+                                    Project
+                                </p>
+                            </div>
+                        </div>
+                        <div *ngIf="hoveredIndex.customerImport === 1">
+                            <img matTooltip="Delete" matTooltipPosition="left" matTooltipClass="left" width="18px"
+                                height="20px" src="assets/images/svgs/actions/delete.svg"
+                                class="clone-settings--delete-icon pointer" (click)="disableImportCustomer()">
+                        </div>
+                    </div>
+
                     <div formArrayName="expenseFields">
                         <div *ngFor="let expenseField of expenseFields.controls; let i = index" [formGroupName]="i"
                             fxLayoutAlign="space-between center" class="clone-settings--coa-import-section"

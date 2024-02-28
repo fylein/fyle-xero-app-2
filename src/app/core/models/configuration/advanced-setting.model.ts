@@ -9,7 +9,9 @@ export type AdvancedSettingWorkspaceGeneralSetting = {
   sync_xero_to_fyle_payments: boolean,
   auto_create_destination_entity: boolean,
   change_accounting_period: boolean,
-  auto_create_merchant_destination_entity: boolean
+  auto_create_merchant_destination_entity: boolean,
+  import_suppliers_as_merchants: boolean,
+  import_customers: boolean
 }
 
 export type AdvancedSettingGeneralMapping = {
@@ -64,7 +66,9 @@ export class AdvancedSettingModel {
         sync_xero_to_fyle_payments: advancedSettingsForm.get('paymentSync')?.value && advancedSettingsForm.get('paymentSync')?.value === PaymentSyncDirection.XERO_TO_FYLE ? true : false,
         auto_create_destination_entity: advancedSettingsForm.get('autoCreateVendors')?.value,
         change_accounting_period: advancedSettingsForm.get('changeAccountingPeriod')?.value,
-        auto_create_merchant_destination_entity: advancedSettingsForm.get('autoCreateMerchantDestinationEntity')?.value
+        auto_create_merchant_destination_entity: advancedSettingsForm.get('autoCreateMerchantDestinationEntity')?.value,
+        import_suppliers_as_merchants: advancedSettingsForm.get('importSuppliersAsMerchants')?.value,
+        import_customers: advancedSettingsForm.get('importCustomers')?.value
       },
       general_mappings: {
         payment_account: advancedSettingsForm.get('billPaymentAccount')?.value ? advancedSettingsForm.get('billPaymentAccount')?.value : emptyDestinationAttribute
