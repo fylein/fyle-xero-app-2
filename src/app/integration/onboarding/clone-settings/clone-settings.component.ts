@@ -68,11 +68,15 @@ export class CloneSettingsComponent implements OnInit {
   hoveredIndex: {
     categoryImport: number,
     expenseFieldImport: number,
-    taxImport: number
+    taxImport: number,
+    customerImport: number,
+    supplierImport: number
   } = {
     categoryImport: -1,
     expenseFieldImport: -1,
-    taxImport: -1
+    taxImport: -1,
+    customerImport: -1,
+    supplierImport: -1
   };
 
   ProgressPhase = ProgressPhase;
@@ -140,6 +144,14 @@ export class CloneSettingsComponent implements OnInit {
 
   disableImportCoa(): void {
     this.cloneSettingsForm.controls.chartOfAccount.setValue(false);
+  }
+
+  disableImportCustomer(): void {
+    this.cloneSettingsForm.controls.importCustomers.setValue(false);
+  }
+
+  disableImportSupplier(): void {
+    this.cloneSettingsForm.controls.importSuppliersAsMerchants.setValue(false);
   }
 
   disableImportTax(): void {
@@ -330,6 +342,8 @@ export class CloneSettingsComponent implements OnInit {
       cccExpenseState: [this.cloneSettings.export_settings.expense_group_settings.ccc_expense_state],
       chartOfAccount: [this.cloneSettings.import_settings.workspace_general_settings.import_categories],
       chartOfAccountTypes: chartOfAccounts,
+      importSuppliersAsMerchants: [this.cloneSettings.import_settings.workspace_general_settings.import_suppliers_as_merchants],
+      importCustomers: [this.cloneSettings.import_settings.workspace_general_settings.import_customers],
       expenseFields: this.formBuilder.array(expenseFieldsFormArray),
       taxCode: [this.cloneSettings.import_settings.workspace_general_settings.import_tax_codes],
       defaultTaxCode: [this.cloneSettings.import_settings.general_mappings?.default_tax_code?.id ? this.cloneSettings.import_settings.general_mappings.default_tax_code : null],
