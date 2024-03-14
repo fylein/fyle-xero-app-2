@@ -195,9 +195,10 @@ export class ImportSettingsComponent implements OnInit, OnDestroy {
         this.fyleExpenseFields = this.fyleExpenseFields.filter(field => !this.customMappedFyleFields.includes(field));
       }
       // Remove custom mapped Xero fields
-      const xeroAttributes = response[2].filter(
+      let xeroAttributes = response[2].filter(
         field => !customMappedXeroFields.includes(field.attribute_type)
       );
+      xeroAttributes = xeroAttributes.filter((data) => data.attribute_type === 'CUSTOMER');
 
       this.xeroExpenseFields = this.importSettingService.getXeroExpenseFields(xeroAttributes, this.importSettings.mapping_settings);
 
