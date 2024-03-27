@@ -43,6 +43,7 @@ export class IntegrationComponent implements OnInit {
     if (pathName === '/workspaces') {
       const onboardingStateComponentMap = {
         [OnboardingState.CONNECTION]: '/workspaces/onboarding/landing',
+        [OnboardingState.TENANT_MAPPING]: '/workspaces/onboarding/xero_connector',
         [OnboardingState.EXPORT_SETTINGS]: '/workspaces/onboarding/export_settings',
         [OnboardingState.IMPORT_SETTINGS]: '/workspaces/onboarding/import_settings',
         [OnboardingState.ADVANCED_CONFIGURATION]: '/workspaces/onboarding/advanced_settings',
